@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand*\pbar[0]{\,|\,}
+\newcommand*\var[0]{\text{Var}}
+
+\begin{document}
+
+\title{Theory of Probability HW \#8}
+\author{Ozaner Hansha}
+\date{November 18, 2019}
+\maketitle
+
+\subsection*{Problem 1}
+
+\noindent\textbf{Solution:} Letting $X$ be the time the rabbit reaches the carrot and $H_i$ be the event hole $i$ is chosen, the expected time is given by:
+\begin{align*}
+    E[X]&=E[X\pbar H_1]P(H_1)+E[X\pbar H_2]P(H_2)+E[X\pbar H_3]P(H_3)\\
+    &=\frac{2+E[X]}{3}+\frac{3+E[X]}{3}+\frac{4}{3}\\
+    3E[X]&=9+2E[X]\\
+    E[X]&=9
+\end{align*}
+
+\subsection*{Problem 2}
+\noindent\textbf{Solution:} Letting $X$ being the number of heads landed in 8 trials, $X_1$ be the number of heads landed in the first 4 trials, and $X_2$ the number of heads last 4 trials, we have:
+\begin{align*}
+    X&=X_1+X_2\tag{convolution of binomial R.V.}\\
+    X_1,X_2&\sim B\left(4,\frac{2}{3}\right)
+\end{align*}
+
+And so our desired expected value is given by:
+\begin{align*}
+    E[X]&=E[X_1\pbar X_1=3]+E[X_2]\\
+    &=E[X_1\pbar X_1=3]+4\cdot\frac{3}{4}\tag{expectation of binomial R.V.}\\
+    &=3+3=6
+\end{align*}
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} First we compute the marginal distribution of $Y$:
+\begin{align*}
+    f_Y(y)&=\int_0^y f(x,y)\mathop{dx}\\
+    &=\int_0^y \frac{e^{-y}}{y}\mathop{dx}\\
+    &=\eval{\frac{xe^{-y}}{y}}{0}{y}\\
+    &=\frac{ye^{-y}}{y}=e^{-y}
+\end{align*}
+
+And so the conditional probability distribution is given by:
+\begin{align*}
+    f_{X\pbar Y}(x\pbar y)&=\frac{f(x,y)}{f_Y(y)}\\
+    &=\frac{\frac{e^{-y}}{y}}{e^{-y}}=\frac{1}{y}
+\end{align*}
+
+And so, finally, our desired expectation is given by:
+\begin{align*}
+    E[X^5\pbar Y=y]&=\int_{-\infty}^\infty x^5f_{X\pbar Y}(x\pbar y)\mathop{dx}\\
+    &=\int_0^y \frac{x^5}{y}\mathop{dx}\\
+    &=\eval{\frac{x^6}{6y}}{0}{y}=\frac{y^5}{6}
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} We'd expect $X$ and $Y$ to be negatively correlated as, out of a pool of 3 rolls, more 1's rolled (i.e. $X$) mean less chances for 2's to be rolled (i.e. $Y$), and vice versa. First let us denote $X$ and $Y$ as the sum of 3 Bernoulli R.V.s rather than a single binomial R.V.:
+\begin{align*}
+    X&=X_1+X_2+X_3\\
+    Y&=Y_1+Y_2+Y_3\\
+    X_i,Y_i&\sim \text{Bernoulli}\left(\frac{1}{6}\right)
+\end{align*} 
+
+Compute the covariance we find:
+\begin{align*}
+    Cov(X,Y)&=Cov\left(\sum_{i=1}^3 X_i,\sum_{j=1}^3 Y_j\right)\\
+    &=\sum_{i=1}^3 \sum_{j=1}^3 Cov(X_i,Y_j)\\
+    &=\sum_{i=1}^3 \sum_{j=1}^3 E[X_iY_j]-E[X_i]E[X_j]\\
+    &=\sum_{i=1}^3 \sum_{j=1}^3 E[X_iY_j]-\left(\frac{1}{6}\cdot\frac{1}{6}\right)\tag{expectation of bernoulli R.V.}\\
+\end{align*}
+
+Note that the expectation $E[X_iY_j]=E[X_i]E[Y_j]$ whenever $i\not=j$ as those represent independent trials. As such, the only case that doesn't cancel out are the 3 cases when $i=j$, giving us:
+\begin{equation*}
+    Cov(X,Y)=\sum_{i=1}^3 E[X_iY_i]-\frac{1}{36}\\
+\end{equation*}
+
+However, note that if $X_i=1$ then $Y_i=0$ since for a 1 to be rolled, a 2 must \textit{not} have been rolled. This applies in the other direction too. As such, we have $E[X_iY_i]=0$, giving us a final covariance of:
+\begin{equation*}
+    Cov(X,Y)=\sum_{i=1}^3 -\frac{1}{36}=-\frac{3}{36}\\
+\end{equation*}
+
+\subsection*{Problem 5}
+\noindent\textbf{Solution:} Part a) first we compute the marginal distribution of $Y$:
+\begin{align*}
+    f_Y(y)&=\int_{-\infty}^\infty f(x,y)\mathop{dx}\\
+    &=\int^1_y 8xy\mathop{dx}\\
+    &=\eval{4x^2y}{y}{1}\\
+    &=4y-4y^3=4y(1-y^2)
+\end{align*}
+
+Now we can compute the conditional distribution:
+\begin{align*}
+    f_{X\pbar Y}(x\pbar y)&=\frac{f(x,y)}{f_Y(y)}\\
+    &=\frac{8xy}{4y(1-y^2)}=\frac{2x}{1-y^2}
+\end{align*}
+
+To show that these distributions are dependent, we'll compute the marginal distribution of $X$:
+\begin{align*}
+    f_X(x)&=\int_{-\infty}^\infty f(x,y)\mathop{dy}\\
+    &=\int^x_0 8xy\mathop{dy}\\
+    &=\eval{4xy^2}{0}{x}\\
+    &=4x^3
+\end{align*}
+
+Clearly, $X$ and $Y$ are not independent as evidenced by the following:
+\begin{align*}
+    f_{X\pbar Y}(x\pbar y)&\not=f_X(x)\\
+    \frac{2x}{1-y^2}&\not=4x^3
+\end{align*}
+
+For part b) we \textbf{cannot} say whether the covariance is 0 or not. This is because, while the independence of two random variables implies a covariance of 0, the converse is not true. It may be the case that $X$ and $Y$ have a covariance of 0 despite being dependent.
+
+\subsection*{Problem 6}
+\noindent\textbf{Solution:} The expectation of $Y$ is given by:
+\begin{align*}
+    E[Y]&=\int^\infty_{-\infty} yf_Y(y)\mathop{dy}\\
+    &=\int_0^1 4y^2-4y^4\mathop{dy}\\
+    &=\eval{\frac{4y^3}{3}-\frac{4y^5}{5}}{0}{1}\\
+    &=\frac{4}{3}-\frac{4}{5}=\frac{8}{15}
+\end{align*}
+
+The expectation of $X$ is given by:
+\begin{align*}
+    E[X]&=\int^\infty_{-\infty} xf_X(x)\mathop{dy}\\
+    &=\int_0^1 4x^4\mathop{dy}\\
+    &=\eval{\frac{4x^5}{5}}{0}{1}\\
+    &=\frac{4}{5}
+\end{align*}
+
+Finally we compute the following joint expectation:
+\begin{align*}
+    E[XY]&=\iint\limits_{(x,y)\in\mathbb R^2} xyf(x,y)\mathop{dy}\mathop{dx}\\
+    &=\int_0^1\int_0^x 8x^2y^2\mathop{dy}\mathop{dx}\\
+    &=\int_0^1\eval{\frac{8x^2y^3}{3}}{0}{x}\mathop{dx}\\
+    &=\int_0^1\frac{8x^5}{3}\mathop{dx}\\
+    &=\int_0^1\frac{8x^5}{3}\mathop{dx}\\
+    &=\eval{\frac{4x^6}{9}}{0}{1}=\frac{4}{9}
+\end{align*}
+
+And so, finally, our covariance is given by:
+\begin{align*}
+    Cov(X,Y)&=E[XY]-E[X]E[Y]\\
+    &=\frac{4}{9}-\frac{4}{5}\cdot\frac{8}{15}\\
+    &=\frac{4}{225}
+\end{align*}
+
+\end{document}

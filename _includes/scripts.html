@@ -1,0 +1,39 @@
+{% if site.footer_scripts %}
+  {% for script in site.footer_scripts %}
+    {% if script contains "://" %}
+      {% capture script_path %}{{ script }}{% endcapture %}
+    {% else %}
+      {% capture script_path %}{{ script | absolute_url }}{% endcapture %}
+    {% endif %}
+    <script src="{{ script_path }}"></script>
+  {% endfor %}
+{% else %}
+  <script src="{{ '/assets/js/main.min.js' | absolute_url }}"></script>
+{% endif %}
+
+{% if site.search == true or page.layout == 'search' %}
+  <script src="{{ '/assets/js/lunr.min.js' | absolute_url }}"></script>
+  <script src="{{ '/assets/js/lunr-en.js' | absolute_url }}"></script>
+{% endif %}
+
+{% include analytics.html %}
+{% include /comments-providers/scripts.html %}
+
+
+{% if page.mathjax %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+{% endif %}
+
+<script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+

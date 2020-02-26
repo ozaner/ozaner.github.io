@@ -1,0 +1,286 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#6}
+\author{Ozaner Hansha}
+\date{November 5, 2018}
+\maketitle
+
+\section*{Exercise 1}
+Consider an arbitrary linear function $f:\mathbb R^n\to\mathbb R$.
+\subsection*{Part a}
+\textbf{Problem:} Show that $\nabla f$ is constant and that $f$ is differentiable at all $\mathbf x_0$.
+\\\\
+\textbf{Solution:} Any linear function from $\mathbb R^n\to\mathbb R$ is of the form:
+$$a_1x_1+\cdots+a_ix_i+\cdots+a_nx_n$$
+
+It is clear then, that the $i$th component of $\nabla f$, is:
+$$\frac{\partial}{\partial x_i}f=a_i$$
+
+This is because the derivative is linear and so we can equivalently take the sum of the derivative of each of the terms. Then we notice that the derivative of $a_ix_i$ with respect to $x_i$ is $a_i$, via the power rule. Then we note that the derivative of $a_jx_j$ is just 0 because it is independent of $x_i$. The sum of these derivatives is $0+\cdots+a_i+\cdots+0=a_i$.
+
+Since every component of $\nabla f$ is constant, it too is constant. And since all the partial derivatives are constant, all the partials are continuous. This implies that the function is differentiable everywhere.
+
+\subsection*{Part b}
+\textbf{Problem:} Show that $\operatorname{ker}(f)=(\nabla f)^\perp$.
+\\\\
+\textbf{Solution:} Note the definitions of both sides:
+\begin{align*}
+  \operatorname{ker}(f)&=\{\mathbf x\mid f(\mathbf x)=0\}\\
+  (\nabla f)^\perp&=\{\mathbf x\mid \nabla f\cdot\mathbf x=0\}
+\end{align*}
+
+To this end, it is more than sufficient to prove that $f(\mathbf x)=\nabla f\cdot\mathbf x$. This can be displayed by noting the following:
+$$\begin{align*}
+  \nabla f&=(a_1,\cdots,a_i,\cdots,a_n)\\
+  \mathbf x &= (x_1,\cdots,x_i,\cdots,x_n)\\
+  \nabla f\cdot\mathbf x&=a_1x_1+\cdots+a_ix_i+\cdots+a_nx_n\\
+\end{align*}$$
+
+This is the definition of $f(\mathbf x)$ and so they are equal. Thus the two sets are equivalent as membership in one guarantees membership in the other.
+
+\section*{Exercise 2}
+Consider the function:
+$$f(x,y)=
+\begin{cases}
+      \frac{x^3}{x^2+y^2} & (x,y)\not=(0,0) \\
+      0 & (x,y)=(0,0)
+\end{cases}$$
+\subsection*{Part a}
+\textbf{Problem:} Find $D_{\mathbf v}f(0,0)$ for any particular $\mathbf v=(a,b)$.
+\\\\
+\textbf{Solution:} Plugging in $\mathbf x=(0,0)$ and $\mathbf v=(a,b)$ into the definition of the directional derivative we find:
+\begin{align*}
+  D_{\mathbf v}f(\mathbf x)&=\lim_{h\to0}\frac{f(\mathbf x+h\mathbf v)-f(\mathbf x)}{h}\\
+  D_{\mathbf v}f(\mathbf 0)&=\lim_{h\to0}\frac{f(\mathbf 0+h\mathbf v)-\mathbf 0}{h}\\
+  &=\lim_{h\to0}\frac{f(ha,hb)}{h}\\
+  &=\lim_{h\to0}\frac{\frac{h^3a^3}{h^2a^2+h^2b^2}}{h}\tag{if $\mathbf v\not=\mathbf 0$}\\
+  &=\lim_{h\to0}\frac{a^3}{a^2+b^2}\\
+  &=\frac{a^3}{a^2+b^2}
+\end{align*}
+
+Which holds for all vectors $\mathbf v\not=\mathbf 0$. If $\mathbf v=\mathbf 0$ then line 3 would evaluate to 0 instead.
+
+\subsection*{Part b}
+\textbf{Problem:} Show that the result in Part a is inconsistent with $D_{\mathbf v}f=\nabla f\cdot\mathbf v$, implying that $f$ is not differentiable at $(0,0)$.
+\\\\
+\textbf{Solution:} First we'll compute the gradient:
+$$\nabla f(x,y)=\frac{x^2}{(x^2+y^2)^2}\left(x^2+3y^2,-2xy\right)$$
+
+Dotting it with $\mathbf v$ we find:
+$$\nabla f\cdot\mathbf v=\frac{x^2}{(x^2+y^2)^2}\left(a(x^2+3y^2)-2bxy\right)$$
+
+Notice that while $D_{\mathbf v}f$ is defined at $\mathbf 0$, the expression above is not. Thus $f$ is not differentiable at $\mathbf 0$.
+
+\section*{Exercise 3}
+Consider a fixed $\mathbf v=(a,b,c)\not=\mathbf 0$ and the function $C(\mathbf x)=\mathbf v\times\mathbf x$
+\subsection*{Part a}
+\textbf{Problem:} Show that $C$ is a linear function, solely via the properties of the cross product.
+\\\\
+\textbf{Solution:} We just have to show that the following properties hold:
+\begin{align}
+  C(\mathbf x+\mathbf y)&=C(\mathbf x)+C(\mathbf y)\\
+  C(k\mathbf x)&=kC(\mathbf x)
+\end{align}
+
+Property (1) is a result of the distributive property of the cross product over addition:
+\begin{align*}
+  C(\mathbf x+\mathbf y)&=\mathbf v\times(\mathbf x+\mathbf y)\tag{def. of $C$}\\
+  &=\mathbf v\times\mathbf x+\mathbf v\times\mathbf y\tag{distributive prop.}\\
+  &=C(\mathbf x)+C(\mathbf y)\tag{def of $C$}
+\end{align*}
+
+Property (2) is a result of the cross product's compatibility with scalar multiplication:
+\begin{align*}
+  C(k\mathbf x)&=\mathbf v\times k\mathbf x\tag{def. of $C$}\\
+  &=k(\mathbf v\times\mathbf x)\tag{scalar prop.}\\
+  &=kC(\mathbf x)\tag{def of $C$}
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Give the matrix form of $C$. Then write $C\mathbf x$ in components using the rows of $C$ then as a linear combination of the columns of $C$.
+\\\\
+\textbf{Solution:} The matrix form of $C$ can be constructed column-wise by computing where the basis vectors are mapped:
+\begin{align*}
+  C(\mathbf e_1)=(0,c,-b)\\
+  C(\mathbf e_2)=(-c,0,a)\\
+  C(\mathbf e_3)=(b,-a,0)\\
+\end{align*}
+
+And so:
+$$C=\begin{bmatrix}
+    0 & -c & b \\
+    c & 0 & -a \\
+    -b & a & 0
+\end{bmatrix}$$
+
+\subsection*{Part c}
+\textbf{Problem:} Show that there is always a nontrivial solution to the homogenous equation $C\mathbf x=\mathbf 0$.
+\\\\
+\textbf{Solution:} This is equivalent to the proposition $\operatorname{det}(C)=0$. Here's the proof:
+$$\begin{align*}
+\operatorname{det}(C)&=
+\begin{vmatrix}
+  0 & -c & b \\
+  c & 0 & -a \\
+  -b & a & 0
+\end{vmatrix}\\
+&=0(0(0)-(-a)a)-(-c)(c(0)-(-a)(-b))+b(ca-0(-b))\\
+&=0(a^2)-c(ab)+b(ca)\\
+&=-abc+abc=0\\
+\end{align*}$$
+\section*{Exercise 4}
+Consider the following 2 matrices:
+$$A=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\ \ \ \ \
+B=\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 0 & -1 \\
+    0 & 1 & 0
+\end{bmatrix}$$
+\subsection*{Part a}
+\textbf{Problem:} Show that $AB$ and $BA$ are not equal.
+\\\\
+\textbf{Solution:} We'll just perform matrix multiplication (dot product A rows and B columns) to show that $AB\not=BA$:
+\begin{align*}
+AB&=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 0 & -1 \\
+    0 & 1 & 0
+\end{bmatrix}=
+\begin{bmatrix}
+    0 & 0 & 1 \\
+    1 & 0 & 0 \\
+    0 & 1 & 0
+\end{bmatrix}\\
+BA&=\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 0 & -1 \\
+    0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}=
+\begin{bmatrix}
+    0 & -1 & 0 \\
+    0 & 0 & -1 \\
+    1 & 0 & 0
+\end{bmatrix}
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Show that $A\mathbf x\cdot A\mathbf y=\mathbf x\cdot \mathbf y$ and $B\mathbf x\cdot B\mathbf y=\mathbf x\cdot \mathbf y$. Why are these rotations by $\frac{\pi}{2}$ about the $z$ and $x$-axis respectively?
+\\\\
+\textbf{Solution:} Recall that a linear transformation is characterized by where it takes the basis vectors of it's domain. Consider column 1 of $A$, which takes $(1,0,0)$ to $(0,1,0)$. This means every vector on the $x$-axis is mapped to the $y$-axis, with no change in length (b.c. they're one-hot vectors). We can perform a similar analysis on the rest of the columns for both $A$ and $B$:
+$$\begin{align*}
+  A:\ &x\text{-axis}\to y\text{-axis}\\
+  & y\text{-axis}\to -x\text{-axis}\\
+  & z\text{-axis}\to z\text{-axis}\\
+  B:\ &x\text{-axis}\to x\text{-axis}\\
+  & y\text{-axis}\to z\text{-axis}\\
+  & z\text{-axis}\to -y\text{-axis}\\
+\end{align*}$$
+
+And so both these vector perform $\frac{\pi}{2}$ rotations about the $z$-axis and $x$-axis respectively (if the basis vectors are rotated, linearity means the span of them is also rotated equivalently). A result of this is that rotating both $\mathbf x$ and $\mathbf y$ before dotting them (i.e. a scalar measure how orthogonal they are) makes no difference to dotting them as is. Indeed their orthogonality is only dependent on their relative angles from each other and uniformly changing both of their orientations won't change this.
+
+Here's an explicit calculation:
+\begin{align*}
+A\mathbf x=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    x_3
+\end{bmatrix}&=(-x_2,x_1,x_3)\\
+A\mathbf y=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    y_3
+\end{bmatrix}&=(-y_2,y_1,y_3)\\
+B\mathbf x=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    x_3
+\end{bmatrix}&=(-x_2,x_1,x_3)\\
+B\mathbf y=\begin{bmatrix}
+    0 & -1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    y_3
+\end{bmatrix}&=(-y_2,y_1,y_3)
+\end{align*}
+
+I don't even need to continue, just notice that the order of the terms in the vector is irrelevant to the dot product (addition is communitive) and notice that the negative terms go away after being multiplied by corresponding negative terms. Thus, the dot product is unchanged under these rotations.
+
+\subsection*{Part c1}
+\textbf{Problem:} Show that $AB(1,1,1)=(1,1,1)$. Also show that $\mathbf x\perp (1,1,1)\rightarrow AB\mathbf x \perp (1,1,1)$.
+\\\\
+\textbf{Solution:} We can show $(1,1,1)$ is a fixed point by writing it as a linear combination of the basis vectors:
+\begin{align*}
+AB(1,1,1)&=AB(\mathbf e_1+\mathbf e_2+\mathbf e_3)\\
+&=AB\mathbf e_1+AB\mathbf e_2+AB\mathbf e_3\\
+&=\mathbf e_2+\mathbf e_3+\mathbf e_1\tag{columns of $AB$}\\
+&=(1,1,1)
+\end{align*}
+
+The second part is equivalent to proving the following:
+$$\mathbf x\cdot(1,1,1)=0\implies AB\mathbf x\cdot(1,1,1)=0$$
+
+We'll prove it by assuming the antecedent and showing the consequent must be true:
+\begin{flalign*}
+  &AB\mathbf x\cdot(1,1,1)\equiv AB\mathbf x\cdot AB(1,1,1) \tag{fixed point}\\
+  &AB\mathbf x\cdot AB(1,1,1)=0\\
+  &(\forall \mathbf a,\mathbf b\in\mathbb R^3)\ AB\mathbf a\cdot AB\mathbf b=\mathbf a\cdot\mathbf b\tag{$AB$ is an isometry}\\
+  &\mathbf x\cdot(1,1,1)=0
+\end{flalign*}
+
+\subsection*{Part c2}
+\textbf{Problem:} Show that $BA(1,-1,1)=(1,-1,1)$. Also show that $\mathbf x\perp (1,-1,1)\rightarrow BA\mathbf x \perp (1,-1,1)$.
+\\\\
+\textbf{Solution:} We can show $(1,1,1)$ is a fixed point by writing it as a linear combination of the basis vectors:
+\begin{align*}
+BA(1,-1,1)&=AB(\mathbf e_1-\mathbf e_2+\mathbf e_3)\\
+&=BA\mathbf e_1-BA\mathbf e_2+BA\mathbf e_3\\
+&=\mathbf e_3-(-\mathbf e_1)-\mathbf e_2\tag{columns of $BA$}\\
+&=(1,-1,1)
+\end{align*}
+
+The second part is equivalent to proving the following:
+$$\mathbf x\cdot(1,-1,1)=0\implies BA\mathbf x\cdot(1,-1,1)=0$$
+
+We'll prove it by assuming the antecedent and showing the consequent must be true:
+\begin{flalign*}
+  &BA\mathbf x\cdot(1,-1,1)\equiv BA\mathbf x\cdot BA(1,-1,1) \tag{fixed point}\\
+  &BA\mathbf x\cdot BA(1,-1,1)=0\\
+  &(\forall \mathbf a,\mathbf b\in\mathbb R^3)\ BA\mathbf a\cdot BA\mathbf b=\mathbf a\cdot\mathbf b\tag{$BA$ is an isometry}\\
+  &\mathbf x\cdot(1,-1,1)=0
+\end{flalign*}
+
+\end{document}

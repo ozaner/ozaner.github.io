@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 7a}
+\author{Ozaner Hansha}
+\date{October 31, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Give an example of a relation on a set that is neither reflexive nor anti-reflexive.
+\\\\
+\textbf{Solution:} Consider the following graph of a relation on the set $\{1,2\}$:
+$$G=\{(1,1)\}$$
+
+This relation is not reflexive because $\neg(2R2)$ and not anti-reflexive because $(1R1)$.
+
+\section*{Problem 2}
+\textbf{Problem:} Give an example of a relation on a set that is neither symmetric nor anti-symmetric.
+\\\\
+\textbf{Solution:} Consider the following graph of a relation on the set $\{1,2,3\}$:
+$$G=\{(1,2),(2,1),(2,3)\}$$
+
+This relation is not symmetric because $(2R3)\wedge\neg(3R2)$ and not anti-symmetric because $(1R2)\wedge(2R1)$.
+
+\section*{Problem 3}
+\textbf{Problem:} If $R$ is a transitive relation on $A$, prove that for all $x,y\in A$: $$xRy\rightarrow\operatorname{im}_R(y)\subseteq\operatorname{im}_R(x)$$
+
+\textbf{Solution:} First note that we can rewrite the proposition as the following:
+$$xRy\rightarrow\left(\forall a\in A\right)yRa\rightarrow xRa$$
+
+Now to prove this we can simply assume the antecedent and prove the consequent:
+$$\left(\forall a\in A\right)yRa\rightarrow xRa$$
+
+We can prove this statement by contradiction. Let us assume there is some element $a_0\in A$ such that:
+$$yRa_0\wedge\neg(xRa_0)$$
+
+This assumption turns out to be false because, from the transitive property of $R$ and the assumption $xRy$:
+\begin{flalign*}
+&xRy\wedge yRa_0\rightarrow xRa_0\\
+&xRy\\
+\therefore\ &xRa_0
+\end{flalign*}
+
+And we are done.
+
+\section*{Problem 4}
+\textbf{Problem:} Suppose $R$ is a transitive relation on $A$ and $\operatorname{im}_R(y)\subseteq\operatorname{im}_R(x)$ for any $x,y\in A$. Prove that these conditions imply $xRy$.
+\\\\
+\textbf{Solution:} This is false. Consider the following graph of a relation on the set $\{1,2\}$:
+$$G=\{(1,1),(2,1)\}$$
+
+The image of $2$ is a subset of that of $1$:
+\begin{gather*}
+  \operatorname{im}_R(1)=\{1\}\\
+  \operatorname{im}_R(2)=\{1\}\\
+  \operatorname{im}_R(2)\subseteq\operatorname{im}_R(1)\\
+\end{gather*}
+
+Yet $\neg(1R2)$ and so the proposition does not hold for any transitive relation $R$.
+
+\section*{Problem 5}
+\textbf{Problem:} Prove that the following relation $R$ on $\mathcal P(\mathbb Z)$ is a partial order:
+$$XRY\implies (X=Y)\vee (Y\setminus X\not=\emptyset\wedge \left(\forall z\in Y\setminus X,\forall x\in X\right) z>x)$$
+\textbf{Solution:} We have to prove this relation is reflexive, anti-symmetric, and transitive.
+
+\subsection*{Reflexivity}
+Proving reflexivity is trivial:
+$$XRY\iff\textcolor{red}{(X=Y)}\vee (Y\setminus X\not=\emptyset\wedge \left(\forall z\in Y\setminus X,\forall x\in X\right) z>x)$$
+
+and so:
+$$(X=Y)\implies XRY$$
+
+\subsection*{Anti-symmetry}
+To prove anti-symmetry we must prove that $XRY\wedge YRX\rightarrow X=Y$. This is equivalent to the contraposition:
+\begin{align*}
+X\not=Y&\rightarrow\neg(XRY\wedge YRX)\\
+&\equiv\neg(XRY)\vee\neg(YRX)\\
+&\equiv XRY\rightarrow\neg(YRX)
+\end{align*}
+
+So assuming $X\not=Y$ and $XRY$ we have to show that $\neg(YRX)$. We can prove this by contradiction and assume that indeed $YRX$. Now notice that:
+\begin{align*}
+&(XRY\wedge X\not=Y)\equiv(\exists y_0\in Y\setminus X,\forall x\in X)\ y_0>x\\
+&XRY\wedge X\not=Y\\
+&Y\setminus X\subset Y\\
+\therefore&(\exists y_0\in Y,\forall x\in X)\ y_0>x\\
+\end{align*}
+
+Now notice the same holds true for $YRX$:
+\begin{align*}
+&(YRX\wedge Y\not=X)\equiv(\exists x_0\in X\setminus Y,\forall y\in Y)\ x_0>y\\
+&YRX\wedge Y\not=X\\
+&X\setminus Y\subset X\\
+\therefore&(\exists x_0\in X,\forall y\in Y)\ x_0>y\\
+\end{align*}
+
+Those two statements cannot simultaneously be true. This is a contradiction, thus our assumption that $YRX$ was false. This means $\neg(YRX)$ which in turn chains back and proves our initial proposition of anti-symmetry.
+
+\subsection*{Transitivity}
+Proving this means proving the following for all subsets $Z$:
+$$XRZ\wedge ZRY\rightarrow XRY$$
+
+\textit{For convience, I'm using the notation $A>B$ to mean:}
+$$(\forall a\in A,b\in B)\ a>b$$
+
+If we assume $XRZ\wedge ZRY$ then we can say:
+$$(Z\setminus X>X)\wedge(Y\setminus Z>Z)$$
+
+Now note that because $Z\setminus X\subseteq Z$ we can say:
+$$Y\setminus Z>Z\setminus X$$
+
+This gives us the following chain of inequalities (which is valid because every element of the right sides are strictly less than that of the elements on the left):
+$$Y\setminus Z>Z\setminus X>X$$
+
+And clearly since every element in $Z$, barring those in $X$, is bigger than the elements of $X$ and every element in $Y$, barring those in $Z$, is bigger than the elements of $Z$, again barring those in $X$:
+$$Y\setminus X>X$$
+
+That is $Y\setminus Z>Z\setminus X$ and $Z\setminus X>X$ imply the above due to all the element in $Y$ (that aren't also in $X$) necessarily being bigger than all of those in $X$. And so the relation is transitive.
+
+\end{document}

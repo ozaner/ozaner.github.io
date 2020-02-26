@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 4b}
+\author{Ozaner Hansha}
+\date{October 3, 2018}
+\maketitle
+
+The functions $f$ and $g$ referenced in Problems 1-3 have the following domain and codomain: $f,g:\mathbb R\to \mathbb R$.
+
+\section*{Problem 1}
+\subsection*{Part a}
+\textbf{Problem:} Are there two functions $f,g$ such that they both have limits as $x\to 0$?
+\\\\
+\textbf{Solution:} Yes, consider $f(x)=g(x)=x$. It clearly has a limit as $x\to 0$, namely 0.
+\subsection*{Part b}
+\textbf{Problem:} Is there a unique pair of functions $(f,g)$ such that they hold the same property in Part A?
+\\\\
+\textbf{Solution:} No, there is more than one pair of functions that satisfy this property. We gave one above, here is another one: $f(x)=x^2$ and $g(x)=5x+1$. They both have limits as $x\to 0$, with $\lim_{x\to 0}f(x)=0$ and $\lim_{x\to 0}g(x)=1$.
+\subsection*{Part c}
+\textbf{Problem:} Is there a pair of functions $(f,g)$ such that they do \textit{not} satisfy the above property?
+\\\\
+\textbf{Solution:} Yes, consider the following choice of $f$ and $g$:
+
+$$f(x)=g(x)=\begin{cases}
+    x+1, &\text{if } x\ge 0\\
+    0, & \text{if }x<0
+\end{cases}$$
+
+This function has a right-sided limit of 1 as $x\to 0$ but a left-sided limit of 0. Thus the limit does not exist for either $f$ or $g$.
+
+\section*{Problem 2}
+\textbf{Problem:} Is the following statement true?: if $f$ has a limit as $x\to 0$ and $g$ is bounded, then the product $fg$ has a limit as $x\to 0$.
+\\\\
+\textbf{Solution:} This statement is false. Consider the following choices of functions:
+\begin{align*}
+  f(x)&=1\\
+  g(x)&=\begin{cases}
+    2, &\text{if } x\ge 0\\
+    -2, & \text{if }x<0
+  \end{cases}
+\end{align*}
+
+These functions satisfy the requirements for $f$ and $g$, namely:
+\begin{align*}
+  \lim_{x\to0}f(x)=1\tag{limit exists}\\
+  \forall x\ |g(x)|\le 2\tag{$g$ is bounded}
+\end{align*}
+
+Also note that $\lim_{x\to0}g(x)$ does not exist (the left hand and right hand limits are $-2$ and $2$ respectively and thus do not line up). The reason this is important is because when we multiply the functions we get $f(x)g(x)=g(x)$. This is because we set $f(x)=1$. As a result $fg$ doesn't have a limit as $x\to0$ just like $g$. And so the statement we set out to disprove is indeed false.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove the following statement: if $\lim_{x\to 0}f(x)=0$ and $g$ is bounded, then the product $fg$ has a limit as $x\to 0$.
+\\\\
+\textbf{Solution:} This is true and we can see this by writing down the definition of limit as $x\to 0$ for $f$:
+
+\begin{align*}
+\lim_{x\to 0}f(x)=0&\equiv(\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x-0|<\delta\rightarrow|f(x)-0|<\epsilon\\
+&\equiv(\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x|<\delta\rightarrow|f(x)|<\epsilon
+\end{align*}
+
+and for the product of the functions $fg$:
+\begin{align*}
+\lim_{x\to 0}f(x)g(x)=0&\equiv(\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x-0|<\delta\rightarrow|f(x)g(x)-0|<\epsilon\\
+&\equiv(\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x|<\delta\rightarrow|f(x)g(x)|<\epsilon
+\end{align*}
+
+Putting these together, this means we must prove the following:
+
+\begin{gather*}
+  (\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x|<\delta\rightarrow|f(x)|<\epsilon\\
+  \implies\\
+  (\forall\epsilon>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x|<\delta\rightarrow|f(x)g(x)|<\epsilon
+\end{gather*}
+
+First let's call the bound on $g$ the constant $M$. As in $|g(x)|\le M$. Now let us note that $|f(x)g(x)|\le|f(x)||g(x)|$ via the triangle inequality. Finally let express the $\epsilon$ in the first statement as $\frac{\epsilon}{M}$. Making the antecedent:
+
+$$(\forall\frac{\epsilon}{M}>0)(\exists\delta>0)(\forall x\in\mathbb R)\ 0<|x|<\delta\rightarrow|f(x)|<\frac{\epsilon}{M}$$
+
+And so for a given choice of $\delta$ we find that $|f(x)|<\frac{\epsilon}{M}$ which means that $|f(x)g(x)|\le|f(x)||g(x)|< M\cdot\frac{\epsilon}{M}=\epsilon$
+
+
+Thus, $|f(x)g(x)|<\epsilon$ making the consequent of the statement true. This chains back up the statement with each implication's consequent being true until we have proved the whole statement.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove the following:
+$$(A \wedge B)\vee C\equiv(A\vee C)\wedge(B\vee C)$$
+\textbf{Solution:} Here is a truth table:
+\begin{center}
+\begin{tabular}{ccccccc}
+$A$ & $B$ & $C$ & $A\vee C$ & $B\vee C$ & $(A\vee C)\wedge(B\vee C)$ & $(A \wedge B)\vee C$\\
+\midrule
+\hline
+F&F&F&F&F&F&F\\
+F&F&T&T&T&T&T\\
+F&T&F&F&T&F&F\\
+F&T&T&T&T&T&T\\
+T&F&F&T&F&F&F\\
+T&F&T&T&T&T&T\\
+T&T&F&T&T&T&T\\
+T&T&T&T&T&T&T\\
+\end{tabular}
+\end{center}
+
+\section*{Problem 5}
+\textbf{Problem:} Prove the following:
+$$\neg(A\rightarrow B)\equiv(A \wedge\neg B)$$
+\textbf{Solution:} Here is a truth table:
+\begin{center}
+\begin{tabular}{cccccc}
+$A$ & $B$ & $\neg B$ & $A\rightarrow B$ & $\neg(A\rightarrow B)$ & $A \wedge\neg B$\\
+\midrule
+\hline
+F&F&T&T&F&F\\
+F&T&F&T&F&F\\
+T&F&T&F&T&T\\
+T&T&F&T&F&F\\
+\end{tabular}
+\end{center}
+
+\end{document}

@@ -1,0 +1,189 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 5a}
+\author{Ozaner Hansha}
+\date{October 10, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that for all indexed collections of sets $(A_\alpha)_{\alpha\in J}$ and for all $\beta\in J$:
+$$\left(\bigcap_{a\in J}A_a\right)\subseteq A_\beta$$
+\\\\
+\textbf{Solution:} The definition of $\left(\bigcap_{a\in J}A_a\right)$ is the following:
+
+$$\left(\bigcap_{a\in J}A_a\right)\equiv\{x\mid(\forall\alpha\in J)\ x\in A_\alpha\}$$
+
+This is equivalent to the following:
+
+$$x\in\left(\bigcap_{a\in J}A_a\right)\equiv (\forall\alpha\in J)\ x\in A_\alpha$$
+
+Now, because $\beta\in J$ we can make the following statement:
+
+$$(\forall\alpha\in J)\ x\in A_\alpha\implies x\in A_\beta$$
+
+That's it, we have established that if an element is in $\left(\bigcap_{a\in J}A_a\right)$ then it is an element of $A_\beta$. This is the definition of a subset.
+
+\section*{Problem 2}
+\textbf{Problem:} Prove that for all sets $A,B,C,D$ that if $A$ is disjoint from $B$ and $C$ is disjoint from $D$, then $A\cap C$ is disjoint from $B\cup D$
+\\\\
+\textbf{Solution:} Here are the definitions of $A\cap C$ and $B\cup D$:
+\begin{align*}
+  A\cap C\equiv\{x\mid x\in A\wedge x\in C\}\\
+  B\cup D\equiv\{x\mid x\in B\vee x\in D\}
+\end{align*}
+
+We know that $A$ is disjoint from $B$ and the same for $C$ and $D$. This is equivalent to saying:
+\begin{align*}
+  x\in A\rightarrow x\not\in B\\
+  x\in C\rightarrow x\not\in D
+\end{align*}
+
+To prove the statement we simply have to show the following:
+$$x\in A\cap C\rightarrow x\not\in B\cup D$$
+
+Which we can rewrite using the definitions we gave as:
+$$x\in A\wedge x\in C\rightarrow \neg(x\in B\vee x\in D)$$
+
+We'll just use a truth table to prove it (with the atomic statements renamed $a,b,c,d$):
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+$a$ & $b$ & $c$ & $d$ & $a\rightarrow \neg b$ & $c\rightarrow \neg d$  & $a\wedge c$ & $b\vee d$ & $\neg(b\vee d)$ & $a\wedge c\rightarrow \neg(b\vee d)$\\
+\hline
+F&F&F&F &T&T  &F&F&T&T\\
+F&F&F&T &T&T  &F&T&F&T\\
+F&F&T&F &T&T  &F&F&T&T\\
+F&F&T&T &T&F  &&&&\\
+F&T&F&F &T&T  &F&T&F&T\\
+F&T&F&T &T&T  &F&T&F&T\\
+F&T&T&F &T&T  &F&T&F&T\\
+F&T&T&T &T&F  &&&&\\
+T&F&F&F &T&T  &F&F&T&T\\
+T&F&F&T &T&T  &F&T&F&T\\
+T&F&T&F &T&T  &T&F&T&T\\
+T&F&T&T &T&F  &&&&\\
+T&T&F&F &F&T  &&&&\\
+T&T&F&T &F&T  &&&&\\
+T&T&T&F &F&T  &&&&\\
+T&T&T&T &F&F  &&&&\\
+\end{tabular}
+\end{center}
+
+Notice that we only had to complete the table for tuples that satisfied $a\rightarrow \neg b$ and $c\rightarrow \neg d$. This is because they were given (we can think of this as trying to prove an implication with the conjunction of these two statements as the antecedent and the conclusion as the consequent). And, as shown above, the statement we set out to prove is indeed true for all these cases.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that all sets $A,B,C$, and $D$, that
+$$(A\setminus B)\cap C=(A\cap C)\setminus B=(A\cap C)\setminus(B\cap C)$$
+\textbf{Solution:} First we'll write the definition of the first term in the equality:
+\begin{align*}
+  A\setminus B&=\{x\mid x\in A\wedge x\not\in B\}\\
+  (A\setminus B)\cap C&=\{x\mid x\in (A\setminus B) \wedge x\in C\}\\
+  &=\{x\mid (x\in A\wedge x\not\in B) \wedge x\in C\}
+\end{align*}
+
+Now we'll write the second term:
+\begin{align*}
+  A\cap C&=\{x\mid x\in A\wedge x\in C\}\\
+  (A\cap C)\setminus B&=\{x\mid x\in (A\cap C) \wedge x\not\in B\}\\
+  &=\{x\mid (x\in A\wedge x\in C) \wedge x\not\in B\}
+\end{align*}
+
+Finally the third term:
+\begin{align*}
+  A\cap C&=\{x\mid x\in A\wedge x\in C\}\\
+  B\cap C&=\{x\mid x\in B\wedge x\in C\}\\
+  (A\cap C)\setminus (B\cap C)&=\{x\mid x\in (A\cap C) \wedge x\not\in (B\cap C)\}\\
+  &=\{x\mid (x\in A\wedge x\in C) \wedge \neg(x\in B\wedge x\in C)\}
+\end{align*}
+
+Now our task is to establish the equivalence between these three statements:
+\begin{align}
+  (x\in A&\wedge x\not\in B) \wedge x\in C\\
+  \equiv(x\in A&\wedge x\in C) \wedge x\not\in B\\
+  \equiv(x\in A&\wedge x\in C) \wedge \neg(x\in B\wedge x\in C)
+\end{align}
+
+The 1 and 2 are trivially equivalent due to the associativity and commutativity of the conjunction. All that's left is to show that 3 is equivalent to 1 and 2:
+\begin{align*}
+  &\ \ \ \ (x\in A\wedge x\in C) \wedge \neg(x\in B\wedge x\in C)\\
+  &\equiv(x\in A\wedge x\in C) \wedge (x\not\in B\vee x\not\in C)\tag{De Morgan's law}\\
+  &\equiv(x\in A\wedge x\in C) \wedge x\not\in B\tag{Law of excluded middle}\\
+\end{align*}
+
+And what we are left with is equivalent to 1 and 2 due to the associativity and commutativity of conjunction. Note that in the step from the second to the third line we noticed that the $x\not\in C$ was superfluous due to $x\in C$ being a necessary condition to the truth of the statement since it was part of a conjunction. More simply, it couldn't be both true and false and it had to be true, thus it wasn't false.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove the following:
+$$x\not\in A\cup B \vee x\in A\cap B\implies x\not\in A\triangle B$$
+\textbf{Solution:} Again, let's write the definitions out:
+\begin{align*}
+  A\cup B&=\{x\mid x\in A\vee x\in B\}\\
+  A\cap B&=\{x\mid x\in A\wedge x\in B\}\\
+  A\triangle B&=\{x\mid (x\in A\setminus B)\vee (x\in B\setminus A)\}\\
+  &=\{x\mid (x\in A\wedge x\not\in B)\vee (x\in B\wedge x\not\in A)\}\\
+\end{align*}
+So we must prove the following:
+$$\neg(x\in A\vee x\in B)\vee (x\in A\wedge x\in B)\rightarrow \neg((x\in A\wedge x\not\in B)\vee (x\in B\wedge x\not\in A))$$
+Using De Morgan's law we can clean this up a bit:
+\begin{align*}
+\neg(x\in A\vee x\in B)\vee (x\in A\wedge x\in B)&\rightarrow \neg(x\in A\wedge x\not\in B)\wedge \neg(x\in B\wedge x\not\in A))\\
+\neg(x\in A\vee x\in B)\vee (x\in A\wedge x\in B)&\rightarrow (x\not\in A\vee x\in B)\wedge (x\not\in B\vee x\in A)\\
+(x\not\in A\wedge x\not\in B)\vee (x\in A\wedge x\in B)&\rightarrow (x\not\in A\vee x\in B)\wedge (x\not\in B\vee x\in A)
+\end{align*}
+We'll just use a truth table (renaming the atomic statements $a$ and $b$):
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c}
+$a$ & $b$ & $\neg a\wedge \neg b$ & $a\wedge b$ & $\neg a\vee b$ & $\neg b\vee a$ & $\underbrace{(\neg a\wedge\neg b)\vee (a\wedge b)}_{P}$ & $\underbrace{(\neg a\vee b)\wedge (\neg b\vee a)}_{Q}$ & $P\rightarrow Q$ \\
+\hline
+F&F& T&F&T&T&T&T&T\\
+F&T& F&F&T&F&F&F&T\\
+T&F& F&F&F&T&F&F&T\\
+T&T& F&T&T&T&T&T&T
+\end{tabular}
+\end{center}
+And we are done.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} Prove that for any two sets $A,B$ the following holds:
+$$\mathcal P(A\cap B)=\mathcal P(A)\cap\mathcal P(B)$$
+\textbf{Solution:} Here is a proof:
+\begin{align*}
+  x\in\mathcal P(A\cap B)&\equiv x\subseteq A\cap B\tag{Def. of power set}\\
+  &\equiv x\subseteq A \wedge x\subseteq B\tag{Def. of intersection}\\
+  &\equiv x\in\mathcal P(A)\wedge x\in\mathcal P(B)\tag{Def. of power set}\\
+  &\equiv x\in(\mathcal P(A)\cap P(B))\tag{Def. of intersection}
+\end{align*}
+And so any element in the first set is also in the second, thus they are equal.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that for any two sets $A,B$ the following holds:
+$$\mathcal P(A\cup B)\subseteq\mathcal P(A)\cup\mathcal P(B)$$
+\textbf{Solution:} This statement is false. Here's an example:
+\begin{gather*}
+  A=\{a\}\\
+  B=\{b\}\\
+  \mathcal P(A)=\{\emptyset,\{a\}\}\\
+  \mathcal P(B)=\{\emptyset,\{b\}\}\\
+  \mathcal P(A)\cup\mathcal P(B)=\{\emptyset,\{a\},\{b\}\}\\
+  A\cup B=\{a,b\}\\
+  \mathcal P(A\cup B)=\{\emptyset,\{a\},\{b\},\{a,b\}\}\\
+\end{gather*}
+
+As we can see, $\{a,b\}\in\mathcal P(A\cup B)$ yet $\{a,b\}\not\in\mathcal P(A)\cup\mathcal P(B)$. Thus the two sets are not equal.
+
+\subsection*{Part c}
+\textbf{Problem:} Prove that for any two sets $A,B$ the following holds:
+$$\mathcal P(A)\cup\mathcal P(B)\subseteq\mathcal P(A\cup B)$$
+\textbf{Solution:} Here is a proof:
+\begin{align*}
+  x\in(\mathcal P(A)\cup P(B))&\equiv x\subseteq A\vee x\subseteq B\tag{Def. of power set \& union}\\
+  &\rightarrow x\subseteq A\cup B\tag{From union}\\
+  &\equiv x\in\mathcal P(A\cup B)\tag{Def. of power set}
+\end{align*}
+
+\end{document}

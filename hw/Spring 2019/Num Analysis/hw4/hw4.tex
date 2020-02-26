@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Numerical Analysis HW \#4}
+\author{Ozaner Hansha}
+\date{April 18, 2019}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Use the composite trapezoid method with 4 equally sized subintervals to approximate the following integral:
+
+$$\int^2_1 x\ln x\ dx$$
+
+Also give an upper bound of the approximation's error.
+\\\\
+\textbf{Solution:} Splitting up our interval of $[1,2]$ into $n=4$ subintervals (with $\Delta x =\frac{1}{4}$) gives us the following 5 nodes (rounded to the 5th decimal place) with which to interpolate:
+
+$$\left(1,0\right), \left(1.25,0.27893\right), \left(1.5,0.60820\right), \left(1.75,0.97933\right), \left(2,1.38629\right)$$
+
+Recall that the composite trapezoid rule for a uniform distribution of 5 points is given by:
+
+$$\frac{\Delta x}{2}\left(y_0+2y_1+2y_2+2y_3+y_4\right)$$
+
+Leaving us with:
+
+$$\int^2_1 x\ln x\ dx\approx\frac{1}{8}\left(0+2(0.27893)+2(0.60820)+2(0.97933)+1.38629\right)=\boxed{0.63990}$$
+
+As for the error of this approximation, recall that the maximum absolute error of the trapezoid method is given by the following:
+
+$$\frac{(\Delta x)^3n}{12}\max_{\xi\in[1,2]}|f''(\xi)|$$
+
+The second derivative of $f$ is given by:
+
+$$f(x)=x\ln x\ \ \ \ \ \ \ \  f'(x)=\ln x + 1\ \ \ \ \ \ \ \  f''(x)=\frac{1}{x}$$
+
+The second derivative, the inverse function, is a decreasing function over the positive reals. Since our interval $[1,2]\subseteq\mathbb R^+$, the maximum of this function is at the end point $x=1$. This gives us $f(1)=1$. Plugging this back into our error bound we arrive at:
+
+$$|\operatorname{error}|\le \frac{(\Delta x)^3n}{12}\max_{\xi\in[1,2]}|f''(\xi)|=\frac{\left(\frac{1}{4}\right)^3(4)}{12}(1)=\boxed{\frac{1}{192}}$$
+
+\section*{Problem 2}
+\textbf{Problem:} Use the composite Simpson rule with 2 equally sized subintervals to approximate the same integral as problem 1 and give an upper bound of the approximation's error.
+\\\\
+\textbf{Solution:} Splitting up our interval of $[1,2]$ into $n=2$ subintervals (with $\Delta x =\frac{1}{2}$) gives us the following 3 nodes (rounded to the 5th decimal place) with which to interpolate:
+
+$$\left(1,0\right), \left(1.5,0.60820\right), \left(2,1.38629\right)$$
+
+Recall that the composite trapezoid rule for a uniform distribution of 3 points is given by:
+
+$$\frac{\Delta x}{3}\left(y_0+4y_1+y_2\right)$$
+
+Leaving us with:
+
+$$\int^2_1 x\ln x\ dx\approx\frac{1}{6}\left(0+4(0.60820)+1.38629\right)=\boxed{0.63651}$$
+
+As for the error of this approximation, recall that the maximum absolute error of the trapezoid method is given by the following:
+
+$$\frac{(\Delta x)^5n}{180}\max_{\xi\in[1,2]}|f^{(4)}(\xi)|$$
+
+The fourth derivative of $f$ is given by:
+
+$$f''(x)=\frac{1}{x}\ \ \ \ \ \ \ \  f'''(x)=\frac{-1}{x^2}\ \ \ \ \ \ \ \  f^{(4)}(x)=\frac{2}{x^3}$$
+
+The fourth derivative of $f$ is a decreasing function over the positive reals. Since our interval $[1,2]\subseteq\mathbb R^+$, the maximum of this function is at the end point $x=1$. This gives us $f(1)=2$. Plugging this back into our error bound we arrive at:
+
+$$|\operatorname{error}|\le \frac{(\Delta x)^5n}{180}\max_{\xi\in[1,2]}|f^{(4)}(\xi)|=\frac{\left(\frac{1}{2}\right)^5(2)}{180}(2)=\boxed{\frac{1}{1440}}$$
+
+\section*{Problem 3}
+\textbf{Problem:} Use the Gaussian–Legendre quadrature rule with $n=2$ to approximate the same integral as problem 1.
+\\\\
+\textbf{Solution:} Before we can apply the rule, we must first perform a change of interval from $[1,2]$ to the bi-unit interval $[-1,1]$. The formula for doing so is given by:
+
+\begin{align*}
+\int_a^b f(x)\ dx&=\frac{b-a}{2}\int_{-1}^1 f\left(\frac{b-a}{2}x+\frac{a+b}{2}\right)\ dx\\
+\int_1^2 f(x)\ dx&=\frac{2-1}{2}\int_{-1}^1 f\left(\frac{2-1}{2}x+\frac{1+2}{2}\right)\ dx\\
+&=\frac{1}{2}\int_{-1}^1 f\left(\frac{1}{2}x+\frac{3}{2}\right)\ dx\\
+&=\frac{1}{2}\int_{-1}^1 g\left(x)\ dx\tag{where $g(x)=f\left(\frac{1}{2}x+\frac{3}{2}\right)$}
+\end{align*}
+
+Now recall that Gaussian–Legendre quadrature on a function $g$ over $[-1,1]$ with $n=2$ is given by the following:
+
+$$\int_{-1}^1 g(x)\ dx\approx g\left(-\frac{1}{\sqrt 3}\right)+g\left(\frac{1}{\sqrt 3}\right)$$
+
+Plugging this into our change of interval, our approximation is:
+
+\begin{align*}
+\int_1^2 f(x)\ dx&=\frac{1}{2}\int_{-1}^1 g\left(x)\ dx\\
+&\approx \frac{1}{2}\left(g\left(-\frac{1}{\sqrt 3}\right)+g\left(\frac{1}{\sqrt 3}\right)\right)\\
+&=\frac{1}{2}\left(f\left(-\frac{1}{2\sqrt 3}+\frac{3}{2}\right)+f\left(\frac{1}{2\sqrt 3}+\frac{3}{2}\right)\right)\\
+&=\boxed{0.636149}
+\end{align*}
+
+\section*{Problem 4}
+\textbf{Problem:} Use both the composite trapezoid and Simpson rule to approximate the following integrals to a tolerance of $10^{-2},10^{-4},10^{-8}$ and record the number of intervals $n$ needed and the error between the last two iterations for each.
+
+$$\underbrace{\int^1_0 (1-4x(1-x))^{\frac{1}{3}}\ dx}_{I1}\ \ \ \ \ \ \ \ \ \underbrace{\int^1_0 xe^{-x}\ dx}_{I2}$$
+
+Also use the Simpson rule on the second integral to a tolerance of $10^{-16}$ and see the results.
+\\\\
+\textbf{Solution:} Below are the results for the composite trapezoid rule:
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+      tol & intervals I1 & error I1 & intervals I2 & error I2 \\
+      \hline
+      10^{-2} & 16 & 0.007944902207349 & 8 & 0.003894761455888\\
+      10^{-4} & 256 & 9.364872715644790e-05 & 64 & 6.103234470516972e-05\\
+      10^{-8} & 65536 & 9.903734277116882e-09 & 8192 & 3.725290242950763e-09
+\end{tabular}
+\end{center}
+
+and the results for the composite Simpson's rule:
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+      tol & intervals I1 & error I1 & intervals I2 & error I2 \\
+      \hline
+      10^{-2} & 4 & 0.009130429264851 & 4 & 4.551028438593008e-05\\
+      10^{-4} & 64 & 9.066353416042894e-05 & 4 & 4.551028438593008e-05\\
+      10^{-8} & 16384 & 8.784285410179393e-09 & 64 & 7.028795323549275e-10\\
+      10^{-16} & - & - & 4096 & 5.551115123125783e-17
+\end{tabular}
+\end{center}
+
+\end{document}

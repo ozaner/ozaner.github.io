@@ -1,0 +1,298 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Linear Algebra HW \#3}
+\author{Ozaner Hansha}
+\date{February 17, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Prove that if $W_1$ and $W_2$ are finite-dimensional subspaces of a vector space $V$ then the following holds for the subspace $W_1+W_2$:
+
+$$\operatorname{dim}(W_1+W_2) = \operatorname{dim}(W_1)+\operatorname{dim}(W_2)-\operatorname{dim}(W_1\cap W_2)$$
+
+\noindent\textbf{Solution:} Since the intersection of subspaces is a subspace, there exists some finite basis $\mathcal B_\cap$ of $W_1\cap W_2$:
+$$\mathcal B_\cap =\{\vec u_1,\vec u_2,\cdots,\vec u_l\}$$
+
+Also note that since $W_1\cap W_2$ is a subspace of both $W_1$ and $W_2$, the basis extension theorem tells us that we can extend, i.e. add vectors to, $\mathcal B_\cap$ to form a basis for both $W_1$ and $W_2$ respectively:
+\begin{gather*}
+  \mathcal B_1 =\{\vec u_1,\vec u_2,\cdots,\vec u_l,\vec v_1,\cdots,\vec v_m\}\\
+  \mathcal B_2 =\{\vec u_1,\vec u_2,\cdots,\vec u_l,\vec w_1,\cdots,\vec w_n\}
+\end{gather*}
+
+We will now show that the union of these bases, call it $\mathcal B$, is a basis for $W_1+W_2$ which will in turn allows us to prove the desired identity.
+
+(Lemma 1) First we prove that $\operatorname{span}(\mathcal B)=W_1+W_2$. Consider an arbitrary $\vec x\in W_1+W_2$. By the definition of the sum of vector spaces, there must be vectors $\vec v\in W_1$ and $\vec w\in W_2$ such that $\vec x=\vec v+\vec w$. And since $\mathcal B_1$ and $\mathcal B_2$ are bases of $W_1$ and $W_2$ respectively, we can express $\vec v$ and $\vec w$ as linear combinations of them:
+\begin{align*}
+  \vec v&=\sum^l_{i=1}a_i\vec u_i+\sum^m_{j=1}b_j\vec v_j\\
+  \vec w&=\sum^l_{i=1}c_i\vec u_i+\sum^n_{k=1}d_k\vec w_k
+\end{align*}
+And so the arbitrary vector $\vec x$ can be expressed as a linear combination of vectors in $\mathcal B$:
+$$\vec x=\vec v+\vec w=\sum^l_{i=1}(a_i+c_i)\vec u_i+\sum^m_{j=1}b_j\vec v_j+\sum^n_{k=1}d_k\vec w_k$$
+
+And so we have shown that $\mathcal B$ spans $W_1+W_2$.
+
+(Lemma 2) Now we will show that is it linearly independent. Consider coefficients $a_i,b_j,c_k$ with at least one being nonzero such that:
+$$\sum^l_{i=1}a_i\vec u_i+\sum^m_{j=1}b_j\vec v_j+\sum^n_{k=1}c_k\vec w_k=\vec 0$$
+
+Rearranging the equation and calling the resulting vector $\vec x$ we have:
+$$\vec x=\underbrace{\sum^m_{j=1}b_j\vec v_j}_{\in W_1}=\underbrace{-\sum^l_{i=1}a_i\vec u_i-\sum^n_{k=1}c_k\vec w_k}_{\in W_2}$$
+
+Note that $\vec x\not=\vec 0$ since at least one of $a_i,b_j,c_k$ is nonzero. Also note that since $\vec x$ is in both $W_1$ and $W_2$ it is certainly in $W_1\cap W_2$. As a result, we can express it as a nonzero linear combination of vectors in $\mathcal B_\cap$:
+$$\vec x=\sum^l_{i=1}d_i\vec u_i$$
+
+But this implies that:
+$$\vec x-\vec x=\underbrace{\sum^l_{i=1}d_i\vec u_i-\sum^m_{j=1}b_j\vec v_j}_{\in\operatorname{span}(\mathcal B_1)=W_1}=\vec 0$$
+
+However since $\mathcal B_1$ is a basis, the above equation implies that $b_j=0$ for all $j$. This implies that $\vec x=\vec 0$ which contradicts our initial assumption that at least one of $a_i,b_j,c_k$ is nonzero. And so we have proved linear independence.
+
+(Proof) Together, Lemma 1 and Lemma 2 prove that $\mathcal B$ is a basis of $W_1+W_2$. To summarize then, we have established the following bases:
+\begin{align*}
+  \mathcal B_\cap&=\{\vec u_1,\cdots,\vec u_l\}\tag{basis of $W_1\cap W_2$}\\
+  \mathcal B_1&=\{\vec u_1,\cdots,\vec u_l,\vec v_1,\cdots,\vec v_m\}\tag{basis of $W_1$}\\
+  \mathcal B_2&=\{\vec u_1,\cdots,\vec u_l,\vec w_1,\cdots,\vec w_n\}\tag{basis of $W_2$}\\
+  \mathcal B&=\{\vec u_1,\cdots,\vec u_l,\vec v_1,\cdots,\vec v_m,\vec w_1,\cdots,\vec w_n\}\tag{basis of $W_1+W_2$}
+\end{align*}
+
+From here it is simple to show the desired identity:
+\begin{align*}
+  \operatorname{dim}(W_1+W_2)&=l+m+n\\
+  &=(l+m)+(l+n)-l\\
+  &=\operatorname{dim}(W_1)+\operatorname{dim}(W_2)-\operatorname{dim}(W_1\cup W_2)
+\end{align*}
+
+\subsection*{Problem 2} 
+\noindent\textbf{Problem:} Prove that there exists a linear transformation $T:\mathbb R^2\to\mathbb R^3$ such that $T(1,1) = (1,0,2)$ and $T(2, 3) = (1, -1, 4)$. What is $T(8, 11)$?
+\bigskip
+
+\noindent\textbf{Solution:} To prove this we will first construct the desired operator $T$ and then demonstrate that it is both satisfies the desired conditions and is linear.
+
+First note that $\icol{1\\1}$ and $\icol{2\\3}$ are linearly independent and thus span all of $\mathbb R^2$. As such, we can express an arbitrary vector $\icol{x\\y}$ as a linear combination of them:
+$$
+  \begin{bmatrix}
+    x\\y
+  \end{bmatrix}=c_1\begin{bmatrix}
+    1\\1
+  \end{bmatrix}+c_2\begin{bmatrix}
+    2\\3
+  \end{bmatrix}=\begin{bmatrix}
+    c_1+2c_2\\c_1+3c_2
+  \end{bmatrix}
+$$
+
+This gives us the following system of equations in $c_1$ and $c_2$:
+\begin{align*}
+  \systeme{
+    c_1+2c_2 = x,
+    c_1+3c_2 = y}
+  &\ro{}
+  \begin{sysmatrix}{rr|r}
+    1 & 2 & x \\
+    1 & 3 & y
+  \end{sysmatrix}\\
+  &\ro{r_2-r_1}
+  \begin{sysmatrix}{rr|r}
+    1 & 2 & x \\
+    0 & 1 & y-x
+  \end{sysmatrix}\\
+  &\ro{r_1-2r_2}
+  \begin{sysmatrix}{rr|r}
+    1 & 0 & 3x-2y \\
+    0 & 1 & y-x
+  \end{sysmatrix}\\
+  &\ro{}
+  \systeme{
+    c_1 = 3x-2y,
+    c_2 = y-x}
+\end{align*}
+
+Now we rewrite our arbitrary vector in terms of $x$ and $y$ as well as apply the linear operator $T$:
+\begin{align*}
+  \begin{bmatrix}
+    x\\y
+  \end{bmatrix}&=(3x-2y)\begin{bmatrix}
+    1\\1
+  \end{bmatrix}+(y-x)\begin{bmatrix}
+    2\\3
+  \end{bmatrix}\\
+  T\begin{pmatrix}
+    x\\y
+  \end{pmatrix}
+  &=T\left((3x-2y)\begin{bmatrix}
+    1\\1
+  \end{bmatrix}+(y-x)\begin{bmatrix}
+    2\\3
+  \end{bmatrix}\right)\\
+  &=(3x-2y)T\begin{pmatrix}
+    1\\1
+  \end{pmatrix}+(y-x)T\begin{pmatrix}
+    2\\3
+  \end{pmatrix}\tag{linearity}\\
+  &=(3x-2y)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(y-x)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\tag{given}
+\end{align*}
+
+Now that we have an operator $T:\mathbb R^2\to\mathbb R^3$, we will demonstrate it that it takes $\icol{1\\1}$ to $\icol{1\\0\\2}$ and $\icol{2\\3}$ to $\icol{1\\-1\\4}$:
+\begin{align*}
+  T\begin{pmatrix}
+    1\\1
+  \end{pmatrix}&=(3-2)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(1-1)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}=\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}\\
+  T\begin{pmatrix}
+    2\\3
+  \end{pmatrix}&=(6-6)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(3-2)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}=\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}
+\end{align*}
+
+All that's left is to show that $T$ is a linear operator:
+\begin{align*}
+  T\begin{pmatrix}
+    \lambda x\\\lambda y
+  \end{pmatrix}&=(3\lambda x-2\lambda y)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(\lambda y-\lambda x)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\\
+  &=\lambda(3x-2 y)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+\lambda(y-x)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\\
+  &=\lambda\left((3x-2 y)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(y-x)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\right)\\
+  &=\lambda T\begin{pmatrix}
+    x\\y
+  \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+  T\begin{pmatrix}
+    x+x'\\y+y'
+  \end{pmatrix}&=(3(x+x')-2(y+y'))\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+((y+y')-(x+x'))\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\\
+  &=((3x-2y)+(3x'-2y'))\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+((y-x)+(y'-x'))\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\\
+  &=(3x-2y)\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(3x'-2y')\begin{bmatrix}
+    1\\0\\2
+  \end{bmatrix}+(y-x)\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}+(y'-x')\begin{bmatrix}
+    1\\-1\\4
+  \end{bmatrix}\\
+  &=T\begin{pmatrix}
+    x\\y
+  \end{pmatrix}+T\begin{pmatrix}
+    x'\\y'
+  \end{pmatrix}
+\end{align*}
+
+And so we have given a linear operator $T$ that satisfies the question.
+
+\subsection*{Problem 3} 
+\noindent\textbf{Problem:} Let $V$ and $W$ be finite-dimensional vector spaces and $T:V\to W$ be linear. Prove that if $\operatorname{dim}(V)<\operatorname{dim}(W)$ then $T$ cannot be surjective.
+\bigskip
+
+\noindent\textbf{Solution:} Assume that $T$ is surjective. This gives us the following:
+\begin{align*}
+  R(T)&=W\tag{def. of surjective}\\
+  \operatorname{dim}(R(T))&=\operatorname{dim}(W)\\
+  \operatorname{rank}(T)&=\operatorname{dim}(W)\tag{def. of rank}
+\end{align*}
+
+Equipped with this knowledge we can now consider the following:
+\begin{align*}
+  \operatorname{dim}(W)&>\operatorname{dim}(V)\\
+  &=\operatorname{nullity}(T)+\operatorname{rank}(T)\tag{dimension theorem}\\
+  &=\operatorname{nullity}(T)+\operatorname{dim}(W)\tag{above reasoning}\\
+  0&>\operatorname{nullity}(T)
+\end{align*}
+
+This however is a contradiction as the dimension of an operator's nullspace, or any vector space for that matter, cannot be any lower than 0.
+
+\subsection*{Problem 4} 
+\noindent\textbf{Problem:} Let $V$ be a vector space and $W_1$ and $W_2$ be subspaces. The sum $W_1$ + $W_2$ is called a direct sum if $W_1\cap W_2 = \{0\}$, and denoted $W_1\oplus W_2$. Suppose that $V = W_1\oplus W_2$. A map
+$T:V\to V$ is called the projection of $W_1$ along $W_2$ if, for all $\vec x = \vec x_1 + \vec x_2\in W_1\oplus W_2$, $T(\vec x) = \vec x_1$.
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item Show that $T$ is linear.
+    \item Show that $W_1 = \{\vec v\in V\mid T(\vec v) = \vec v\}$.
+    \item Prove that $W_1 = R(T)$ and $W_2 = \mathcal N(T)$.
+\end{enumerate}
+\bigskip
+\pagebreak
+
+\noindent\textbf{Solution:} 
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item Note that any vector $\vec x\in V$ can be uniquely written as the sum $\vec x_1+\vec x_2\in W_1\oplus W_2$. And so we can prove linearity like so:
+  \begin{align*}
+    T(\lambda\vec x)&=T(\lambda\vec x_1+\lambda\vec x_2)=\lambda\vec x_1=\lambda T(\vec x)\\
+    T(\vec x+\vec x')&=T(\vec x_1+\vec x_2+\vec x'_1+\vec x'_2)=T((\vec x'_1+\vec x'_1)+(\vec x_2+\vec x'_2))=\vec x_1+\vec x'_1=T(\vec x)+T(\vec x')
+  \end{align*}
+  \item Consider an arbitrary vector $\vec v\in V$. If $\vec v\in W_1$ then it could be uniquely written as the sum $\vec v=\vec v+\vec 0$ and thus:
+  $$T(\vec v)=T(\vec v+\vec 0)=\vec v$$
+  
+  Satisfying the set criterion. Now consider the case where $\vec v\not\in W_1$. This would imply that $\vec v=\vec v_1+\vec v_2$ for some $\vec v_2\not=\vec 0$:
+  $$T(\vec v)=T(\vec v_1+\vec v_2)=\vec v_1\not=\vec v_1+\vec v_2=\vec v$$
+  
+  And so we have shown that the only vectors in $V$ that are in the set $\{\vec v\in V\mid T(\vec v) = \vec v\}$ are those in $W_1$. Thus they are equivalent.
+  \item It should be clear that $R(T)\subseteq W_1$, since $T$ outputs the $W_1$ component of any vector it is given. Now consider an $\vec v\in W_1$. Since $T(\vec v)=\vec v$, as shown in \textbf{b)}, we have that $W_1\subseteq R(T)$. These together imply that $R(T)=W_1$.
+
+  For the other equality, consider a $\vec v\in W_2$. This implies that $T(\vec v)=T(\vec0+\vec v)=\vec 0$ and so $W_2\subseteq\mathcal N(T)$. For the other direction, consider $\vec v\in\mathcal N(T)$. This implies that $T(\vec v)=\vec 0$. This must mean that:
+  $$T(\vec v)=T(\vec v_1+\vec v_2)=\vec v_1=\vec 0$$
+  
+  And since $\vec v=\vec v_1+\vec v_2$ we have that $\vec v=\vec v_2\in W_2$, giving us $\mathcal N(T)\subseteq W_2$. Putting both directions together we have $\mathcal N(T)=W_2$.
+\end{enumerate}
+
+\end{document}

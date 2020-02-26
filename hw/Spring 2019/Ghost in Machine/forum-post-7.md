@@ -1,0 +1,6 @@
+## Fourm Post 7
+If we could achieve Sloman’s model of a virtual machine, would you consider it sufficiently conscious to treat it as a person?
+
+Sloman's CogAff model of a virtual machine, is more an architecture to base on AI off of than something we could make explicitly. Would I treat an AI based on this architecture as a person like I would you or anyone else? Probably not. I would have no qualms treating it in a cruel or demeaning way just to observe its behaviors and then resetting its state to one before I had done this.
+
+Consider why I would treat normal human persons with respect. Not because they have some ethereal being that is somehow more sacred than Sloman's AI, but because I've evolved and been culturally indoctrinated to do so. Why we 'ought' to do anything is at question here and the assumption that we treat people humanely due to them being conscious (by whatever measure and even if an AI on the CogAff model satisfies this measure) is one that shouldn't be accepted so easily.

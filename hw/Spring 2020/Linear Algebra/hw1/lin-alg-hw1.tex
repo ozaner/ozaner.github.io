@@ -1,0 +1,614 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Linear Algebra HW \#1}
+\author{Ozaner Hansha}
+\date{February 3, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Are the following statements true or false? Provide justification of your answers.
+\begin{enumerate}[label=\alph*)]
+    \item In any vector space, $\lambda_1v=\lambda_2v$ implies that $\lambda_1=\lambda_2$.
+    \item If $f$ and $g$ are polynomials of degree $n$, then $f + g$ is a polynomial of degree $n$.
+    \item The empty set is a subspace of every vector space.
+    \item If $V$ is a vector space other than the zero vector space, then $V$ contains a subspace $W$
+    such that $W \not= V$.
+  \end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} 
+
+\begin{enumerate}[label=\alph*)]
+    \item False. For a counterexample, consider the following statement in $\mathbb R^2$:
+
+    \[0\cdot\begin{bmatrix}
+        0 \\
+        0 
+    \end{bmatrix}=5\cdot\begin{bmatrix}
+        0 \\
+        0 
+    \end{bmatrix}\centernot\implies0=5\]
+
+    \item False. For a counterexample, consider the $n=2$ case and the two polynomials $f,g\in\mathbb R[x]$:
+    
+    $$\underbrace{(x^2+x)}_{f}+\underbrace{(-x^2+x)}_{g}=\underbrace{2x}_{f+g}$$
+
+    \hspace{10pt} As we can see, the sum $f+g$ is a 1st degree polynomial, not 2nd.
+
+    \item False. This can be seen by noting that the empty set does not contain a zero vector, or any vector for that matter, and thus does not qualify to be a subspace.
+    \item True. Since all vector spaces contain a zero vector, i.e. $\vec 0\in V$, the condition $V\not=\{\vec 0\}$ implies that $V$ is a strict superset of the zero vector space, i.e. $\{0\}\subsetneq V$. As such we can simply choose $W$ to be the zero vector space $\{\vec 0\}=W\not=V$.
+  \end{enumerate}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} a) Solve the following system of linear equations using Gaussian elimination:
+\[\systeme{3x_1 - 7x_2 + 4x_3 = 10,
+            x_1 - 2x_2 +  x_3 =  3,
+           2x_1 -  x_2 - 2x_3 =  6}
+\]
+
+b) Does the following system of linear equations have a solution?
+\[\systeme{x_1 + 2x_2 + 2x_3        =  2,
+           x_1        + 8x_3 + 5x_4 = -6,
+           x_1 +  x_2 + 5x_3 + 5x_4 =  3}
+\]
+\bigskip
+
+\noindent\textbf{Solution:} a) We first express this system of equations as an augmented matrix, and then perform Gaussian elimination:
+\begin{align*}
+    \begin{sysmatrix}{rrr|r}
+        3 & -7 & 4 & 10 \\
+        1 & -2 & 1 & 3 \\
+        2 & -1 & -2 & 6
+    \end{sysmatrix}
+    &\ro{r_1-r_3}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        1 & -2 & 1 & 3 \\
+        2 & -1 & -2 & 6
+    \end{sysmatrix}
+    &&\ro{r_2-r_1}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 4 & -5 & -1 \\
+        2 & -1 & -2 & 6
+    \end{sysmatrix}\\
+    &\ro{(1/4)r_2}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 1 & -\frac{5}{4} & -\frac{1}{4} \\
+        2 & -1 & -2 & 6
+    \end{sysmatrix}
+    &&\ro{r_3-2r_1}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 1 & -\frac{5}{4} & -\frac{1}{4} \\
+        0 & 11 & -14 & -2
+    \end{sysmatrix}\\
+    &\ro{r_3-11r_2}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 1 & -\frac{5}{4} & -\frac{1}{4} \\
+        0 & 0 & -\frac{1}{4} & \frac{3}{4}
+    \end{sysmatrix}
+    &&\ro{-4r_3}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 1 & -\frac{5}{4} & -\frac{1}{4} \\
+        0 & 0 & 1 & -3
+    \end{sysmatrix}\\
+    &\ro{r_2+(5/4)r_3}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 6 & 4 \\
+        0 & 1 & 0 & -4 \\
+        0 & 0 & 1 & -3
+    \end{sysmatrix}
+    &&\ro{r_1-6r_3}
+    \begin{sysmatrix}{rrr|r}
+        1 & -6 & 0 & 22 \\
+        0 & 1 & 0 & -4 \\
+        0 & 0 & 1 & -3
+    \end{sysmatrix}\\
+    &\ro{r_1+6r_2}
+    \begin{sysmatrix}{rrr|r}
+        1 & 0 & 0 & -2 \\
+        0 & 1 & 0 & -4 \\
+        0 & 0 & 1 & -3
+    \end{sysmatrix}
+    &&\implies\hspace{14pt}\systeme{
+        x_1 = -2,
+        x_2 = -4,
+        x_3 = -3}
+\end{align*}
+
+And so our solution is $\vec x=\begin{bmatrix}
+    -2 \\
+    -4 \\
+    -3
+\end{bmatrix}$.
+
+b) First we express the system as an augmented matrix and put it in ref:
+\begin{align*}
+    \begin{sysmatrix}{rrrr|r}
+        1 & 2 & 2 & 0 & 2 \\
+        1 & 0 & 8 & 5 & -6 \\
+        1 & 1 & 5 & 5 & 3
+    \end{sysmatrix}
+    &\ro{r_2-r_3}
+    \begin{sysmatrix}{rrrr|r}
+        1 & 2 & 2 & 0 & 2 \\
+        0 & -1 & 3 & 0 & -9 \\
+        1 & 1 & 5 & 5 & 3
+    \end{sysmatrix}
+    &&\ro{r_3-r_1}
+    \begin{sysmatrix}{rrrr|r}
+        1 & 2 & 2 & 0 & 2 \\
+        0 & -1 & 3 & 0 & -9 \\
+        0 & -1 & 3 & 5 & 1
+    \end{sysmatrix}\\
+    &\ro{-r_2}
+    \begin{sysmatrix}{rrrr|r}
+        1 & 2 & 2 & 0 & 2 \\
+        0 & 1 & -3 & 0 & 9 \\
+        0 & -1 & 3 & 5 & 1
+    \end{sysmatrix}
+    &&\ro{r_3+r_2}
+    \begin{sysmatrix}{rrrr|r}
+        1 & 2 & 2 & 0 & 2 \\
+        0 & 1 & -3 & 0 & 9 \\
+        0 & 0 & 0 & 5 & 10
+    \end{sysmatrix}
+\end{align*}
+
+It is at this point that we can see that the rank of the matrix without augmentation is equal to the rank of augmented matrix, that is they both have a rank of 3. This guarantees that there exists at least one solution. And since the system is of 4 variables, there is $4-3=1$ free variable and thus the solution set is infinite.
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Equip $V = \{(a_1, a_2, \cdots, a_n)^\top \mid a_i\in\mathbb C, i = 1, \cdots, n\}$ with the operations of coordinatewise addition and multiplication. Is $V$ a vector space over $\mathbb C$? Is $V$ a vector space over $\mathbb R$?
+\bigskip
+
+\noindent\textbf{Solution:} a) For closure under addition, we have the following:
+\begin{align*}
+    \begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}=\begin{bmatrix}
+        a_1+b_1 \\
+        a_2+b_2\\
+        \vdots\\
+        a_n+b_n
+    \end{bmatrix}\in V\tag{VS1}
+\end{align*}
+
+Since $\mathbb C$ is a field, in particular closed under addition, any component of the sum $a_i+b_i$ is also a complex number and thus by definition the sum is a member of $V$.
+
+We inherit commutativity and associativity of vector addition in much the same way:
+\begin{align*}
+    \begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}=\begin{bmatrix}
+        a_1+b_1 \\
+        a_2+b_2\\
+        \vdots\\
+        a_n+b_n
+    \end{bmatrix}&=\begin{bmatrix}
+        b_1+a_1 \\
+        b_2+a_2\\
+        \vdots\\
+        b_n+a_n
+    \end{bmatrix}=\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}+\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}\tag{VS2}
+    \\
+    \left(\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}\right)+\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}=
+    \begin{bmatrix}
+        (a_1+b_1)+c_1 \\
+        (a_2+b_2)+c_2\\
+        \vdots\\
+        (a_n+b_n)+c_3
+    \end{bmatrix}&=\begin{bmatrix}
+        a_1+(b_1+c_1) \\
+        a_2+(b_2+c_2)\\
+        \vdots\\
+        a_n+(b_n+c_3)
+    \end{bmatrix}=\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\left(\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}+\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\right)\tag{VS3}
+\end{align*}
+
+Our zero vector is given by the vector with 0 as all its components:
+\begin{align*}
+    \begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}+\begin{bmatrix}
+        0 \\
+        0\\
+        \vdots\\
+        0
+    \end{bmatrix}=\begin{bmatrix}
+        c_1+0 \\
+        c_2+0\\
+        \vdots\\
+        c_n+0
+    \end{bmatrix}=\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\tag{VS4}
+\end{align*}
+
+And every vector has an additive inverse obtained by multiplying it by -1:
+\begin{align*}
+    \begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}+\begin{bmatrix}
+        -c_1 \\
+        -c_2\\
+        \vdots\\
+        -c_n
+    \end{bmatrix}=\begin{bmatrix}
+        c_1-c_1 \\
+        c_2-c_2\\
+        \vdots\\
+        c_n-c_n
+    \end{bmatrix}=\begin{bmatrix}
+        0 \\
+        0\\
+        \vdots\\
+        0
+    \end{bmatrix}\tag{VS5}
+\end{align*}
+
+These first 5 axioms cover the additive properties of the vector space, now all that's left is to verify the multiplicative properties.
+
+For closure under multiplication, we have the following:
+\begin{align*}
+    \lambda\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}=\begin{bmatrix}
+        \lambda a_1 \\
+        \lambda a_2 \\
+        \vdots\\
+        \lambda a_n
+    \end{bmatrix}\in V\tag{VS6}
+\end{align*}
+
+Since $\mathbb C$ is a field, in particular closed under multiplication, any component of the product $\lambda a_i$ is also a complex number and thus by definition the product is a member of $V$.
+
+We inherit the distributivity and associativity of scalar multiplication in much the same way:
+\begin{align*}
+    \lambda\left(\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}\right)&=\lambda\begin{bmatrix}
+        a_1+b_1 \\
+        a_2+b_2\\
+        \vdots\\
+        a_n+b_n
+    \end{bmatrix}=\begin{bmatrix}
+        \lambda(a_1+b_1)\\
+        \lambda(a_2+b_2)\\
+        \vdots\\
+        \lambda(a_n+b_n)
+    \end{bmatrix}=
+    \begin{bmatrix}
+        \lambda a_1+\lambda b_1\\
+        \lambda a_2+\lambda b_2\\
+        \vdots\\
+        \lambda a_n+\lambda b_n
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        \lambda a_1 \\
+        \lambda a_2\\
+        \vdots\\
+        \lambda a_n
+    \end{bmatrix}+\begin{bmatrix}
+        \lambda b_1 \\
+        \lambda b_2\\
+        \vdots\\
+        \lambda b_n
+    \end{bmatrix}=\lambda\begin{bmatrix}
+        a_1 \\
+        a_2\\
+        \vdots\\
+        a_n
+    \end{bmatrix}+\lambda\begin{bmatrix}
+        b_1 \\
+        b_2\\
+        \vdots\\
+        b_n
+    \end{bmatrix}\tag{VS7}
+\end{align*}
+
+\begin{align*}
+    (\lambda_1+\lambda_2)\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}&=\begin{bmatrix}
+        (\lambda_1+\lambda_2)c_1 \\
+        (\lambda_1+\lambda_2)c_2\\
+        \vdots\\
+        (\lambda_1+\lambda_2)c_n
+    \end{bmatrix}=\begin{bmatrix}
+        \lambda_1c_1+\lambda_2c_1 \\
+        \lambda_1c_2+\lambda_2c_2\\
+        \vdots\\
+        \lambda_1c_n+\lambda_2c_n
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        \lambda_1 c_1 \\
+        \lambda_1 c_2\\
+        \vdots\\
+        \lambda_1 c_n
+    \end{bmatrix}+\begin{bmatrix}
+        \lambda_2 c_1 \\
+        \lambda_2 c_2\\
+        \vdots\\
+        \lambda_2 c_n
+    \end{bmatrix}=\lambda_1\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}+\lambda_2\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\tag{VS8}
+\end{align*}
+
+\begin{align*}
+    \lambda_1\left(\lambda_2\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\right)=
+    \lambda_1\begin{bmatrix}
+        \lambda_2c_1 \\
+        \lambda_2c_2\\
+        \vdots\\
+        \lambda_2c_n
+    \end{bmatrix}=
+    \begin{bmatrix}
+        \lambda_1(\lambda_2c_1) \\
+        \lambda_1(\lambda_2c_2)\\
+        \vdots\\
+        \lambda_1(\lambda_2c_n)
+    \end{bmatrix}=
+    \begin{bmatrix}
+        (\lambda_1\lambda_2)c_1 \\
+        (\lambda_1\lambda_2)c_2\\
+        \vdots\\
+        (\lambda_1\lambda_2)c_n
+    \end{bmatrix}=
+    (\lambda_1\lambda_2)\begin{bmatrix}
+        c_1 \\
+        c_2\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\tag{VS9}
+\end{align*}
+
+Finally we verify that there is a scalar identity, namely 1:
+\begin{align*}    
+1\begin{bmatrix}
+    c_1 \\
+    c_2\\
+    \vdots\\
+    c_n
+\end{bmatrix}=\begin{bmatrix}
+    1\cdot c_1 \\
+    1\cdot c_2\\
+    \vdots\\
+    1\cdot c_n
+\end{bmatrix}=\begin{bmatrix}
+    c_1 \\
+    c_2\\
+    \vdots\\
+    c_n
+\end{bmatrix}\tag{VS10}
+\end{align*}
+
+b) Of course, all the same additive properties hold just as in a) for this case as they do not involve the underlying field. And since $\mathbb R\subseteq \mathbb C$, the multiplicative properties also still hold, i.e distributivity, associativity, and closure under $V$. The scalar identity, i.e. 1, also remains the same.
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Let $V = \left\{\begin{bmatrix}
+    a_1 \\
+    a_2
+\end{bmatrix}\mid a_1, a_2\in\mathbb R\right\}$. Define addition coordinatewise, and scalar multiplication for each $\lambda\in\mathbb R$ by:
+
+\[\lambda\begin{bmatrix}
+    a_1 \\
+    a_2
+\end{bmatrix}=\begin{cases} 
+    \begin{bmatrix}
+        0 \\
+        0
+    \end{bmatrix} & \text{if }\lambda=0,\vspace{5pt}\\
+    \begin{bmatrix}
+        \lambda a_1 \\
+        \frac{a_2}{\lambda}
+    \end{bmatrix} & \text{if }\lambda\not=0.
+ \end{cases}
+\]
+
+Is $V$ a vector space over $\mathbb R$ with these operations? Justify your answer.
+\bigskip
+
+\noindent\textbf{Solution:} No, $V$ fails to satisfy the distributivity of vectors over scalars, i.e. the following axiom:
+
+\begin{equation*}
+    (\lambda_1+\lambda_2)\vec v=\lambda_1\vec v+\lambda_2\vec v\tag{VS8}
+\end{equation*}
+
+To see this, consider the following counterexample:
+\begin{align*}
+    (2+3)\begin{bmatrix}
+        18 \\
+        30
+    \end{bmatrix}&\stackrel{?}{=}2\begin{bmatrix}
+        18 \\
+        30
+    \end{bmatrix}+3\begin{bmatrix}
+        18 \\
+        30
+    \end{bmatrix}\\
+    \begin{bmatrix}
+        5\cdot18 \\
+        \frac{30}{5}
+    \end{bmatrix}&\stackrel{?}{=}\begin{bmatrix}
+        2\cdot18 \\
+        \frac{30}{2}
+    \end{bmatrix}+\begin{bmatrix}
+        3\cdot18 \\
+        \frac{30}{3}
+    \end{bmatrix}\\
+    \begin{bmatrix}
+        90 \\
+        6
+    \end{bmatrix}&\not=
+    \begin{bmatrix}
+        90 \\
+        25
+    \end{bmatrix}
+\end{align*}
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Is the set $W = \{f(x)\in \mathbb F[x]\mid f(x) = 0 \vee f(x)\text{ has degree } n\}$ a subspace of $\mathbb F[x]$ if $n\ge 1$? Justify your answer.
+\bigskip
+
+\noindent\textbf{Solution:} No. Consider the case where $\mathbb F = \mathbb R$ and $n=2$. The following example shows that $W$ is \textit{not} closed under vector addition:
+
+$$(x^2+2x)+(-x^2+2x)=4x\not\in W$$
+
+You'll notice that both summands are 2nd degree polynomials and thus are members of $W$. Yet their sum, the polynomial $4x$, is of degree 1 and thus by definition is not in $W$. Thus $W$ fails additive closure.
+
+\subsection*{Problem 6}
+\noindent\textbf{Problem:} Let $W_1$ and $W_2$ be subspaces of a vector space $V$. Prove that $V$ is the direct sum of $W_1$ and
+$W_2$ if and only if each vector in $V$ can be uniquely written as $w_1 + w_2$, where $w_i\in W_i$.
+\bigskip
+
+\noindent\textbf{Solution:} ($\Rightarrow$) To prove the forward implication we assume that $V=W_1\oplus W_2$, or equivalently that $V=W_1+W_2$ and that $W_1\cap W_2=\{\vec 0\}$. Firstly, note that every vector $\vec v\in V$ can be represented as the sum of two vectors $\vec w_1+\vec w_2$ where $\vec w_i\in W_i$, because $V=W_1+W_2$. Now let us show that the choice of these two vectors is unique. Let
+
+$$\vec v=\vec w_1+\vec w_2=\vec w'_1+\vec w'_2$$
+
+With $w_i,w'_i\in W_i$. Note that $\vec w_1-w'_1\in W_1$ since $W_1$ is a vector space and closed under addition and has inverses, likewise for $W_2$. However, from the equation above, we note that $w_1-w'_1=w_2'-w_2\in W_2$. But since $W_1\cap W_2=\{\vec 0\}$, it must be the case that:
+
+\begin{align*}
+    w_1-w'_1=0&\implies w_1=w'_1\\
+    w_2'-w_2=0&\implies w'_2=w_2
+\end{align*}
+
+And so we have shown $V=W_1\oplus W_2\implies(\forall\vec v\in V, \exists!\vec w_i\in W_i)\,\,\vec w_1+\vec w_2=\vec v$.
+\newline
+
+($\Leftarrow$) Now to prove the converse, we will assume that every vector $\vec v\in V$ has a unique representation $\vec w_1+\vec w_2=\vec v$ with $\vec w_i\in W_i$. We can see that this immediately results in $V=W_1+W_2$ since every vector in $V$ is a sum of two vectors from these subspaces. To show that $W_1\cap W_2=\{\vec 0\}$, let us assume there exists an $\vec x\in W_1\cap W_2$ such that $\vec x\not=\vec 0$. Note that since $W_1$ and $W_2$ are subspaces, their intersection must include the zero vector $\vec 0$.
+
+Note that we would then have that $\vec x=\vec x+\vec 0$ with $\vec x\in W_1$ and $\vec 0\in W_2$ but that we'd also have $\vec x=\vec 0+\vec x$ with $\vec 0\in W_1$ and $\vec x\in W_2$, since both $\vec 0,\vec x\in W_i$. This clearly violates the uniqueness we assumed in proving the converse and thus means that there is no nonzero element in the intersection of $W_1$ and $W_2$.
+
+Put together, these two facts imply that $V=W_1\oplus W_2$. Thus showing that:
+
+$$(\forall\vec v\in V, \exists!\vec w_i\in W_i)\,\,\vec w_1+\vec w_2=\vec v\implies V=W_1\oplus W_2$$
+
+($\Leftrightarrow$) Since we have shown both conditions are sufficient for the other, we have established that they are equivalent.
+
+$$V=W_1\oplus W_2\iff(\forall\vec v\in V, \exists!\vec w_i\in W_i)\,\,\vec w_1+\vec w_2=\vec v$$
+
+\end{document}

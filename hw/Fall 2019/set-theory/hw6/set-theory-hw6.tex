@@ -1,0 +1,457 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage[margin=1.2in]{geometry}
+
+\newenvironment{rcases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
+\begin{document}
+
+\title{Set Theory HW \#6}
+\author{Ozaner Hansha}
+\date{November 12, 2019}
+\maketitle
+
+% Set Theory Class notation
+\newcommand{\pset}[1]{\mathfrak P#1}
+\newcommand{\psetp}[1]{\mathfrak P(#1)}
+\renewcommand{\wedge}{\,\,\&\,\,}
+\renewcommand{\vee}{\text{ or }}
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\newcommand{\triplet}[3]{\langle#1,#2,#3\rangle}
+\renewcommand{\setminus}{-}
+
+% My Notation
+% \newcommand{\pset}[1]{\mathcal P(#1)}
+% \newcommand{\psetp}[1]{\mathcal P(#1)}
+% \newcommand{\pair}[2]{(#1,#2))}
+% \newcommand{\triplet}[3]{(#1,#2,#3)}
+
+\begin{center}
+    \Large{\textbf{Part 1}}
+\end{center}
+
+\section*{Problem I}
+\noindent\textbf{Problem:} Assume that $f:A\to B$. Define $\sim_f$ to be the set:
+\begin{equation*}
+    \{\pair{x}{y}\mid f(x)=f(y)\}
+\end{equation*}
+
+\begin{enumerate}
+    \item Prove that $\sim_f$ is an equivalence relation on $A$.
+    \item Prove that if $C\not=\varnothing$ and $g:A\to C$ is a function, then there exists a function $h:B\to C$ such that $h\circ f=g$ if and only if:
+    \begin{equation}
+        \forall x\forall y\, \left(x\sim_f y\implies g(x)=g(y)\right)
+    \end{equation}
+\end{enumerate}
+\medskip
+
+\noindent\textbf{Solution:} Part 1) Consider an arbitrary set $x$. We have:
+\begin{align*}
+    x\in A&\implies f(x)=f(x)\\
+    &\implies x\sim_f x\tag{def. of $\sim_f$}
+\end{align*}
+
+And so $\sim_f$ is reflexive. Next consider an arbitrary ordered pair $\pair{x}{y}$. We have:
+\begin{align*}
+    x\sim_fy&\implies f(x)=f(y)\tag{def. of $\sim_f$}\\
+    &\implies f(y)=f(x)\\
+    &\implies y\sim_fx\tag{def. of $\sim_f$}
+\end{align*}
+
+And so $\sim_f$ is symmetric. Finally, consider two arbitrary ordered pairs $\pair{x}{y}$ and $\pair{y}{z}$. We have:
+\begin{align*}
+    x\sim_fy\wedge y\sim_fz&\implies f(x)=f(y)\wedge f(y)=f(z)\tag{def. of $\sim_f$}\\
+    &\implies f(x)=f(z)\tag{transitivity of equality}\\
+    &\implies x\sim_fz\tag{def. of $\sim_f$}
+\end{align*}
+
+And so $\sim_f$ is transitive. We have thus proven all 3 necessary conditions for the relation $\sim_f$ to be an equivalence relation over $A$.
+\smallskip
+
+Part 2) Let us assume that such a function $h$ exists. We then have that:
+\begin{align*}
+    (\forall x,y)\,\,x\sim_fy&\implies f(x)=f(y)\\
+    &\implies h\circ f(x)=h\circ f(y)=\underbrace{g(x)=g(y)}
+\end{align*}
+
+We can see that this last equality is a contradiction, making our assumption that such a function $h$ exists, false. This is, unless, statement (1) holds. In other words, $h$ existing implies (1). Now we need the other direction. Assume that such a function $h$ exists but that (1) is false. We have:
+\begin{align*}
+    (\forall x,y)\,\,x\sim_fy&\implies f(x)=f(y)\\
+    &\implies h\circ f(x)=h\circ f(y)\\
+    &\implies g(x)=g(y)\tag{def. of $h\circ f$}
+\end{align*}
+
+This last implication is a contradiction as we explicitly assumed that (1) was false. Thus, our initial assumption was false and (1) must be true for $h$ to exist.
+
+\section*{Problem II}
+\noindent\textbf{Problem:} Prove that if $R$ is an equivalence relation on a set $A$ then there exist a set $B$ and a function $f:A\to B$ such that $R =\sim_f$.
+\bigskip
+
+\noindent\textbf{Solution:} Let $B=A/R$ and $f(x)=[x]_R$. We then have:
+\begin{align*}
+    x\sim_fy&\iff f(x)=f(y)\\
+    &\iff[x]_R=[y]_R\\
+    &\iff xRy\tag{def. of equivalence class}
+\end{align*}
+
+\section*{Problem III}
+\noindent\textbf{Problem:} If $R$ is an equivalence relation on a
+set $A$, and $f:A\times A\to A$, then we say that \underline{$f$ is compatible with $R$} if:
+\begin{equation*}
+    (\forall x,y,x',y'\in A)\,\,(xRx'\wedge yRy'\implies f(x,y)Rf(x',y'))
+\end{equation*}
+
+Prove that if $R$ is an equivalence relation on $A$ and $f:A\times A\to A$, then:
+\begin{enumerate}
+    \item there exists a function $\hat{f}:A/R\times A/R\to A/R$ such that:
+    \begin{equation*}
+        (\forall x\forall y\in A)\,\, \hat{f}([x]_R,[y]_R)=[f(x,y)]_R
+    \end{equation*}
+
+    iff $f$ is compatible with $R$
+    \item if there exists a function $\hat{f}$ such that the above holds, it is unique.
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} Part 1) First we need to extend our definition of compatibility:
+\begin{equation*}
+    xRy\wedge uRv\implies f(x,y)Rf(x,y)
+\end{equation*}
+
+Now let us assume that $f$ is compatible with $R$, and prove that such a $\hat{f}$ exists:
+\begin{align*}
+    \pair{[x]}{[y]}=\pair{[u]}{[v]}&\implies [x]=[u]\wedge [y]=[v]\\
+    &\implies xRu\wedge yRv\\
+    &\implies f(x,y)Rf(u,v)\\
+    &\implies[f(x,y)]=[f(u,v)]
+\end{align*}
+
+And so $\hat{f}$ is a function, with $\text{dom}\hat{f}=A/R\times A/R$ and $\text{ran}\hat{f}\subseteq A/R$
+
+Now suppose that $f$ is not compatible. By incompatibility, there are some pairs $\pair{x}{y}, \pair{u}{v}\in A\times A$ such that the following holds:
+\begin{align*}
+    xRu\wedge yRv&\qquad f(x,y)\centernot Rf(u,v)\\
+    [x]=[u]\wedge [y]=[v] &\qquad [f(x,y)]\not=[f(u,v)]
+\end{align*}
+
+Despite both of these conditions needing to be true, the right sides are not equal.
+\bigskip
+
+Part 2) The function $\hat{f}$ is unique. Suppose for some $g:A/R\times A/R\to A/R$, the same conditions hold. Then for any $x,y\in A$ we have:
+\begin{equation*}
+    g([x],[y])=[f([x],[y])]=\hat{f}([x],[y])
+\end{equation*}
+\medskip
+
+\begin{center}
+    \Large{\textbf{Part 2}}
+\end{center}
+
+The following problems are from pages 61-62 of the textbook.
+
+\section*{Exercise 36}
+\noindent\textbf{Problem:} Assume that $f:A\to B$ and that $R$ is an equivalence relation on $B$. Define $Q$ to be the following set:
+\begin{equation*}
+    \{\pair{x}{y}\in A\times A\mid \pair{f(x)}{f(y)}\in R\}
+\end{equation*}
+
+Show that $Q$ us an equivalence relation on $A$
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $x$. We have:
+\begin{align*}
+    x\in A&\implies f(x)\in B\tag{def. of $f$}\\
+    &\implies\pair{f(x)}{f(x)}\in R\tag{reflexivity of equiv. relation}\\
+    &\implies\pair{x}{x}\in Q\tag{def. of $Q$}
+\end{align*}
+
+And so $Q$ is reflexive. Next consider an arbitrary ordered pair $\pair{x}{y}$. We have:
+\begin{align*}
+    \pair{x}{y}\in Q&\implies\pair{f(x)}{f(y)}\in R\tag{def. of $Q$}\\
+    &\implies\pair{f(y)}{f(x)}\in R\tag{symmetry of equiv. relation}\\
+    &\implies\pair{y}{x}\in Q\tag{def. of $Q$}
+\end{align*}
+
+And so $Q$ is symmetric. Finally, consider two arbitrary ordered pairs $\pair{x}{y}$ and $\pair{y}{z}$. We have:
+\begin{align*}
+    \pair{x}{y}\in Q\wedge\pair{y}{z}\in Q&\implies\pair{f(x)}{f(y)}\in R\wedge\pair{f(y)}{f(z)}\in R\tag{def. of $Q$}\\
+    &\implies\pair{f(x)}{f(z)}\in R\tag{transitivity of equiv. relation}\\
+    &\implies\pair{x}{z}\in Q\tag{def. of $Q$}
+\end{align*}
+
+And so $Q$ is transitive. We have thus proven all 3 necessary conditions for the relation $Q$ to be an equivalence relation over $A$.
+
+\section*{Exercise 37}
+\noindent\textbf{Problem:} Assume $\Pi$ is a partition of a set $A$. Define the relation $R_\Pi$ as follows:
+\begin{equation*}
+    xR_\Pi y\iff(\exists B\in\Pi)(x\in B\wedge y\in B)
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $x$. We have:
+\begin{align*}
+    x\in A&\implies (\exists B\in\Pi)\,x\in B\tag{def. of partition}\\
+    &\implies xR_\Pi x\tag{def. of $R_\Pi$}
+\end{align*}
+
+And so $R_\Pi$ is reflexive. Next consider an arbitrary ordered pair $\pair{x}{y}$. We have:
+\begin{align*}
+    xR_\Pi y&\implies(\exists B\in\Pi)\,x\in B\wedge y\in B\tag{def. of $R_\Pi$}\\
+    &\implies(\exists B\in\Pi)\,y\in B\wedge x\in B\\
+    &\implies yR_\Pi x\tag{def. of $R_\Pi$}
+\end{align*}
+
+And so $R_\Pi$ is symmetric. Finally, consider two arbitrary ordered pairs $\pair{x}{y}$ and $\pair{y}{z}$. We have:
+\begin{align*}
+    xR_\Pi y\wedge yR_\Pi z&\implies(\exists B\in\Pi)(x\in B\wedge y\in B)\wedge (\exists C\in\Pi)(y\in C\wedge z\in C)\tag{def. of $R_\Pi$}\\
+    &\implies(\exists B,C\in\Pi)\,x\in B\wedge \underbrace{y\in B\wedge y\in C}_{y\in B\cap C}\wedge z\in C
+\end{align*}
+
+Yet recall that, by definition, every element $y$ of a partitioned set $A$ belongs to exactly one set in that partition $\Pi$. And so, the sets $B$ and $C$ above must actually be the same set. As such we have:
+\begin{align*}
+    &\implies(\exists C\in\Pi)\,x\in C\wedge y\in C\wedge y\in C\wedge z\in C\tag{B=C}\\
+    &\implies(\exists C\in\Pi)\,x\in C\wedge z\in C\\
+    &\implies xR_\Pi z\tag{def. of $R_\Pi$}
+\end{align*}
+
+And so $R_\Pi$ is transitive. We have thus proven all 3 necessary conditions for the relation $R_\Pi$ to be an equivalence relation over $A$.
+
+\section*{Exercise 38}
+\noindent\textbf{Problem:} Theorem 3P shows that $A/R$ is a partition of $A$ whenever $R$ is an equivalence relation on $A$. Show that if we start with the equivalence relation $R_\Pi$ of the preceding
+exercise, then the partition $A/R_\Pi$ is just $\Pi$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary element $x\in A$. We have:
+\begin{align*}
+    [x]\in A/R_\Pi&\implies(\forall y\in[x])\,xR_\Pi y\\
+    &\implies(\forall y\in[x])(\exists B\in\Pi)\,x\in B\wedge y\in B
+\end{align*}
+
+Now fix this $B$ and note that for any $z\in[x]$ we have $yR_\Pi z$ (because $R_\Pi$ is an equiv. relation). From exercise 3, we know that $z\in B$. So since any two elements of $[x]$ are in this fixed set $B$, we have: $[x]\subseteq B$. And since any $b\in B$ satisfies $bR_\Pi x$, we have the other direction, giving us $[x]=B$. And so every equivalence class in $A/R_\Pi$ equals some set in the partition $\Pi$.
+
+For the other direction, consider an arbitrary set $C\in\Pi$. Note that $C$ is nonempty (since $\Pi$ is a partition) so consider an arbitrary element $m\in C$. By definition, we know $C\subseteq [m]$. However, via the same reasoning we used in the paragraph above, we also know the other direction giving us $C=[m]$. And so every member of the partition $\Pi$ equals some equivalence class in $A/R_\Pi$.
+
+Putting these two facts together we finally find that:
+\begin{equation*}
+    A/R_\Pi=\Pi
+\end{equation*}
+
+\section*{Exercise 39}
+\noindent\textbf{Problem:} Assume that we start with an equivalence relation $R$ on $A$ and define $\Pi$ to be the partition $A/R$. Show that $R_\Pi$, as defined in Exercise 37, is just $R$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary ordered pair $\pair{x}{y}$. We have:
+\begin{align*}
+    xRy&\iff(\exists B\in A/R)\, x\in B\wedge y\in B\tag{def. quotient set}\\
+    &\iff(\exists B\in \Pi)\, x\in B\wedge y\in B\tag{def. $\Pi$}\\
+    &\iff xR_\Pi y\tag{def. of $R_\Pi$}
+\end{align*}
+
+And so the relations are identical. 
+
+\section*{Exercise 40}
+\noindent\textbf{Problem:} Define an equivalence relation $R$ on the set $P$ of positive integers by:
+\begin{equation*}
+    mRn \iff \text{$m$ and $n$ have the same \# of unique prime factors}
+\end{equation*}
+
+Is there a function $f:P/R\to P/R$ such that $f([n]_R)=[3n]_R$ for each $n$?
+\bigskip
+
+\noindent\textbf{Solution:} Recall from theorem 3Q that, for such a function $f$ to exist the following function $g:P\to P$ must be compatible with $R$:
+\begin{equation*}
+    g(n)=3n
+\end{equation*}
+
+However, consider the following counterexample. Trivially we have $2R3$ Yet note that:
+\begin{equation*}
+    \begin{rcases}
+        g(2)&=6=\underbrace{2\cdot3}_{2\text{ factors}}\\
+        g(3)&=9=\underbrace{3^2}_{1\text{ factor}}
+    \end{rcases}\implies g(2)\centernot{R}g(3)
+\end{equation*}
+
+And so $g$ isn't compatible with $R$ and the desired function $f$ can't exist.
+
+\begin{center}
+    \Large{\textbf{Part 3}}
+\end{center}
+
+The following problems are from pages 101, 111, 120, and 121 of the textbook.
+
+\section*{Exercise 1}
+\noindent\textbf{Problem:} Is there a function $F:\mathbb Z\to \mathbb Z$ satisfying the following:
+\begin{equation*}
+    F([\pair{m}{n}])=[\pair{m+n}{n}]
+\end{equation*}
+\smallskip
+
+\noindent\textbf{Solution:} Let $\hat{F}:\mathbb Z^2\to \mathbb Z^2$ be defined as:
+\begin{equation*}
+    \hat{F}(\pair{m}{n})=\pair{m+n}{n}
+\end{equation*}
+
+By theorem 3Q in the textbook, it suffices to show that $\hat{F}$ is not compatible with $\sim$ to show that no such function $F$ can exist. Clearly $\pair{3}{2}\sim\pair{1}{0}$, yet we have:
+\begin{equation*}
+    \hat{F}(\pair{3}{2})=\pair{5}{2}\centernot\sim\pair{1}{0}=\hat{F}(\pair{1}{0})\\
+\end{equation*}
+
+And so $\hat{F}$ is not compatible with $\sim$ and thus the function $F$ cannot exist.
+
+\section*{Exercise 3}
+\noindent\textbf{Problem:} Is there a function $H:\mathbb Z\to \mathbb Z$ satisfying the following:
+\begin{equation*}
+    H([\pair{m}{n}])=[\pair{n}{m}]
+\end{equation*}
+\smallskip
+\bigskip
+
+\noindent\textbf{Solution:} Let $\hat{F}:\mathbb Z^2\to \mathbb Z^2$ be defined as:
+\begin{equation*}
+    \hat{F}(\pair{m}{n})=\pair{m+n}{n}
+\end{equation*}
+
+By theorem 3Q, in proving that there exists such a function $H$, it suffices to show that $\hat{H}$ is compatible with $\sim$:
+\begin{align*}
+    \pair{m}{n}\sim\pair{m'}{n'}&\implies m+n'=m'+n\\
+    &\implies n+m'=n'+m\\
+    &\implies \pair{n}{m}\sim\pair{n'}{m'}\\
+    &\implies \hat{H}(\pair{m}{n})\sim \hat{H}(\pair{m'}{n'})
+\end{align*}
+
+And so $\hat{H}$ is compatible and the function $H$ exists.
+
+\section*{Exercise 4}
+\noindent\textbf{Problem:} Prove that $+_\mathbb Z$ is associative.
+\bigskip
+
+\noindent\textbf{Solution:} Let the integers $a=[\pair{m}{n}], b=[\pair{p}{q}]$ and $c=[\pair{r}{s}]$. We then have:
+\begin{align*}
+    (a+_\mathbb Zb)+_\mathbb Zc&=([\pair{m}{n}]+_\mathbb Z[\pair{p}{q}])+_\mathbb Z[\pair{r}{s}]\\
+    &=[\pair{m+p}{n+q}]+_\mathbb Z[\pair{r}{s}]\\
+    &=[\pair{(m+p)+r}{(n+q)+s}]\\
+    &=[\pair{m+(p+r)}{n+(q+s)}]\tag{associativity of $\mathbb N$}\\
+    &=[\pair{m}{n}]+_\mathbb Z[\pair{p+r}{q+s}]\\
+    &=[\pair{m}{n}]+_\mathbb Z([\pair{p}{q}]+_\mathbb Z\pair{r}{s}])\\
+    &=a+_\mathbb Z(b+_\mathbb Zc)
+\end{align*}
+
+\section*{Exercise 14}
+\noindent\textbf{Problem:} Show that the ordering of the rationals is dense, i.e. between any two rationals there is a third one:
+\begin{equation*}
+    p<_\mathbb Q\implies(\exists r)\,p<_\mathbb Qr<_\mathbb Qs
+\end{equation*}
+\smallskip
+
+\noindent\textbf{Solution:} Let $p=[\pair{a}{b}]$ and $s=[\pair{c}{d}]$ with $b,d>_\mathbb Z 0$. (note that there is no loss of generality because every rational can be expressed in this form i.e. $\pair{a}{-b}\sim\pair{-a}{b}$). Also let $p<_\mathbb Q s$. Now note the following:
+\begin{align*}
+    [\pair{a}{b}]<_\mathbb Q [\pair{c}{d}]&\implies ad<_\mathbb Z bc\\
+    &\implies abd<_\mathbb Z bbc\\
+    &\implies add<_\mathbb Z bcd
+\end{align*}
+
+Now, define $r$ as the following rational number:
+\begin{align*}
+    r&=(p+_\mathbb Q s)\div[\pair{2}{1}]\\
+    &=[\pair{ad+bc}{bd}]\cdot_\mathbb Q[\pair{1}{2}]\\
+    &=[\pair{ad+bc}{2bd}]
+\end{align*}
+
+Now note that:
+\begin{align*}
+    abd&<_\mathbb Z bbc\\
+    abd+abd&<_\mathbb Z abd+bbc\\
+    2abd&<_\mathbb Z b(ad+bc)
+\end{align*}
+
+Implying that $p<_\mathbb Q r$. Similarly we have:
+\begin{align*}
+    add&<_\mathbb Z bcd\\
+    add+bcd&<_\mathbb Z bcd+bcd\\
+    (ad+bc)d&<_\mathbb Z 2bcd
+\end{align*}
+
+Implying that $r<_\mathbb Q s$. And so, given any 2 rationals $p$ and $s$ we have constructed a rational number $r$ such that:
+\begin{equation*}
+    p<_\mathbb Q r<_\mathbb Q s
+\end{equation*}
+
+\section*{Exercise 15}
+\noindent\textbf{Problem:} In theorem 5RB, show that $\bigcup A$ is closed downward and has no largest element.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $q$. We have:
+\begin{align*}
+    q\in\bigcup A&\implies(\exists x\in A)\,q\in x\\
+    &\implies(\forall r<q)(\exists x\in A)\,r\in x\tag{$x$ is closed downwards}\\
+    &\implies(\forall r<q)\,r\in \bigcup A
+\end{align*}
+
+And so $\bigcup A$ is closed downwards. Now consider an arbitrary set $p$. We have:
+\begin{align*}
+    p\in\bigcup A&\implies(\exists x\in A)\,p\in x\\
+    &\implies(\exists x\in A)\,p\in x\wedge (\exists q\in x)\,p<q\tag{$x$ has no largest element}\\
+    &\implies(\exists x\in A)\,q\in x\wedge p<q\\
+    &\implies q\in\bigcup A\wedge p<q
+\end{align*}
+
+And so $\bigcup A$ has no largest element since for any element $p$ it contains a larger element $q$.
+
+\section*{Exercise 16}
+\noindent\textbf{Problem:} In lemma 5RC, show that $x+_\mathbb R y$ has no largest element.
+\bigskip
+
+\noindent\textbf{Solution:} Take any $q + r \in x +_\mathbb R y$, so that $q \in x$ and $r \in y$. Since neither $x$ nor $y$ has a largest element, there exist a $q'\in x$ and $r'\in y$ such that $q < q'$ and $r < r'$. Since addition preserves order in the rationals, $q + r < q' + r' \in x +_\mathbb R y$. Hence $x +_\mathbb R y$ has no largest element.
+
+\section*{Exercise 22}
+\noindent\textbf{Problem:} 
+\bigskip
+
+\noindent\textbf{Solution:} Recall that:
+\begin{equation*}
+    |x| = x \cup -x
+\end{equation*}
+
+Consider two rational numbers $q$ and $r$ such that $q\in|x|$ and $r<q$. We have two cases:
+\begin{align*}
+    q\in x\wedge r<q&\implies r\in x\tag{$x$ is downward closed}\\
+    &\implies r\in|x|\tag{def. of $|x|$}\\
+    q\in -x\wedge r<q&\implies r\in -x\tag{$-x$ is downward closed}\\
+    &\implies r\in|x|\tag{def. of $|x|$}
+\end{align*}
+
+And so in either case, $|x|$ is downward closed. Now take any rational $p\in|x|$. We again have two cases:
+\begin{align*}
+    p\in x&\implies(\exists p'\in x)\,p'>p\tag{$x$ has no greatest element}\\
+    p\in -x&\implies(\exists p'\in -x)\,p'>p\tag{$-x$ has no greatest element}
+\end{align*}
+
+And so in either case, $|x|$ has no greatest element. All that's left to prove is that $\varnothing\not=|x|\not=\mathbb Q$.
+\bigskip
+
+$|x|\not=\varnothing$:
+
+Since no real number is the empty set, and $|x|$ is the union of two real numbers, it can't be the empty set either.
+\bigskip
+
+$|x|\not=\mathbb Q$:
+
+Assume that $x<0$. Then we have:
+\begin{equation*}
+    (\forall q\in x)\, q<0_\mathbb Q
+\end{equation*}
+
+and so $0_\mathbb Q\not\in x$, since $0_\mathbb Q\not\in 0$, and consequently not in $x$. Hence $q\in -x$, and thus $x\subseteq-x$. Hence $|x|=x\cup-x=-x\not=\mathbb Q$.
+
+Suppose instead that $x\ge0$. Suppose $r\ge0$, then if $s>r$, then $s>0$, and so $-s < 0$. Thus $s\in x$, so $r\not\in -x$. So if $r\in -x$, then necessarily $r < 0$, and so $r\in x$. Hence $-x\subseteq x$,
+and so:
+\begin{equation*}
+    |x| = x\cup -x = x\not=\mathbb Q
+\end{equation*}
+
+\end{document}

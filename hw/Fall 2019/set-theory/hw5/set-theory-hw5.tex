@@ -1,0 +1,208 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Set Theory HW \#5}
+\author{Ozaner Hansha}
+\date{October 10, 2019}
+\maketitle
+
+% Set Theory Class notation
+\newcommand{\pset}[1]{\mathfrak P#1}
+\newcommand{\psetp}[1]{\mathfrak P(#1)}
+\renewcommand{\wedge}{\,\,\&\,\,}
+\renewcommand{\vee}{\text{ or }}
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\newcommand{\triplet}[3]{\langle#1,#2,#3\rangle}
+\renewcommand{\setminus}{-}
+
+% My Notation
+% \newcommand{\pset}[1]{\mathcal P(#1)}
+% \newcommand{\psetp}[1]{\mathcal P(#1)}
+% \newcommand{\pair}[2]{(#1,#2))}
+% \newcommand{\triplet}[3]{(#1,#2,#3)}
+
+\begin{center}
+    \Large{\textbf{Part 1}}
+\end{center}
+
+The following problems are from pages 64-65 of the textbook.
+
+\section*{Problem 46}
+\noindent\textbf{Problem:} Evaluate the following sets:
+
+\begin{enumerate}[label=\alph*)]
+    \item $\bigcap\bigcap\pair{x}{y}$
+    \item $\bigcap\bigcap\bigcap\{\pair{x}{y}\}^{-1}$
+\end{enumerate}
+\medskip
+
+\noindent\textbf{Solution:} For a) we have:
+\begin{align*}
+    \bigcap\bigcap\pair{x}{y}&=\bigcap\bigcap\{\{x\},\{x,y\}\}\tag{def. of ordered pair}\\
+    &=\bigcap(\{x\}\cap\{x,y\})\tag{def. of arbitrary intersection}\\
+    &=\bigcap\{x\}\\
+    &=x\tag{def. of arbitrary intersection}\\
+\end{align*}
+
+And for b) we have:
+\begin{align*}
+    \bigcap\bigcap\bigcap\{\pair{x}{y}\}^{-1}&=\bigcap\bigcap\bigcap\{\pair{y}{x}\}\tag{def. of inverse}\\
+    &=\bigcap\bigcap\pair{y}{x}\tag{def. of arbitrary intersection}\\
+    &=\bigcap(\{y\}\cap\{y,x\})\tag{def. of arbitrary intersection}\\
+    &=\bigcap\{y\}\\
+    &=y\tag{def. of arbitrary intersection}\\
+\end{align*}
+
+\section*{Problem 52}
+\noindent\textbf{Problem:} Suppose that $A\times B = C\times D$. Under what conditions can we conclude that $A = C$ and $B = D$?
+\bigskip
+
+\noindent\textbf{Solution:} We must have that none of the 4 sets $A,B,C,D$ equal the empty set. If we assume this we have for any two sets $a$ and $b$:
+\begin{align*}
+    a\in A\wedge b\in B&\iff\pair{a}{b}\in A\times B\tag{def. of ordered pair}\\
+    &\iff\pair{a}{b}\in C\times D\tag{extensionality}\\
+    &\iff a\in C\wedge b\in D\tag{def. of ordered pair}
+\end{align*}
+
+This argument implies that $a\in A\iff a\in C$ and $b\in B\iff b\in D$ for any sets $a$ and $b$, only if there exists at least 1 element in $A, B, C$ and $D$. If not, then we can't split up the conjunctions at the beginning and end of our proof, as there will be no element to pair with $a$ or $b$ (depending on which sets are empty) to create the ordered pair.
+
+\textit{Of course, a special case that this proof does not touch upon is that if all 4 sets are empty then we can conclude that $A = C$ and $B = D$.}
+\bigskip
+
+\section*{Problem 56}
+\noindent\textbf{Problem:} Answer "yes" or "no." Where the answer is negative, supply a counterexample.
+
+\begin{enumerate}[label=\alph*)]
+    \item Is dom$(R\cup S)$ always the same as dom $R\cup\phantom{}$dom $S$?
+    \item Is dom$(R\cap S)$ always the same as dom $R\cap\phantom{}$dom $S$?
+\end{enumerate}
+\medskip
+
+\noindent\textbf{Solution:} For a) the answer is yes, consider an arbitrary set $x$:
+\begin{align*}
+    x\in\text{dom }(R\cup S)&\iff(\exists y)\,\,\pair{x}{y}\in R\cup S\tag{def. of dom}\\
+    &\iff(\exists y)\,\,\pair{x}{y}\in R\vee\pair{x}{y}\in S\tag{def. of union}\\
+    &\iff x\in\text{dom }R\vee x\in\text{dom }S\tag{def. of dom}\\
+    &\iff x\in\text{dom }R\cup\text{dom }S\tag{def. of union}
+\end{align*}
+
+And so by extensionality, the equality holds. On the other hand, b) is false. Here's a counterexample:
+
+Let $R=\{0,1\}$ and $S=\{0,2\}$. This means that $R\cap S=\varnothing$, which further implies that dom $(R\cap S)=\varnothing$. However, we clearly have $0\in\text{dom }R\cap\text{dom }S$ and thus b) cannot hold.
+
+\section*{Problem 58}
+\noindent\textbf{Problem:} Give an example to show that $F[\![F^{-1}[\![S]\!]]\!]$ is not always the same as $S$.
+\bigskip
+
+\noindent\textbf{Solution:} Take $S=\{0\}$ and $F=\{\pair{1}{2}\}$. We clearly have that $F^{-1}=\{\pair{2}{1}\}$, and also that $F^{-1}[\![S]\!]=\varnothing$ since $0\not\in$ dom $F^{-1}$. This finally gives us our counterexample:
+\begin{equation*}
+    F[\![F^{-1}[\![S]\!]]\!]=F[\![\varnothing]\!]=\varnothing\not=\{0\}=S
+\end{equation*}
+
+\section*{Problem 59}
+\noindent\textbf{Problem:} Show that for any sets $Q\upharpoonright(A\cap B)=(Q\upharpoonright A)\cap(Q\upharpoonright B)$ and $Q\upharpoonright(A\setminus B) = (Q\upharpoonright A)\setminus(Q\upharpoonright B)$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider two arbitrary sets $x$ and $y$:
+\begin{align*}
+    \pair{x}{y}\in Q\upharpoonright(A\cap B)&\iff x\in A\cap B\wedge xQy\tag{def. of restriction}\\
+    &\iff x\in A\wedge x\in B\wedge xQy\tag{def. of intersection}\\
+    &\iff \pair{x}{y}\in(Q\upharpoonright A)\wedge \pair{x}{y}\in(Q\upharpoonright B)\tag{def. of restriction}\\
+    &\iff \pair{x}{y}\in(Q\upharpoonright A)\cap(Q\upharpoonright B)\tag{def. of intersection}
+\end{align*}
+
+Since all restrictions are relations and thus considering only ordered pairs is sufficient, we have by extensionality the first equality. The second can be found by, again, considering two arbitrary sets $x$ and $y$:
+\begin{align*}
+    \pair{x}{y}\in Q\upharpoonright(A\setminus B)&\iff x\in A\setminus B\wedge xQy\tag{def. of restriction}\\
+    &\iff x\in A\wedge x\not\in B\wedge xQy\tag{def. of set difference}\\
+    &\iff \pair{x}{y}\in(Q\upharpoonright A)\wedge \pair{x}{y}\not\in(Q\upharpoonright B)\tag{def. of restriction}\\
+    &\iff \pair{x}{y}\in(Q\upharpoonright A)\setminus(Q\upharpoonright B)\tag{def. of set difference}
+\end{align*}
+\medskip
+
+\begin{center}
+    \Large{\textbf{Part 2}}
+\end{center}
+
+The following problems are from page 73 of the textbook.
+
+\section*{Exercise 3b}
+\noindent\textbf{Problem:} Show that if $\pset{a}$ is a transitive set, then $a$ is also a transitive set.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following chain of implications:
+\begin{align*}
+    ((\forall x)\,\,x\in\pset{a}\implies x\subseteq\pset{a)}&\implies\bigcup\pset{a}\subseteq\pset{a}\\
+    &\implies a\subseteq\pset{a}\tag{$\bigcup\pset{a}=a$}\\
+    &\implies(\forall y)\,\,y\in a\implies y\in\pset{a}\tag{def. of subset}\\
+    &\implies(\forall y)\,\,y\in a\implies y\subseteq a\tag{def. of powerset}
+\end{align*}
+Which is precisely the definition of transitivity.
+
+\section*{Exercise 4}
+\noindent\textbf{Problem:} Show that if $a$ is a transitive set, then $\bigcup a$ is also a transitive set.
+\bigskip
+
+\noindent\textbf{Solution:} Note that for any transitive set $a$ we have:
+\begin{equation*}
+    \bigcup a\subseteq a
+\end{equation*}
+
+Now let $a$ be a transitive set, and consider an arbitrary set $x$:
+\begin{align*}
+    x\in\bigcup a\wedge\bigcup a\subseteq a&\implies x\in a\tag{$a$ is transitive}\\
+    &\implies(\forall y\in x)\,\,y\in x\in a\\
+    &\implies(\forall y\in x)\,\,y\in \bigcup a\tag{def. of arbitrary union}\\
+    &\implies x\subseteq \bigcup a\tag{def. of subset}
+\end{align*}
+
+And so we have shown that for any transitive set $a$, its arbitrary union $\bigcup a$ is also transitive.
+
+\bigskip
+
+\section*{Exercise 5}
+\noindent\textbf{Problem:} Assume that every member of $A$ is a transitive set.
+\begin{enumerate}[label=\alph*)]
+    \item Show that $\bigcup A$ is a transitive set.
+    \item Show that $\bigcap A$ is a transitive set (assuming that $A$ is nonempty.)
+\end{enumerate}
+\medskip
+
+\noindent\textbf{Solution:} For a) consider an arbitrary set $x$:
+\begin{align*}
+    x\in\bigcup A&\implies(\exists b\in A)\,\,x\in b\tag{def. of arbitrary union}\\
+    &\implies(\forall y\in x)(\exists b\in A)\,\,y\in x\in b\\
+    &\implies(\forall y\in x)(\exists b\in A)\,\,y\in b\tag{$b$ is transitive}\\
+    &\implies(\forall y\in x)\,\,y\in\bigcup A\tag{def. of arbitrary union}\\
+    &\implies x\subseteq\bigcup A\tag{def. of subset}
+\end{align*}
+
+And so if every element of a set $A$ is transitive, so too is its arbitrary union. For b) once again consider an arbitrary $x$:
+\begin{align*}
+    x\in\bigcap A&\implies(\forall b\in A)\,\,x\in b\tag{def. of arbitrary intersection}\\
+    &\implies(\forall y\in x)(\forall b\in A)\,\,y\in x\in b\\
+    &\implies(\forall y\in x)(\forall b\in A)\,\,y\in b\tag{all $b$ are transitive}\\
+    &\implies(\forall y\in x)\,\,y\in\bigcap A\tag{def. of arbitrary intersection}\\
+    &\implies x\subseteq\bigcap A\tag{def. of subset}
+\end{align*}
+
+\section*{Exercise 6}
+\noindent\textbf{Problem:} Prove the following: If $\bigcup(a^+)=a$, then $a$ is a transitive set.
+\bigskip
+
+\noindent\textbf{Solution:} Suppose the antecedent $\bigcup(a^+)=a$:
+\begin{align*}
+    a&=\bigcup(a^+)\tag{assumption}\\
+    &=\bigcup(a\cup\{a\})\tag{def. of successor}\\
+    &=\bigcup a\cup\bigcup \{a\}\tag{distributivity of union}\\
+    &=\bigcup a\cup a
+\end{align*}
+
+This implies that $\bigcup a\subseteq a$ which is equivalent to being a transitive set.
+
+\end{document}

@@ -1,0 +1,73 @@
+# the masthead
+main:
+  - title: "Home"
+    url: /
+  # - title: "About"
+  #   url: /about/
+  - title: "Portfolio"
+    url: /portfolio/
+  - title: "Coursework"
+    url: /coursework/
+  - title: "Resume"
+    url: /assets/docs/resume.pdf
+  # - title: "Posts"
+  #   url: /posts/
+  # - title: "Categories"
+  #   url: /categories/
+  - title: "All Posts"
+    url: /tags/
+  # - title: "Blog"
+  #   url: /blog/
+
+# sidebar for projects
+portfolio:
+  - title: "Projects"
+    children:
+      - title: "• qRNG"
+        url: "https://github.com/ozanerhansha/qRNG"
+      - title: "• Breast Cancer Classification Network"
+        url: "https://github.com/ozanerhansha/qRNG"
+      - title: "• FileToPNG"
+        url: "https://github.com/ozanerhansha/qRNG"
+      - title: "• Reinforcement Learning Pong AI"
+        url: "/reinforcement-learning-pong/"
+      - title: "• Neurosky EEG Readings App"
+        url: "https://github.com/ozanerhansha/NeuroSkyOutput"
+      - title: "• Handwritten Digit Classifier App"
+        url: "https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/MNIST/conv/mnist_convolutional.py"
+
+
+  # - title: "Papers"
+  #   children:
+  #     - title: "DeskAI"
+  #       url: /portfolio/deskai
+  #     - title: "Smart Climate Index"
+  #       url: /portfolio/sclm
+
+  - title: "Other Work"
+    children:
+      - title: "• OEIS entry of numerators of Kaplan's series'"
+        url: https://oeis.org/A302977
+
+# sidebar for coursework
+coursework:
+  - title: "Spring 2019 Papers"
+    children:
+      - title: "• On the CTD Principle's Implications for the Mind"
+        url: /hw/Spring 2019/Ghost in Machine/ctdpaper/main.pdf
+      - title: "• Atari Pong AI via Reinforcement Learning"
+        url: /hw/Spring 2019/Ghost in Machine/pongpaper/pongpaper.pdf
+      - title: "• On Bloom's \"Is God an Accident\""
+        url: /hw/Spring 2019/humannaturepaper/paper.pdf
+  - title: "Fall 2018 Papers"
+    children:
+      - title: "• On Clark's \"Without Evidence or Argument\""
+        url: /hw/Fall 2018/Intro to Philosophy/philosophypaper1.pdf
+      - title: "• On Pereboom's Argument Against Moral Responsibility"
+        url: /hw/Fall 2018/Intro to Philosophy/philosophypaper2.pdf
+  - title: "Rough Notes"
+    children:
+      - title: "• Drag Force"
+        url: /drag-force/
+      - title: "• Linear ODEs"
+        url: /linear-ODEs/

@@ -1,0 +1,6 @@
+.sass-cache
+.jekyll-metadata
+ltximg
+
+# Ignore localhost test site
+_site/

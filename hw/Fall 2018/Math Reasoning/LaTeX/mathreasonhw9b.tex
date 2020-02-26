@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 9b}
+\author{Ozaner Hansha}
+\date{November 14, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Use induction to prove that:
+$$(\forall r\in\mathbb R,\ \forall n,m\in\mathbb Z_{\ge0})\ r^{m+n}=r^mr^n$$
+\textbf{Solution:} First we'll state this as a predicate for all reals $r$ and integers $m$:
+$$P(n)\equiv r^{m+n}=r^mr^n$$
+
+We know that $P(0)$ is true:
+\begin{align*}
+  P(0)\equiv r^{m+0}&=r^mr^0\\
+  r^{m}&=r^m\tag{def. of $r^0$}
+\end{align*}
+
+Now we just need to show that $P(n)\rightarrow P(n+1)$:
+\begin{align*}
+  r^{m+n}=r^mr^n\tag{given}\\
+  r^{m+n}(r)=r^mr^n(r)\\
+  r^{m+(n+1)}=r^mr^{n+1}\tag{def. of $r^{k+1}$}
+\end{align*}
+
+And so by induction, the equality holds for all real numbers $r$ and nonnegative integers $m,n$.
+
+\section*{Problem 2}
+\textbf{Problem:} Use induction to prove that:
+$$(\forall r\in\mathbb R,\ \forall n,m\in\mathbb Z_{\ge0})\ (r^m)^n=r^{mn}$$
+\textbf{Solution:} First we'll state this as a predicate for all reals $r$ and integers $m$:
+$$P(n)\equiv (r^m)^n=r^{mn}$$
+
+We know that $P(0)$ is true:
+\begin{align*}
+  P(0)\equiv (r^m)^0&=r^{m(0)}\\
+  (r^m)^0&=r^0\\
+  1&=1\tag{def. of $r^0$}
+\end{align*}
+
+Now we just need to show that $P(n)\rightarrow P(n+1)$:
+\begin{align*}
+  (r^m)^n&=r^{mn}\tag{given}\\
+  (r^m)^n(r^m)&=r^{mn}(r^m)\\
+  (r^m)^{n+1}&=r^{mn}r^m\tag{def. of $r^{k+1}$}\\
+  &=r^{mn+m}\tag{problem 1}\\
+  &=r^{m(n+1)}
+\end{align*}
+
+And so by induction, the equality holds for all real numbers $r$ and nonnegative integers $m,n$.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that given a list of $n$ real numbers $a_i$:
+$$(\forall i,\ 1\le i<n)\ a_i\ge a_{i+1}\implies a_1\ge a_n$$
+\textbf{Solution:} First we'll establish the following proposition:
+$$P(i)\equiv a_1\ge a_{i}$$
+
+We know that $P(1)$ is true because $a_1\ge a_1$ is clearly true. We also know that $P(2)$ is true because letting $i=1$ our antecedent tells us that $a_1\ge a_2$.
+
+Now we will prove that $P(i)\rightarrow P(i+1)$ assuming $1\le i<n$:
+\begin{align*}
+  a_1&\ge a_i\tag{given}\\
+  a_i&\ge a_{i+1}\tag{plug $i$ into antecedent}\\
+  a_1&\ge a_{i+1}\tag{transitive property of $\ge$}
+\end{align*}
+
+\textit{Notice that we could only do line 2 because we assumed $1\le i<n$.}
+
+And so by induction $(\forall i,\ 1\le i<n)\ P(i)$.
+
+\section*{Problem 4}
+\textbf{Problem:} Give and prove an explicit formula for the following sequence:
+\begin{align*}
+  c_1=1;\ \  c_n&=c_{n-1}+\cdots+c_1+1\\
+  &=\left(\sum_{i=1}^{n-1}\right)+1
+\end{align*}
+\textbf{Solution:} The explicit formula for this sequence is:
+$$2^{n-1}$$
+
+We'll prove it using induction. Consider the predicate:
+$$P(n)\equiv \left(\sum_{i=1}^{n-1}\right)+1=2^{n-1}$$
+
+We know that $P(1)$ is true because $c_1$ is defined to be 1 and:
+\begin{align*}
+  P(1)\equiv c_1&=2^{1-1}\\
+  1&=2^0\\
+  1&=1
+\end{align*}
+
+Now we just need to show that $P(n)\rightarrow P(n+1)$
+\begin{align*}
+  \left(\sum_{i=1}^{n-1}\right)+1&=2^{n-1}\\
+  2\left(\left(\sum_{i=1}^{n-1}c_i\right)+1\right)&=2^{n-1}(2)\\
+  \left(\left(\sum_{i=1}^{n-1}c_i\right)+1\right)+\left(\left(\sum_{i=1}^{n-1}c_i\right)+1\right)&=2^n\\
+  \left(\left(\sum_{i=1}^{n-1}c_i\right)+1\right)+c_n&=2^n\tag{def. of $c_n$}\\
+  \left(\sum_{i=1}^{n-1}c_i\right)+c_n+1&=2^n\\
+  \left(\sum_{i=1}^nc_i\right)+1&=2^n\tag{def. finitary addition}
+\end{align*}
+
+And so by induction the explicit formula holds for all $n\ge 1$.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} Prove that $x+y\in X$ if $x,y\in X$.
+\\\\
+\textbf{Solution:} Note that any constant $c$ of the following form (where $c_i\in\mathbb Z^n$) is in $X$ by definition:
+$$\sum_{i=1}^na_ic_i=c$$
+
+Consider two solutions $x,y\in X$. There must be at least one corresponding list $x_i$ and $y_i$ respectively that when plugged into the function return these constants:
+\begin{align*}
+  x&=\sum_{i=1}^na_ix_i\\
+  y&=\sum_{i=1}^na_iy_i\\
+  x+y&=\sum_{i=1}^na_ix_i+\sum_{i=1}^na_iy_i\\
+  &=\sum_{i=1}^na_ix_i+a_iy_i\\
+  &=\sum_{i=1}^na_i(x_i+y_i)
+\end{align*}
+
+And since that last sum is of the proper form (because the integers are closed under addition), $x+y$ is indeed in $X$.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that $cx\in X$ if $x\in X$.
+\\\\
+\textbf{Solution:} Note that any constant $c$ of the following form (where $c_i\in\mathbb Z^n$) is in $X$ by definition:
+$$\sum_{i=1}^na_ic_i=c$$
+
+Consider a solution $x\in X$. There must be at least one corresponding list $x_i$ that when plugged into the function returns this constant. So if we multiply both sides by some arbitrary $k\in\mathbb Z$:
+\begin{align*}
+  x&=\sum_{i=1}^na_ix_i\\
+  kx&=k\sum_{i=1}^na_ix_i\\
+  &=\sum_{i=1}^nka_ix_i\\
+  &=\sum_{i=1}^na_i(kx_i)
+\end{align*}
+
+And since that last sum is of the proper form (because the integers are closed under multiplication), $kx$ for any integer $k$ is indeed in $X$.
+\begin{align*}
+
+\end{align*}
+
+\end{document}

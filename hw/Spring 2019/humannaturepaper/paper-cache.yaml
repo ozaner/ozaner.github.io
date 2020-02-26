@@ -1,0 +1,1022 @@
+version: 0.12.2
+filePath: paper.tex
+options:
+  $BIBINPUTS:
+    - $ROOTDIR
+    - $ROOTDIR/$OUTDIR
+    - ''
+  $TEXINPUTS:
+    - $ROOTDIR
+    - $ROOTDIR/$OUTDIR
+    - ''
+  bibtexEngine: bibtex
+  cleanPatterns:
+    - '**/*.aux'
+    - '**/*.aux.bak'
+    - '**/*.bbl'
+    - '**/*.bcf'
+    - '**/*.blg'
+    - '**/*.dvi'
+    - '**/*.fdb_latexmk'
+    - '**/*.fls'
+    - '**/*.idx'
+    - '**/*.idx.bak'
+    - '**/*.ilg'
+    - '**/*.ind'
+    - '**/*.lof'
+    - '**/*.log'
+    - '**/*.lol'
+    - '**/*.lot'
+    - '**/*.nav'
+    - '**/*.out'
+    - '**/*.pdf'
+    - '**/*.ps'
+    - '**/*.snm'
+    - '**/*.synctex.gz'
+    - '**/*.toc'
+    - '/**/_minted-${JOB}'
+    - '/${OUTDIR}/sage-plots-for-${JOB}.tex'
+    - /missfont.log
+    - /texput.log
+    - /texput.aux
+  dviToPdfEngine: xdvipdfmx
+  engine: pdflatex
+  epstopdfBoundingBox: default
+  epstopdfOutputPath: $DIR_0/$NAME_0.pdf
+  indexAutomaticRanges: true
+  indexEngine: makeindex
+  indexOrdering: word
+  indexSorting: default
+  knitrConcordance: true
+  knitrOutputPath: $JOB.tex
+  lhs2texStyle: poly
+  literateAgdaEngine: agda
+  literateHaskellEngine: lhs2TeX
+  loadCache: true
+  loadUserOptions: true
+  outputFormat: pdf
+  phaseCycles: 20
+  pweaveCacheDirectory: pweave-cache-for-$JOB
+  pweaveFigureDirectory: pweave-figures-for-$JOB
+  pweaveKernel: python3
+  pweaveOutputFormat: tex
+  pweaveOutputPath: $JOB.tex
+  saveCache: true
+  severity: info
+  validateCache: true
+  synctex: true
+  copyTargetsToRoot: true
+  outputDirectory: ''
+  intermediatePostScript: false
+  $PATH: >-
+    %SystemDrive%\texlive\2017\bin\win32;%SystemDrive%\texlive\2016\bin\win32;%SystemDrive%\texlive\2015\bin\win32;%ProgramFiles%\MiKTeX
+    2.9\miktex\bin\x64;%ProgramFiles(x86)%\MiKTeX 2.9\miktex\bin;$PATH
+files:
+  dicy-instance.yaml-ParsedYAML:
+    timeStamp: 2019-04-28T14:43:11.775Z
+    jobNames: []
+    value:
+      severity: info
+    type: ParsedYAML
+  dicy.yaml-ParsedYAML:
+    jobNames: []
+    type: ParsedYAML
+  paper.yaml-ParsedYAML:
+    jobNames: []
+    type: ParsedYAML
+  paper.tex-ParsedLaTeXMagic:
+    timeStamp: 2019-04-21T01:21:43.356Z
+    jobNames: []
+    value: {}
+    type: ParsedLaTeXMagic
+  'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml-ParsedYAML':
+    timeStamp: 2019-04-21T01:21:43.354Z
+    jobNames: []
+    value:
+      synctex: true
+      engine: pdflatex
+      severity: warning
+      copyTargetsToRoot: true
+      outputDirectory: ''
+      outputFormat: pdf
+      cleanPatterns:
+        - '**/*.aux'
+        - '**/*.aux.bak'
+        - '**/*.bbl'
+        - '**/*.bcf'
+        - '**/*.blg'
+        - '**/*.dvi'
+        - '**/*.fdb_latexmk'
+        - '**/*.fls'
+        - '**/*.idx'
+        - '**/*.idx.bak'
+        - '**/*.ilg'
+        - '**/*.ind'
+        - '**/*.lof'
+        - '**/*.log'
+        - '**/*.lol'
+        - '**/*.lot'
+        - '**/*.nav'
+        - '**/*.out'
+        - '**/*.pdf'
+        - '**/*.ps'
+        - '**/*.snm'
+        - '**/*.synctex.gz'
+        - '**/*.toc'
+        - '/**/_minted-${JOB}'
+        - '/${OUTDIR}/sage-plots-for-${JOB}.tex'
+        - /missfont.log
+        - /texput.log
+        - /texput.aux
+      intermediatePostScript: false
+      $PATH: >-
+        %SystemDrive%\texlive\2017\bin\win32;%SystemDrive%\texlive\2016\bin\win32;%SystemDrive%\texlive\2015\bin\win32;%ProgramFiles%\MiKTeX
+        2.9\miktex\bin\x64;%ProgramFiles(x86)%\MiKTeX 2.9\miktex\bin;$PATH
+    type: ParsedYAML
+  paper.tex:
+    timeStamp: 2019-04-29T22:07:48.939Z
+    jobNames: []
+    hash: WFnwf0L999bR+qs2QjL88mH9Ao9t4p9sFf+jxo82f1o=
+    type: LaTeX
+    subType: article
+  'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml':
+    timeStamp: 2019-04-28T14:43:11.834Z
+    jobNames: []
+    type: YAML
+  x.y-Nil:
+    jobNames: []
+    type: Nil
+  paper.log:
+    timeStamp: 2019-04-29T22:07:51.685Z
+    jobNames: []
+    hash: tW1L1TmtLnOf2zW/sVKksFG8tX8zdnAlmZGuVg+r2Ks=
+    type: LaTeXLog
+    subType: pdfTeX
+  paper.fls-ParsedFileListing:
+    timeStamp: 2019-04-29T18:47:35.262Z
+    jobNames: []
+    value:
+      messages: []
+      inputs:
+        - 'c:\texlive\2018\texmf-dist\fonts\map\fontname\texfonts.map'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm'
+        - >-
+          c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam7.tfm'
+        - >-
+          c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm7.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx10.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx12.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx9.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmex10.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi12.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi6.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi8.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr12.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr17.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr6.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr8.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr9.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy10.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy6.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy8.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy9.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmti9.tfm'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx10.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx12.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx9.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr10.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr12.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr17.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr9.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmsy9.pfb'
+        - 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmti9.pfb'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amsfonts.sty'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amssymb.sty'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsa.fd'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsb.fd'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\base\article.cls'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\base\omscmr.fd'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\base\size10.clo'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.cfg'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.def'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.sty'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\etoolbox\etoolbox.sty'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\graphics\keyval.sty'
+        - 'c:\texlive\2018\texmf-dist\tex\latex\setspace\setspace.sty'
+        - 'c:\texlive\2018\texmf-dist\web2c\texmf.cnf'
+        - 'c:\texlive\2018\texmf-var\fonts\map\pdftex\updmap\pdftex.map'
+        - 'c:\texlive\2018\texmf-var\web2c\pdftex\pdflatex.fmt'
+        - 'c:\texlive\2018\texmf.cnf'
+        - paper.aux
+        - paper.tex
+      outputs:
+        - paper.aux
+        - paper.log
+        - paper.pdf
+      calls: []
+    type: ParsedFileListing
+  paper.log-ParsedLaTeXLog:
+    timeStamp: 2019-04-29T22:07:52.059Z
+    jobNames: []
+    value:
+      messages:
+        - name: pdfTeX
+          severity: info
+          text: amssymb 2013/01/14 v3.01 AMS font symbols
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amssymb.sty'
+          log:
+            file: paper.log
+            range:
+              start: 28
+              end: 28
+        - name: pdfTeX
+          severity: info
+          text: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amsfonts.sty'
+          log:
+            file: paper.log
+            range:
+              start: 30
+              end: 30
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: >-
+            Overwriting math alphabet `\mathfrak' in version `bold' U/euf/m/n
+            --> U/euf/b/n.
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amsfonts.sty'
+            range:
+              start: 106
+              end: 106
+          log:
+            file: paper.log
+            range:
+              start: 34
+              end: 35
+        - name: pdfTeX
+          severity: info
+          text: setspace 2011/12/19 v6.7a set line spacing
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\setspace\setspace.sty'
+          log:
+            file: paper.log
+            range:
+              start: 37
+              end: 37
+        - name: pdfTeX
+          severity: info
+          text: csquotes 2018/04/13 v5.2d context-sensitive quotations (JAW)
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.sty'
+          log:
+            file: paper.log
+            range:
+              start: 39
+              end: 39
+        - name: pdfTeX
+          severity: info
+          text: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\etoolbox\etoolbox.sty'
+          log:
+            file: paper.log
+            range:
+              start: 41
+              end: 41
+        - name: pdfTeX
+          severity: info
+          text: keyval 2014/10/28 v1.15 key=value parser (DPC)
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\graphics\keyval.sty'
+          log:
+            file: paper.log
+            range:
+              start: 44
+              end: 44
+        - severity: info
+          name: pdfTeX
+          category: Package csquotes
+          text: >-
+            Trying to load configuration file 'csquotes.cfg'... ...
+            configuration file loaded successfully.
+          source:
+            file: 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.sty'
+          log:
+            file: paper.log
+            range:
+              start: 57
+              end: 58
+        - severity: info
+          name: pdfTeX
+          category: Package csquotes
+          text: Checking for multilingual support... ... none found.
+          source:
+            file: paper.tex
+          log:
+            file: paper.log
+            range:
+              start: 62
+              end: 63
+        - severity: warning
+          name: pdfTeX
+          category: LaTeX
+          text: Label `dm' multiply defined.
+          source:
+            file: paper.aux
+          log:
+            file: paper.log
+            range:
+              start: 68
+              end: 68
+        - severity: warning
+          name: pdfTeX
+          category: LaTeX
+          text: Label `dm' multiply defined.
+          source:
+            file: paper.aux
+          log:
+            file: paper.log
+            range:
+              start: 71
+              end: 71
+        - severity: warning
+          name: pdfTeX
+          category: LaTeX
+          text: Label `dm' multiply defined.
+          source:
+            file: paper.aux
+          log:
+            file: paper.log
+            range:
+              start: 74
+              end: 74
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for OML/cmm/m/it ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 79
+              end: 80
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for T1/cmr/m/n ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 81
+              end: 82
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for OT1/cmr/m/n ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 83
+              end: 84
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for OMS/cmsy/m/n ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 85
+              end: 86
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for OMX/cmex/m/n ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 87
+              end: 88
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Checking defaults for U/cmr/m/n ... okay
+          source:
+            file: paper.tex
+            range:
+              start: 7
+              end: 7
+          log:
+            file: paper.log
+            range:
+              start: 89
+              end: 90
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Try loading font information for U+msa
+          source:
+            file: paper.tex
+            range:
+              start: 14
+              end: 14
+          log:
+            file: paper.log
+            range:
+              start: 91
+              end: 91
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Try loading font information for U+msb
+          source:
+            file: paper.tex
+            range:
+              start: 14
+              end: 14
+          log:
+            file: paper.log
+            range:
+              start: 95
+              end: 95
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: Try loading font information for OMS+cmr
+          source:
+            file: paper.tex
+            range:
+              start: 32
+              end: 32
+          log:
+            file: paper.log
+            range:
+              start: 101
+              end: 101
+        - severity: info
+          name: pdfTeX
+          category: LaTeX Font
+          text: >-
+            Font shape `OMS/cmr/m/n' in size <9> not available Font shape
+            `OMS/cmsy/m/n' tried instead.
+          source:
+            file: paper.tex
+            range:
+              start: 32
+              end: 32
+          log:
+            file: paper.log
+            range:
+              start: 105
+              end: 106
+        - severity: warning
+          name: pdfTeX
+          category: LaTeX
+          text: There were multiply-defined labels.
+          source:
+            file: paper.tex
+          log:
+            file: paper.log
+            range:
+              start: 111
+              end: 111
+      inputs: []
+      outputs:
+        - paper.pdf
+      calls: []
+    type: ParsedLaTeXLog
+  paper.xdv:
+    timeStamp: 2019-04-29T07:15:12.000Z
+    jobNames: []
+    type: DeviceIndependentFile
+  paper.pdf:
+    timeStamp: 2019-04-29T22:07:51.552Z
+    jobNames: []
+    hash: wYzHBHPcGPTT3xJHaPH5/uzKSypK5qyo5lgHh+4OVds=
+    type: PortableDocumentFormat
+  paper.aux:
+    timeStamp: 2019-04-29T22:07:51.461Z
+    jobNames: []
+    hash: S/6JbiI9XEbtxgpkyqm/gOiLwQkmSVjQsv7Q9UBdEBM=
+    type: LaTeXAuxilary
+  paper.fls:
+    timeStamp: 2019-04-29T22:07:51.729Z
+    jobNames: []
+    hash: 1stOF+adMdYwMG3OtafikMopjZuBgDzQ+yKLOVbld1w=
+    type: FileListing
+  paper.synctex.gz:
+    timeStamp: 2019-04-29T22:07:51.591Z
+    jobNames: []
+    hash: BoKV8AQ+Mam9wZY5epD83tZw7ZYtr/zMI1TQJRsghnw=
+    type: SyncTeX
+  paper.aux-ParsedLaTeXAuxilary:
+    timeStamp: 2019-04-29T22:07:52.048Z
+    jobNames: []
+    value:
+      commands:
+        - relax
+        - '@writefile'
+        - '@writefile'
+        - '@writefile'
+        - '@writefile'
+        - '@writefile'
+        - '@writefile'
+        - '@writefile'
+        - bibcite
+        - bibcite
+        - '@writefile'
+        - bibcite
+        - bibcite
+    type: ParsedLaTeXAuxilary
+  'c:\texlive\2018\texmf-dist\fonts\map\fontname\texfonts.map':
+    timeStamp: 2018-09-29T22:50:39.023Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm':
+    timeStamp: 2018-09-29T22:07:56.315Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm':
+    timeStamp: 2018-09-29T22:07:56.320Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam10.tfm':
+    timeStamp: 2018-09-29T22:07:56.729Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam7.tfm':
+    timeStamp: 2018-09-29T22:07:56.745Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm10.tfm':
+    timeStamp: 2018-09-29T22:07:56.759Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm7.tfm':
+    timeStamp: 2018-09-29T22:07:56.775Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx12.tfm':
+    timeStamp: 2018-09-29T22:24:23.182Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx9.tfm':
+    timeStamp: 2018-09-29T22:24:23.209Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmex10.tfm':
+    timeStamp: 2018-09-29T22:24:23.237Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi12.tfm':
+    timeStamp: 2018-09-29T22:24:23.272Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi6.tfm':
+    timeStamp: 2018-09-29T22:24:23.281Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi8.tfm':
+    timeStamp: 2018-09-29T22:24:23.294Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr12.tfm':
+    timeStamp: 2018-09-29T22:24:23.318Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr17.tfm':
+    timeStamp: 2018-09-29T22:24:23.326Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr6.tfm':
+    timeStamp: 2018-09-29T22:24:23.338Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr8.tfm':
+    timeStamp: 2018-09-29T22:24:23.347Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr9.tfm':
+    timeStamp: 2018-09-29T22:24:23.352Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy10.tfm':
+    timeStamp: 2018-09-29T22:24:23.474Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy6.tfm':
+    timeStamp: 2018-09-29T22:24:23.488Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy8.tfm':
+    timeStamp: 2018-09-29T22:24:23.497Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmti9.tfm':
+    timeStamp: 2018-09-29T22:24:23.556Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx12.pfb':
+    timeStamp: 2018-09-29T22:07:56.824Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx9.pfb':
+    timeStamp: 2018-09-29T22:07:56.865Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr10.pfb':
+    timeStamp: 2018-09-29T22:07:57.321Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr12.pfb':
+    timeStamp: 2018-09-29T22:07:57.327Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr17.pfb':
+    timeStamp: 2018-09-29T22:07:57.336Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr9.pfb':
+    timeStamp: 2018-09-29T22:07:57.370Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmti9.pfb':
+    timeStamp: 2018-09-29T22:07:57.624Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amsfonts.sty':
+    timeStamp: 2018-09-29T22:07:58.155Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amssymb.sty':
+    timeStamp: 2018-09-29T22:07:58.163Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsa.fd':
+    timeStamp: 2018-09-29T22:07:58.211Z
+    jobNames: []
+    type: FontDescription
+  'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsb.fd':
+    timeStamp: 2018-09-29T22:07:58.217Z
+    jobNames: []
+    type: FontDescription
+  'c:\texlive\2018\texmf-dist\tex\latex\base\article.cls':
+    timeStamp: 2018-09-29T23:10:05.963Z
+    jobNames: []
+    type: LaTeXClass
+  'c:\texlive\2018\texmf-dist\tex\latex\base\size10.clo':
+    timeStamp: 2018-09-29T23:10:06.546Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.cfg':
+    timeStamp: 2018-09-29T22:35:36.082Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.def':
+    timeStamp: 2018-09-29T22:35:36.088Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.sty':
+    timeStamp: 2018-09-29T22:35:36.096Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\tex\latex\etoolbox\etoolbox.sty':
+    timeStamp: 2018-09-29T22:45:39.714Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\tex\latex\graphics\keyval.sty':
+    timeStamp: 2018-09-29T22:56:29.871Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\tex\latex\setspace\setspace.sty':
+    timeStamp: 2018-09-29T23:55:24.461Z
+    jobNames: []
+    type: LaTeXStyle
+  'c:\texlive\2018\texmf-dist\web2c\texmf.cnf':
+    timeStamp: 2018-09-29T23:08:31.706Z
+    jobNames: []
+  'c:\texlive\2018\texmf-var\fonts\map\pdftex\updmap\pdftex.map':
+    timeStamp: 2018-09-30T00:22:51.000Z
+    jobNames: []
+  'c:\texlive\2018\texmf-var\web2c\pdftex\pdflatex.fmt':
+    timeStamp: 2018-09-30T00:24:42.797Z
+    jobNames: []
+  'c:\texlive\2018\texmf.cnf':
+    timeStamp: 2018-09-30T00:22:18.534Z
+    jobNames: []
+  'c:\texlive\2018\texmf-var\web2c\xetex\xelatex.fmt':
+    timeStamp: 2018-09-30T00:25:03.138Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy9.tfm':
+    timeStamp: 2018-09-29T22:24:23.502Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmsy9.pfb':
+    timeStamp: 2018-09-29T22:07:57.563Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\tex\latex\base\omscmr.fd':
+    timeStamp: 2018-09-29T23:10:06.377Z
+    jobNames: []
+    type: FontDescription
+  'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx10.tfm':
+    timeStamp: 2018-09-29T22:24:23.177Z
+    jobNames: []
+  'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx10.pfb':
+    timeStamp: 2018-09-29T22:07:56.810Z
+    jobNames: []
+rules:
+  - name: ApplyOptions
+    command: load
+    phase: initialize
+    parameters: []
+    inputs:
+      - file: dicy.yaml-ParsedYAML
+        type: default
+      - file: paper.yaml-ParsedYAML
+        type: default
+      - file: paper.tex-ParsedLaTeXMagic
+        type: default
+      - file: dicy-instance.yaml-ParsedYAML
+        type: default
+      - file: 'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml-ParsedYAML'
+        type: default
+    outputs: []
+  - name: LoadAndValidateCache
+    command: load
+    phase: initialize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: Migrate
+    command: load
+    phase: initialize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: ApplyOptions
+    command: load
+    phase: execute
+    parameters: []
+    inputs:
+      - file: dicy.yaml-ParsedYAML
+        type: default
+      - file: paper.yaml-ParsedYAML
+        type: default
+      - file: paper.tex-ParsedLaTeXMagic
+        type: default
+      - file: dicy-instance.yaml-ParsedYAML
+        type: default
+      - file: 'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml-ParsedYAML'
+        type: default
+    outputs: []
+  - name: ParseOptionsFile
+    command: load
+    phase: execute
+    parameters: []
+    inputs:
+      - file: 'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml'
+        type: default
+    outputs:
+      - file: 'C:\Users\Ozaner Hansha\AppData\Roaming\dicy\config.yaml-ParsedYAML'
+        type: default
+  - name: ParseLaTeXMagic
+    command: load
+    phase: execute
+    parameters:
+      - paper.tex
+    inputs:
+      - file: paper.tex
+        type: default
+    outputs:
+      - file: paper.tex-ParsedLaTeXMagic
+        type: default
+  - name: AssignJobNames
+    command: load
+    phase: finalize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: FindLogFiles
+    command: build
+    phase: initialize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: LaTeX
+    command: build
+    phase: execute
+    parameters:
+      - paper.tex
+    inputs:
+      - file: paper.tex
+        type: default
+      - file: paper.fls-ParsedFileListing
+        type: default
+      - file: paper.log-ParsedLaTeXLog
+        type: default
+      - file: paper.aux
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\map\fontname\texfonts.map'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm'
+        type: default
+      - file: >-
+          c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msam7.tfm'
+        type: default
+      - file: >-
+          c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\amsfonts\symbols\msbm7.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx12.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx9.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmex10.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi12.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi6.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmmi8.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr12.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr17.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr6.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr8.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmr9.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy10.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy6.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy8.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmti9.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx12.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx9.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr10.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr12.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr17.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmr9.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmti9.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amsfonts.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\amssymb.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsa.fd'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\amsfonts\umsb.fd'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\base\article.cls'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\base\size10.clo'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.cfg'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.def'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\csquotes\csquotes.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\etoolbox\etoolbox.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\graphics\keyval.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\setspace\setspace.sty'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\web2c\texmf.cnf'
+        type: default
+      - file: 'c:\texlive\2018\texmf-var\fonts\map\pdftex\updmap\pdftex.map'
+        type: default
+      - file: 'c:\texlive\2018\texmf-var\web2c\pdftex\pdflatex.fmt'
+        type: default
+      - file: 'c:\texlive\2018\texmf.cnf'
+        type: default
+      - file: 'c:\texlive\2018\texmf-var\web2c\xetex\xelatex.fmt'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmsy9.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmsy9.pfb'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\tex\latex\base\omscmr.fd'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\tfm\public\cm\cmbx10.tfm'
+        type: default
+      - file: 'c:\texlive\2018\texmf-dist\fonts\type1\public\amsfonts\cm\cmbx10.pfb'
+        type: default
+    outputs:
+      - file: paper.xdv
+        type: default
+      - file: paper.aux
+        type: default
+      - file: paper.fls
+        type: default
+      - file: paper.log
+        type: default
+      - file: paper.synctex.gz
+        type: target
+      - file: paper.pdf
+        type: target
+  - name: ParseLaTeXLog
+    command: build
+    phase: execute
+    parameters:
+      - paper.log
+    inputs:
+      - file: paper.log
+        type: default
+    outputs:
+      - file: paper.log-ParsedLaTeXLog
+        type: default
+  - name: DviToPdf
+    command: build
+    phase: execute
+    parameters:
+      - paper.xdv
+    inputs:
+      - file: paper.xdv
+        type: target
+    outputs:
+      - file: paper.pdf
+        type: target
+  - name: ParseLaTeXAuxilary
+    command: build
+    phase: execute
+    parameters:
+      - paper.aux
+    inputs:
+      - file: paper.aux
+        type: default
+    outputs:
+      - file: paper.aux-ParsedLaTeXAuxilary
+        type: default
+  - name: ParseFileListing
+    command: build
+    phase: execute
+    parameters:
+      - paper.fls
+    inputs:
+      - file: paper.fls
+        type: default
+    outputs:
+      - file: paper.fls-ParsedFileListing
+        type: default
+  - name: LogProducedTargets
+    command: build
+    phase: finalize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: CheckForMissingBuildRule
+    command: build
+    phase: finalize
+    parameters:
+      - paper.tex
+    inputs:
+      - file: paper.tex
+        type: default
+    outputs: []
+  - name: FindLogFiles
+    command: log
+    phase: initialize
+    parameters: []
+    inputs: []
+    outputs: []
+  - name: ParseLaTeXLog
+    command: log
+    phase: execute
+    parameters:
+      - paper.log
+    inputs:
+      - file: paper.log
+        type: default
+    outputs:
+      - file: paper.log-ParsedLaTeXLog
+        type: default
+  - name: ReportLogMessages
+    command: log
+    phase: execute
+    parameters:
+      - paper.log-ParsedLaTeXLog
+    inputs:
+      - file: paper.log-ParsedLaTeXLog
+        type: default
+    outputs: []
+  - name: SaveCache
+    command: save
+    phase: execute
+    parameters: []
+    inputs: []
+    outputs: []

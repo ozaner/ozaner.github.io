@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\DeclareRobustCommand{\revR}{\text{\reflectbox{$R$}}}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 7b}
+\author{Ozaner Hansha}
+\date{October 31, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that for any relation $R$ on $A$ that for all $a\in A$:
+$$R\text{ is reflexive}\iff\operatorname{graph}(I_A)\subseteq\operatorname{graph}(R)$$
+\textit{where $I_A$ is the identity relation on $A$.}
+\\\\
+\textbf{Solution:} This is obvious because, by definition, for a relation $R$ to be reflexive its graph must contain the set of all pairs of the form $(a,a)$ where $a\in A$:
+$$(\forall a\in A)\ aRa\equiv(a,a)\in\operatorname{graph}(R)$$
+
+and the graph of the identity relation on $A$, by definition, is simply the set of all $(a,a)$ where $a\in A$:
+$$\operatorname{graph}(I_A)\equiv\{(a,a)\mid a\in A\}$$
+
+And so any pair $(a,b)\in\operatorname{graph}(I_A)$ must also be in $R$:
+$$aI_Ab\rightarrow aRb$$
+
+And so the left is a subset of the right.
+
+\section*{Problem 2}
+\textbf{Problem:} Prove that for any relation $R$ on $A$ that for all $a\in A$:
+$$R\text{ is anti-reflexive}\iff\operatorname{graph}(R)\setminus\operatorname{graph}(I_A)=\emptyset$$
+\\\\
+\textbf{Solution:} By definition, for a relation $R$ to be anti-reflexive its graph cannot contain any pair of the form $(a,a)$ where $a\in A$:
+$$(\forall a\in A)\ \neg(aRa)\equiv(a,a)\not\in\operatorname{graph}(R)$$
+
+and the graph of the identity relation on $A$, by definition, is simply the set of all $(a,a)$ where $a\in A$:
+$$\operatorname{graph}(I_A)\equiv\{(a,a)\mid a\in A\}$$
+
+And so any pair $(a,b)\in\operatorname{graph}(I_A)$ cannot also be in $R$:
+$$aI_Ab\rightarrow\neg(aRb)$$
+
+This means that no element of the graph of $I_A$ is in the graph of the $R$ and so they are disjoint.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that for any relation $R$ on $A$ that for all $a\in A$:
+$$R\text{ is symmetric}\iff(R=\revR)$$
+\textit{where $\revR$ is the reverse of $R$.}
+\\\\
+\textbf{Solution:} This should be quite clear as all symmetric relations satisfy the following:
+$$(\forall a,b\in A)\ aRb\rightarrow bRa$$
+
+And since $a$ and $b$ were arbitrary indistinguishable variables from $A$, the stronger statement:
+$$(\forall a,b\in A)\ aRb\equiv bRa$$
+
+holds as well. Along with the definition of the reverse of $R$:
+$$a\revR b\equiv bRa$$
+
+it's clear that for all $a$ and $b$:
+$$aRb\equiv bRa\equiv a\revR b$$
+
+Thus the relations are actually equivalent, given symmetry.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that for any relation $R$ on $A$ that for all $a,b\in A$:
+$$R\text{ is anti-symmetric}\iff(aRb\wedge\neg(a\revR b)\rightarrow a=b)$$
+\textbf{Solution:} All anti-symmetric relations satisfy the following:
+$$(\forall a,b\in A)\ aRb\wedge\neg(bRa)\rightarrow a=b$$
+
+And as shown in Problem 3, $aRb\equiv bRa\equiv a\revR b$, and so the two statements above are actually equivalent.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} Prove that the following relation $C$ on the set of finite subsets of $\mathbb Z$ is a partial order:
+$$xCy\equiv |x|\le|y|$$
+\textbf{Solution:} This is not a partial order because, due to anti-symmetry, no two \textit{distinct} elements $x$ and $y$ can satisfy the following:
+$$xCy\wedge yCx$$
+
+Yet, consider the sets $\{1,2\}$ and $\{-1,-2\}$. These sets are both clearly finite subsets of $\mathbb Z$ as well as not equivalent. Yet the definition of $C$ states that:
+\begin{gather*}
+  \{1,2\}C\{-1,-2\}\equiv |\{1,2\}|\le|\{-1,-2\}|\equiv 2\le 2\\
+  \{-1,-2\}C\{1,2\}\equiv |\{-1,-2\}|\le|\{1,2\}|\equiv 2\le 2
+\end{gather*}
+
+It cannot be the case that both of those statements are true \textit{and} $C$ is a partial order. Thus, because $2\le2$, $C$ is not a partial order.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that the following relation $E$ on the set of finite subsets of $\mathbb Z$ is a partial order:
+$$xEy\equiv |x|=|y|$$
+\textbf{Solution:} This is not a partial order because, due to anti-symmetry, no two \textit{distinct} elements $x$ and $y$ can satisfy the following:
+$$xCy\wedge yCx$$
+
+Yet, consider the sets $\{1,2\}$ and $\{-1,-2\}$. These sets are both clearly finite subsets of $\mathbb Z$ as well as not equivalent. Yet the definition of $C$ states that:
+\begin{gather*}
+  \{1,2\}C\{-1,-2\}\equiv |\{1,2\}|=|\{-1,-2\}|\equiv 2= 2\\
+  \{-1,-2\}C\{1,2\}\equiv |\{-1,-2\}|=|\{1,2\}|\equiv 2= 2
+\end{gather*}
+
+It cannot be the case that both of those statements are true \textit{and} $C$ is a partial order. Thus, because 2=2, $C$ is not a partial order.
+
+\end{document}

@@ -1,0 +1,20 @@
+1
+Odd-Parity	0
+10
+Even-Parity	0
+100
+Odd-Parity	1
+1000
+Even-Parity	2
+10000
+Odd-Parity	1
+3
+Even-Parity	1
+146
+Odd-Parity	0
+7645
+Even-Parity	3
+16383
+Even-Parity	7
+43690
+Even-Parity	0

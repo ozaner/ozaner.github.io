@@ -1,0 +1,66 @@
+
+This is your auto_grader directory. This directory contains your
+auto_grader to test your assignment.
+
+There are two modes available for testing your assignment with the
+auto_grader.
+
+First mode
+==========
+
+Testing with a pa2 folder
+
+(1) Lets say you have a pa2 folder with the directory structure as
+described in the assignment.
+
+(2) Copy the folder to the directory of the autograder
+   
+(3) Run the autograder with the following command
+
+$python auto_grader.py 
+
+
+It will run your programs and print your scores.
+
+Second Mode
+===========
+
+This mode is to test your final submission (i.e, pa2.tar)
+
+(1) Copy pa2.tar to the auto_grader directory
+
+(2) Run the auto_grader with pa2.tar as the argument.
+
+The command line is 
+
+$python auto_grader.py pa2.tar
+
+
+Scoring
+=======
+
+The autograder will print out information about the compilation and
+the testing process.  At the end, if your assignment is completely
+correct, the score will something similar to what is given below.
+
+
+You scored 
+17.5  in  second
+15.0  in  third
+17.5  in  first
+Yoor TOTAL SCORE =  50.0 /50
+Your assignment will be graded for another 50 points with test cases not given to you
+
+
+FAQs
+====
+
+(1) Your program should return 0 from main and every place you exit.
+
+(2) Your pa1 folder and pa2.tar should have the correct directory structure.
+
+(3) You should not have extra print statements and new lines in your output.
+
+(4) You should not touch the testcases directory. If you create any
+temporary file in the testcases directory, the autograder will not
+work.

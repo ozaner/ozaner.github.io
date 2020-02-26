@@ -1,0 +1,272 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand*\pbar[0]{\,|\,}
+
+\begin{document}
+
+\title{Theory of Probability HW \#4}
+\author{Ozaner Hansha}
+\date{October 7, 2019}
+\maketitle
+
+\begin{center}
+    \Large{\textbf{Part A}}
+\end{center}
+Problems taken from Chapter 4 of the textbook.
+
+\subsection*{Problem 43a}
+$A$ and $B$ will take the same 10-question examination. Each question will be answered correctly by $A$ with probability .7, independently of her results on other questions. Each question will be answered correctly by $B$ with probability .4, independently of both her results on the other questions and on $A$'s.
+\bigskip
+
+\noindent\textbf{Problem:} Find the expected number of questions that are answered correctly by both $A$ and $B$.
+\bigskip
+
+\noindent\textbf{Solution:} Because they're independent, the probability of  $A$ and $B$ both getting a particular question correct is:
+
+\begin{equation*}
+    P(AB)=P(A)P(B)=(.7)(.4)=.28
+\end{equation*}
+
+Let the random variable $X$ denote how many questions both students got correct. $X$ is given by a binomial distribution of 10 trials, each with a probability of .28, giving us:
+
+\begin{equation*}
+    X\sim B(10,.28)\implies E[X]=10(.28)=2.8
+\end{equation*}
+
+% Let the random variable $X$ denote how many questions both students got correct. $P(A)$ the probability that $A$ gets a given question correct, and $P(B)$ for $B$ getting it correct. For each of the questions, the expected value of both students getting it right is simply 1 times the probability that they both get it right. Since each these 10 events are independent of each other we have:
+
+% \begin{align*}
+%     E[X]&=10\cdot P(AB)\\
+%     &=10\cdot P(A)P(B)\tag{$A$ and $B$ are independent}\\
+%     &=10\cdot (.7)(.4)\tag{given}\\
+%     &=2.8
+% \end{align*}
+
+\subsection*{Problem 45}
+\noindent\textbf{Problem:} A satellite system consists of $n$ components and functions on any given day if at least $k$ of the $n$ components function on that day. On a rainy day each of the components independently functions with probability $p_1$, whereas on a dry day, they each independently function with probability $p_2$. If the probability of rain tomorrow is $\alpha$, what is the probability that the satellite system will function? 
+\bigskip
+
+\noindent\textbf{Solution:} Let $R$ denote the event it rains, and let the random variable $Z$ denote the number of working components. Now let the random variable $X$ denote $Z$ conditioned on $R$, and likewise let $Y$ denote $Z$ conditioned on $R^\complement$. That is to say:
+
+\begin{equation*}
+    P(Z=k\pbar R)=P(X=k)\,\,\,\,\,\,\,\,\,\, P(Z=k\pbar R^\complement)=P(Y=k)
+\end{equation*}
+
+Note that, since each component working is independent of the others, both $X$ and $Y$ are binomial distributions:
+
+\begin{equation*}
+    X\sim B(n,p_1)\,\,\,\,\,\,\,\,\,\,\, Y\sim B(n,p_2)
+\end{equation*}
+
+Thus, the probability that the system functions tomorrow is given by:
+\begin{align*}
+    P(Z\ge k)&=P(Z\ge k\pbar R)P(R)+P(Z\ge k\pbar R^\complement)P(R^\complement)\\
+    &=P(X\ge k)P(R)+P(Y\ge k)P(R^\complement)\tag{def. of $X$ and $Y$}\\
+    &=\alpha\sum_{i=k}^n\binom{n}{i}p_1^i(1-p_1)^{n-i}+(1-\alpha)\sum_{i=k}^n\binom{n}{i}p_2^i(1-p_2)^{n-i}\tag{binomial distribution}
+\end{align*}
+
+\subsection*{Problem 47}
+\noindent\textbf{Problem:} Suppose that it takes at least 9 votes from a 12 member jury to convict a defendant. Suppose also that the probability that a juror votes a guilty person innocent is .2, whereas the probability that the votes an innocent person guilty is .1. If each juror acts independently and if 65\% of defendants are guilty, find the probability that the jury renders a correct decision. Also, what percentage of defendants are convicted?
+\bigskip
+
+\noindent\textbf{Solution:} Let $G$ denote the event of a guilty defendant, let $C$ denote a correct decision, and let the random variable $Z$ denote the number of votes for conviction. Now let $X$ be $X$ conditioned on $G$ and $Y$ be $X$ conditioned on $G^\complement$. That is to say:
+
+\begin{equation*}
+    P(Z=k\pbar G)=P(X=k)\,\,\,\,\,\,\,\,\,\, P(Z=k\pbar G^\complement)=P(Y=k)
+\end{equation*}
+
+Note that, since each juror's decision is independent of the others, \ both $X$ and $Y$ are both binomial distributions:
+
+\begin{equation*}
+    X\sim B(12,\underbrace{.8}_{1-0.2})\,\,\,\,\,\,\,\,\,\,\, Y\sim B(12,.1)
+\end{equation*}
+
+And as such their cumulative distribution functions, $F_X$ and $F_Y$ respectively, are given by the following sums:
+
+\begin{align*}
+    F_X(k)&=P(X\le k) & F_Y(k)&=P(Y\le k)\\
+    &=\sum_{i=0}^{k} P(X=i) & &=\sum_{i=0}^{k} P(Y=i)\\
+    &=\sum_{i=0}^{k} \binom{12}{i}(.8)^i(.2)^{12-i} & &=\sum_{i=0}^{k} \binom{12}{i}(.1)^i(.9)^{12-i}\\
+\end{align*}
+
+Note the following cumulative probabilities:
+\begin{align*}
+    F_X(8)&=\sum_{i=0}^{k} \binom{12}{i}(.8)^i(.2)^{12-i}=\frac{10030813}{48828125}\\
+    F_Y(8)&=\sum_{i=0}^{k} \binom{12}{i}(.1)^i(.9)^{12-i}=\frac{199999966833}{2\cdot10^{11}}
+\end{align*}
+
+We can now express the probability that a correct decision is made:
+\begin{align*}
+    P(C)&=P(Z\ge 9\pbar G)P(G)+P(Z<9\pbar G^\complement)P(G^\complement)\\
+    &=P(X\ge 9)P(G)+P(Y<9)P(G^\complement)\tag{def. of $X$ and $Y$}\\
+    &=(1-P(X<9))P(G)+P(Y<9)P(G^\complement)\tag{complement}\\
+    &=(1-P(X\le 8))P(G)+P(Y\le 8)P(G^\complement)\tag{discrete random variable}\\
+    &=(1-F_X(8))P(G)+F_Y(8)P(G^\complement)\tag{def. of cdf}\\
+    &=\left(1-\frac{10030813}{48828125}\right)(.65)+\frac{199999966833}{2\cdot10^{11}}(.35)\\
+    &=\frac{3465879037207}{4\cdot10^{11}}\approx 0.88647
+\end{align*}
+
+And the probability that someone is convicted is simply given by the probability that there are at least 9 votes:
+
+\begin{align*}
+    P(Z\ge9)&=P(Z\ge 9\pbar G)P(G)+P(Z\ge9\pbar G^\complement)P(G^\complement)\\
+    &=P(X\ge 9)P(G)+P(Y\ge9)P(G^\complement)\tag{def. of $X$ and $Y$}\\
+    &=(1-P(X<9))P(G)+(1-P(Y<9))P(G^\complement)\tag{complement}\\
+    &=(1-P(X\le 8))P(G)+P(Y\le 8)P(G^\complement)\tag{discrete random variable}\\
+    &=(1-F_X(8))P(G)+(1-F_Y(8))P(G^\complement)\tag{def. of cdf}\\
+    &=\left(1-\frac{10030813}{48828125}\right)(.65)+\left(1-\frac{199999966833}{2\cdot10^{11}}\right)(.35)\\
+    &=\frac{413175900309}{8\cdot10^{11}}\approx 0.51647
+\end{align*}
+
+\subsection*{Problem 49}
+\noindent\textbf{Problem:} It is known that diskettes produced by a certain company will be, independently of one another, defective with probability .01. The company sells the diskettes in packages of size 10 and offers a money-back guarantee that at most 1 of the 10 diskettes in this package will be defective. The guarantee is that the customer can return the entire package of diskettes if he or she finds more than 1 defective diskette in it. If someone buys 3 packages, what is the probability that he or she will return exactly 1 of them?
+\bigskip
+
+\noindent\textbf{Solution:} Let the random variable $D$ denote how many diskettes are defective in a single package. Note that since the probability of defectiveness is independent, $D$ has a binomial distribution:
+
+\begin{equation*}
+    D\sim B(10,.01)
+\end{equation*}
+
+And so the probability that more than 1 diskette is defective is given by:
+\begin{align*}
+    P(D>1)&=1-P(D\le 1)\tag{complement}\\
+    &=1-F_D(1)\tag{def. of cdf}\\
+    &=1-p_D(0)-p_D(1)\tag{def. of pmf}\\
+    &=1-\binom{10}{0}(.01)^0(.99)^{10-0}-\binom{10}{1}(.01)^1(.99)^{10-1}\tag{binomial distribution}\\
+    &=1-(.99)^{10}-.1(.99)^9\approx.004266\\
+\end{align*}
+
+Now let the random variable $R$ denote how many packages are to be returned, i.e. how many have more than 1 defective diskette. Since a package being returned is independent of any other, $R$ is given by a binomial distribution:
+
+\begin{equation*}
+    D\sim B(3,\underbrace{P(D>1)}_{\approx.004266})
+\end{equation*}
+
+And so the probability that exactly 1 package is returned is given by:
+\begin{align*}
+    P(R=1)&=p_R(1)\tag{def. of pmf}\\
+    &=\binom{3}{1}(P(D>1))^1(1-P(D>1))^{3-1}\tag{binomial distribution}\\
+    &=3P(D>1)(1-P(D>1))^2\\
+    &\approx3(.004266)(1-.004266)^2\\
+    &\approx.01269
+\end{align*}
+
+\subsection*{Problem 52}
+In a tournament involving players 1, 2, 3, and 4, players 1 and 2 play a game, with the loser departing and the winner then playing against palter 3, with the loser again departing and the winner playing player 4. The winner of the game is the winner of the tournament. Suppose that a game between players $i$ and $j$ is won by $i$ with a probability of $P(W_{ij})=\frac{i}{i+j}$.
+\bigskip
+
+\noindent\textbf{Part a:} Find the expected number of games played by player 1.
+\bigskip
+
+\noindent\textbf{Solution:} Player 1 always plays the first game and, for each successive game played, the probability that player 1 won the previous games must be taken into account. And since each game played is independent of the others, we have:
+% \begin{align*}
+%     E[\text{games P1 plays}]&=P(W_{1,2})+P(W_{1,3}W_{1,2})+P(W_{1,4}W_{1,3}W_{1,2})\\
+%     &=P(W_{1,2})+P(W_{1,3})P(W_{1,2})+P(W_{1,4})P(W_{1,3})P(W_{1,2})\tag{independence}\\
+%     &=P(W_{1,2})(1+P(W_{1,3})(1+P(W_{1,4})))\\
+%     &=\frac{1}{3}\left(1+\frac{1}{4}\left(1+\frac{1}{5}\right)\right)\\
+%     &=\frac{1}{3}\left(\frac{5}{4}\right)\left(\frac{6}{5}\right)=\frac{1}{2}
+% \end{align*}
+\begin{align*}
+    E[\text{games P1 plays}]&=1+P(W_{12})+P(W_{13}W_{12})\\
+    &=1+P(W_{12})+P(W_{13})P(W_{12})\tag{independence}\\
+    &=1+\frac{1}{3}+\frac{1}{3}\left(\frac{1}{4}\right)\\
+    &=1+\frac{1}{3}+\frac{1}{12}=\frac{17}{12}
+\end{align*}
+\medskip
+
+\noindent\textbf{Part b:} Find the expected number of games played by player 3.
+\bigskip
+
+\noindent\textbf{Solution:} Player 3 always plays 1 game, and potentially another if they win game 2 (which could be against player 1 or 2):
+\begin{align*}
+    E[\text{games P3 plays}]&=1+P(W_{31}W_{12})+P(W_{32}W_{21})\\
+    &=1+P(W_{31})P(W_{12})+P(W_{32})P(W_{21})\tag{independence}\\
+    &=1+\frac{3}{4}\left(\frac{1}{3}\right)+\frac{3}{5}\left(\frac{2}{3}\right)=\frac{33}{20}
+\end{align*}
+\pagebreak
+
+\subsection*{Problem 78}
+\noindent\textbf{Problem:} A fair coin is continually flipped until heads appears for the 10th time. Let $X$ denote the number of tails that occur. Compute the probability mass function of $X$.
+\bigskip
+
+\noindent\textbf{Solution:} Note that $X$ has a negative binomial distribution with parameters $r=10$ and $p=\frac{1}{2}$:
+
+\begin{equation*}
+    X\sim NB\left(10,\frac{1}{2}\right)
+\end{equation*}
+
+And so the pmf of $X$ is simply given by:
+
+\begin{align*}
+    p_X(n)&=\binom{n+10-1}{n}\left(\frac{1}{2}\right)^{10}\left(1-\frac{1}{2}\right)^{n}\\
+    &=\binom{n+9}{9}\left(\frac{1}{2}\right)^{10}\left(\frac{1}{2}\right)^{n-10}\\
+    &=\binom{n+9}{9}\frac{1}{2^{n+10}}
+\end{align*}
+
+\textit{Note that for $r>n$, $\binom{n}{r}=0$.}
+
+\subsection*{Problem 81}
+\noindent\textbf{Problem:} An urn contains 4 white and 4 black balls. We randomly choose 4 balls. If 2 of them are white and 2 are black, we stop. If not, we replace the balls in the urn and again randomly select 4 balls. This continues until exactly 2 of the 4 chosen are white. What is the probability that we shall make exactly $n$ selections?
+\bigskip
+
+\noindent\textbf{Solution:} Note that, for any given selection, the probability of picking exactly 2 white and 2 black balls is:
+
+\begin{equation*}
+    \frac{\overbrace{\binom{4}{2}\binom{4}{2}}^{\substack{\text{Pick 2 each of the}\\\text{4 white/black balls}}}}{\underbrace{\binom{8}{4}}_{\substack{\text{Pick 4 of the}\\\text{8 total balls}}}}=\frac{6\cdot6}{70}=\frac{18}{35}
+\end{equation*}
+
+Now let the random variable $X$ denote how many times a selection had to be made. since each selection is independent and ends in a success, $X$ is given by a geometric distribution:
+
+\begin{equation*}
+    X\sim Geo\left(\frac{18}{35}\right)
+\end{equation*}
+
+As such, the probability that $n$ trials are conducted, i.e. the pmf of $X$, is given by:
+
+\begin{align*}
+    P(X=n)=p_X(n)&=\left(1-\frac{18}{35}\right)^{n-1}\frac{18}{35}\\
+    &=\left(\frac{17}{35}\right)^{n-1}\frac{18}{35}
+\end{align*}
+\pagebreak
+
+\begin{center}
+    \Large{\textbf{Part B}}
+\end{center}
+\noindent\textbf{Problem:} Each member of a group of $n$ players rolls a die. For any pair of players who throw the same number, the group scores 1 point. Find the expected score of the group.
+\bigskip
+
+\noindent\textbf{Solution:} For every pair of distinct players $(i,j)$, let the random variable $X_{ij}$ indicate whether they share a roll. Note that for any pair, this variable can only take on 1 of 2 values:
+
+\begin{align*}
+    P(X_{ij}=0)&=p_{X_{ij}}(0)=\frac{5}{6}\\
+    P(X_{ij}=1)&=p_{X_{ij}}(1)=\frac{1}{6}
+\end{align*}
+
+Note, then, that the expected value of $X_{ij}$ is given by:
+
+\begin{equation*}
+    E[X_{ij}]=0\cdot p_{X_{ij}}(0)+1\cdot p_{X_{ij}}(1)=\frac{1}{6}
+\end{equation*}
+
+Now let the sum $Y$ of $X_{ij}$ over all pairs be the score of the group. We then have:
+
+\begin{align*}
+    Y&=\sum_{i<j}X_{ij}\\
+    E[Y]&=\sum_{i<j}E[X_{ij}]\tag{linearity of expectation}\\
+    &=\sum_{i<j}\frac{1}{6}\tag{given above}\\
+    &=\binom{n}{2}\frac{1}{6}\tag{$\binom{n}{2}$ unique pairs of players}
+\end{align*}
+
+And so the expected score of a group of $n$ players is $\frac{\binom{n}{2}}{6}$.
+
+\end{document}

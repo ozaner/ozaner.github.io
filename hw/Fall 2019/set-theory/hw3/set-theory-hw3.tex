@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Set Theory HW \#3}
+\author{Ozaner Hansha}
+\date{September 26, 2019}
+\maketitle
+
+% Set Theory Class notation
+\newcommand{\pset}[1]{\mathfrak P#1}
+\newcommand{\psetp}[1]{\mathfrak P(#1)}
+\renewcommand{\wedge}{\,\,\&\,\,}
+\renewcommand{\vee}{\text{ or }}
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\newcommand{\triplet}[3]{\langle#1,#2,#3\rangle}
+\renewcommand{\setminus}{-}
+
+% My Notation
+% \newcommand{\pset}[1]{\mathcal P(#1)}
+% \newcommand{\psetp}[1]{\mathcal P(#1)}
+% \newcommand{\pair}[2]{(#1,#2))}
+% \newcommand{\triplet}[3]{(#1,#2,#3)}
+
+\section*{Problem 1}
+Exercises 1,2,3,4,5 from pages 38-39 in the textbook.
+\bigskip
+
+\noindent\textbf{Exercise 1:} Suppose that we attempted to generalize the Kuratowski definitions of ordered pairs to ordered triples by defining:
+
+\begin{equation*}
+    \triplet{x}{y}{z}^*=\{\{x\},\{x,y\},\{x,y,z\}\}
+\end{equation*}
+
+Show that this definition is unsuccessful by giving an example of objects $u,v,w,x,y,z$ with $\triplet{x}{y}{z}^*=\triplet{u}{v}{w}^*$ but with either $y\not=v$ or $z\not=w$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following {\lq triplet\rq} under the proposed definition:
+\begin{align*}
+    \triplet{1}{2}{1}^*&=\{\{1\},\{1,2\},\{1,2,1\}\}\\
+    &=\{\{1\},\{1,2\},\{1,2\}\}\\
+    &=\{\{1\},\{1,2\},\{1,2,2\}\}\\
+    &=\triplet{1}{2}{2}^*
+\end{align*}
+
+As we can see this triplet definition fails since the last elements of both triplets do not equal each other (i.e. $1\not=2$).
+\bigskip
+
+\noindent\textbf{Exercise 2:} Prove the following:
+\begin{align*}
+    \textbf{a) }&A\times(B\cup C)=(A\times B)\cup (A\times C)\\
+    \textbf{b) }&(A\times B=A\times C \wedge A\not=\varnothing)\implies B=C
+\end{align*}
+
+\noindent\textbf{Solution:} For \textbf{a)} considering an arbitrary ordered pair $\pair{x}{y}$ gives us following chain of logical equivalences:
+\begin{align*}
+    \pair{x}{y}\in A\times(B\cup C)&\iff x\in A\wedge y\in B\cup C\tag{def. of Cartesian product}\\
+    &\iff x\in A\wedge (y\in B\vee y\in C)\tag{def. of union}\\
+    &\iff (x\in A\wedge y\in B)\vee(x\in A\wedge y\in C)\tag{distributive prop. of $\wedge$}\\
+    &\iff \pair{x}{y}\in(A\times B)\vee\pair{x}{y}\in(A\times C)\tag{def. of Cartesian product}\\
+    &\iff \pair{x}{y}\in(A\times B)\cup(A\times C)\tag{def. of union}\\
+\end{align*}
+
+And so, by extensionality, we have that $A\times(B\cup C)=(A\times B)\cup (A\times C)$.
+
+For \textbf{b)} consider an arbitrary set $x$:
+\begin{align*}
+    x\in B&\implies(\exists a\in A)\, \pair{a}{x}\in A\times B\tag{Assuming $A\not=\varnothing$}\\
+    &\iff(\exists a\in A)\, \pair{a}{x}\in A\times C\tag{Assuming $A\times B=A\times C$}\\
+    &\implies x\in C\tag{def. of ordered pair}
+\end{align*}
+
+And so, by the definition of subset, $B\subseteq C$. A symmetric argument where $B$ and $C$ are switched gives us $C\subseteq B$ and so we have $B=C$.
+\bigskip
+
+\noindent\textbf{Exercise 3:} Prove the following:
+\begin{equation*}
+    A\times\bigcup B=\bigcup\{A\times X\mid X\in B\}
+\end{equation*}
+
+\noindent\textbf{Solution:} Consider an arbitrary ordered pair $\pair{x}{y}$:
+\begin{align*}
+    \pair{x}{y}\in A\times\bigcup B&\iff y\in\bigcup B\wedge x\in A\tag{def. of ordered pair}\\
+    &\iff (\exists X\in B)\, y\in X\wedge x\in A\tag{def. of arbitrary union}\\
+    &\iff (\exists X\in B)\, \pair{x}{y}\in A\times X\tag{def. of ordered pair}\\
+    &\iff \pair{x}{y}\in\bigcup\{A\times X\mid X\in B\}\tag{def. of arbitrary union}
+\end{align*}
+
+And so by extensionality $A\times\bigcup B=\bigcup\{A\times X\mid X\in B\}$. Also note that since the LHS is a Cartesian product and the RHS is the union of Cartesian products, we are justified in denoting an arbitrary element of these sets in the form of an ordered pair $\pair{x}{y}$ and using the axiom of extensionality.
+\bigskip
+
+\noindent\textbf{Exercise 4:} Show that there is no set to which every ordered pair belongs.
+\bigskip
+
+\noindent\textbf{Solution:} Let us assume that such a set $P$ exists that contains all ordered pairs. Now let us consider an arbitrary $x$:
+\begin{align*}
+    &\phantom{\,\,\,\,\implies}\pair{x}{x}\in P\tag{assumption}\\
+    &\implies\{\{x\}\}\in P\tag{def. of ordered pair}\\
+    &\implies\{x\}\in \bigcup P\tag{def. of arbitrary union}\\
+    &\implies x\in \bigcup\bigcup P\tag{def. of arbitrary union}
+\end{align*}
+
+And so we have shown that the set $\bigcup\bigcup P$ (which exists because the arbitrary union of any set exists) contains all sets. The existence of a set that contains all sets has already been shown to be a contradiction (Russel's paradox, etc.) and so our assumption that the set $P$ exists was false.
+
+\bigskip
+
+\noindent\textbf{Exercise 5:} \textbf{a)} Assume $A$ and $B$ are given sets, and show that there exists a set $C$ such that for any $y$:
+\begin{equation*}
+    y\in C\iff (\exists x)\,y=\{x\}\times B
+\end{equation*}
+
+In other words, show that the set $C=\{\{x\}\times B\mid x\in A\}$ exists. \textbf{b)} With $A,B$ and $C$ as above, show that $A\times B=\bigcup C$.
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} consider an arbitrary set $x$:
+\begin{align*}
+    x\in A&\implies\Big[(\forall b\in B)\,\,x\in\{x\}\wedge b\in B\implies x\in A\wedge b\in B\Big]\\
+    &\implies\Big[(\forall b\in B)\,\,\pair{x}{b}\in \{x\}\times B\implies\pair{x}{b}\in A\times B\Big]\tag{def. of ordered pair}\\
+    &\implies\{x\}\times B\subset A\times B\tag{def. of subset}\\
+    &\implies\{x\}\times B\in \psetp{A\times B}\tag{def. of powerset}\\
+    &\implies\{\{x\}\times B\}\subseteq \psetp{A\times B}\tag{def. of powerset}\\
+\end{align*}
+
+And so we have shown that the set $\{\{x\}\times B\}$ is a subset of $\psetp{A\times B}$ for any $x\in A$. Since the union of subsets of a set is still a subset we have:
+
+\begin{equation*}
+    \{\{x\}\times B\mid x\in A\}\subseteq \psetp{A\times B}
+\end{equation*}
+
+And since we know that 1) given sets $A$ and $B$, their Cartesian product $A\times B$ exists and 2) the power set of any set exists due to the powerset axiom, the subset axiom implies that the set $C=\{\{x\}\times B\mid x\in A\}$ must exist as well.
+\medskip
+
+For \textbf{b)} consider an arbitrary set $c$:
+\begin{align*}
+    c\in A\times B&\iff(\exists x\in A,\exists y\in B)\,\,c=\pair{x}{y}\tag{def. of Cartesian product}\\
+    &\iff(\exists x\in A)\,\,c\in\{x\}\times B\tag{$x\in\{x\}$}\\
+    &\iff c\in\bigcup\{\{x\}\times B\mid x\in A\}\tag{def. of arbitrary union}\\
+    &\iff c\in \bigcup C\tag{def. of C}
+\end{align*}
+
+And so for any set $c$ we have $c\in A\times B\iff c\in C$ which, by extensionality, implies that $A\times B=\bigcup C$.
+
+\section*{Problem 2}
+Consider the following theorem and its proof:
+\bigskip
+
+\textbf{Theorem:} If $A,B$ are sets and $A\times B = B\times A$ then $A = B$.
+\bigskip
+
+\textit{Proof:} If $x\in A$ and $y\in B$ then $\pair{x}{y}\in A\times B$; since $A\times B = B\times A$, it follows that $\pair{x}{y}\in B\times A$; so $x\in B$ and $y\in A$. This shows that if $x\in A$ then $x\in B$, so $A\subseteq B$, and that if $y\in B$ then $y\in A$, so $B\subseteq A$.
+Hence $A = B$. $\hfill\ensuremath{\blacksquare}$
+\bigskip
+
+As it turns out, the theorem, as stated, is false. And so the proof must be wrong.
+\bigskip
+
+\noindent\textbf{Part i:} Prove that the theorem is false, by giving a counterexample.
+\bigskip
+
+\noindent\textbf{Solution:} Consider $A=\varnothing$ and $B=\{\varnothing\}$, this gives us:
+\begin{align*}
+    A\times B&=\varnothing\times\{\varnothing\}\\
+    &=\varnothing\\
+    &=\{\varnothing\}\times\varnothing\\
+    &=B\times A
+\end{align*}
+
+Yet we clearly have $A=\varnothing\not=\{\varnothing\}=B$. Thus, the theorem presented is false.
+\bigskip
+
+\noindent\textbf{Part ii:} Explain why the proof is wrong, that is, find the step or steps that are invalid.
+\bigskip
+
+\noindent\textbf{Solution:} We can rephrase the given proof in the following way: \textit{Consider arbitrary sets $x$ and $y$:}
+
+\begin{align*}
+    x\in A\wedge y\in B&\implies\pair{x}{y}\in A\times B\tag{def. of ordered pair}\\
+    &\implies\pair{x}{y}\in B\times A\tag{assume $A\times B=B\times A$}\\
+    &\implies x\in B\wedge y\in A\tag{def. of ordered pair}
+\end{align*}
+
+\textit{And so we have shown that for arbitrary $x$ and $y$, $x\in A$ implies that $x\in B$ and the revserse for $y$ meaning $A\subseteq B$ and $B\subseteq A$ giving us $A=B$.}
+
+This proof, however, breaks down at the assumption that:
+
+\begin{equation*}
+    (\forall x,y)\,\,\,\,\,x\in A\wedge y\in B\implies x\in B\wedge y\in A
+\end{equation*}
+
+entails the following:
+
+\begin{equation*}
+    (\forall x,y)\,\,\,\,\,(x\in A\implies x\in B)\wedge (y\in B\implies y\in A)
+\end{equation*}
+
+Since, for instance, $x\in a\implies x\in B$ only if there exists a $y\in B$ for the ordered pair $(x,y)$ to be created with. But this is not the case $B=\varnothing$. The same problem goes for the other direction when $A=\varnothing$.
+\bigskip
+
+\noindent\textbf{Part iii:} Fix the theorem, by adding an extra condition to the hypotheses of the theorem that makes it true.
+\bigskip
+
+\noindent\textbf{Solution:} The theorem should instead be stated as:
+
+\begin{equation*}
+    (A\times B=B\times A\wedge A\not=\emptyset\wedge B\not=\emptyset)\implies A=B
+\end{equation*}
+
+That is to say, the theorem given is correct if we add the assumption that neither $A$ nor $B$ is the empty set.
+\bigskip
+
+\noindent\textbf{Part iv:} Give a correct proof of the true theorem.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $x$:
+\begin{align*}
+    &\phantom{\implies\,\,\,}x\in A\wedge(\exists y\in B)\tag{assume $B\not=\varnothing$}\\
+    &\implies(\exists y\in B)\,\,\,\pair{x}{y}\in A\times B\tag{def. of ordered pair}\\
+    &\implies(\exists y\in B)\,\,\,\pair{x}{y}\in B\times A\tag{assume $A\times B=B\times A$}\\
+    &\implies x\in B\wedge(\exists y\in B)\,\,\,y\in A\tag{def. of ordered pair}\\
+    &\implies x\in B
+\end{align*}
+
+And so we have shown that, by assuming that $B\not=\varnothing$, that for an arbitrary set $x\in A\implies x\in B$ and thus $A\subset B$. A symmetric argument holds for the other direction under the assumption that $A\not=\varnothing$, giving us $B\subseteq A$. Along with the previous result, this implies that $A=B$.
+\medskip
+
+\textit{As a side note, our theorem says nothing about the special case where $A=\varnothing=B$. In this case, we do indeed have $A\times B=\varnothing=B\times A$ and $A=B$.}
+\end{document}

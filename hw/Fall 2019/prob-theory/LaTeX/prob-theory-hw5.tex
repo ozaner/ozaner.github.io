@@ -1,0 +1,345 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand*\pbar[0]{\,|\,}
+\newcommand*\var[0]{\text{Var}}
+
+\begin{document}
+
+\title{Theory of Probability HW \#5}
+\author{Ozaner Hansha}
+\date{October 21, 2019}
+\maketitle
+
+\begin{center}
+    \Large{\textbf{Part A}}
+\end{center}
+
+Problems taken from Chapter 4 and 5 of the textbook.
+
+\section*{\underline{Chapter 4}}
+
+\subsection*{Problem 39}
+\noindent\textbf{Problem:} If $E[X]=1$ and $\var(X)=5$, find:
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item $E[(2+X)^2]$
+    \item $\var(4+3X)$
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} we have:
+\begin{align*}
+    E[(2+X)^2]&=E[x^2+4x+4]\tag{algebra}\\
+    &=E[X^2]+4E[X]+4\tag{linearity of expectation}\\
+    &=\var(X)+E[X]^2+4E[X]+4\tag{def. of variance}\\
+    &=5+1+4+4=14
+\end{align*}
+
+For \textbf{b)} we have, via the identity $\var[aX+b]=a^2\var[X]$, the following:
+\begin{equation*}
+    \var(3X+4)=3^2\var[X]=9\cdot5=45
+\end{equation*}
+
+\subsection*{Problem 58}
+\noindent\textbf{Problem:} A certain typing agency employees 2 typists. The average number of errors per article is 3 when typed by the first typist, and 4.2 when typed by the second. If your article is equally likely to be typed by either typist, approximate the probability that it will have no errors.
+\bigskip
+
+\noindent\textbf{Solution:} Let $A$ be the event that typist 1 is chosen, and $A^\complement$ the event that typist 2 is chosen. Also let the random variable $X$ denote the number of typos. Since the probability of typo is quite rare, we can approximate their number of occurrences with a Poisson distribution:
+
+\begin{equation*}
+    P(X=0\pbar A)=\frac{3^0e^{-3}}{0!}=e^{-3}\,\,\,\,\,\,\,\,\,\,\,P(X=0\pbar A^\complement)=\frac{5^0e^{-5}}{0!}=e^{-5}
+\end{equation*}
+
+And so the probability of no typos, i.e. $X=0$, under this assumption is given by:
+\begin{align*}
+    P(X=0)&=P(X=0\pbar A)P(A)+P(X=0\pbar B)P(B)\tag{law of total probability}\\
+    &=\frac{P(X=0\pbar A)+P(X=0\pbar B)}{2}\tag{$P(A)=P(B)=\frac{1}{2}$}\\
+    &=\frac{e^{-3}+e^{-4.2}}{2}\approx0.0324\tag{Poisson distribution}
+\end{align*}
+
+\subsection*{Problem 63}
+\noindent\textbf{Problem:} The number of times that a person contracts a cold in a given year is a Poisson random variable with parameter $\lambda=5$. Suppose that a new wonder drug has just been marketed that reduces the Poisson parameter to $\lambda=3$ for 75 percent of the population. For the other 25 percent of the population, the drug has no appreciable effect on colds. If an individual tries the drug for a year and has 2 colds in that time, how likely is it that the drug is beneficial for him or her?
+\bigskip
+
+\noindent\textbf{Solution:} Let $B$ be the event that the drug is beneficial to the patient, and let $X$ be the number of times that patient got a cold in a year. We then have the following statements:
+\begin{align*}
+    P(B)&=0.75 & P(B^\complement)=0.25\\
+    P(X=2\pbar B)&=\frac{3^2e^{-3}}{2} & P(X=2\pbar B^\complement)&=\frac{5^2e^{-5}}{2}
+\end{align*}
+
+Out desired probability is thus:
+\begin{align*}
+    P(B\pbar X=2)&=\frac{P(X=2\pbar B)P(B)}{P(X=2)}\tag{Bayes' theorem}\\
+    &=\frac{P(X=2\pbar B)P(B)}{P(X=2\pbar B)P(B)+P(X=2\pbar B)P(B^\complement)}\tag{law of total probability}\\
+    &=\frac{\frac{3^2e^{-3}}{2}(0.75)}{\frac{3^2e^{-3}}{2}(0.75)+\frac{5^2e^{-5}}{2}(0.25)}\approx0.8886
+\end{align*}
+
+\subsection*{Problem 64}
+\noindent\textbf{Problem:} The probability of being dealt a full house in a hand of poker is approximately 0.0014. Find an approximation for the probability that in 1000 hands of poker, you will be dealt at least 2 full houses.
+\bigskip
+
+\noindent\textbf{Solution:} The approximate number of full houses per 1000 hands $\lambda$ is given by:
+
+\begin{equation*}
+    \lambda = 1000\cdot0.0014 = 1.4
+\end{equation*}
+
+Letting $X$ be the number of full houses per 1000 hands, we can approximate it as a Poisson distribution. This gives us:
+
+\begin{align*}
+    P(X\ge2)&=1-P(X<2)\tag{complement of inequality}\\
+    &=1-P(X\le 1)\tag{discrete random variable}\\
+    &=1-\left(\frac{\lambda^0+e^{-\lambda}}{0!}+\frac{\lambda^1+e^{-\lambda}}{1!}\right)\tag{Poisson distribution}\\
+    &=1-e^{-1.4}-1.4e^{-1.4}\approx0.4082
+\end{align*}
+
+\subsection*{Problem 66}
+\noindent\textbf{Problem:} People enter a casino at a rate of 1 every 2 minutes.
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item What is the probability that no one enters between 12:00 and 12:05?
+    \item What is the probability that at least 4 people enter the casino during that time.
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} Note that $\frac{1}{2}$ people enter per minute, and so the approximate amount of people who enter every 5 minutes $\lambda$ is given by:
+
+\begin{equation*}
+    \lambda = \frac{1}{2}\cdot 5=2.5
+\end{equation*}
+
+Letting $X$ be the number of people who enter in 5 minutes, we can approximate that number via a Poisson distribution:
+
+\begin{equation*}
+    P(X=0)=\frac{2.5^0e^{-2.5}}{0!}=e^{-2.5}\approx0.0821
+\end{equation*}
+
+\textbf{b)} Our desired probability can once again be approximated via a Poisson distribution:
+
+\begin{align*}
+    P(X\ge4)&=1-P(X<4)\tag{complement of inequality}\\
+    &=1-P(X\le 3)\tag{discrete random variable}\\
+    &=1-\sum_{k=0}^3\frac{2.5^ke^{-2.5}}{k!}\tag{Poisson distribution}\\
+    &=1-\frac{433e^{-2.5}}{48}\approx0.2424
+\end{align*}
+
+\section*{\underline{Chapter 5}}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} A system consisting of one original unit plus a spare can function for a random amount of time $X$. If the density of $X$ is given (in units of months) by:
+\begin{equation*}
+    f_X(x)=\begin{cases}
+        Cxe^{-x/2},&x>0\\
+        0,&x\le0\\
+    \end{cases}
+\end{equation*}
+
+what is the probability that the system functions for at least 5 months?
+\bigskip
+
+\noindent\textbf{Solution:} Since the $f_X(x)$ is only non zero on the interval $(0,\infty)$ and because it is a pdf, it must satisfy the following:
+
+\begin{equation*}
+    \int_0^\infty Cxe^{-x/2}\mathop{dx}=1
+\end{equation*}
+
+To compute the antiderivative $\int xe^{-x/2}\mathop{dx}$ we perform integration by parts with the following substitutions:
+
+\begin{align*}
+    u&=x & \mathop{du}&=\mathop{dx}\\
+    dv&=e^{-x/2}\mathop{dx} & v&=-2e^{-x/2}
+\end{align*}
+
+This gives us:
+\begin{align*}
+    \int xe^{-x/2}\mathop{dx}&=\int u\mathop{dv}\tag{substitutions}\\
+    &=uv-\int v\mathop{du}\tag{integration by parts}\\
+    &=-2xe^{-x/2}-\int -2e^{-x/2}\mathop{dx}\tag{substitutions}\\
+    &=-2xe^{-x/2}-4e^{-x/2}+C_1
+\end{align*}
+
+We can now finally solve for the constant $C$:
+\begin{align*}
+    \int_0^\infty Cxe^{-x/2}\mathop{dx}&=1\\
+    C\eval{-2xe^{-x/2}-4e^{-x/2}}{0}{\infty}&=1\tag{solution above}\\
+    \lim_{x\to\infty}(-2xe^{-x/2}-4e^{-x/2})-(-2(0)e^{-0/2}-4e^{-0/2})&=\frac{1}{C}\\
+    0+4&=\frac{1}{C}\implies C=\frac{1}{4}
+\end{align*}
+
+And so our desired probability is given by:
+\begin{align*}
+    P(X\ge 5)&=\frac{1}{4}\int_5^\infty xe^{-x/2}\mathop{dx}\\
+    &=\frac{1}{4}\eval{-2xe^{-x/2}-4e^{-x/2}}{5}{\infty}\tag{solution above}\\
+    &=\frac{1}{4}\left(\lim_{x\to\infty}(-2xe^{-x/2}-4e^{-x/2})-(-2(5)e^{-5/2}-4e^{-5/2})\right)\\
+    &=\frac{1}{4}\left(0+10e^{-5/2}+4e^{-5/2}\right)\\
+    &=\frac{7}{2}e^{-5/2}\approx0.2873
+\end{align*}
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} A filling station is supplied with gasoline once a week. If its weekly volume of sales in thousands of gallons is a random variable with the following pdf:
+\begin{equation*}
+    f_X(x)=\begin{cases}
+        5(1-x)^4,&0<x<1\\
+        0,& \text{otherwise}
+    \end{cases}
+\end{equation*}
+
+what must the capacity of the tank be so that the probability of the supply’s being exhausted in a given week is 0.01?
+\bigskip
+
+\noindent\textbf{Solution:} Let $X$ denote the weekly volume of sales and $C$ denote the capacity of the tank. The condition can thus be restated as:
+\begin{align*}
+    0.01&=P(X>C)\\
+    &=P(X\ge C)\tag{continuous distribution}\\
+    &=\int_C^1 f_X(x)\mathop{dx}\\
+    &=\int_C^1 5(1-x)^4\mathop{dx}\\
+    &=\eval{(1-x)^5}{C}{1}\\
+    &=(1-C)^5
+\end{align*}
+
+We can now solve for the desired capacity of the tank $C$:
+\begin{align*}
+    (1-C)^5&=0.01\\
+    1-C&=\sqrt[5]{0.01}\\
+    C&=1-\sqrt[5]{0.01}\approx0.6019
+\end{align*}
+
+\subsection*{Problem 10}
+\noindent\textbf{Problem:} Trains headed for destination $A$ arrive at the train station at 15-minute intervals starting at 7 a.m., whereas trains headed for destination B arrive at 15-minute intervals starting at 7:05 a.m.
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item If a passenger arrives at the station at a time $X$ uniformly distributed between 7 a.m. and 8 a.m. and then gets on the first train that arrives, what proportion of the time does this passenger go to destination $A$?
+    \item What if the passenger arrives at a time uniformly distributed between 7:10 and 8:10?
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} if we let $t$ be the number of minutes after 7:00 a.m., then the set of times $I$ where the passanger would take train $A$ is given by:
+\begin{equation*}
+    I=(5,15)\cup(20,30)\cup(35,45)\cup(50,60)
+\end{equation*}
+
+Thus the desired probability is given by:
+\begin{align*}
+    P(X\in I)&=P(5\le X\le 15)+P(20\le X\le 30)+P(35\le X\le 45)+P(50\le X\le 60)\\
+    &=\int_{5}^{15} f_X(t)\mathop{dt}+\int_{20}^{30} f_X(t)\mathop{dt}+\int_{35}^{45} f_X(t)\mathop{dt}+\int_{50}^{60} f_X(t)\mathop{dt}\\
+    &=\int_{5}^{15} \frac{1}{60}\mathop{dt}+\int_{20}^{30} \frac{1}{60}\mathop{dt}+\int_{35}^{45} \frac{1}{60}\mathop{dt}+\int_{50}^{60} \frac{1}{60}\mathop{dt}\tag{uniform distribution}\\
+    &=\frac{1}{60}\left(\int_{5}^{15}\mathop{dt}+\int_{20}^{30}\mathop{dt}+\int_{35}^{45}\mathop{dt}+\int_{50}^{60}\mathop{dt}\right)\\
+    &=\frac{1}{60}\left(10+10+10+10\right)=\frac{2}{3}
+\end{align*}
+
+\textbf{b)} is solved in much the same way. First we note that train $A$ is taken only when $X\in I$ for the following $I$:
+\begin{equation*}
+    I=(10,15)\cup(20,30)\cup(35,45)\cup(50,60)\cup(65,70)
+\end{equation*}
+
+Thus the desired probability is given by:
+\begin{align*}
+    P(X\in I)&=P(10\le X\le 15)+P(20\le X\le 30)+P(35\le X\le 45)+P(50\le X\le 60)+P(65\le X\le 70)\\
+    &=\int_{10}^{15} f_X(t)\mathop{dt}+\int_{20}^{30} f_X(t)\mathop{dt}+\int_{35}^{45} f_X(t)\mathop{dt}+\int_{50}^{60} f_X(t)\mathop{dt}+\int_{65}^{70} f_X(t)\mathop{dt}\\
+    &=\int_{10}^{15} \frac{1}{60}\mathop{dt}+\int_{20}^{30} \frac{1}{60}\mathop{dt}+\int_{35}^{45} \frac{1}{60}\mathop{dt}+\int_{50}^{60} \frac{1}{60}\mathop{dt}+\int_{65}^{70} \frac{1}{60}\mathop{dt}\tag{uniform distribution}\\
+    &=\frac{1}{60}\left(\int_{10}^{15}\mathop{dt}+\int_{20}^{30}\mathop{dt}+\int_{35}^{45}\mathop{dt}+\int_{50}^{60}\mathop{dt}+\int_{65}^{70}\mathop{dt}\right)\\
+    &=\frac{1}{60}\left(5+10+10+10+5\right)=\frac{2}{3}
+\end{align*}
+\bigskip
+
+\begin{center}
+    \Large{\textbf{Part B}}
+\end{center}
+
+A total of $2n$ people, consisting of $n$ married couples, are randomly seated at a round table. Let $C_i$ denote the event that the members of couple $i$ are seated next to each other, where $i=1,\cdots,n$.
+\bigskip
+
+\noindent\textbf{Part i:} Prove the following:
+\begin{equation*}
+    P(C_i)=\frac{2}{2n-1}
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} Note that the number of circular permutations of $n>0$ objects $P_\circ(n)$ is given by:
+\begin{equation*}
+    P_\circ(n)=(n-1)!
+\end{equation*}
+
+This is because there are $n$ equivalent rotations for each of the $n!$ linear permutations. This gives us the followign probability:
+\begin{equation*}
+    P(C_i)=\frac{\overbrace{2}^{\substack{\text{order of}\\\text{couple}}}\overbrace{P_\circ(2n-1)}^{\substack{\text{arrangements}\\\text{of 1 couple}\\\text{plus }2n-2\\\text{other people}}}}{\underbrace{P_\circ(2n)}_{\substack{\text{total \# of}\\\text{arrangements}}}}=\frac{2(2n-2)!}{(2n-1)!}=\frac{2}{2n-1}
+\end{equation*}
+
+\bigskip
+
+\noindent\textbf{Part ii:} Compute $P(C_j\pbar C_i)$ for $i\not=j$.
+\bigskip
+
+\noindent\textbf{Solution:} First let us consider the probability that any 2 distinct couples $i$ and $j$ are both sitting next to their spouses:
+\begin{equation*}
+    P(C_iC_j)=\frac{\overbrace{2^2}^{\substack{\text{orderings of}\\\text{2 couples}}}\overbrace{P_\circ(2n-2)}^{\substack{\text{arrangements}\\\text{of 2 couples}\\\text{plus }2n-4\\\text{other people}}}}{\underbrace{P_\circ(2n)}_{\substack{\text{total \# of}\\\text{arrangements}}}}=\frac{2^2(2n-3)!}{(2n-1)!}
+\end{equation*}
+
+Now we can plug this into Bayes' theorem, netting us:
+\begin{align*}
+    P(C_j\pbar C_i)&=\frac{P(C_iC_j)}{P(C_i)}\tag{Bayes' theorem}\\
+    &=\frac{\frac{2^2(2n-3)!}{(2n-1)!}}{\frac{2}{2n-1}}\tag{above \& part i}\\
+    &=\frac{2(2n-3)!(2n-1)}{(2n-1)!}\\
+    &=\frac{2}{2n-2}=\frac{1}{n-1}
+\end{align*}
+
+\bigskip
+
+\noindent\textbf{Part iii:} If $X$ is the total number of couples who are seated next to each other, show that the following statement is false:
+\begin{equation*}
+    X\sim B\left(n,\frac{2}{2n-1}\right)
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} The above two cases, part ii in particular, showed that the probability of any particular couple sitting together is \textit{not} independent of the other couples sitting next to each other. As such, a binomial distribution, which is the sum of $n$ independent Bernoulli trials, is certainly not the correct distribution.
+
+We can easily verify this by computing $p_X(1)$ given the proposed binomial distribution, and comparing it to the result found in part i:
+\begin{align*}
+    p_X(1)&=\binom{n}{1}\left(\frac{2}{2n-1}\right)^1\left(1-\frac{2}{2n-1}\right)^{n-1}\tag{binomial distribution}\\
+    &=\frac{2n}{2n-1}\left(\frac{2n-3}{2n-1}\right)^{n-1}\\
+    &\not=\frac{2}{2n-1}\tag{part i}
+\end{align*}
+
+And so the proposed distribution is incorrect.
+
+% The above two cases of $P(X=1)$ and $P(X=2)$ imply the following pmf for $X$:
+% \begin{equation*}
+%     P(X=k)=p_X(k)=\frac{\overbrace{2^k}^{\substack{\text{orderings of}\\\text{k couples}}}\overbrace{P_\circ(2n-k)}^{\substack{\text{arrangements}\\\text{of k couples}\\\text{plus }2n-2k\\\text{other people}}}}{\underbrace{P_\circ(2n)}_{\substack{\text{total \# of}\\\text{arrangements}}}}=\frac{2^k(2n-k-1)!}{(2n-1)!}
+% \end{equation*}
+
+% Which is clearly not equivalent to the pmf of the proposed binomial distribution:
+% \begin{equation*}
+%     p_X(k)=\binom{n}{k}\left(\frac{n}{2n-1}\right)^k\left(1-\frac{n}{2n-1}\right)^{n-k}
+% \end{equation*}
+
+\bigskip
+
+\noindent\textbf{Part iv:} Approximate the probability, for $n$ large, that there is exactly 1 couple that sits next to each other.
+\bigskip
+
+\noindent\textbf{Solution:} Since the probability that a couple sits next to each other gets much rarer as $n$ grows larger, we can approximate it with a Poisson distribution. Since the probability of a single couple sitting next to each other is $\frac{2}{2n-1}$, as shown in part 1, and there are $n$ trials this can happen over, we have the following parameter $\lambda$:
+\begin{equation*}
+    \lambda=n\cdot\frac{2}{2n-1}=\frac{2n}{2n-1}
+\end{equation*}
+\smallskip
+
+And so the desired probability, as $n$ goes to infinity, is given by:
+\begin{align*}
+    \lim_{n\to\infty}p_X(1)&=\lim_{n\to\infty}\frac{\lambda^1e^{-\lambda}}{1!}\tag{Poisson distribution}\\
+    &=\lim_{n\to\infty}\left(\frac{2n}{2n-1}\right)e^{-\frac{2n}{2n-1}}\\
+    &=\lim_{n\to\infty}\left(\frac{2n}{2n-1}\right)\lim_{n\to\infty}e^{-\frac{2n}{2n-1}}\\
+    &=e^{-1}\approx0.3679\tag{limit of rational function}
+\end{align*}
+
+% \begin{equation*}
+%     P(X=1)=p_X(1)=\frac{\lambda^1e^{-\lambda}}{1!}=\left(\frac{2n}{2n-1}\right)e^{-\frac{2n}{2n-1}}
+% \end{equation*}
+
+\end{document}

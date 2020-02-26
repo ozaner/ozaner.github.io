@@ -1,0 +1,218 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#9}
+\author{Ozaner Hansha}
+\date{December 12, 2018}
+\maketitle
+
+\section*{Exercise 1}
+\textbf{Problem:} Let $D$ be the triangle bounded by the following lines:
+\begin{align*}
+  y&=x\\
+  y&=2x\\
+  y&=3x-1
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(xy\right)dA$$
+\textbf{Solution:} Graphing these functions we see there are three points of intersection:
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-3,0) -- (4.2,0) node[right] {$x$};
+    \draw[->] (0,-3) -- (0,4.2) node[above] {$y$};
+    \draw[scale=1,domain=-1:1.2,smooth,variable=\x,blue] plot ({\x},{\x});
+    \draw[scale=1,domain=-1:1.2,smooth,variable=\y,red]  plot ({\y},{2*\y});
+    \draw[scale=1,domain=-.5:1.2,smooth,variable=\z,green]  plot ({\z},{3*\z-1});
+\end{tikzpicture}
+\end{center}
+
+Setting each equation equal to the others we find the points to be:
+$$(0,0)\ \ \ \ \left(\frac{1}{2},\frac{1}{2}\right)\ \ \ \ (1,2)$$
+
+We can now integrate in two separate stages, from $[0,1/2]$ for the bottom line and from $[1/2,1]$ for the top line:
+\begin{align*}
+  \int_D\left(xy\right)dA&=\int_0^{1/2}\left(\int_x^{2x}xy\ dy\right)dx+\int_{1/2}^1\left(\int_{3x-1}^{2x}xy\ dy\right)dx\\
+  &=\int_0^{1/2}\frac{3x^3}{2}dx+\int_{1/2}^1\frac{6x^2-5x^3-x}{2}dx=\frac{13}{128}+\frac{3}{128}=\frac{1}{8}
+\end{align*}
+
+\section*{Exercise 2}
+\textbf{Problem:} Let $D$ be the region outside the unit circle and to the left of $x=\frac{5}{4}-y^2$. Compute the following integral:
+$$\int_D\left(x^2+y^2\right)dA$$
+\textbf{Solution:} These functions intersect at two points to the left of the circle. We simply substitute them in each other to arrive at:
+$$\left(\frac{1}{2},\pm\frac{\sqrt 3}{2}\right)$$
+
+We can now just integrate from these points to the tip of the parabola:
+\begin{align*}
+  \int_D\left(xy\right)dA&=\int_{-\sqrt 3/2}^{\sqrt 3/2}\left(\int_{\sqrt{1-y^2}}^{5/4-y^2}(x^2+y^2)\ dx\right)dy\\
+  &=\int_{-\sqrt 3/2}^{\sqrt 3/2}\left(\frac{1}{3}\left(\frac{5}{4}-y^2\right)^3-\frac{1}{3}(1-y^2)^{3/2}+y^2\left(\frac{5}{4}-y^2-\sqrt{1-y^2}\right)\right)dy\\
+  &=\frac{267\sqrt 3}{560}-\frac{\pi}{6}
+\end{align*}
+
+\section*{Exercise 3}
+\textbf{Problem:} Let $D$ be given by:
+\begin{align*}
+  x^2&\le y\le2x^2\\
+  x^3&\le y\le2x^3
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(\frac{x}{y}\right)dA$$
+\textbf{Solution:} We'll use substitution. In particular, we'll use the following transformation:
+$$\mathbf u(x,y)=(u(x,y),v(x,y))=\left(\frac{y}{x^2},\frac{y}{x^3}\right)$$
+
+We can solve for the inverse transformation by solving $u$ and $v$ for $x$ and $y$:
+$$\mathbf x=\left(\frac{u}{v},\frac{u^3}{v^2}\right)$$
+
+Plugging this into our original function $f$ we get:
+$$f(\mathbf x(u,v))=\frac{u^4}{v^2}$$
+
+Further, the Jacobian of this inverse function is then:
+$$J\mathbf x(u,v)=\begin{bmatrix}
+  \frac{1}{v} & \frac{-u}{v^2}\\
+  \frac{3u^2}{v^2} & \frac{-2u^3}{v^3}
+\end{bmatrix}$$
+
+The absolute value of the determinant leaves us with: $\frac{u^3}{v^4}$. Now we just need to use the change of variables formula on our original integral and we find:
+\begin{align*}
+  \int_Df\left(x,y\right)dA&=\int_1^2f\left(\int_1^2f\frac{u^4}{v^2}\frac{u^3}{v^4}dv\right)du\\
+  &=\left(\int_1^2u^7du\right)\left(\int_1^2\frac{1}{v^2}dv\right)=\frac{255}{16}
+\end{align*}
+
+\section*{Exercise 4}
+\textbf{Problem:} Let $D$ be the region in the first quadrant of the unit circle and between:
+\begin{align*}
+  y&=2x^2\\
+  y&=3x^2
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(xy\right)dA$$
+\textbf{Solution:} First we will note the polar form of a parabola:
+$$\sin^2\theta+\frac{\sin\theta}{ar}=1$$
+
+Solving for $\theta$ we arrive at:
+$$\theta_a(r)=\sin^{-1}\left(\frac{\sqrt{(2ar)^2+1}-1}{2ar}\right)$$
+
+And so now our integral and constraints are:
+\begin{gather*}
+  \iint_Dr^3\cos\theta\sin\theta\ drd\theta\\
+  \theta_2(r)\le\theta\le\theta_3(r)\\
+  0\le r\le1
+\end{gather*}
+
+Now we can solve for our integral:
+\begin{align*}
+  \iint_Dr^3\cos\theta\sin\theta\ d\theta dr&=\int_0^1r^3\left(\int^{\theta_3(r)}_{\theta_2(r)}\cos\theta\sin\theta\ d\theta\right)dr\\
+  &=\frac{1}{2}\int_0^1r^3(\sin^2(\theta_3(r))-\sin^2(\theta_3(r)))dr\\
+  &=\frac{1}{72}\int_0^1r(9\sqrt{16r^2+1}-4\sqrt{36r^2+1}-5)dr\\
+  &=\frac{17^{3/2}}{768}-\frac{37^{3/2}}{3888}-\frac{1145}{62208}\approx0.01497429
+\end{align*}
+
+\section*{Exercise 5}
+\textbf{Problem:} Let $D$ be the area in the first quadrant bounded by:
+\begin{align*}
+  y&=x\\
+  y&=\sqrt{3}x\\
+  1&=x^2+y^2
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(\sqrt{1+x+y}\right)dA$$
+\textbf{Solution:} Graphing the constraints clearly show us that the line $y=x$ cooresponds to the angle $\pi/4$ and the line $y=\sqrt 3x$ with $\pi/3$. Since this is all on the unit circle we are left with the following two constraints:
+\begin{gather*}
+  \frac{\pi}{4}\le\theta\le\frac{\pi}{3}\\
+  0\le r\le1\\
+  f(x,y)=\sqrt{1+x^2+y^2}=\sqrt{1+r^2}
+\end{gather*}
+
+Putting this together the integral evaluates to:
+$$\int_Df(x,y)dA=\left(\int^{\pi/3}_{\pi/4}d\theta\right)\left(\int_0^1r\sqrt{1+r^2}\ dr\right)=\frac{\pi(\sqrt 8 -1)}{36}$$
+
+\section*{Exercise 6}
+\textbf{Problem:} Let $D$ be the region in the first quadrant between:
+\begin{align*}
+  x&=\frac{1}{y^2}\\
+  x&=\frac{4}{y^2}\\
+  y&=x^2\\
+  y&=4x^2
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(x^2+y^2\right)dA$$
+\textbf{Solution:} The relevant points of intersection are between curve 1 with 3 and 4 and curve 2 with 3 and 4. Solving for these points gives us:
+$$\left(2^{-2/5},2^{6/5}\right)\ \ \ \ \left(2^{2/5},2^{4/5}\right)\ \ \ \ \left(1,1\right)\ \ \ \ \left(2^{-4/5},2^{2/5}\right)$$
+
+We can now split this into three regions (over the x-axis) from point 4 to point 1, then point 1 to point 3, and finally point 3 to point 2:
+$$
+  \left(\int_{2^{-4/5}}^{2^{-2/5}}\int_{x^{-1/2}}^{4x^2}(x^2+y^2)\ dydx\right)+
+  \left(\int_{2^{-2/5}}^1\int_{x^{-1/2}}^{2x^{-1/2}}(x^2+y^2)\ dydx\right)+
+  \left(\int_1^{2^{2/5}}\int_{x^2}^{4x^2}(x^2+y^2)\ dydx\right)
+$$
+
+Evaluating this we find the first region's area to be approximately 0.31089, the second's to be around 0.89393 and the third's to be about 19.6932. Summing these we find the area to be about 20.898.
+
+\section*{Exercise 7}
+\textbf{Problem:} Let $D$ be the area simultaneously inside both the following circles:
+\begin{align*}
+  (x-1)^2+y^2&=4\\
+  (x+1)^2+y^2&=4
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(x^2y^2\right)dA$$
+\textbf{Solution:} Since this integral has is symmetric in each quadrant, we only need to compute the are in the first quadrant and multiply it by 4. We can now just integrate this as normal, solving for $y$ in the constraint equation:
+\begin{align*}
+  \int_D\left(x^2y^2\right)dA&=\int_0^1\int_0^{\sqrt{4-(x+1)^2}}x^2y^2\ dydx\\
+  &=\int_0^1\frac{-x^2(x^2+2x-3)\sqrt{-x^2-2*x+3}}{3}\\
+  &=\frac{200\pi-351\sqrt 3}{180}
+\end{align*}
+
+
+\section*{Exercise 8}
+\textbf{Problem:} Let $D$ be the area of the first quadrant bounded by:
+\begin{align*}
+  xy&=1\\
+  xy&=2\\
+  \frac{y}{x}&=1\\
+  \frac{y}{x}&=2
+\end{align*}
+
+Compute the following integral:
+$$\int_D\left(xy\right)dA$$
+\textbf{Solution:} First we'll note that the two lines $y=x$ and $y=2x$ correspond to the range:
+$$\frac{\pi}{4}\le\theta\le\cos^{-1}\left(\frac{1}{\sqrt 5}\right)\approx1.107$$
+
+Now we just convert the hyperbolas to polar leaving us with:
+\begin{align*}
+  r^2\cos\theta\sin\theta&=1\\
+  r^2\cos\theta\sin\theta&=2
+\end{align*}
+
+We can solve for $r$ (in a limited range but that won't matter to us) like so:
+\begin{align*}
+  r&=\sqrt{\frac{1}{\cos\theta\sin\theta}}\\
+  r&=\sqrt{\frac{2}{\cos\theta\sin\theta}}
+\end{align*}
+
+Now we just integrate (also note that $xy=r^2\cos\theta\sin\theta$):
+\begin{align*}
+  \int_{\pi/4}^{\cos^{-1}(1/\sqrt 5)}\int_{\sqrt{\frac{1}{\cos\theta\sin\theta}}}^{\sqrt{\frac{2}{\cos\theta\sin\theta}}}r^3\cos\theta\sin\theta dr d\theta=\int_{\pi/4}^{\cos^{-1}(1/\sqrt 5)}\frac{-3}{4\sin\theta\cos\theta}=\frac{3\ln 2}{4}\approx0.5199
+\end{align*}
+
+% Graphing the equations we find there are only 4 points of intersection but only 2 regions we need to integrate since they have the same x-coordinate. The points of intersection are:
+% $$\left(\frac{1}{\sqrt 2},\sqrt 2\right)\ \ \ \ (1,1)\ \ \ \ (1,2)\ \ \ \ (\sqrt 2,\sqrt 2)$$
+%
+% The integral, then, becomes:
+% \begin{align*}
+%   \int_D\left(xy\right)dA&=\int_{1/\sqrt 2}^1\int_{1/x}^{2x}xy\ dydx+
+%   \int^{\sqrt 2}_1\int_{x}^{2/x}xy\ dydx\\
+%   &=\int_{1/\sqrt 2}^1\frac{xy(2x^2-1)}{x}dx+\int^{\sqrt 2}_1\frac{-xy(x^2-2)}{x}dx\\
+%   &=xy
+% \end{align*}
+
+\end{document}

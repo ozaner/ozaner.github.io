@@ -1,0 +1,226 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Numerical Analysis HW \#3}
+\author{Ozaner Hansha}
+\date{April 9, 2019}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Given a function $f$ for which the following values are given:
+
+\begin{gather*}
+  f(8.1) = 16.94410\ \ \ \ \ \ f(8.3) = 17.56492\\
+  f(8.6) = 18.50515\ \ \ \ \ \ f(8.7) = 18.82091
+\end{gather*}
+
+approximate $f(8.4)$ using both $f$'s degree 1 and degree 2 interpolating polynomials over the interval $[8.1,8.6]$.
+\\\\
+\textbf{Solution:} Given $k+1$ data points the Lagrange basis polynomials are given by:
+
+$$\ell_{j}(x):=\prod_{\substack{i=0\\i\neq j}}^k\frac {x-x_i}{x_j-x_i}$$
+
+\textbf{Linear Case}
+And so for the 1st degree, i.e. linear, interpolating polynomial we use the following nodes:
+\begin{gather*}
+  (x_0,y_0)=(8.1,16.94410)\\
+  (x_1,y_1)=(8.6,18.50515)
+\end{gather*}
+
+giving us the following basis polynomials:
+\begin{align*}
+  \ell_0(x)&=\frac{x-8.6}{8.1-8.6}=-\frac{x-8.6}{.5}=-2(x-8.6)\\
+  \ell_1(x)&=\frac{x-8.1}{8.6-8.1}=\frac{x-8.1}{.5}=2(x-8.1)
+\end{align*}
+
+The following linear combination gives us the interpolating polynomial:
+\begin{align*}
+  p_1(x)&=y_0\ell_0(x)+y_1\ell_1(x)\\
+  &=(16.94410)(-2)(x-8.6)+(18.50515)(2)(x-8.1)\\
+  &=-33.8882(x-8.6)+37.0103(x-8.1)\\
+  &=3.1221x - 8.34491
+\end{align*}
+
+Evaluating $p_1(8.4)$ gives us our linear approximation:
+
+$$p_1(8.4)=3.1221(8.4) - 8.34491=\boxed{17.88073}$$
+
+\textbf{Quadratic Case}
+Now we do the same for the 2nd degree, i.e. quadratic, interpolating polynomial. It's nodes are:
+\begin{gather*}
+  (x_0,y_0)=(8.1,16.94410)\\
+  (x_1,y_1)=(8.3,17.56492)\\
+  (x_2,y_2)=(8.6,18.50515)
+\end{gather*}
+
+giving us the following Lagrange basis polynomials:
+\begin{align*}
+  \ell_0(x)&=\left(\frac{x-8.3}{8.1-8.3}\right)\left(\frac{x-8.6}{8.1-8.6}\right)=10(x^2-16.9x+71.38)\\
+  \ell_1(x)&=\left(\frac{x-8.1}{8.3-8.1}\right)\left(\frac{x-8.6}{8.3-8.6}\right)=\frac{-50}{3}(x^2-16.7x+69.66)\\
+  \ell_2(x)&=\left(\frac{x-8.1}{8.6-8.1}\right)\left(\frac{x-8.3}{8.6-8.3}\right)=\frac{20}{3}(x^2-16.4x+67.23)\\
+\end{align*}
+
+The following linear combination of the basis' gives us our interpolation:
+\begin{align*}
+  p_2(x)&=y_0\ell_0(x)+y_1\ell_1(x)+y_2\ell_2(x)\\
+  &=(16.94410)(10)(x^2-16.9x+71.38)\\
+  &\ \ \ \ \ +(17.56492)\left(\frac{-50}{3}\right)(x^2-16.7x+69.66)\\
+  &\ \ \ \ \ +(18.50515)\left(\frac{20}{3}\right)(x^2-16.4x+67.23)\\
+  &=0.0600147x^2+2.11987x-4.16437
+\end{align*}
+
+Evaluating $p_2(8.4)$ gives us our quadratic approximation:
+
+$$p_2(8.4)=0.0600147(8.4)^2+2.11987(8.4)-4.16437=\boxed{17.877132}$$
+
+\section*{Problem 2}
+\textbf{Problem:} The values above were truncated from their original values given by $f(x)=x\ln x$. Find a bound for the error in both the linear and quadratic cases and compare it to the results in problem 1.
+\\\\
+\textbf{Solution:} Recall that, assuming $f$ is $n+1$ times differentiable, the error of $p_n$ is given by the following:
+
+$$\operatorname{error}(x)=f(x)-p_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i=0}^n (x-x_i)$$
+
+Where $\xi\in[x_0,x_n]$. We can bound this error by simply choosing a $\xi$ such that $f^{(n+1)}$ is maximized:
+
+$$|\operatorname{error}(x)| \le \max_{x_0\le\xi\le x_n}\left|f^{(n+1)}(\xi)\right|\left|\frac{1}{(n+1)!} \prod_{i=0}^n (x-x_i)\right|$$
+
+\textbf{Linear Case}
+Using this, we can provide error bounds for both the linear and quadratic linear interpolations derived in problem 1. For the linear case, we note that $f''$ is given by:
+
+$$f(x)=x\ln x\ \ \ \ \ f'(x)=\ln x+1\ \ \ \ \ f''(x)=\frac{1}{x}$$
+
+To maximize this $f''$ over the interval $[x_0,x_1]$, we note that it is a decreasing function over the positive reals and since $0<x_0<x_1$ we can say the function reaches a maximum at $x_0$:
+
+$$\max_{x_0\le\xi\le x_1}\left|f''(\xi)\right|=\max_{x_0\le\xi\le x_1}\left|\frac{1}{\xi}\right|=\frac{1}{x_0}=\frac{1}{8.1}$$
+
+We can now solve for the error bound:
+
+\begin{align*}
+  |\operatorname{error}(x)|
+  &\le\max_{x_0\le\xi\le x_n}\left|f^{(n+1)}(\xi)\right|\left|\frac{1}{(n+1)!} \prod_{i=0}^n (x-x_i)\right|\\
+  &=\max_{x_0\le\xi\le x_n}\left|f''(\xi)\right|\left|\frac{(x-x_0)(x-x_1)}{2}\right|\\
+  &=\frac{1}{8.1}\left|\frac{(x-8.1)(x-8.6)}{2}\right|\\
+  &=\frac{1}{16.2}|x^2-16.7x+69.66|
+\end{align*}
+
+Plugging in $x=8.4$ into the error bound, we arrive at:
+
+$$|\operatorname{error}(8.4)|\le\boxed{0.003704}$$
+
+Even further, the maximum error of the linear interpolation over the entire interval can be found by finding the vertex of the error bound. The maximizing $x=\frac{-b}{2a}=8.3994$. Plugging this in gives us:
+
+$$\max_{x_0\le x\le x_n}|\operatorname{error}(x)|\le0.003851$$
+
+The actual error of our approximation was:
+
+$$f(8.4)-p_1(8.4)=17.87715-17.88073=-0.003584$$
+
+We can compare the absolute value of these errors like so:
+
+$$\underbrace{0.003584}_{\text{actual}}<\underbrace{0.003704}_{\text{bound}}<\underbrace{0.003851}_{\text{max bound}}$$
+
+\textbf{Quadratic Case}
+We can now repeat the process for the quadratic interpolation polynomial. First we note that $f'''(x)$ is given by:
+
+$$f''(x)=\frac{1}{x}\ \ \ \ \ f'''(x)=\frac{-1}{x^2}$$
+
+To maximize $|f'''(x)|$ over the interval, we note that it is an increasing function over the positive reals and since $0<x_0<x_2$ we can say the function reaches a maximum at $x_2$:
+
+$$\max_{x_0\le\xi\le x_2}\left|f'''(\xi)\right|=\max_{x_0\le\xi\le x_1}\left|\frac{-1}{\xi^2}\right|=\frac{1}{x_0^2}=\frac{1}{65.61}$$
+
+We can now solve for the error bound:
+
+\begin{align*}
+  |\operatorname{error}(x)|
+  &\le\max_{x_0\le\xi\le x_n}\left|f^{(n+1)}(\xi)\right|\left|\frac{1}{(n+1)!} \prod_{i=0}^n (x-x_i)\right|\\
+  &=\max_{x_0\le\xi\le x_n}\left|f'''(\xi)\right|\left|\frac{(x-x_0)(x-x_1)(x-x_2)}{3!}\right|\\
+  &=\frac{1}{65.61}\left|\frac{(x-8.1)(x-8.3)(x-8.6)}{6}\right|\\
+  &=\frac{1}{393.66}|x^3-25x^2+208.27x-578.178|
+\end{align*}
+
+Plugging in $x=8.4$ into the error bound, we arrive at:
+
+$$|\operatorname{error}(8.4)|\le\boxed{0.000015242}$$
+
+% Even further, the maximum error of the linear interpolation over the entire interval can be found by finding the vertex of the error bound. The maximizing $x=\frac{-b}{2a}=8.3994$. Plugging this in gives us:
+%
+% $$\max_{x_0\le x\le x_n}|\operatorname{error}(x)|\le0.003851$$
+
+The actual error of our approximation was:
+
+$$f(8.4)-p_2(8.4)=17.87715-17.87713=0.000014$$
+
+We can compare the absolute value of these errors like so:
+
+$$\underbrace{0.000014}_{\text{actual}}<\underbrace{0.000015242}_{\text{bound}}$$
+
+\section*{Problem 3}
+\textbf{Problem:} Use the divided differences method to construct an interpolating polynomial of the following 4 points:
+$$(-0.1, 5.3),(0, 2),(0.2, 3.19),(0.3, 1)$$
+\textbf{Solution:} Recall that the divided difference of $n$ nodes is given by:
+
+$$f[x_{i },\ldots ,x_{{i +j}}]:={\frac  {f[x_{{i +1}},\ldots ,x_{{i+j}}]-f[x_{i},\ldots ,x_{{i +j-1}}]}{x_{{i +j}}-x_{i }}}$$
+
+The relevant divided differences are given in the following table:
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c}
+x_i & y_i & 1\text{st Order Diff.} & 2\text{nd Order Diff.} & 3\text{rd Order Diff.}\\\hline
+-0.1 & 5.3 &&&\\
+    &     & -33 &&\\
+0 & 2 &             & 129.833 &\\
+    &     & 5.95  &              & -556.667 &\\
+0.2 & 3.19 &             & -92.833 &\\
+    &     & -21.9  &&&\\
+0.3 & 1 &&&
+\end{tabular}
+\end{center}
+
+The interpolating cubic polynomial is given by:
+$$p(x)=[y_0]+[y_0,y_1](x-x_0)+[y_0,y_1,y_2](x-x_0)(x-x_1)+[y_0,y_1,y_2,y_3](x-x_0)(x-x_1)(x-x_2)$$
+
+Plugging in our divided differences we arrive at:
+\begin{align*}
+p(x)&=5.3-33(x+0.1)+129.833x(x+0.1)-556.667x(x+0.1)(x-0.2)\\
+&=-556.667x^3 + 185.5x^2 - 8.88333x + 2
+\end{align*}
+
+\section*{Problem 4}
+\textbf{Problem a:} Use MATLAB to plot the error between the function $\frac{1}{1+x^2}$ and its $n$th degree polynomial interpolation over the interval $[-5,5]$, where $n=4,8,16,32$ and the interpolation points are uniformly spaced. Record the approximate maximum error magnitude.
+\\\\
+\textbf{Solution:} The apparent maximum errors are:
+
+\begin{center}
+\begin{tabular}{c|c}
+$n$ & $\approx|e_{\text{max}}|$ \\\hline
+4 & 0.4383 \\
+8 & 1.045\\
+16 & 14.01 \\
+32 & 4641 \\
+\end{tabular}
+\end{center}
+
+\textbf{Problem b:} Repeat part a but this time use the Chebyshev points to interpolate the polynomial instead:
+
+$$x_i=\frac{a+b}{2}+\frac{b-a}{2}\cos\left(\frac{(2i+1)\pi}{2n+2}\right)$$
+
+\textbf{Solution:} The apparent maximum errors are:
+
+\begin{center}
+\begin{tabular}{c|c}
+$n$ & $\approx|e_{\text{max}}|$ \\\hline
+4 & 0.2002 \\
+8 & 0.1194\\
+16 & 0.03258 \\
+32 & 0.001304 \\
+\end{tabular}
+\end{center}
+
+\textbf{Problem c:} Based on these results, does the choice of interpolation points make a difference in the error of the interpolating polynomial? Which choice is better?
+\\\\
+\textbf{Solution:} The choice of nodes clearly makes a huge impact in the error of the interpolation, especially as the number of nodes $n$ increases. Indeed, in the first test with uniformly spaced nodes, the error seemed to grow hyper-exponentially with respect to $n$. Meanwhile, the error in the Chebyshev interpolation seemed to approach zero. Clearly this form of interpolation is superior to that of a uniform distribution (at least for continuous, infinitely differentiable functions).
+
+\end{document}

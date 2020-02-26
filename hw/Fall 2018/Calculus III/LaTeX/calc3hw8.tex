@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#8}
+\author{Ozaner Hansha}
+\date{November 26, 2018}
+\maketitle
+
+\section*{Exercise 1}
+\textbf{Problem:} Consider the following function:
+$$f(x,y)=xy+2x-2y$$
+Find the maximum and minimum values of $f$ in the region that lies below $y=1-x^2$ and above $y=0$.
+\\\\
+\textbf{Solution:} The gradient is $\nabla f(x,y)=(y+2,x-2)$, meaning the only critical point is $(2,-2)$. Plugging this point in tells us it is outside the region, so we now only need to check the region's boundary.
+
+The first part of this boundary is given by $b_1(x,y)=x^2+y-1$ when $b_1(x,y)=0$. By finding the gradient $\nabla b_1(x,y)=(2x,-1)$ we can give the following Lagrange equations:
+\begin{gather*}
+  y+2=2x(x-2)\\
+  y=1-x^2
+\end{gather*}
+
+By plugging the second equation into the first we are left with $3x^3-4x-3=0$. This quadratic polynomial has the following solutions:
+$$r=\frac{2\pm\sqrt{13}}{3}$$
+
+Only the $-$ case of the root lied on the boundary so we need not consider the other. Plugging this root back into either of our original equations we can solve for $y$ as well, giving us the complete critical point:
+$$\mathbf x_1=\left(\frac{2-\sqrt{13}}{3},\frac{4\sqrt{13}-8}{9}\right)$$
+
+The second part of the boundary is given by $b_2(x,y)=y$ when $b_2(x,y)=0$. The gradient is then $\nabla b_2(x,y)=(0,1)$. Clearly, $\nabla f=\lambda\nabla b_2$ means that $y$ must equal $-2$. This isn't possible however as it falls outside of the bounded region. And so we need not consider this case any further.
+
+Now we have the third case where the two previous boundaries intersect. These are the points $\mathbf x_2=(-1,0)$ and $\mathbf x_3=(1,0)$. Now we can see which ones are the max/mins:
+\begin{align*}
+  f(\mathbf x_1)&=\frac{16-26\sqrt{13}}{27}\approx-2.88\\
+  f(\mathbf x_2)&=-2\\
+  f(\mathbf x_3)&=2
+\end{align*}
+
+And so $\mathbf x_1$ is the minimizer which gives $\frac{16-26\sqrt{13}}{27}$. The maximizer is $\mathbf x_3$ which gives $2$
+
+\section*{Exercise 2}
+\textbf{Problem:} The intersection of the cone $z^2=x^2+y^2$ and the following plane is an ellipse:
+$$2z=x+9$$
+Find the points on the ellipse closest and farthest to the origin.
+\\\\
+\textbf{Solution:} This is equivalent to maximizing/minimizing the square distance $f(x,y,z)=x^2+y^2+z^2$ on the following boundaries when they equal 0:
+\begin{align*}
+  b_1(x,y,z)&=x-2z+9\\
+  b_2(x,y,z)&=z^2-x^2-y^2
+\end{align*}
+
+Given that the ellipse is closed and bounded, there must be minimizers and maximizers. Lagrange's theorem tells us that these max/mins $\mathbf x$ must satisfy:
+$$\nabla f(\mathbf x)\cdot\nabla b_1(\mathbf x)\times\nabla b_2(\mathbf x)=0$$
+
+And so, made explicit, this gives us:
+$$(2x,2y,2z)\cdot(1,0,-2)\times(-2x,-2y,2z)=-8yz=0$$
+
+This means that $y=0$ or $z=0$. If $y=0$ then the equations $g_1=0$ and $g_2=0$ become:
+\begin{align*}
+  x-2z+9&=0\\
+  z^2-x^2&=0
+\end{align*}
+
+We first solve for $x$ in the first equation and plug it into the second giving us $z^2-12z+27=0$ which has roots $z=3,9$. Plugging these back in we find their corresponding $x$ values to be $-3$ and $9$ respectively. This gives us the following critical points:
+\begin{align*}
+  \mathbf x_1=(-3,0,3)\\
+  \mathbf x_2=(9,0,9)
+\end{align*}
+
+If $z=0$ then the equations $g_1=0$ and $g_2=0$ become:
+\begin{align*}
+  x+9&=0\\
+  -x^2-y^2&=0
+\end{align*}
+
+This system, however, has no real solutions. And so we are left to plug our critical points into the function to find:
+\begin{align*}
+  f(\mathbf x_1)&=3\sqrt 2\\
+  f(\mathbf x_2)&=9\sqrt 2
+\end{align*}
+
+And so $\mathbf x_1$ is the minimizer (closest to origin) and $\mathbf x_2$ is the maximizer (farthest from origin).
+
+\section*{Exercise 3}
+Consider the following function:
+$$f(x,y,z)=x+yz$$
+And now consider the following two equations which together give a curve in $\mathbb R^3$:
+\begin{gather*}
+  3x^2+4y^2+z^2=1\\
+  z=x^2+y^2
+\end{gather*}
+\subsection*{Part a}
+\textbf{Problem:} Give the system of 3 equations that all maximizers/minimizers of $f$ must satisfy due to Lagrange's Theorem:
+\\\\
+\textbf{Solution:} Consider the following functions:
+\begin{align*}
+  b_1(x,y,z)&=3x^2+4y^2+z^2-1\\
+  b_2(x,y,z)&=z-x^2-y^2
+\end{align*}
+
+The gradients of all these functions come out to:
+\begin{align*}
+  \nabla f(x,y,z)&=(1,z,y)\\
+  \nabla b_1(x,y,z)&=(6x,8y,2z)\\
+  \nabla b_2(x,y,z)&=(-2x,-2y,1)
+\end{align*}
+
+Lagrange's theorem tells us that the triple product of these gradients must be 0:
+$$4x(y^2-z^2)+z(4y-6x)+8y=0$$
+
+This equation, along with the two original constraints comprise the system of 3 equations we originally sought after.
+
+\subsection*{Part b}
+\textbf{Problem:} One of these 3 equations can be used to reduce this system of equations to 2 variables. In particular, eliminate $z$ from this system.
+\\\\
+\textbf{Solution:} If we substitute the second constraint equation (i.e. $z=x^2+y^2$) into the first two, we arrive at the following system of 2 equations:
+\begin{align*}
+  4x^3(x^2-2y^2)+4xy^4+6x^3-4y^3+2xy^2-4x^2y-8y&=0\\
+  3x^2+4y^2+(x^2+y^2)^2-1&=0
+\end{align*}
+
+\end{document}

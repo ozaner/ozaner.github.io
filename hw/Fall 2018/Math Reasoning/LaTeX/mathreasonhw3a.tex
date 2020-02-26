@@ -1,0 +1,217 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage[top=1in, bottom=1.5in, left=1.5in, right=1.5in]{geometry}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 3a}
+\author{Ozaner Hansha}
+\date{September 26, 2018}
+\maketitle
+
+\section{Problem 1}
+\textbf{Problem:} Define the functions $r(X)$ and $c(X)$ which take a matrix $X$ of size $m\times n$ with entries from some set $S$, and output a tuple of size $mn$ with each entry taken row by row or column by column, respectively, from $X$.
+\\\\
+\textbf{Solution:} The set of all $m\times n$ matrices with entries from some set $S$ is denoted $S^{m\times n}$. This means the functions have the following domain and range:
+\begin{gather*}
+  r:S^{m\times n}\to S^{mn}\\
+  c:S^{m\times n}\to S^{mn}
+\end{gather*}
+
+More explicitly, we can define the functions as a subset of the cartesian product of their domain and codomain):
+\begin{gather*}
+  r\equiv\{(a,b)\in S^{m\times n}\times S^{mn}\mid b=(a[x(i)][y(i)])_{i=0}^{mn}\}\\
+  x(i)=\left\lfloor\frac{i}{n}\right\rfloor\\
+  y(i)=i \bmod n
+\end{gather*}
+
+\textit{Note that the $\bmod$ is being used as an operator (i.e remainder) and not an equivalence relation.}
+\newline
+
+As you can see the matrix $a$ is indexed by the indexing functions $x(i)$ and $y(i)$. They \textit{unroll} the matrix row-wise. Unsurprisingly, the definition of $c$ is the same as $r$ but with the index functions switched:
+$$c\equiv\{(a,b)\in S^{m\times n}\times S^{mn}\mid b=(a[y(i)][x(i)])_{i=0}^{mn}\}$$
+
+If functional notation ala $f(x)$ is preferred, we can just call it shorthand for the following set-theoretic definition:
+$$f(x)\equiv\bigcup\{y\mid (x,y)\in f\}$$
+
+The above holds for any function $f$, like $r$ and $c$.
+
+\section{Problem 2}
+\subsection{Part a}
+\textbf{Problem:} Give three distinct finite arithmetic sequences.
+\\\\
+\textbf{Solution:}
+\begin{align*}
+  S_1&=(1,5,9,13)\\
+  &=(1+4i)_{i=0}^{3}\\
+  S_2&=(3,5,7,9,11,13)\\
+  &=(3+2i)_{i=0}^{5}\\
+  S_3&=(4,5)\\
+  &=(4+i)_{i=0}^{1}
+\end{align*}
+
+\subsection{Part b}
+\textbf{Problem:} What is the minimum information needed to define a finite arithmetic sequence?
+\\\\
+\textbf{Solution:} Any finite arithmetic sequence can be fully defined by 3 numbers. The first is the difference between each term $m$, second is the first term $b$, and the last is the length of the sequence $\ell\in\mathbb Z_{>1}$. Thus, a particular arithmetic sequence over the is completely defined by a triplet of numbers $(m,b,\ell)$. Where $m$ and $b$ numbers from $\mathbb R$, or $\mathbb C$, or $\mathbb Z$, etc.
+
+\textit{We could also add the starting index tuple but this would be redundant because the same effect can be created by adjusting the first term. Also I specified that the list must be at least two elements, but 1 and even 0 element lists that are vacuously arithmetic are conceivable.}
+
+\subsection{Part c}
+\textbf{Problem:} Define a definite arithmetic sequence given a triplet $(m,b,\ell)$ where $\ell\in\mathbb Z_{>1}$.
+\\\\
+\textbf{Solution:}
+$$AP(m,b,\ell)=(mi+b)_{i=0}^{\ell-1}$$
+
+\section{Problem 3}
+\subsection{Part a}
+\textbf{Problem:} Give two distinct examples of real valued piecewise linear functions on the interval $[0,1]$. The functions need not be continuous.
+\\\\
+\textbf{Solution:}
+\begin{align*}
+  f_1(x)&=
+\begin{cases}
+3x+1, &0\ge x>\frac{1}{2}\\
+2x, &\frac{1}{2}\ge x\ge 1
+\end{cases}\\
+  f_2(x)&=
+\begin{cases}
+x+1, &0\ge x>\frac{3}{4}\\
+x+3, &\frac{3}{4}\ge x\ge 1
+\end{cases}\\
+  f_3(x)&=
+\begin{cases}
+1, &0\ge x>\frac{7}{9}\\
+2x+18, &\frac{7}{9}\ge x\ge 1
+\end{cases}
+\end{align*}
+
+\subsection{Part b}
+\textbf{Problem:} What is the minimum information needed to completely specify any function that satisfies part a?
+\\\\
+\textbf{Solution:} We can define such a function via 3 finite lists of size $\ell$. The elements of the first list are ordered pairs of the form $(m,b)$ and represent a given linear function (in terms of its slope and y-intercept).
+
+The second list contains all the end bounds (it must end with 1, because the final end bound is 1). This list must also be strictly increasing so that we don't get repeated input values (decreasing list) or vacuous lines that don't appear in the function (constant list).
+
+The third and final list is simply a list of 1's and 0's that represent whether the ending bound of the $i$th linear function is inclusive or not. 1 is inclusive, 0 is not. Since the interval this function is defined on is bounded by an inclusive 1 at the end, this list should end with a 1. The inclusivity of the starting bound for the next line on the list will simply be the opposite of what it was for the previous ending bound (so that every point on the interval is defined).
+
+\subsection{Part c}
+\textbf{Problem:} Provide a definition of the real valued finite piecewise function given above.
+\\\\
+\textbf{Solution:} Given 3 lists of size $\ell$ which we call $L=((m_i,b_i))_{i=1}^{\ell}$, and $B=(d_i)_{i=1}^{\ell}$, and $J=(j_i)_{i=1}^{\ell}\in \{0,1\}^\ell$ (with $j_\ell=1$) we can define the piecewise function like so:
+
+$$f_{L,B,J}(x)=
+  \begin{cases}
+  \multirow{2}{*}{$m_1x+b_1,$} &(j_1=0)\wedge(0\ge x>d_1)\ \vee\\
+                              &(j_1=1)\wedge(0\ge x\ge d_1)\\
+  \hspace{22}\vdots\\
+  m_ix+b_i, &P_i(x)\\
+  \hspace{22}\vdots\\
+  m_\ell x+b_\ell, &P_\ell(x)\\
+  \end{cases}
+$$
+
+Where the family of predicates $P_i(x)$ is defined as so ($\forall i, 2\le i\le\ell$):
+\begin{align*}
+  P_i(x)\equiv (j_{i-1}=0\wedge j_i=0)&\wedge(d_{i-1}\ge x>d_i)\ \vee\\
+            (j_{i-1}=0\wedge j_i=1)&\wedge(d_{i-1}\ge x\ge d_i)\ \vee\\
+            (j_{i-1}=1\wedge j_i=0)&\wedge(d_{i-1}>x>d_i)\ \vee\\
+            (j_{i-1}=1\wedge j_i=1)&\wedge(d_{i-1}>x\ge d_i)
+\end{align*}
+
+\section{Problem 4}
+\subsection{Part a}
+\textbf{Problem:} Determine the truth of the assertion $(\forall x\in\mathbb R)(\exists y\in\mathbb R)\ xy>x+y$.
+\\\\
+\textbf{Solution:} This is indeed true. To show this we can simply define $y:=x-1$ and see that:
+\begin{align*}
+  xy&>x+y\\
+  x(x-1)&>x+x-1\\
+  x^2-x&>2x-1\\
+  x^2-x+1&>0
+\end{align*}
+
+And the last statement is surely true. If it's not clear, note that the quadratic polynomial on the left-hand side is both concave up ($a$ is positive) and has no real roots ($b^2-4ac=-3<0$). As a result there is no real number that could make the polynomial less than or equal to $0$.
+
+\subsection{Part b}
+\textbf{Problem:} Determine the truth of the assertion $(\forall x,y\in\mathbb R)\ xy>x+y$.
+\\\\
+\textbf{Solution:} This is false. Only one counterexample suffices to disprove this statement so here is one: $x=1,y=1\rightarrow 1>2\equiv F$.
+
+\subsection{Part c}
+\textbf{Problem:} Determine the truth of the assertion $(\exists x,y\in\mathbb R)\ xy>x^2+y^2$.
+\\\\
+\textbf{Solution:} This statement is actually false. To see this let's first miniplate the statement:
+\begin{align*}
+  xy&>x^2+y^2\\
+  0&>x^2-xy+y^2
+\end{align*}
+
+Now note that the polynomial on the right-hand side (which we are parameterizing with $y$) can never be below 0 because
+
+$$b^2-4ac=y^2-4y^2=-3y^2$$
+
+and it is clear that this expression, for any $y$, can never be above 0 (but can be equal to it), thus the quadratic has either 1 root at 0 or no real roots. This combined with the fact that this quadratic is concave up for all $y$ is enough to show that the polynomial will never be less than 0 for any choice of $y$ (or via the commutativity of addition and multiplication, $x$). We know it is concave up because if we take the partial derivative of the polynomial we get $\frac{\partial}{\partial x}(x^2-xy+y^2)=2x-y$. Because $y$ is just a constant term we can see that the function is increasing regardless of the choice of $y$. Thus it is concave up for any choice of $y$ and also for $x$ for the reason stated above. So the statement we set out to disprove is indeed false.
+
+\section{Problem 5}
+(A) ($n$ is prime or $n+2$ is prime) implies that ($n^2+2$ is prime or $n^2-2$ is prime.)\\
+(B) ($n^2+2$ is composite and $n^2-2$ is composite) implies ($n$ is composite and $n+2$ is composite.)
+\subsection{Part a}
+\textbf{Problem:} Assign variables to the two propositions above.
+\\\\
+\textbf{Solution:}
+
+\begin{align*}
+A&\equiv P\vee Q\rightarrow R\vee S\\
+B&\equiv \neg R\wedge \neg S\rightarrow \neg P\wedge \neg Q
+\end{align*}
+
+\subsection{Part b}
+\textbf{Problem:} Determine the truth of $A\rightarrow B$ and its converse.
+\\\\
+\textbf{Solution:} We can show that both statements are true (i.e $A\equiv B$) by noting the following equivalence:
+
+$$x\rightarrow y\equiv \neg x\vee y$$
+
+and De Morgan's laws for the negation of the disjunction:
+
+$$\neg(x\vee y)\equiv (\neg x\wedge \neg y)$$
+
+Now we simply show that, only by replacing the statements with other equivalent ones, that they are indeed logically equivalent:
+
+\begin{align*}
+  A&\equiv(P\vee Q)\rightarrow (R\vee S)\\
+  &\equiv\neg (P\vee Q)\vee (R\vee S) \tag{1st equivalence}\\
+  &\equiv(\neg P\wedge\neg Q)\vee (R\vee S) \tag{De Morgan's law}\\
+  &\equiv(R\vee S)\vee (\neg P\wedge\neg Q) \tag{Symmetry of disjunction}\\
+  &\equiv\neg(\neg(R\vee S))\vee (\neg P\wedge\neg Q) \tag{Double negation}\\
+  &\equiv\neg(R\vee S)\rightarrow (\neg P\wedge\neg Q) \tag{1st equivalence}\\
+  &\equiv(\neg R\wedge\neg S)\rightarrow (\neg P\wedge\neg Q) \tag{De Morgan's law}\\
+  &\equiv B
+\end{align*}
+
+If my word wasn't enough regarding the 1st equivalence and De Morgan's law, here are the truth tables:
+
+\begin{center}
+\begin{tabular}{ccccc}
+$x$ & $y$ & $\neg x$ & $\neg x\vee y$ & $x\rightarrow y$\\
+\midrule
+F & F & T & T & T\\
+F & T & T & T & T\\
+T & F & F & F & F\\
+T & T & F & T & T\\
+\end{tabular}
+
+\begin{tabular}{ccccccc}
+$x$ & $y$ & $\neg x$ & $\neg y$ & $x\vee y$ & $\neg x\wedge\neg y$ & $\neg(x\vee y)$\\
+\midrule
+F & F & T & T & F & T & T\\
+F & T & T & F & T & F & F\\
+T & F & F & T & T & F & F\\
+T & T & F & F & T & F & F\\
+\end{tabular}
+\end{center}
+
+\end{document}

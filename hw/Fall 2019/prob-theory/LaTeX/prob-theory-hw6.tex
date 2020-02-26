@@ -1,0 +1,286 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand*\pbar[0]{\,|\,}
+\newcommand*\var[0]{\text{Var}}
+
+\begin{document}
+
+\title{Theory of Probability HW \#6}
+\author{Ozaner Hansha}
+\date{November 4, 2019}
+\maketitle
+
+\begin{center}
+    \Large{\textbf{Part A}}
+\end{center}
+
+Problems taken from Chapter 5 of the textbook.
+
+\subsection*{Problem 8}
+\noindent\textbf{Problem:} The lifetime in hours of an electronic tube $X$ is a random variable having a pdf given by:
+\begin{equation*}
+    f_X(x)=xe^{-x},\,\,\,\,x\le 0
+\end{equation*}
+
+Compute the expected lifetime of such a tube.
+\bigskip
+
+\noindent\textbf{Solution:} The expected value $X$ is given by:
+\begin{align*}
+    E[X]&=\int_{-\infty}^\infty xf_X(x)\mathop{dx}\tag{def. of expectation}\\
+    &=\underbrace{\int_0^\infty x^2e^{-x}\mathop{dx}}_{\text{Integral \#1}}\tag{pdf of $X$}
+\end{align*}
+
+We will now use via integration by parts to solve this first integral. Our change of variables are given by:
+\begin{align*}
+    u&=x^2,\,\,\,\,\,\,\,\,du=2x\mathop{dx}\\
+    v&=-e^{-x},\,\,\,\,\,dv=e^{-x}\mathop{dx}
+\end{align*}
+
+Plugging these in we find:
+\begin{align*}
+    \overbrace{\int x^2e^{-x}\mathop{dx}}^{\text{Integral \#1}}&=\int u\mathop{dv}\tag{change of variables}\\
+    &=uv-\int v\mathop{du}\tag{integration by parts}\\
+    &=-x^2e^{-x}+2\underbrace{\int xe^{-x}\mathop{dx}}_{\text{Integral \#2}}\tag{change of variables}
+\end{align*}
+
+Once again, we use integration by parts to solve this second integral. Our change of variables are given by:
+\begin{align*}
+    u&=x,\,\,\,\,\,\,\,\,du=dx\\
+    v&=-e^{-x},\,\,\,\,\,dv=e^{-x}\mathop{dx}
+\end{align*}
+
+Plugging these in we find:
+\begin{align*}
+    \overbrace{\int xe^{-x}\mathop{dx}}^{\text{Integral \#2}}&=\int u\mathop{dv}\tag{change of variables}\\
+    &=uv-\int v\mathop{du}\tag{integration by parts}\\
+    &=-xe^{-x}+\int e^{-x}\mathop{dx}\tag{change of variables}\\
+    &=-xe^{-x}-e^{-x}+C_1\\
+\end{align*}
+
+Plugging this result back into our first integral:
+\begin{align*}
+    \overbrace{\int x^2e^{-x}\mathop{dx}}^{\text{Integral \#1}}&=-x^2e^{-x}+2\overbrace{\int xe^{-x}\mathop{dx}}^{\text{Integral \#2}}\\
+    &=-x^2e^{-x}+2(-xe^{-x}-e^{-x}+C_1)\\
+    &=-x^2e^{-x}-2xe^{-x}-2e^{-x}+C_2\\
+    &=-e^{-x}(x^2+2x+2)+C_2
+\end{align*}
+
+By choosing a particular antiderivative, say $C_2=0$, we can now finally solve for the expectation of $X$:
+\begin{align*}
+    E[X]&=\overbrace{\int_0^\infty x^2e^{-x}\mathop{dx}}^{\text{Integral \#1}}\\
+    &=\eval{-e^{-x}(x^2+2x+2)}{0}{\infty}\\
+    &=2+\lim_{x\to\infty}(-e^{-x}(x^2+2x+2))\\
+    &=2-\lim_{x\to\infty}\frac{x^2+2x+2}{e^{x}}\\
+    &=2+\lim_{x\to\infty}\frac{2x+2}{e^{x}}\tag{L'Hôpital's rule}\\
+    &=2-\lim_{x\to\infty}\frac{2}{e^{x}}\tag{L'Hôpital's rule}\\
+    &=2-0=2
+\end{align*}
+
+\subsection*{Problem 18}
+\noindent\textbf{Problem:} Suppose that $X$ is a normal random variable with mean 5. If $P(X>9)=0.2$, what is Var($X$)?
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+    0.2&=P(X>9)\\
+    &=1-P(X\le 9)\tag{complement}\\
+    &=1-F_X(9)\tag{def. of cdf}\\
+    &=1-\Phi\left(\frac{9-5}{\sigma}\right)\tag{unit normal random variable}\\
+    &\Rightarrow\Phi\left(\frac{4}{\sigma}\right)=0.8
+\end{align*}
+
+Recall that the cdf of a normal random variable can be expressed in terms of the unit normal random variable, thus justifying line 4.
+
+We can now solve for $\sigma$, i.e. the square root of the variation, by computing the inverse function $\Phi^{-1}$ on 0.8. We can do this by either finding an output value close to 0.8 on a $\Phi$ lookup table or, more directly, by solving for it numerically on a computer. Using the latter approach, we find the following 4 digit approximation:
+
+\begin{align*}
+    \Phi\left(\frac{4}{\sigma}\right)&=0.8\\
+    \Phi^{-1}\left(\Phi\left(\frac{4}{\sigma}\right)\right)&=\Phi^{-1}\left(0.8\right)\\
+    \frac{4}{\sigma}&\approx0.8416\tag{numerical approxmation}\\
+    \sigma&\approx4.753\\
+    \sigma^2&\approx22.59
+\end{align*}
+
+\subsection*{Problem 25}
+\noindent\textbf{Problem:} Each item produced by a certain manufacturer is, independently, of acceptable quality with probability 0.95. Approximate the probability that at most 10 of the next 150 items produced are unacceptable.
+\bigskip
+
+\noindent\textbf{Solution:} Letting $X$ be the number of unacceptable items produced, we have the following binomial distribution with $n=150$ and $p=0.05$:
+\begin{equation*}
+    X\sim B(150,0.05)
+\end{equation*}
+
+And the exact probability of the desired event occurring is given by:
+\begin{equation*}
+    P(X\le10)=p_X(10)=\binom{150}{10}(0.05)^{10}(0.95)^{140}
+\end{equation*}
+
+This expression, however, is difficult to accurately evaluate. In particular, the $\binom{150}{10}$ is extremely large and the $(0.95)^{140}$ term extremely small, lending themselves to numerical error. To remedy this, we can make use of the \textbf{de Moivre–Laplace theorem} and approximate this binomial distribution as a normal distribution with $\mu=np$ and $\sigma^2=np(1-p)$:
+\begin{equation*}
+    \widetilde{X}\sim\mathcal N(7.5,7.125)
+\end{equation*}
+
+The probability can now be expressed as:
+\begin{align*}
+    P(X\le10)&\approx P(\widetilde{X}<10.5)\tag{normal approximation \& continuity correction}\\
+    &=F_{\widetilde{X}}(10.5)\tag{def. of cdf}\\
+    &=\Phi\left(\frac{10.5-7.5}{\sqrt{7.125}}\right)\approx0.86947\tag{unit normal random variable}
+\end{align*}
+
+Also note that our rule of thumb, $\sigma^2\ge 10$, is satisfied since $7.125\ge 10$, allowing us to be reasonably confident in our approximation.
+
+\subsection*{Problem 30}
+\noindent\textbf{Problem:} An image is partitioned into two regions, one white and the other black. A reading taken from a randomly chosen points in the white section will be normally distributed with $\mu=4$ and $\sigma^2=4$, whereas one taken from a randomly chosen point in the black region will have a normally distributed reading with $\mu=6$ and $\sigma^2=9$.
+
+A point is randomly chosen on the image and has a reading of 5. If the fraction of the image that is black is $\alpha$, for what value of $\alpha$ would the probability of making an error be the same, regardless of whether one concluded that the point was in the black region or in the white region?
+\bigskip
+
+\noindent\textbf{Solution:} Let $X$ be the recorded value of a uniformly random chosen point of the image, and let $B$ and $W$ be the event that the point is black or white respectively. We then have the following:
+\begin{align*}
+    X|_B\sim\mathcal N(6,9)\,\,\,\,&\,\,\,\,X|_W\sim\mathcal N(4,4)\\
+    P(W)=1-\alpha\,\,\,\,&\,\,\,\,P(B)=\alpha
+\end{align*}
+
+Now we just have to solve for the $\alpha$ such that the following conditional pdfs are equivalent:
+\begin{align*}
+    f_{X|_B}(5)P(B)&=f_{X|_W}(5)P(W)\tag{equal prob of $W$ or $B$}\\
+    \frac{\alpha}{3\sqrt{2\pi}}e^{-\frac{(5-6)^{2}}{2\cdot9}}&=\frac{1-\alpha}{2\sqrt{2\pi}}e^{-\frac{(5-4)^{2}}{2\cdot4}}\tag{pdf of normal distribution}\\
+    \frac{\alpha e^{-\frac{1}{18}}}{3}&=\frac{(1-\alpha)e^{-\frac{1}{8}}}{2}\\
+    \frac{1-\alpha}{\alpha}&=\frac{2e^{\frac{1}{8}}}{3e^{\frac{1}{18}}}=\frac{2e^{\frac{5}{72}}}{3}\\
+    \alpha&=\frac{1}{\frac{2e^{\frac{5}{72}}}{3}+1}\approx.583224
+\end{align*}
+
+And so the proportionate black area $\alpha=0.583224$ and the proportionate white area $1-\alpha=0.416776$.
+
+\subsection*{Problem 31a}
+\noindent\textbf{Problem:} A fire station is to be located along a road of length $A$. If fires occur at points uniformly chosen on the interval $(0,A)$, where should the station be located so as to minimize the expected distance from the fire? That is, choose $\alpha$ so as to minimize $E[|X-\alpha|]$ when $X\sim \mathcal U(0,A)$. 
+\bigskip
+
+\noindent\textbf{Solution:} While it should be intuitively clear that the station should be put at $\alpha=\frac{A}{2}$, i.e. the mean, we can verify it nonetheless. First we compute the expected distance in terms of $\alpha$:
+\begin{align*}
+    E[|x-\alpha|]&=\int_{-\infty}^{\infty} |x-\alpha|f_X(x)\mathop{dx}\tag{def. of expected value}\\
+    &=\frac{1}{A}\int_0^A |x-\alpha|\mathop{dx}\tag{pdf of uniform distribution}\\
+    &=\frac{1}{A}\eval{\frac{(x-\alpha)|x-\alpha|}{2}}{0}{A}\tag{integral of $|\cdot|$}\\
+    &=\frac{1}{2A}\left((A-\alpha)|A-\alpha|\right)-\left(-\alpha|-\alpha|\right)\\
+    &=\frac{1}{2A}((A-\alpha)^2+\alpha^2)\tag{$A\ge\alpha\ge0$}
+\end{align*}
+
+Now to minimize $E[|x-\alpha|]$, we simply take its derivative with respect to $\alpha$ and set it equal to 0:
+\begin{align*}
+    0&=\frac{d}{d\alpha}E[|x-\alpha|]\\
+    &=\frac{1}{2A}\frac{d}{d\alpha}((A-\alpha)^2+\alpha^2)\\
+    &=\frac{1}{2A}(-2(A-\alpha)+2\alpha)\\
+    &=\frac{2\alpha}{A}-1\\
+    \frac{A}{2}&=\alpha
+\end{align*}
+
+\subsection*{Problem 34}
+\noindent\textbf{Problem:} \textbf{a)} Smith has a used car that he claims has been driven only 10,000 miles. If Jones purchases the car, what is the probability that she would get at least 20,000 more miles out of it if $X\sim\text{Exp}\left(\frac{1}{20}\right)$? \textbf{b)} What is the probability if instead $X\sim\mathcal U(0,40)$?
+\bigskip
+
+\noindent\textbf{Solution:} \textbf{a)} The probability we seek is given by:
+\begin{align*}
+    P(X\ge 20+10\pbar X\ge 10)&=P(X\ge 20)\tag{memorylessness}\\
+    &=1-F_X(20)\tag{complement \& def. of cdf}\\
+    &=1-(1-e^{-1})\tag{cdf of exponential distribution}\\
+    &=e^{-1}\approx0.36788
+\end{align*}
+
+\textbf{b)} In this case we have the following:
+\begin{align*}
+    P(X\ge 30\pbar X\ge 10)&=\frac{P(X\ge30\cap X\ge10)}{P(X\ge10)}\tag{conditional probability}\\
+    &=\frac{P(X\ge30)}{P(X\ge10)}\tag{$30\ge10$}\\
+    &=\frac{1-F_X(30)}{1-F_X(10)}\tag{complement \& def. of cdf}\\
+    &=\frac{1-\frac{30}{40}}{1-\frac{10}{40}}=\frac{1}{3}\tag{cdf of uniform distribution}
+\end{align*}
+
+\subsection*{Problem 40}
+\noindent\textbf{Problem:} If $X\sim \text{Exp}(1)$, what is the pdf of $Y=\log X$?
+\bigskip
+
+\noindent\textbf{Solution:} First we solve for the $F_Y$ in terms of $F_X$:
+\begin{align*}
+    F_Y(x)&=P(Y\le x)\tag{def. of cdf}\\
+    &=P(\log X\le x)\tag{def. of $Y$}\\
+    &=P(X\le e^x)\tag{$e^x$ is monotonoically increasing}\\
+    &=F_X(e^x)\tag{def. of cdf}
+\end{align*} 
+
+We can now differentiate this to arrive at an expression for the pdf of $Y$:
+\begin{align*}
+    f_Y(x)&=\frac{d}{dx}F_Y(x)\tag{def. of pdf}\\
+    &=\frac{d}{dx}F_X(e^x)\\
+    &=e^x(e^{-e^x})=e^{x-e^x}\tag{chain rule}
+\end{align*}
+\smallskip
+
+\begin{center}
+    \Large{\textbf{Part B}}
+\end{center}
+
+Recall that for a nonnegative continuous random variable $X$, we have:
+\begin{equation*}
+    E[X]=\int_0^\infty P(X>t)\mathop{dt}
+\end{equation*}
+
+\noindent\textbf{Part a:} Using the above result, show that for nonnegative $X$ and $n\in\mathbb Z^+$, the following holds:
+\begin{equation*}
+    E[X^n]=\int_0^\infty nx^{n-1}P(X>x)\mathop{dx}
+\end{equation*}
+
+\noindent\textbf{Solution:} Lt $X$ be a nonnegative random variable. Plugging $X^n$ into the given formula, we have:
+\begin{align*}
+    E[X^n]&=\int_0^\infty P(X^n>t)\mathop{dt}\\
+    &=\int_0^\infty P(X>t^{1/n})\mathop{dt}\tag{$x^{1/n}$ is strictly monotonic for $x\ge0$}
+\end{align*}
+
+Now we define $x=t^{1/n}$ and compute the relevant bounds and differentials:
+\begin{align*}
+    x^n&=t\\
+    dt&=nx^{n-1}\mathop{dx}\\
+    x(0)&=0^{1/n}=0\\
+    \lim_{t\to\infty} x(t)&=\lim_{t\to\infty} t^{1/n}=\infty
+\end{align*}
+
+Performing a change of variables we arrive at:
+\begin{align*}
+    E[X^n]&=\int_0^\infty P(X>t^{1/n})\mathop{dt}\\
+    &=\int_0^\infty nx^{n-1}P(X>x)\mathop{dx}\tag{change of variables}
+\end{align*}
+
+And so the result is proved.
+\bigskip
+
+\noindent\textbf{Part b:} We call $E[X^n]$ the $n$th moment of $X$. Compute the $n$th moment of an exponential random variable with parameter $\lambda$.
+\bigskip
+
+\noindent\textbf{Solution:} Rather than use the formula from part a, we compute the $n$th moment of $X\sim\text{Exp}(\lambda)$ directly:
+\begin{align*}
+    E[X^n]&=\int_{-\infty}^\infty x^nf_X(x)\mathop{dx}\tag{def. of expected value}\\
+    &=\int_0^\infty x^n\lambda e^{-\lambda x}\mathop{dx}\tag{pdf of exponential variable}
+\end{align*}
+
+Now we define $t=\lambda x$ and compute the relevant bounds and differentials:
+\begin{align*}
+    x&=\frac{t}{\lambda}\\
+    dx&=\frac{dt}{\lambda}\\
+    t(x)&=\lambda(0)=0\\
+    \lim_{x\to\infty} t(x)&=\lim_{x\to\infty} \lambda x=\infty
+\end{align*}
+
+Performing a change of variables we arrive at:
+\begin{align*}
+    E[X^n]&=\int_0^\infty x^n\lambda e^{-\lambda x}\mathop{dx}\\
+    &=\int_0^\infty \left(\frac{t}{\lambda}\right)^n \lambda e^{-t}\frac{dt}{\lambda}\tag{change of variables}\\
+    &=\frac{1}{\lambda^n}\int_0^\infty t^n e^{-t}\mathop{dt}\\
+    &=\frac{\Gamma(n+1)}{\lambda^n}\tag{def. of gamma function}\\
+    &=\frac{n!}{\lambda^n}\tag{for $n\in\mathbb N$}\\
+\end{align*}
+
+\end{document}

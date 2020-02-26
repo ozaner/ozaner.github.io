@@ -1,0 +1,5 @@
+To simulate an L1 cache I used a basic data structure called a line which had an int representing the valid bit (1 for valid, 0 for invalid), an unsigned long for representing the time it was last used (for the LRU replacement policy, higher number means more recently used), and an unsigned long representing the address its tag (used to find its corresponding block).
+
+The other key data structure I use is the 2D array that holds the many line structs above depending on what associativity mode is chosen. The set index of any particular line corresponds to the index in the 2D array.
+
+And in regards to the effect of prefetching on the cache misses, reads, writes, etc. Prefetching doesn't effect how many memory reads/writes have to occur but it does effect the number of hits/misses. Namely, the number of hits increases. This increases running time on the short scale and even though the same number of memory reads and writes have to happen, this probably spaces them out more effectively.

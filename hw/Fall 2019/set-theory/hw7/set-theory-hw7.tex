@@ -1,0 +1,358 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage[margin=1.2in]{geometry}
+
+\newenvironment{rcases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
+\begin{document}
+
+\title{Set Theory HW \#7 NAME ON TOP}
+\author{Ozaner Hansha}
+\date{November 12, 2019}
+\maketitle
+
+% Set Theory Class notation
+\newcommand{\pset}[1]{\mathfrak P#1}
+\newcommand{\psetp}[1]{\mathfrak P(#1)}
+\renewcommand{\wedge}{\,\,\&\,\,}
+\renewcommand{\vee}{\text{ or }}
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\newcommand{\triplet}[3]{\langle#1,#2,#3\rangle}
+\renewcommand{\setminus}{-}
+
+% My Notation
+% \newcommand{\pset}[1]{\mathcal P(#1)}
+% \newcommand{\psetp}[1]{\mathcal P(#1)}
+% \newcommand{\pair}[2]{(#1,#2))}
+% \newcommand{\triplet}[3]{(#1,#2,#3)}
+
+\section*{Problem 1}
+\noindent\textbf{Part 1:} The sum of two superCauchy sequences $s$ and $t$ is given by the following sequence:
+\begin{equation*}
+    s+t=\{\pair{n}{s_n+t_n}\mid n\in\omega\}
+\end{equation*}
+
+For this sequence to qualify as superCauchy, there must exist some constant $C\in\mathbb Q^+$ such that for all naturals $n$:
+\begin{equation*}
+    |(s_{n+1}+t_{n+1})-(s_n+t_n)|\le\frac{C}{2^n}
+\end{equation*}
+
+We shall now produce this constant. Consider two arbitrary superCauchy sequences $s,t\in SC(\mathbb Q)$. By definition, there exists two constants $C_s,C_t\in\mathbb Q^+$ such that for all natural numbers $n$:
+\begin{align}
+    |s_{n+1}-s_n|&\le\frac{C_s}{2^n}\\
+    |t_{n+1}-t_n|&\le\frac{C_t}{2^n}
+\end{align}
+
+Let us choose and fix these constants as $C_s$ and $C_t$ respectively. Now note that since they are both inequalities of positive numbers, we can add them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    \frac{C_s+C_t}{2^n}&\ge|s_{n+1}-s_n|+|t_{n+1}-t_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_{n+1}-s_n+t_{n+1}-t_n|\tag{triangle inequality}\\
+    &\ge|s_{n+1}+t_{n+1}-s_n-t_n|\tag{associative \& commutative prop. of $\mathbb Q$}\\
+    &\ge|(s_{n+1}+t_{n+1})-(s_n+t_n)|\tag{distributive prop. of $\mathbb Q$}
+\end{align*}
+
+And so we have shown that, given two superCauchy sequences $s$ and $t$, their sum $s+t$ is also a superCauchy sequence with constant $C_s+C_t$. For the product we can multiply the inequalities together (since they are of positive numbers):
+\begin{align*}
+    |s_{n+1}-s_n||t_{n+1}-t_n|&\le\frac{C_s}{2^n}\cdot\frac{C_t}{2^n}\tag{product of (1) and (2)}\\
+    |(s_{n+1}-s_n)(t_{n+1}-t_n)|&\le\frac{C_sC_t}{2^{n+1}}\tag{product of absolute values}\\
+    |(s_{n+1}t_{n+1}-s_nt_{n+1}-s_{n+1}t_n+t_ns_n|&\le\frac{C_sC_t/2}{2^{n}}\\
+    |s_{n+1}t_{n+1}-s_nt_n|&\le\frac{C_sC_t/2}{2^{n}}
+\end{align*}
+
+And so $s\cdot t$ is superCauchy.
+\bigskip
+
+\noindent\textbf{Part 2:} For the sum of two null superCauchy sequences $s+t$ to qualify as null superCauchy, there must exist some constant $C\in\mathbb Q^+$ such that for all naturals $n$:
+\begin{equation*}
+    |s_n+t_n|\le\frac{C}{2^n}
+\end{equation*}
+
+We shall now produce this constant. Consider two arbitrary superCauchy sequences $s,t\in SC(\mathbb Q)$. By definition, there exists two constants $C_s,C_t\in\mathbb Q^+$ such that for all natural numbers $n$:
+\setcounter{equation}{0}
+\begin{align}
+    |s_n|&\le\frac{C_s}{2^n}\\
+    |t_n|&\le\frac{C_t}{2^n}
+\end{align}
+
+Let us choose and fix these constants as $C_s$ and $C_t$ respectively. Now note that since they are both inequalities of positive numbers, we can add them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    \frac{C_s+C_t}{2^n}&\ge|s_n|+|t_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_n+t_n|\tag{triangle inequality}
+\end{align*}
+
+And so we have shown that, given two null superCauchy sequences $s$ and $t$, their sum $s+t$ is also a null superCauchy sequence with constant $C_s+C_t$. The proof for the difference $s-t$ is much the same. With the fixed constants $C_s$ and $C_t$ we have:
+\begin{align*}
+    \frac{C_s+C_t}{2^n}&\ge|s_n|+|t_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_n|+|-t_n|\tag{multiply by $-1$}\\
+    &\ge|s_n-t_n|\tag{triangle inequality}
+\end{align*}
+
+And so the difference of two null superCauchy sequences is also null with a constant of $C_s+C_t$.
+\bigskip
+
+\noindent\textbf{Part 3:}  For the product of two null superCauchy sequences $s\cdot t$ to qualify as null superCauchy, there must exist some constant $C\in\mathbb Q^+$ such that for all naturals $n$:
+\begin{equation*}
+    |s_n\cdot t_n|\le\frac{C}{2^n}
+\end{equation*}
+
+We shall now produce this constant. Consider two arbitrary superCauchy sequences $s,t\in SC(\mathbb Q)$. By definition, there exists two constants $C_s,C_t\in\mathbb Q^+$ such that for all natural numbers $n$:
+\setcounter{equation}{0}
+\begin{align}
+    |s_n|&\le\frac{C_s}{2^n}\\
+    |t_n|&\le\frac{C_t}{2^n}
+\end{align}
+
+Let us choose and fix these constants as $C_s$ and $C_t$ respectively. Now note that since they are both inequalities of positive numbers, we can multiply them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    |s_n||t_n|&\le\frac{C_s}{2^n}\cdot\frac{C_t}{2^n}\tag{product of (1) and (2)}\\
+    &\le\frac{C_sC_t}{2^{n+1}}\\
+    |s_nt_n|&\le\frac{C_sC_t/2}{2^{n}}\tag{product of absolute values}
+\end{align*}
+
+And so we have shown that, given two null superCauchy sequences $s$ and $t$, their product $s\cdot t$ is also a null superCauchy sequence with constant $\frac{C_sC_t}{2}$.
+\bigskip
+
+\noindent\textbf{Part 4:} First we show that $\sim$ is reflexive, i.e. $s\sim s$ for an arbitrary superCauchy sequence $s$. Note that for this to be the case, there must be a constant $C\in\mathbb Q^+$ such that for all naturals $n$:
+\begin{equation*}
+    |s_n-s_n|\le\frac{C}{2^n}
+\end{equation*}
+
+But since $|s_n-s_n|=0$, every positive rational $C$ satisfies this (for instance 1). And so we have proved reflexivity. Now we will prove the relation is symmetric, i.e. $s\sim t\implies t\sim s$ for any arbitrary superCauchy sequences $s$ and $t$. Assuming that $s\sim t$, we have for some $C\in\mathbb Q^+$ and all naturals $n$:
+\begin{align*}
+    &|s_n-t_n|\le\frac{C}{2^n}\\
+    \implies&|t_n-s-n|\le\frac{C}{2^n}\tag{multiply by $-1$}
+\end{align*}
+
+With the second line being equivalent to $t\sim s$. And so we have proved symmetry. All that's left is to prove transitivity, i.e. given 3 super cauchy sequences $s,t,u$ the following holds:
+\begin{equation*}
+    s\sim t\wedge t\sim u\implies s\sim u
+\end{equation*}
+
+To prove this, let us assume the antecedent. This implies that for some constants $C_1,C_2\in\mathbb Q^+$ and all naturals $n$:
+\setcounter{equation}{0}
+\begin{align}
+    |s_n-t_n|&\le\frac{C_1}{2^n}\\
+    |t_n-u_n|&\le\frac{C_2}{2^n}
+\end{align}
+
+Let us choose and fix these constants as $C_1$ and $C_2$ respectively. Now note that since they are both inequalities of positive numbers, we can add them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    \frac{C_1+C_2}{2^n}&\ge|s_n-t_n|+|t_n-u_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_n-t_n+t_n-u_n|\tag{triangle inequality}\\
+    &\ge|s_n-u_n|
+\end{align*}
+
+And so we have shown that $s\sim u$ for some constant ($C_1+C_2$), thus proving the relation is transitive. All three of these conditions (i.e. reflexivity, symmetry, and transitivity) taken together imply the relation is an equivalence relation.
+\bigskip
+
+\noindent\textbf{Part 5:} For a binary function $f$ on a set $SC(\mathbb Q)$ to be compatible with an equivalence relation $\sim$ on that same set, the following must hold for all $s,t,s',t'\in SC(\mathbb Q)$:
+\begin{equation*}
+    s\sim s'\wedge t\sim t'\implies f(s,t)\sim f(s',t')
+\end{equation*}
+
+To prove this for $+,-$ and $\cdot$, let us assume the antecedent. This implies that for some constants $C_s,C_t\in\mathbb Q^+$ and all naturals $n$:
+\setcounter{equation}{0}
+\begin{align}
+    |s_n-s'_n|&\le\frac{C_s}{2^n}\\
+    |t_n-t'_n|&\le\frac{C_t}{2^n}
+\end{align}
+
+For the $+$ case, note that since these are both inequalities of positive numbers, we can add them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    \frac{C_t+C_s}{2^n}&\ge|s_n-s'_n|+|t_n-t'_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_n-s'_n+t_n-t'_n|\tag{triangle inequality}\\
+    &\ge|(s_n+t_n)-(s'_n+t'_n)|\tag{assoc., comm., \& distr. prop. of $\mathbb Q$}
+\end{align*}
+
+This implies that $s+t\sim s'+t'$ for some constant ($C_1+C_2$) and so the function $+$ is compatible. In the $-$ case we have:
+\begin{align*}
+    \frac{C_t+C_s}{2^n}&\ge|s_n-s'_n|+|t_n-t'_n|\tag{sum of (1) and (2)}\\
+    &\ge|s_n-s'_n|+|-t_n+t'_n|\tag{multiply by $-1$}\\
+    &\ge|s_n-s'_n-t_n+t'_n|\tag{triangle inequality}\\
+    &\ge|(s_n-t_n)-(s'_n-t'_n)|\tag{assoc., comm., \& distr. prop. of $\mathbb Q$}
+\end{align*}
+
+This implies that $s-t\sim s'-t'$ for some constant ($C_1+C_2$) and so the function $-$ is compatible. Note that, for the $\cdot$ case, since they are both inequalities of positive numbers, we can multiply them together, implying the following for all natural numbers $n$:
+\begin{align*}
+    |s_n-s'_n||t_n-t'_n|&\le\frac{C_s}{2^n}\cdot\frac{C_t}{2^n}\tag{product of (1) and (2)}\\
+    |(s_n-s'_n)(t_n-t'_n)|&\le\frac{C_sC_t}{2^{n+1}}\tag{product of absolute values}\\
+    |(s_nt_n-s'_nt_n-s_nt'_n+t'_ns'_n|&\le\frac{C_sC_t/2}{2^{n}}\\
+    |s_nt_n-s'_nt'_n|&\le\frac{C_sC_t/2}{2^{n}}
+\end{align*}
+
+This implies that $st\sim s't'$ for some constant ($\frac{C_sC_t}{2}$) and so the function $\cdot$ is compatible.
+\bigskip
+
+\noindent\textbf{Part 6:} Recall problem III of HW 6, where we proved a theorem analogous to Theorem 3Q of the textbook. That is, given a binary function $f$ compatible with the relation $\sim$, there exists a unique function $\hat{f}$ such that:
+\begin{equation*}
+    \hat{f}([s]_\sim,[t]_\sim)=[f(s,t)_\sim]
+\end{equation*}
+
+Which is presumably what the problem means by ``well-defined". And so the binary the operations $\hat +,\hat -$, and $\hat\cdot$ on $SC(\mathbb Q)/\sim$ are well defined because we proved they were compatible in part 5.
+
+\section*{Problem 2}
+\noindent\textbf{Part 1:} For 1a) note that for any arbitrary $x\in\mathbb R$, there exists a sequence $r\in SC(\mathbb Q)$ such that:
+\begin{align*}
+    &\phantom{=}x-x\tag{well-defined by prob. 1, part 6}\\
+    &=[r]_\sim-[r]_\sim\tag{i}\\
+    &=[r-r]_\sim\tag{prob. 1, part 6}\\
+    &=[0_{seq}]_\sim\tag{$-$ on $\mathbb Q$}
+\end{align*}
+
+Now note that, for all naturals $n$, $0_{seq_n}=0$ which implies $0_{seq_n}\le0$. Combining this with the fact that $0_{seq}\in x-x$, (v) tells us that $0\le x-x$. This can be written as $x\le x$ thanks to (iv.a). And so we have proved reflexivity.
+\medskip
+
+For 1b) we need to prove totality. Consider two arbitrary real numbers $x,y\in\mathbb R$. Let $s,t\in SC(\mathbb Q)$ such that:
+\begin{equation*}
+    x=[s]_\sim\quad y=[t]_\sim
+\end{equation*}
+
+This implies the following due to problem 1, part 6:
+\begin{equation*}
+    x-y=[s-t]_\sim\quad y-x=[t-s]_\sim
+\end{equation*}
+
+Since the difference of two superCauchy sequences is superCauchy, we have for all naturals $n$:
+\begin{align*}
+    &|s_n-t_n|\le \frac{C}{2^n}\\
+    \implies&s_n-t_n\le\frac{C}{2^n}\wedge s_n-t_n\ge-\frac{C}{2^n}\\
+    \implies&s_n-t_n\le0\vee -(s_n-t_n)\le0\tag{0 in interval}\\
+    \implies&s_n-t_n\le0\vee t_n-s_n\le0
+\end{align*}
+
+And since $s_n-t_n\in[s-t]_\sim=x-y$ as well as $t_n-s_n\in[t-s]_\sim=y-x$ we have from (iv.a) that $0\le x-y\vee 0\le y-x$. And so totality is proven.
+\medskip
+
+For 1c) we need to prove transitivity. Consider three arbitrary real numbers $x,y,z\in\mathbb R$. Now let us assume $x\le y$ and $y\le z$. With $s,t,u\in SC(\mathbb Q)$ such that:
+\begin{align*}
+    x=[s]_\sim\quad y&=[t]_\sim\quad z=[u]_\sim\\
+    0\le t_n-s_n&\wedge 0\le u_n-t_n
+\end{align*}
+
+With sequences that satisfy the second line guaranteed to exist by (iv.a). There implies the following due to problem 1, part 6:
+\begin{equation*}
+    y-x=[t-s]_\sim\quad z-y=[u-t]_\sim\quad z-x=[u-s]_\sim
+\end{equation*}
+
+We thus have the following (note we distinguish between the rational $\le_\mathbb Q$ and the real $\le$ to make the proof clear.)
+\begin{align*}
+    &x\le y\wedge y\le z\\
+    \implies&0\le y-x\wedge 0\le z-y\tag{v}\\
+    \implies&0\le [t-s]_\sim\wedge 0\le [u-t]_\sim\\
+    \implies&0\le_\mathbb Q t_n-s_n\wedge 0\le u_n-t_n\\
+    \implies&s_n\le_\mathbb Q t_n\wedge t_n\le u_n\\
+    \implies&s_n\le_\mathbb Q u_n\tag{transitivity of $\le_\mathbb Q$}\\
+    \implies&0\le_\mathbb Q u_n-s_n\\
+    \implies&0\le [u-s]_\sim\\
+    \implies&0\le z-x\\
+    \implies&x\le z
+\end{align*}
+
+And so we have proved the transitivity of $\le$.
+\medskip
+
+For 1d) all that is left to prove is antisymmetry. Consider two arbitrary real numbers $x,y\in\mathbb R$ such that $x\le y\wedge y\le x$, and where $s,t\in SC(\mathbb Q)$ such that:
+\begin{equation*}
+    x=[s]_\sim\quad y=[t]_\sim
+\end{equation*}
+
+This implies the following due to problem 1, part 6:
+\begin{equation*}
+    x-y=[s-t]_\sim\quad y-x=[t-s]_\sim
+\end{equation*}
+
+We thus have the following:
+\begin{align*}
+    &x\le y&\wedge y\le x\\
+    \implies&0\le y-x&\wedge 0\le x-y\\
+    \implies&0\le [t-s]_\sim&\wedge 0\le [s-t]_\sim\\
+    \implies&0\le_\mathbb Q t_n-s_n&\wedge 0\le_\mathbb Q s_n-t_n\\
+    \implies&s_n\le_\mathbb Q t_n&\wedge t_n\le_\mathbb Q s_n\\
+    \implies&s_n=t_n\tag{antisymmetry of $\le_\mathbb Q$}\\
+    \implies&[s]_\sim=[t]_\sim\\
+    \implies&x=y
+\end{align*}
+
+And thus we have proven antisymmetry. All 4 of the properties we proved in 1a,b,c, and d imply that $\le$ is a total order over the reals.
+\bigskip
+
+\noindent\textbf{Part 2:} Consider a nonempty set $S$ with a rational upper bound $B_1$, if bound is not rational take the next highest rational. Since this set is nonempty, there must be some rational number that is \textit{not} an upper bound of $S$. Choose such a number and call it $A_1$. Now we define the following iteration:
+
+If $\frac{1}{2}\cdot(A_n+B_n)$ is an upper bound of $S$, let $A_{n+1}=A_n$ and $B_{n+1}=\frac{1}{2}\cdot(A_n+B_n)$. Otherwise, there must be some number $s\in S$ such that $\frac{1}{2}\cdot(A_n+B_n)<s$. Let $A_{n+1}$ equal such an $s$ and let $B_{n+1}=B_n$.
+
+As a result of this particular construction, our sequences have the following properties: $A_n$ is increasing, $B_n$ is decreasing, and for every $i,j\in\mathbb N$ we have $A_i\le B_j$. Visually we can express this as:
+\begin{equation*}
+    A_1\le A_2\le \cdots \le B_2\le B_1
+\end{equation*}
+
+But also note that multiplying by $\frac{1}{2}$ at each iteration give us the following for all naturals $n$:
+\begin{align*}
+    |A_n|\le \frac{C_a}{2^n}\\
+    |B_n|\le \frac{C_b}{2^n}
+\end{align*}
+
+And so both $A$ and $B$ are null superCauchy sequences and, as we've proved before, so is their difference $A-B$. As a result, $A\sim B$ meaning there is only one unique real bound of the set $S$ and no other is less than it. This bound being given by $[A]_\sim=[B]_\sim=r$.
+
+\section*{Problem 3}
+\noindent\textbf{Solution:} First we note that $r\not=\varnothing$ because it contains $0_\mathbb R$, i.e. the st of all rationals less than 0.
+
+Second we note that $r\not=\mathbb Q$. For example, $2\not\in r$ because $2\cdot2\not<2$ and thus does not satisfy the conditions for being a member of $r$.
+
+Third we note that for any element $a\in r$, all rationals $b$ that satisfy $b<a$ are also in $r$. To show this, we note that all negative rationals are in $r$ (because $0_\mathbb R\subset r$) and so we need only consider the $b$ such that $0<b<a$. Note:
+\begin{align*}
+    0<b<a&\implies b^2<a^2=a\cdot a<2\\
+    &\implies b^2=b\cdot b<2\tag{transitive prop.}
+\end{align*} 
+
+And so $b$ is in $r$.
+
+Finally, to prove that $r$ is a real number we show that it has no greatest element. To do this simply consider an arbitrary rational $a$ such that $a^2<2$. We can construct a new rational $b$ such that $a<b$ yet $b^2<2$. Such a rational is given by:
+\begin{equation*}
+    b=\frac{2a+2}{a+2}
+\end{equation*}
+
+Now we just need to show that $r\cdot r=2_\mathbb R$. The definition of nonnegative real multiplication tells us:
+\begin{equation*}
+    r\cdot r=\{ab\mid a,b\in r\wedge a,b\ge 0\}\cup0_\mathbb R
+\end{equation*}
+
+We know that $r\cdot r\le2$ since the only numbers $q$ in $r$ are those such that $q\cdot q$, and w.l.o.g. if $q_1>q_2$ and both are in $r$, then $q_1q_2<2$ since $q_1q_2<q_2q_2<2$. And since all elements (bar the negative ones) of $r\cdot r$ take this form, it too is $\le 2_\mathbb R$.
+
+And since $r\cdot r\ge 2_\mathbb R$, we have by antisymmetry that $r\cdot r=2_\mathbb R$
+
+\section*{Problem 4}
+\noindent\textbf{Solution:} Consider an arbitrary natural $n$ and an arbitrary positive real $r$. Consider the following set:
+\begin{equation*}
+    s=\{t\in\mathbb R\mid t>0\wedge t^n\le r\}
+\end{equation*}
+
+Note that $s\not=\varnothing$. Consider $t=\frac{r}{r+1}$. It satisfies:
+\begin{equation*}
+    t<1\wedge t<r
+\end{equation*}
+
+And since $t<1$ we must have that $t^{n-1}<1$ so:
+\begin{equation*}
+    t^n<t<r
+\end{equation*}
+
+And thus $t$ is a member of $s$. Now we show that $s$ has an upper bound. Consider $r+1$, this satisfies both:
+\begin{equation*}
+    1<r+1\wedge r<r+1
+\end{equation*}
+
+And so since $r+1>1$ we have:
+\begin{equation*}
+    (r+1)^n\ge r+1>r
+\end{equation*}
+
+And so $r+1$ is an upper bound. Now recall the LUB property which states that all subsets of the reals that are bounded above have a least upper bound. Call this bound $y$. Since this bound must exist and since $y^n=r$, we are done and there must be an $n$th root $y$ of every real number $r$. 
+
+
+
+\end{document}

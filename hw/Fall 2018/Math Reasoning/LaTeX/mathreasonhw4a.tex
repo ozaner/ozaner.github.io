@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 4a}
+\author{Ozaner Hansha}
+\date{October 3, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Consider the predicate $C(x,y)$ where $x$ and $y$ are real numbers. Let the sets $S_1$ and $S_2$:
+\begin{align*}
+S_1&=\{x\in\mathbb R\mid(\forall y\in\mathbb R)\ C(x,y)\}\\
+S_2&=\{y\in\mathbb R\mid(\forall x\in\mathbb R)\ \neg C(x,y)\}
+\end{align*}
+Can both $S_1$ and $S_2$ be nonempty?
+\\\\
+\textbf{Solution:} No, either $S_1$ or $S_2$ must be empty. We can make this clearer by renaming $x$ and $y$ in the definition of $S_2$:
+
+\begin{align*}
+S_1&=\{x\in\mathbb R\mid(\forall y\in\mathbb R)\ C(x,y)\}\\
+S_2&=\{x\in\mathbb R\mid(\forall y\in\mathbb R)\ \neg C(y,x)\}
+\end{align*}
+
+They both cannot be nonempty if $C(x,y)\equiv C(y,x)$. But even if this didn't hold, they still coudln't be nonempty. This is because whatever the predicate is, it has to hold for all $y$ in $S_1$ and not hold for all $y$ in $S_2$. This means we would have to be able to distinguish between $x$ and $y$ in the predicate but if we could then whatever held for all in one case wouldn't in the other.
+
+% Yes, and to prove this it suffices to give a single example. Consider the following choice of $C(x,y)$:
+%
+% $$C(x,y)\equiv y\not=0\wedge x=0$$
+%
+% We can see that $S_1$ is the set $\{x\mid\}$
+
+% Yes, and to prove this it suffices to give a single example. Consider the following choice of $C(x,y)$:
+%
+% $$C(x,y)\equiv (\exists! k\in\mathbb R)\ kx=y$$
+%
+% Notice that this is just a more accurate way of saying $\frac{y}{x}$ is uniquely defined. We know that for all real numbers $x,y$ the statement is defined and thus the proposition is true \textit{except} when $x=0$ since $\frac{y}{0}$ is not defined for any $y$.
+% \\\\
+% So in this case $S_1=\{x\in\mathbb R\mid x\not=0\}$ and $S_2=\{0\}$ which are both nonempty.
+
+\section*{Problem 2}
+Consider the predicate $P(A,B,C)\equiv (C\setminus A=C\setminus B)\rightarrow A=B$.
+\subsection*{Part a}
+\textbf{Problem:} Is there an $A,B$ and $C$ such that $P(A,B,C)$ is true?
+\\\\
+\textbf{Solution:} Yes there is. $A=\{1\}$, $B=\{1\}$, and $C=\{1,2,3\}$
+\begin{gather*}
+  C\setminus A=\{2,3\}=C\setminus B\\
+  A=\{1\}=B
+\end{gather*}
+
+Both the antecedent and the consequent are true, thus the predicate is satisfied.
+
+\subsection*{Part b}
+\textbf{Problem:} Is there a unique $(A,B,C)$ such that $P(A,B,C)$ is true?
+\\\\
+\textbf{Solution:} No. It suffices to show two examples of this. One was shown above, another is $A=\{1\}$, $B=\{2\}$, and $C=\{1,2,3\}$
+\begin{gather*}
+  C\setminus A=\{1\}\not=C\setminus B=\{2\}\\
+  A=\{1\}\not=B=\{2\}
+\end{gather*}
+
+The antecedent is false and the consequent is false, thus the predicate is satisfied.
+
+\subsection*{Part c}
+\textbf{Problem:} Is there an $A,B$ and $C$ such that $P(A,B,C)$ is false?
+\\\\
+\textbf{Solution:} Yes there is. $A=\{0,1\}$, $B=\{1\}$, and $C=\{2,3\}$
+\begin{gather*}
+  C\setminus A=\{2,3\}=C\setminus B=\{2,3\}\\
+  A=\{0,1\}\not=B=\{1\}
+\end{gather*}
+
+The antecedent is true and the consequent is false, thus the predicate is not satisfied.
+
+\section*{Problem 3}
+\textbf{Problem:} For all sets $A,B$, and $C$ is the following true:
+$$A\cup B\subseteq C\implies (C\setminus(A\cup B) = (C\setminus A)\cap (C\setminus B))$$
+\textbf{Solution:} The proposition is true. To prove it let us first note the definition of the antecedent:
+\begin{align*}
+  A\cup B &= \{x\mid x\in A \vee x\in B\}\\
+  A\cup B\subseteq C&\equiv (x\in A\cup B)\implies x\in C\\
+  &\equiv (x\in A \vee x\in B)\implies x\in C
+\end{align*}
+
+We can rename the atomic propositions in the above compound proposition like so:
+$$(a \vee b)\rightarrow c$$
+
+Now we do the same for the first half of the consequent:
+\begin{align*}
+  A\cup B &= \{x\mid x\in A \vee x\in B\}\\
+  C\setminus(A\cup B)&= \{x\mid x\in C\wedge \neg(x\in A\cup B)\}\\
+  &= \{x\mid x\in C\wedge \neg(x\in A \vee x\in B)\}
+\end{align*}
+
+Like above, we can rename the propositions like so:
+$$c\wedge\neg(a \vee b)$$
+
+Finally we do the same for the second half of the antecedent:
+\begin{align*}
+  C\setminus A &= \{x\mid x\in C \wedge x\not\in A\}\\
+  C\setminus B &= \{x\mid x\in C \wedge x\not\in B\}\\
+  (C\setminus A)\cap (C\setminus B)&= \{x\mid (x\in C\setminus A) \wedge (x\in C\setminus B)\}\\
+  &= \{x\mid (x\in C \wedge x\not\in A) \wedge (x\mid x\in C \wedge x\not\in B)\}
+\end{align*}
+
+Again, we can rename the propositions like so:
+\begin{align*}
+  (c\wedge\neg a)\wedge(c\wedge\neg b)&\equiv c\wedge(\neg a\wedge\neg b) \tag{distributive property}\\
+  &\equiv c\vee\neg (a\vee b)\tag{De Morgan's law}
+\end{align*}
+
+Now we simply have to prove the following:
+
+$$((a \vee b)\rightarrow c)\rightarrow (c\wedge\neg(a \vee b)\equiv c\wedge\neg (a\vee b))$$
+
+However notice that the consequent is trivially a tautology (it is literally the same expression on both sides). Since the consequent is always true, the truth of the antecedent is irrelevant and the statement as a whole is true.
+
+\section*{Problem 4}
+\textbf{Problem:} For all sets $A,B$, and $C$ is the following always true:
+$$A\cup B\subseteq C\implies C\setminus(A\cup B)\subseteq C\setminus A$$
+\textbf{Solution:} Yes this is true and we can prove it in the same way as above. Start with the antcedent:
+\begin{align*}
+  A\cup B &= \{x\mid x\in A \vee x\in B\}\\
+  A\cup B\subseteq C&\equiv (x\in A\cup B)\implies x\in C\\
+  &\equiv (x\in A \vee x\in B)\implies x\in C\\
+  &\equiv a\vee b\rightarrow c
+\end{align*}
+
+Now the consequent
+\begin{align*}
+  C\setminus(A\cup B)&= \{x\mid x\in C\wedge \neg(x\in A\cup B)\}\\
+  &\equiv \{x\mid x\in C\wedge \neg(x\in A \vee x\in B)\}\\
+  &\equiv c\wedge \neg(a\vee b)\\
+  C\setminus A&=\{x\mid x\in C\wedge x\not\in A\}\\
+  &\equiv c \wedge \neg a\\
+  C\setminus(A\cup B)\subseteq C\setminus A &= (x\in C\setminus(A\cup B))\rightarrow (x\in C\setminus A)\\
+  &\equiv c\wedge \neg(a\vee b)\rightarrow c\wedge\neg a
+\end{align*}
+
+So now we just have to prove the following:
+$$(a\vee b\rightarrow c)\rightarrow (c\wedge \neg(a\vee b)\rightarrow c\wedge\neg a)$$
+
+However consider the consequent, which is itself an implication:
+\begin{align*}
+  &\phantom{\equiv\ \ } c\wedge \neg(a\vee b)\rightarrow c\wedge\neg a\\
+  &\equiv c\wedge (\neg a\wedge \neg b) \rightarrow c\wedge\neg a\tag{De Morgan's law}\\
+  &\equiv (c\wedge \neg a)\wedge \neg b \rightarrow c\wedge\neg a\tag{associative property}\\
+\end{align*}
+
+With the last statement clearly being a tautology (simplification of a conjunction). Remember that the tautology above is the consequent of the bigger statement that we set out to prove. As a result of this, the statement we set out to prove is also a tautology, since its consequent is always true.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} Is the following true proposition always true:
+
+$$(A\rightarrow B)\rightarrow C \equiv A\rightarrow (B\rightarrow C)$$
+\\\\
+\textbf{Solution:} No. Here's a truth table:
+\begin{center}
+\begin{tabular}{ccccccc}
+$A$ & $B$ & $C$ & $A\rightarrow B$ & $B\rightarrow C$ & $(A\rightarrow B)\rightarrow C$ & $A\rightarrow (B\rightarrow C)$\\
+\midrule
+\hline
+F&F&F&T&T&F&T\\
+F&F&T&T&T&T&T\\
+F&T&F&T&F&F&T\\
+F&T&T&T&T&T&T\\
+T&F&F&F&T&T&F\\
+T&F&T&F&T&T&T\\
+T&T&F&T&F&F&F\\
+T&T&T&T&T&T&T\\
+\end{tabular}
+\end{center}
+As we can see the left and right hand propositions are not equivalent thus the proposition is false.
+\subsection*{Part b}
+\textbf{Problem:} Is it the case that either $(A\rightarrow B)\rightarrow C$ or $A\rightarrow (B\rightarrow C)$ must be true?
+\\\\
+\textbf{Solution:} No. Here's a truth table:
+\begin{center}
+\begin{tabular}{cccccc}
+$A$ & $B$ & $C$ & $(A\rightarrow B)\rightarrow C$ & $A\rightarrow (B\rightarrow C)$ & $(A\rightarrow B)\rightarrow C \oplus A\rightarrow (B\rightarrow C)$\\
+\midrule
+\hline
+F&F&F&F&T&T\\
+F&F&T&T&T&F\\
+F&T&F&F&T&T\\
+F&T&T&T&T&F\\
+T&F&F&T&F&T\\
+T&F&T&T&T&F\\
+T&T&F&F&F&F\\
+T&T&T&T&T&F\\
+\end{tabular}
+\end{center}
+The exclusive disjunction of the two statements indeed does not form a tautology. And so the statement we set out to disprove is false.
+\end{document}

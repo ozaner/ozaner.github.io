@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 10b}
+\author{Ozaner Hansha}
+\date{November 7, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that for any integer $j\ge 1$:
+$$j<10^{j+1}$$
+\textbf{Solution:} First note that when $j=1$ we have:
+$$1<10^{1+1}=1<100$$
+
+Which is true. Now we just need to show the inductive step:
+\begin{align*}
+  j&<10^{j+1}\\
+  10j&<10^{j+1}10\\
+  10j&<10^{j+2}\\
+\end{align*}
+
+Now we just need to show that $j+1<10j$ for all $j\ge 1$. Now we will prove the statement $1<9j$ for any positive $j$. For the $j=1$ case we have $1<9$ and for the inductive step:
+\begin{align*}
+  1<9j\tag{given}\\
+  9j<9j+9\\
+  9j<9(j+1)\\
+  1<9j<9(j+1)\\
+  1<9(j+1)
+\end{align*}
+
+Now we can use this to prove the statement we set out to show:
+\begin{align*}
+  1<9j\tag{for any $j\ge1$}\\
+  1+j<9j+j\\
+  j+1<10j
+\end{align*}
+
+Now we can write them together as:
+$$j+1<10j<10^{j+2}\implies j+1<10^{j+2}$$
+
+And so by induction the statement is true.
+
+% \section*{Problem 2}
+% \subsection*{Part a}
+% \textbf{Problem:}
+% \\\\
+% \textbf{Solution:}
+%
+% \subsection*{Part b}
+% \textbf{Problem:}
+% \\\\
+% \textbf{Solution:}
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that if $m\le0$ then $10^m-1$ is divisible by 9.
+\\\\
+\textbf{Solution:} First we show the base case of $m=1$:
+$$10^1-1=9$$
+
+And 9 is clearly divisible by itself. Now we show the inductive step:
+\begin{align*}
+  10^m-1&=9q\\
+  10(10^m-1)&=10(9q)\\
+  10^m10-10&=90q\\
+  10^{m+1}-10&=90q\\
+  10^{m+1}-10+9&=90q+9\\
+  10^{m+1}-1&=9(10q+1)
+\end{align*}
+
+Where $10q+1\in\mathbb Z$ since $q$ is also an integer. And so we are done.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that am integer greater than or equal to 1 is divisible by 9 iff the sum of its digits are divisible by 9.
+\\\\
+\textbf{Solution:} (I'm starting the indexing at 0 and restating above result in terms of modulo) Note that the decimal expansion of a number $n$ is:
+$$n=10^nd_n+10^{n-1}d_{n-1}\cdots+10d_1+d_0$$
+
+And since $10\equiv 1\ (\operatorname{mod } 9)$ we have $10^m\equiv 1\ (\operatorname{mod } 9)$. This means in modulo arithmetic we can say:
+$$n\equiv 1d_n+1d_{n-1}\cdots+1d_1+d_0\ (\operatorname{mod } 9)$$
+
+Which is just the sum of its digits. And so if $n$ is divisible by 9 then the right hand side (the sum of the digits) must also be divisible by 9. This is because they are in the same equivalence class under mod 9.
+
+\section*{Problem 5}
+% \subsection*{Part a}
+\textbf{Problem:} Prove that $j\ge 1$ and $b\ge 2$ imply that $j<b^{j+1}$
+\\\\
+\textbf{Solution:} We can prove this using a base case and 2 inductive steps. The base case is simply $1<2^2$ which is clearly true. Now we need to show that $j+1<b^{j+2}$ follows from $j<b^{j+1}$:
+\begin{align*}
+  j<b^{j+1}\\
+  j<b^{j+2}\tag{multiply by positive integer, always bigger}\\
+  j+1<b^{j+2}\tag{as long as $j\le b$}
+\end{align*}
+
+Now we need to prove $j<(b+1)^{j+1}$ which should be clear since $b+1>b$ and all the other variables are positive integers and so $j<b^{j+1}<(b+1)^{j+1}$.
+
+And so using induction and the base case the statement is true for all $b\le 2$ and $j\le 1$
+
+% \subsection*{Part b}
+% \textbf{Problem:}
+% \\\\
+% \textbf{Solution:}
+%
+% \subsection*{Part c}
+% \textbf{Problem:}
+% \\\\
+% \textbf{Solution:}
+
+\end{document}

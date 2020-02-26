@@ -1,0 +1,458 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{stackengine}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Linear Algebra HW \#4}
+\author{Ozaner Hansha}
+\date{February 24, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Are the following statements true or false. Justify your answers.
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item $\left([T]^{\beta}_{\alpha}\right)^{-1}=[T^{-1}]^{\beta}_{\alpha}$
+  \item $\mathbb F^{2\times 3}\cong\mathbb F^5$
+  \item $AB=I$ implies that $A$ and $B$ are invertible.
+  \item If a matrix $A$ is invertible then $(A^{-1})^{-1}=A$ 
+  \item Only square matrices have inverses.
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} \textbf{a)} is false, the correct identity is:
+$$\left([T]^{\beta}_{\alpha}\right)^{-1}=[T^{-1}]_{\beta}^{\alpha}$$
+
+In light of this identity we have that \textbf{a)} equates a matrix that takes the basis $\beta$ to $\alpha$ to one that does the reverse, which clearly cannot be the case in general.
+
+% the answer is true. Consider a linear transformation $T:V\to W$ where $\alpha$ and $\beta$ are bases for $V$ and $W$ respectively. We have the following:
+% \begin{align*}
+%   [T]_{\alpha}^{\beta}\vec v&=\Phi_\beta\circ T\circ\Phi^{-1}_{\alpha}(\vec v)\tag{$\forall v\in V$}\\
+%   \left([T]_{\alpha}^{\beta}\right)^{-1}\vec w&=\left(\Phi_\beta\circ T\circ\Phi^{-1}_{\alpha}\right)^{-1}(\vec w)\tag{$\forall w\in W$}\\
+%   &=\Phi_\alpha\circ T^{-1}\circ\Phi_{\beta}^{-1}(\vec w)\tag{matrix inversion}\\
+%   &=[T^{-1}]_{\beta}^{\alpha}\vec w
+% \end{align*}
+
+% And since both $\left([T]_{\alpha}^{\beta}\right)^{-1}$ and $[T^{-1}]_{\beta}^{\alpha}$ map all the vectors in $W$ to $V$ in the same way, they are equal. 
+\medskip
+
+\textbf{b)} is false. Consider the following bases $\alpha$ and $\beta$ for $\mathbb F^{2\times 3}$ and $\mathbb F^5$ respectively:
+\begin{gather*}
+  \alpha=\left\{\begin{bmatrix}
+    1&0&0\\0&0&0
+  \end{bmatrix},\begin{bmatrix}
+    0&1&0\\0&0&0
+  \end{bmatrix},\begin{bmatrix}
+    0&0&1\\0&0&0
+  \end{bmatrix},\begin{bmatrix}
+    0&0&0\\1&0&0
+  \end{bmatrix},\begin{bmatrix}
+    0&0&0\\0&1&0
+  \end{bmatrix},\begin{bmatrix}
+    0&0&0\\0&0&1
+  \end{bmatrix}\right\}\\
+  \beta=\left\{\begin{bmatrix}
+    1\\0\\0\\0\\0
+  \end{bmatrix},\begin{bmatrix}
+    0\\1\\0\\0\\0
+  \end{bmatrix},\begin{bmatrix}
+    0\\0\\1\\0\\0
+  \end{bmatrix},\begin{bmatrix}
+    0\\0\\0\\1\\0
+  \end{bmatrix},\begin{bmatrix}
+    0\\0\\0\\0\\1
+  \end{bmatrix}\right\}
+\end{gather*}
+
+Clearly, since $\alpha$ is a basis of $\mathbb F^{2\times 3}$ and $|\alpha|=6$, we have that $\dim(\mathbb F^{2\times 3})=6$. Similar reasoning leads us to $\dim(\mathbb F^5)=5$. And since $\dim(\mathbb F^5)<\dim(\mathbb F^{2\times 3})$, they cannot be isomorphic as no linear bijection exists between them.
+\medskip
+
+\textbf{c)} is false. Consider the following matrix product of $A$ and $B$:
+$$AB=\begin{bmatrix}
+  1&0&0\\0&1&0
+\end{bmatrix}\begin{bmatrix}
+  1&0\\0&1\\0&0
+\end{bmatrix}=\begin{bmatrix}
+  1&0\\0&1
+\end{bmatrix}=I$$
+
+While the product $AB=I$, neither $A$ nor $B$ are invertible because they are not square.
+\medskip
+
+\textbf{d)} is true. Note the following two identities:
+\begin{align*}
+  A^{-1}&A=I\tag{def. of inverse}\\
+  A^{-1}&(A^{-1})^{-1}=I\tag{def. of inverse}
+\end{align*}
+
+As we can see both $A$ and $(A^{-1})^{-1}$ are inverses of $A$. But since inverses are unique in a group, and the set of invertible matrices $\operatorname{GL}_n(\mathbb F)$ is certainly a group, we must have that $A=(A^{-1})^{-1}$.
+\medskip
+
+\textbf{e)} is true, by the definition of invertible matrix.
+
+\bigskip
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Let $V$ and $W$ be $n$-dimensional vector spaces, and let $T:V\to W$ be a linear transformation. Suppose that $\beta$ is a basis for $V$. Prove that $T$ is an isomorphism if and only if $T(\beta)$ is a basis for $W$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that an isomorphism is a linear bijection. For $\vec v_i\in\beta$ we have:
+
+\begin{align*}
+  a_i=0&\iff\sum_{i=1}^n a_i\vec v_i=\vec 0\tag{$\beta$ is a basis}\\
+  &\iff T\left(\sum_{i=1}^n a_i\vec v_i\right)=T(\vec 0)\tag{$T$ is bijective}\\
+  &\iff \sum_{i=1}^n a_iT\left(\vec v_i\right)=\vec 0\tag{$T$ is linear}
+\end{align*}
+
+And so the vectors $T(\vec v_i)\in W$ form a linearly independent set. Now note that, since $T$ is surjective, we have that $R(T)=W$. This means that:
+$$\operatorname{span}(T(\beta))=R(T)=W$$
+
+And so $T(\beta)$ spans all of $W$. Along with its linear independence, this implies that $T(\beta)$ is a basis of $W$.
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} In $\mathbb R^2$, let $L$ be the line $y = mx$, where $m\not= 0$. Let $T$ be the projection on $L$ along the line perpendicular to $L$. Find an expression for $T(x, y)$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the basis $\beta'=\{\icol{1\\m},\icol{-m\\1}\}$. Under this basis, our transformation maps $\vec e_1$ and $\vec e_2$ like so:
+\begin{align*}
+  T\begin{pmatrix}
+    1\\0
+  \end{pmatrix}&=\begin{bmatrix}
+    1\\0
+  \end{bmatrix}\\
+  T\begin{pmatrix}
+    0\\1
+  \end{pmatrix}&=\begin{bmatrix}
+    0\\0
+  \end{bmatrix}
+\end{align*}
+
+Giving us the following matrix representative of $T$ in the basis $\beta'$:
+$$[T]_{\beta'}^{\beta'}=\begin{bmatrix}
+  1&0\\0&0
+\end{bmatrix}$$
+
+Now, to express this matrix in our desired basis $\beta=\{\vec e_1,\vec e_2\}$, we simply have to compute the change of basis matrix from $\beta'$ to $\beta$ and its inverse. This gives us:
+\begin{align*}
+  [\operatorname{id}]_{\beta'}^{\beta}&=[\Phi_{\beta}(\operatorname{id}(\vec v_i))]\tag{$\vec v_i\in\beta'$}\\
+  &=[\Phi_{\beta}(\vec v_i)]\\
+  &=\begin{bmatrix}
+    1&-m\\m&1
+  \end{bmatrix}\tag*{$\left(\stackanchor{$\vec e_1+m\vec e_2=\icol{1\\m}$}{$-m\vec e_1+\vec e_2=\icol{-m\\1}$}\right)$}\\
+  [\operatorname{id}]^{\beta'}_{\beta}=([\operatorname{id}]_{\beta'}^{\beta})^{-1}&=\frac{1}{1+m^2}\begin{bmatrix}
+    1&m\\-m&1
+  \end{bmatrix}\tag{$2\times 2$ matrix inverse}
+\end{align*}
+
+And now we can express our desired matrix representative $[T]_{\beta}^{\beta}$ as the following matrix product:
+\begin{align*}
+  [T]_{\beta}^{\beta}&=[\operatorname{id}]_{\beta'}^{\beta}[T]_{\beta'}^{\beta'}[\operatorname{id}]^{\beta'}_{\beta}\\
+  &=\frac{1}{1+m^2}\begin{bmatrix}
+    1&-m\\m&1
+  \end{bmatrix}\begin{bmatrix}
+    1&0\\0&0
+  \end{bmatrix}\begin{bmatrix}
+    1&m\\-m&1
+  \end{bmatrix}\\
+  &=\frac{1}{1+m^2}\begin{bmatrix}
+      1&m\\m&m^2
+    \end{bmatrix}
+\end{align*}
+
+And so, using the coorespondence between linear operators and their associated matrix representatives, we can finally express $T(x,y)$ in terms of $x$ and $y$:
+\begin{align*}
+  T(x,y)&=[T]_{\beta}^{\beta}\begin{bmatrix}
+    x\\y
+  \end{bmatrix}\\
+  &=\frac{1}{1+m^2}\begin{bmatrix}
+    1&m\\m&m^2
+  \end{bmatrix}\begin{bmatrix}
+    x\\y
+  \end{bmatrix}\\
+  &=\frac{1}{1+m^2}\begin{bmatrix}
+    x+my\\mx+m^2y
+  \end{bmatrix}
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Let $A=\icol{1&3\\1&1}$ and $\beta=\{\icol{1\\1},\icol{1\\2}\}$. Find $[A]_{\beta}$, and find an invertible matrix $Q$ such that $[A]_{\beta}=Q^{-1}AQ$.
+\bigskip
+
+\noindent\textbf{Solution:} Note that $A$ is expressed in the standard basis, so we can denote it $[A]_\alpha$. We then have the following:
+\begin{align*}
+  [A]_\beta&=[\operatorname{id}]_\alpha^\beta[A]_\alpha[\operatorname{id}]_\beta^\alpha\\
+  &=Q^{-1}AQ\tag{let $Q=[\operatorname{id}]_\beta^\alpha$}
+\end{align*}
+
+And now we calculate $Q$:
+\begin{align*}
+  Q&=[\operatorname{id}]_\beta^\alpha\\
+  &=[\Phi_\alpha(\operatorname{id}(\beta))]\\
+  &=[\Phi_\alpha(\beta)]\\
+  &=\begin{bmatrix}
+    1&1\\1&2
+  \end{bmatrix}
+\end{align*}
+
+And its inverse
+\begin{align*}
+  Q^{-1}&=[\operatorname{id}]_\alpha^\beta\\
+  &=\begin{bmatrix}
+    1&1\\1&2
+  \end{bmatrix}^{-1}\\
+  &=\begin{bmatrix}
+    2&-1\\-1&1
+  \end{bmatrix}
+\end{align*}
+
+With $Q$ and $Q^{-1}$ we can finally calculate $[A]_\beta$:
+\begin{align*}
+  [A]_\beta&=Q^{-1}AQ\tag{let $Q=[\operatorname{id}]_\beta^\alpha$}\\
+  &=\begin{bmatrix}
+    2&-1\\-1&1
+  \end{bmatrix}
+  \begin{bmatrix}
+    1&3\\1&1
+  \end{bmatrix}
+  \begin{bmatrix}
+    1&1\\1&2
+  \end{bmatrix}\\
+  &=\begin{bmatrix}
+    6&11\\-2&-4
+  \end{bmatrix}
+\end{align*}
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Verify that the following sets are bases of $\mathcal P_2(\mathbb R)$:
+\begin{align*}
+  \beta&=\{x^2-x+1,x+1,x^2+1\}\\
+  \beta'&=\{x^2+x+4,4x^2-3x+2,2x^2+3\}
+\end{align*}
+
+And then find the change of coordinate matrix $[\operatorname{id}]_{\beta}^{\beta'}$ from $\beta$ to $\beta'$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that $\mathcal P_2(\mathbb R)\cong\mathbb R^3$, and thus we can coordinatize each polynomial under the standard basis $\{1,x,x^2\}$. Putting these coordinatized vectors in a matrix, we can perform Gaussian elimination to determine the matrix's rank and thus the dimension the polynomials span. We start with $\beta$:
+
+\begin{align*}
+    \begin{sysmatrix}{rrr|r}
+      1 & 0 & 1 & 0 \\
+      -1 & 1 & 0 & 0\\
+      1 & 1 & 1 & 0 
+    \end{sysmatrix}
+    &\ro{r_2+r_1}
+    \begin{sysmatrix}{rrr|r}
+      1 & 0 & 1 & 0 \\
+      0 & 1 & 1 & 0\\
+      1 & 1 & 1 & 0 
+    \end{sysmatrix}\\
+    &\ro{r_3-r_1}
+    \begin{sysmatrix}{rrr|r}
+      1 & 0 & 1 & 0 \\
+      0 & 1 & 1 & 0\\
+      0 & 1 & 0 & 0 
+    \end{sysmatrix}\\
+    &\ro{r_3-r_2}
+    \begin{sysmatrix}{rrr|r}
+      1 & 0 & 1 & 0 \\
+      0 & 1 & 1 & 0\\
+      0 & 0 & -1 & 0 
+    \end{sysmatrix}
+\end{align*}
+
+Once reduced, we see that the matrix has 3 pivot rows and thus is of rank 3. As such, $\beta$ not only spans all 3 dimensions of $\mathcal P_2(\mathbb R)$ but is a basis of it since $|\beta|=3$. Now we do the same for $\beta'$:
+
+\begin{align*}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    1 & -3 & 0 & 0\\
+    4 & 2 & 3 & 0 
+  \end{sysmatrix}
+  &\ro{r_2-r_1}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    0 & -7 & -2 & 0\\
+    4 & 2 & 3 & 0 
+  \end{sysmatrix}\\
+  &\ro{r_3-4r_1}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    0 & -7 & -2 & 0\\
+    0 & -14 & -5 & 0 
+  \end{sysmatrix}\\
+  &\ro{r_3-2r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    0 & -7 & -2 & 0\\
+    0 & 0 & -1 & 0 
+  \end{sysmatrix}
+\end{align*}
+
+Again, we see that the matrix is of rank 3. And since $|\beta'|=3$, it is a basis of $\mathcal P_2(\mathbb R)$.
+
+Now all that's left is to compute the change of basis matrix $[\operatorname{id}]_{\beta}^{\beta'}$:
+\begin{equation*}
+  [\operatorname{id}]_{\beta}^{\beta'}=[\Phi_{\beta'}(\operatorname{id}(\vec v_i))]=[\Phi_{\beta'}(v_i)]\tag{$\vec v_i\in \beta$}
+\end{equation*}
+
+To do this, we must perform the ardous task of solving 3 systems of equations to find what the coordinatization of the vectors in $\beta$ are in terms of $\beta'$. Of course, just as when we checked if they were bases, we will be operating on their coordinatized form w.r.t. the standard basis $\{1,x,x^2\}$ rather than their polynomial form:
+
+\begin{align*}
+  [\beta'\mid\vec v_1]=
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    1 & -3 & 0 & -1\\
+    4 & 2 & 3 & 1 
+  \end{sysmatrix}
+  &\ro{\substack{r_2-r_1\\r_3-4r_1}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    0 & -7 & -2 & -2\\
+    0 & -14 & -5 & -3 
+  \end{sysmatrix}
+  &&\ro{r_3-2r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    0 & -7 & -2 & -2\\
+    0 & 0 & -1 & 1
+  \end{sysmatrix}\\
+  &\ro{\substack{r_2-2r_3\\r_1+2r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & 3 \\
+    0 & -7 & 0 & -4\\
+    0 & 0 & -1 & 1 
+  \end{sysmatrix}
+  &&\ro{\substack{(-1/7)r_2\\-r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & 3 \\
+    0 & 1 & 0 & 4/7\\
+    0 & 0 & 1 & -1 
+  \end{sysmatrix}\\
+  &\ro{r_1-4r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 0 & 0 & 5/7 \\
+    0 & 1 & 0 & 4/7\\
+    0 & 0 & 1 & -1 
+  \end{sysmatrix}
+  &&\implies \Phi_{\beta'}(\vec v_1)=\frac{1}{7}\begin{bmatrix}
+    5\\4\\-7
+  \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+  [\beta'\mid\vec v_2]=
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    1 & -3 & 0 & 1\\
+    4 & 2 & 3 & 1 
+  \end{sysmatrix}
+  &\ro{\substack{r_2-r_1\\r_3-4r_1}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    0 & -7 & -2 & 1\\
+    0 & -14 & -5 & 1 
+  \end{sysmatrix}
+  &&\ro{r_3-2r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 0 \\
+    0 & -7 & -2 & 1\\
+    0 & 0 & -1 & -1
+  \end{sysmatrix}\\
+  &\ro{\substack{r_2-2r_3\\r_1+2r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & -2 \\
+    0 & -7 & 0 & 3\\
+    0 & 0 & -1 & -1 
+  \end{sysmatrix}
+  &&\ro{\substack{(-1/7)r_2\\-r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & -2 \\
+    0 & 1 & 0 & -3/7\\
+    0 & 0 & 1 & 1 
+  \end{sysmatrix}\\
+  &\ro{r_1-4r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 0 & 0 & -2/7 \\
+    0 & 1 & 0 & -3/7\\
+    0 & 0 & 1 & 1 
+  \end{sysmatrix}
+  &&\implies \Phi_{\beta'}(\vec v_2)=\frac{1}{7}\begin{bmatrix}
+    -2\\-3\\7
+  \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+  [\beta'\mid\vec v_3]=
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    1 & -3 & 0 & 0\\
+    4 & 2 & 3 & 1 
+  \end{sysmatrix}
+  &\ro{\substack{r_2-r_1\\r_3-4r_1}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    0 & -7 & -2 & -1\\
+    0 & -14 & -5 & -3 
+  \end{sysmatrix}
+  &&\ro{r_3-2r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 2 & 1 \\
+    0 & -7 & -2 & -1\\
+    0 & 0 & -1 & -1
+  \end{sysmatrix}\\
+  &\ro{\substack{r_2-2r_3\\r_1+2r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & -1 \\
+    0 & -7 & 0 & 1\\
+    0 & 0 & -1 & -1 
+  \end{sysmatrix}
+  &&\ro{\substack{(-1/7)r_2\\-r_3}}
+  \begin{sysmatrix}{rrr|r}
+    1 & 4 & 0 & -1 \\
+    0 & 1 & 0 & -1/7\\
+    0 & 0 & 1 & 1 
+  \end{sysmatrix}\\
+  &\ro{r_1-4r_2}
+  \begin{sysmatrix}{rrr|r}
+    1 & 0 & 0 & -3/7 \\
+    0 & 1 & 0 & -1/7\\
+    0 & 0 & 1 & 1 
+  \end{sysmatrix}
+  &&\implies \Phi_{\beta'}(\vec v_3)=\frac{1}{7}\begin{bmatrix}
+    -3\\-1\\7
+  \end{bmatrix}
+\end{align*}
+
+And so we can finally express the change of basis matrix as the following:
+$$[\operatorname{id}]_{\beta}^{\beta'}=[\Phi_{\beta'}(v_i)]=\frac{1}{7}\begin{bmatrix}
+  5&-2&-3\\4&-3&-1\\-7&7&7
+\end{bmatrix}$$
+
+\end{document}

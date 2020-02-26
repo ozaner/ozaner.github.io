@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 5b}
+\author{Ozaner Hansha}
+\date{October 10, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that for all indexed collections of sets $(A_\alpha)_{\alpha\in J}$ and any set $B$:
+$$\left(\bigcup_{\alpha\in J} A_\alpha\right)\cap B=\left(\bigcup_{\alpha\in J} A_\alpha\cap B\right)$$
+\\\\
+\textbf{Solution:} The definitions of the set on the left hand side is the following:
+\begin{align*}
+  \left(\bigcup_{a\in J}A_\alpha\right)&=\{x\mid(\exists\alpha\in J)\ x\in A_\alpha\}\\
+  \left(\bigcup_{a\in J}A_\alpha\right)\cap B&=\{x\mid x\in(\bigcup_{a\in J}A_\alpha)\wedge x\in B\}\\
+  &=\{x\mid(\exists\alpha\in J)\ x\in A_\alpha\wedge x\in B\}
+\end{align*}
+
+The other set is defined to be:
+\begin{align*}
+  \left(\bigcup_{\alpha\in J} A_\alpha\cap B\right)&=\{x\mid x\in(\bigcup_{a\in J}A_\alpha)\wedge x\in B\}\\
+  &=\{x\mid(\exists\alpha\in J)\ x\in A_\alpha\wedge x\in B\}
+\end{align*}
+
+And thus the two sets are equivalent.
+
+\section*{Problem 2}
+\textbf{Problem:} Prove that for any universe $U$ and sets in it $A,B$ the following holds:
+$$(A\setminus B)^\complement = A^\complement\cup B$$
+\textbf{Solution:} We'll write down the definition of the left hand set (the universe is assumed to be $U$):
+\begin{align*}
+  A\setminus B&=\{x\mid x\in A\wedge x\not\in B\}\\
+  (A\setminus B)^\complement&=\{x\mid x\not\in (A\setminus B)\}\\
+  &=\{x\mid \neg(x\in A\wedge x\not\in B)\}\\
+  &=\{x\mid x\not\in A\vee x\in B\}\\
+\end{align*}
+
+Now the definition of the right hand set (again, the universe is assumed to be $U$):
+\begin{align*}
+  A^\complement&=\{x\mid x\not\in A\}\\
+  A^\complement\cup B&=\{x\mid x\in A^\complement\vee x\in B\}\\
+  &=\{x\mid x\not\in A\vee x\in B\}
+\end{align*}
+
+The two sets are equal and we are done.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove the following for all sets $A,B,C,D$:
+$$A\subseteq C \wedge B\subseteq D \implies A\setminus B\subseteq C\setminus D$$
+\textbf{Solution:} Here are the definitions for the left hand side:
+\begin{align*}
+  A\subseteq C&\equiv x\in A\rightarrow x\in C\\
+  B\subseteq D&\equiv x\in B\rightarrow x\in D\\
+  A\subseteq C \wedge B\subseteq D&\equiv (x\in A\rightarrow x\in C)\wedge (x\in B\rightarrow x\in D)
+\end{align*}
+
+Now the right hand side:
+\begin{align*}
+  A\setminus B&\equiv \{x\mid x\in A\wedge x\not\in B\}\\
+  C\setminus D&\equiv \{x\mid x\in C\wedge x\not\in D\}\\
+  A\setminus B\subseteq C\setminus D&\equiv (x\in A\setminus B) \rightarrow (x\in C\setminus D)\\
+  &\equiv (x\in A\wedge x\not\in B)\rightarrow(x\in C\wedge x\not\in D)
+\end{align*}
+
+We'll just use a truth table to verify this:
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+$a$ & $b$ & $c$ & $d$ & $a\rightarrow c$ & $b\rightarrow d$ & $a\wedge\neg b$ & $c\wedge\neg d$ & $\underbrace{(a\rightarrow c)\wedge(b\rightarrow d)}_{P}$ & $\underbrace{(a\wedge\neg b)\rightarrow(c\wedge\neg d)}_{Q}$ & $P\rightarrow Q$\\
+\hline
+F&F&F&F &T&T &F&F &T&T&T\\
+F&F&F&T &T&T &F&F &T&T&T\\
+F&F&T&F &T&T &F&T &T&T&T\\
+F&F&T&T &T&T &F&F &T&T&T\\
+F&T&F&F &T&F &F&F &F&&\\
+F&T&F&T &T&T &F&F &T&T&T\\
+F&T&T&F &T&F &F&T &F&&\\
+F&T&T&T &T&T &F&F &T&T&T\\
+T&F&F&F &F&T &T&F &F&&\\
+T&F&F&T &F&T &T&F &F&&\\
+T&F&T&F &T&T &T&T &T&T&T\\
+T&F&T&T &T&T &T&F &T&T&T\\
+T&T&F&F &F&F &F&F &F&&\\
+T&T&F&T &F&T &F&F &F&&\\
+T&T&T&F &T&F &F&T &F&&\\
+T&T&T&T &T&T &F&F &T&T&T\\
+\end{tabular}
+\end{center}
+
+And we have proved it. Notice that we only care to check the truth table when the antecedent $P$ is true. The other cases are irrelevant to our cause.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that for any sets $A,B,C$:
+$$(A\triangle B)\triangle C=A\triangle (B\triangle C)$$
+\textbf{Solution:} Let's expand out the left hand side:
+\begin{align*}
+  x\in (A\triangle B)\triangle C&\equiv(x\in A\triangle B\wedge x\not\in C)\vee(x\not\in A\triangle B\wedge x\in C)\\
+  &\equiv(x\in A\wedge x\not\in B\wedge x\not\in C)\vee(x\in A\wedge x\in B\wedge x\in C)\\
+  &\vee(x\not\in A\wedge x\in B\wedge x\not\in C)\vee(x\not\in A\wedge x\not\in B\wedge x\in C)\\
+\end{align*}
+
+Now let's do the same for right hand side:
+\begin{align*}
+  x\in A\triangle (B\triangle C)&\equiv(x\in A\wedge x\not\in B\triangle C)\vee(x\not\in A\wedge x\in B\triangle C)\\
+  &\equiv(x\in A\wedge x\not\in B\wedge x\not\in C)\vee(x\in A\wedge x\in B\wedge x\in C)\\
+  &\vee(x\not\in A\wedge x\in B\wedge x\not\in C)\vee(x\not\in A\wedge x\not\in B\wedge x\in C)\\
+\end{align*}
+
+Notice that when expanded out both statements say the same thing: for an element to be the set it must be in either only 1 or all 3 of the sets $A,B,C$. Thus they are equal and the symmetric difference is associative.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} Prove or give a counterexample:
+$$\mathcal P(A)\setminus\mathcal P(B)\subseteq\mathcal P(A\setminus B)$$
+\textbf{Solution:} This isn't true, here's an example:
+\begin{align*}
+  A&=\{a,b\}\\
+  B&=\{b\}\\
+  A\setminus B&=\{a\}\\
+  \mathcal P(A)&=\{\emptyset,\{a\},\{b\},\{a,b\}\}\\
+  \mathcal P(B)&=\{\emptyset,\{b\}\}\\
+  \mathcal P(A\setminus B)&=\{\emptyset,\{a\}\}\\
+  \mathcal P(A)\setminus\mathcal P(B)&=\{\{a\},\{a,b\}\}\\
+\end{align*}
+
+As we can see, $\{a,b\}\not\in\mathcal P(A\setminus B)$ but $\{a,b\}\in\mathcal P(A)\setminus\mathcal P(B)$.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove or give a counterexample:
+$$\mathcal P(A\setminus B)\subseteq\mathcal P(A)\setminus\mathcal P(B)$$
+\textbf{Solution:} This isn't true, here's an example:
+\begin{align*}
+  A&=\{a,b\}\\
+  B&=\{b\}\\
+  A\setminus B&=\{a\}\\
+  \mathcal P(A)&=\{\emptyset,\{a\},\{b\},\{a,b\}\}\\
+  \mathcal P(B)&=\{\emptyset,\{b\}\}\\
+  \mathcal P(A\setminus B)&=\{\emptyset,\{a\}\}\\
+  \mathcal P(A)\setminus\mathcal P(B)&=\{\{a\},\{a,b\}\}\\
+\end{align*}
+
+As we can see, $\emptyset\in\mathcal P(A\setminus B)$ but $\emptyset\not\in\mathcal P(A)\setminus\mathcal P(B)$.
+
+\end{document}

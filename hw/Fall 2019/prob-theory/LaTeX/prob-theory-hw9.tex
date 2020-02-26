@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand*\pbar[0]{\,|\,}
+\newcommand*\var[0]{\text{Var}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+
+\begin{document}
+
+\title{Theory of Probability HW \#9}
+\author{Ozaner Hansha}
+\date{December 2, 2019}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Suppose the moment generating function of a random variable $X$ is given by:
+\begin{equation*}
+    M_X(t)=\frac{e^{t^2/2}+e^{t^3/6}}{2}
+\end{equation*}
+
+Compute the third moment of $Y$, where $Y=2X+1$.
+\bigskip
+
+\noindent\textbf{Solution:} The mgf of $Y$ is given by:
+\begin{align*}
+    M_Y(t)&=E[e^{tY}]\tag{def. of mgf}\\
+    &=E[e^{t(2X+1)}]\\
+    &=E[e^{2tX+t}]\\
+    &=E[e^{2tX}e^{t}]\\
+    &=e^{t}E[e^{2tX}]\\
+    &=e^{t}M_X(2t)\\
+    &=e^{t}\left(\frac{e^{(2t)^2/2}+e^{(2t)^3/6}}{2}\right)\\
+    &=\frac{e^{2t^2+t}+e^{4t^3/3+t}}{2}
+\end{align*}
+
+Taking the third derivative and evaluating at $t=0$ gives us the third moment of $Y$:
+\begin{align*}
+    M_Y'(t)&=\frac{1}{2}\left((4t+1)e^{2t^2+t}+(4t^2+1)e^{4t^3/3+t}\right)\\
+    M_Y''(t)&=\frac{1}{2}\left((4t+1)^2e^{2t^2+t}+4e^{2t^2+t}+(4t^2+1)^2e^{4t^3/3+t}+8te^{4t^3/3+t}\right)\\
+    M_Y'''(t)&=\frac{1}{2}\left((4t+1)^3e^{2t^2+t}+12(4t+1)e^{2t^2+t}+(4t^2+1)^3e^{4t^3/3+t}+24t(4t^2+1)e^{4t^3/3+t}+8e^{4t^3/3+t}\right)\\
+    E[Y^3]=M_Y'''(0)&=\frac{1}{2}\left(1+12+1+8\right)=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{11}
+\end{align*}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Compute the moment generating function of $X$ which has a discrete uniform distribution over the integer interval $[1..n]$.
+\bigskip
+
+\noindent\textbf{Solution:} The mgf of $X$ is given by:
+\begin{align*}
+    M_X(t)&=E[e^{tX}]\tag{def. of mgf}\\
+    &=\sum_{i=1}^ne^{it}p_X(i)\tag{def. of expectation}\\
+    &=\frac{1}{n}\sum_{i=1}^ne^{it}\tag{uniform distribution}\\
+    &=\frac{1}{n}\left(\frac{e^t(1-e^{tn})}{1-e^t}\right)\tag{finite geometric series}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\frac{e^t-e^{t(n+1)}}{n(1-e^t)}}
+\end{align*}
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Suppose a random variable $X$ has the following mgf:
+\begin{equation*}
+    M_X(t)=\frac{e^{-2t}}{10}+\frac{e^{-t}}{5}+\frac{2}{10}+\frac{e^{t}}{5}+\frac{e^{2t}}{10}
+\end{equation*}
+
+Compute $P(|X|\le 1)$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the random variable $\widetilde{X}$ with the following probability distribution:
+\begin{align*}
+    p_{\widetilde{X}}(-2)&=\frac{1}{10} & p_{\widetilde{X}}(-1)&=\frac{1}{5} & p_{\widetilde{X}}(0)&=\frac{2}{5}\\
+    p_{\widetilde{X}}(1)&=\frac{1}{5} & p_{\widetilde{X}}(2)&=\frac{1}{10}
+\end{align*}
+
+Where the probability of any other value occuring is 0. Note that, as the probabilities sum to 1, this is indeed a valid probability distribution. Also note that the mgf of $\widetilde{X}$ is given by:
+\begin{align*}
+    M_{\widetilde{X}}(t)&=E[e^{t\widetilde{X}}]\\
+    &=\sum_{i=-2}^2e^{ti}p_{\widetilde{X}}(i)\\
+    &=\frac{e^{-2t}}{10}+\frac{e^{-t}}{5}+\frac{2}{10}+\frac{e^{t}}{5}+\frac{e^{2t}}{10}
+\end{align*}
+
+Note that $M_{\widetilde{X}}(t)=M_X(t)$, implying that $\widetilde{X}\sim X$. That is, they share the same probability distribution. And so, the desired probability is given by:
+\begin{align*}
+    P(|X|\le 1)&=P(|\widetilde{X}|\le 1)\\
+    &=P(-1\le\widetilde{X}\le 1)\\
+    &=p_{\widetilde{X}}(-1)+p_{\widetilde{X}}(0)+p_{\widetilde{X}}(1)\\
+    &=\frac{1}{5}+\frac{2}{5}+\frac{1}{5}=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\frac{4}{5}}
+\end{align*} 
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Consider the following random variables:
+\begin{align*}
+    \Lambda&\sim \text{Exp}(\mu)\\
+    X &\sim \text{Poisson}(s)
+\end{align*}
+
+Find the mgf of $X$.
+\bigskip
+
+\noindent\textbf{Solution:} The mgf of $X$ is given by:
+\begin{align*}
+    M_X(t)&=E_X[e^{tX}]\tag{def. of mgf}\\
+    &=E_\Lambda[E_X[e^{tX}\pbar \Lambda=s]]\\
+    &=E_\Lambda\left[\sum_{k=0}^\infty\frac{s^ke^{-s}}{k!}\right]\tag{def. of expectation}\\
+    &=\int_0^\infty\sum_{k=0}^\infty\frac{s^ke^{-s}}{k!}(\mu e^{-\mu s})\mathop{ds}\tag{def. of expectation}\\
+    &=\sum_{k=0}^\infty\frac{\mu}{k!}\int_0^\infty s^ke^{-s(1+\mu)}\mathop{ds}\tag{linearity of sum \& integral}\\
+\end{align*}
+
+At this point we perform a change of variables, letting $t=s(1+\mu)$ and computing the relevant bounds and differentials:
+\begin{align*}
+    s&=\frac{t}{1+\mu}\\
+    ds&=\frac{dt}{1+\mu}\\
+    t(s)&=s(1+\mu)\\
+    t(0)&=0\\
+    \lim_{s\to\infty} t(s)&=\infty
+\end{align*}
+
+We can now continue our chain of equalities:
+\begin{align*}
+    M_X(t)&=\sum_{k=0}^\infty\frac{\mu}{k!}\int_0^\infty s^ke^{-s(1+\mu)}\mathop{ds}\\
+    &=\sum_{k=0}^\infty\frac{\mu}{k!}\int_{t(0)}^{t(\infty)} \left(\frac{t}{1+\mu}\right)^ke^{-t}\frac{dt}{1+\mu}\tag{change of variables}\\
+    &=\sum_{k=0}^\infty\frac{\mu}{k!(1+\mu)^{k+1}}\int_0^\infty t^ke^{-t}\mathop{dt}\\
+    &=\sum_{k=0}^\infty\frac{\mu\Gamma(k+1)}{k!(1+\mu)^{k+1}}\tag{def. of gamma function}\\
+    &=\sum_{k=0}^\infty\frac{\mu}{(1+\mu)^{k+1}}\tag{$(\forall n\in\mathbb N)\,\,\,\Gamma(n+1)=n!$}\\
+    &=\frac{\mu}{1+\mu}\sum_{k=0}^\infty\frac{1}{(1+\mu)^{k}}\\
+    &=\frac{\mu}{1+\mu}\left(\frac{1}{1-\frac{1}{1+\mu}}\right)\tag{geometric series}\\
+    &=\frac{\mu}{1+\mu}\left(\frac{1+\mu}{\mu}\right)=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{1}
+\end{align*}
+
+Note that $\mu>0$ for any exponential distribution. This implies that $\left|\frac{1}{1+\mu}\right|<1$, thus justifying the second to last step (i.e. the geometric series).
+
+\end{document}

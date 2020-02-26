@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+## Linguist Settings
+
+# Make markdown count in the language stats. This is a blog after all.
+*.md linguist-detectable=true

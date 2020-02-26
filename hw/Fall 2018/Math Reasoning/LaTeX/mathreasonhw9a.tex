@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 9a}
+\author{Ozaner Hansha}
+\date{November 14, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that the distributive property holds for finitary addition.
+\\\\
+\textbf{Solution:} First we'll define distributivity for an $n$-ary sum via the following predicate for any $y$ and summands $x_i$:
+$$P(n)\equiv y\left(\sum^n_{i=1}x_i\right)=\sum^n_{i=1}x_iy$$
+
+Now note that $P(1)$ is true:
+\begin{align*}
+  y\left(\sum^n_{i=1}x_i\right)&=\sum^n_{i=1}x_iy\tag*{$P(1)$}\\
+  y(x_1)&=yx_1\tag{def. of $1$-ary sum}
+\end{align*}
+
+Now we will prove that $P(n)\rightarrow P(n+1)$:
+\begin{align*}
+  y\sum^n_{i=1}x_i&=\sum^n_{i=1}yx_i\tag{$P(n)$ given}\\
+  \left(y\sum^n_{i=1}x_i\right)+yx_{n+1}&=\left(\sum^n_{i=1}yx_i\right)+yx_{n+1}\\
+  y\left(\left(\sum^n_{i=1}x_i\right)+x_{n+1}\right)&=\left(\sum^n_{i=1}yx_i\right)+yx_{n+1}\tag{distrib. prop. of binary $+$}\\
+  y\left(\sum^{n+1}_{i=1}x_i\right)&=\left(\sum^{n+1}_{i=1}yx_i\right)\tag{def. of $(n+1)$-ary sum}
+\end{align*}
+
+And so we have shown that $P(n+1)$ follows from $P(n)$. The PMI tells us that:
+\begin{align*}
+&P(n)\implies P(n+1)\\
+&P(1)\\
+\therefore\ &{\forall n\in \mathbb{Z}^+,\ P(n)}
+\end{align*}
+
+And so $n$-ary addition is distributive for finite positive $n$.
+
+\section*{Problem 2}
+\textbf{Problem:} Prove that the associative property holds for finitary multiplication.
+\\\\
+\textbf{Solution:} First we'll define distributivity for an $n$-ary sum via the following predicate given $x_i$:
+$$P(n,k)\equiv(1<k<n)\wedge\left(\prod^n_{i=1}x_i\right)=\left(\prod^k_{i=1}x_i\right)\left(\prod^n_{i=k+1}x_i\right)$$
+
+Now note that $(\forall k,\ 1<k<n)\ P(3,k)$ is true, we just need to check $k=2$:
+\begin{align*}
+  \left(\prod^3_{i=1}x_i\right)&=\left(\prod^2_{i=1}x_i\right)\left(\prod^{3}_{i=2+1}x_i\right)\tag*{$P(3,2)$}\\
+  \left(\prod^2_{i=1}x_i\right)x_3&=\left(\prod^2_{i=1}x_i\right)\left(\prod^3_{i=3}x_i\right)\tag{def. of finitary multiplication}\\
+  \left(\prod^2_{i=1}x_i\right)x_3&=\left(\prod^2_{i=1}x_i\right) x_3\tag{def. of $1$-ary multiplication}
+\end{align*}
+
+\textit{Also note that $(\forall k,\ 1<k<n)\ P(1,k)\wedge P(2,k)$ is vacuously true.}\\
+
+Now we will prove that $(\forall k,\ 1<k<n)\ P(n,k)\rightarrow P(n+1,k)$:
+\begin{align*}
+  \left(\prod^n_{i=1}x_i\right)&=\left(\prod^k_{i=1}x_i\right)\left(\prod^n_{i=k+1}x_i\right)\tag{given}\\
+  \left(\prod^n_{i=1}x_i\right)x_{n+1}&=\left(\prod^k_{i=1}x_i\right)\left(\prod^n_{i=k+1}x_i\right)x_{n+1}\\
+  \left(\prod^{n+1}_{i=1}x_i\right)&=\left(\prod^k_{i=1}x_i\right)\left(\prod^{n+1}_{i=k+1}x_i\right)\tag{def. of finitary multiplication}
+\end{align*}
+
+But this only proves $k$ bounded by the previous $n$ not $n+1$. To resolve this we now have to prove that $(P(n,k)\wedge(1<k+1<n))\rightarrow P(n,k+1)$:
+
+\begin{align*}
+  \left(\prod^n_{i=1}x_i\right)&=\left(\prod^k_{i=1}x_i\right)\left(\prod^n_{i=k+1}x_i\right)\tag{given}\\
+  &=\left(\prod^k_{i=1}x_i\right)\left(\prod^n_{i=k+2}x_i\right)x_{k+1}\tag{def. of finitary multiplication}\\
+  &=\left(\prod^k_{i=1}x_i\right)x_{k+1}\left(\prod^n_{i=k+2}x_i\right)\tag{associativity of $3$-ary mult.}\\
+  &=\left(\prod^{k+1}_{i=1}x_i\right)\left(\prod^n_{i=k+2}x_i\right)\tag{def. of finitary multiplication}
+\end{align*}
+
+\textit{Notice that line 2 required that $1<k+1<n$ in order to use that definition of finitary multiplication.}\\
+
+And so by induction we have:
+\begin{align*}
+&(\forall k,\ 1<k<n)\ P(3,k)\\
+&(\forall k,\ 1<k<n)\ P(n,k)\rightarrow P(n+1,k)\\
+&(\forall n\in \mathbb{Z}^+)(\forall k,\ 1<k<3)\ P(n,k)\tag{special case for 1 \& 2}\\
+\therefore\ &(\forall n\in \mathbb{Z}^+)\ P(n,2)\tag{only $k=2$ satisfies this}
+\end{align*}
+
+Using induction once more we find:
+\begin{align*}
+&(\forall n\in \mathbb{Z}^+)\ P(n,2)\\
+&(P(n,k)\wedge(1<k+1<n))\rightarrow P(n,k+1)\\
+\therefore\ &{(\forall n,k\in \mathbb{Z}^+)\ (\forall k,\ 1<k<n)\ P(n,k)}
+\end{align*}
+
+\section*{Problem 3}
+\textbf{Problem:} Prove the following for all $n\in\mathbb Z^+$:
+$$\sum_{i=1}^ni^3=\left(\sum_{i=1}^ni\right)^2$$
+\textbf{Solution:} First we define the following predicate:
+$$P(n)\equiv \sum_{i=1}^ni^3=\left(\sum_{i=1}^ni\right)^2$$
+
+Now note that $P(1)$ is true:
+\begin{align*}
+  \sum_{i=1}^1i^3&=\left(\sum_{i=1}^1i\right)^2\tag*{$P(1)$}\\
+  1^3&=(1)^2\tag{def. of $1$-ary sum}
+\end{align*}
+
+Now we will prove that $P(n)\rightarrow P(n+1)$:
+\begin{align*}
+  \sum_{i=1}^ni^3&=\left(\sum_{i=1}^ni\right)^2\tag{$P(n)$ given}\\
+  \left(\sum_{i=1}^ni^3\right)+(n+1)^3&=\left(\sum_{i=1}^ni\right)^2+(n+1)^3\\
+  \left(\sum_{i=1}^{n+1}i^3\right)&=\left(\sum_{i=1}^ni\right)^2+(n+1)^3\tag{def. of finitary sum}\\
+  &=\left(\frac{n(n+1)}{2}\right)^2+(n+1)^3\tag{$n$th triangular number}\\
+  &=\frac{n^4+6n^3+13n^2+12n+4}{4}\tag{algebra}\\
+  &=\left(\frac{(n+1)(n+2)}{2}\right)^2\tag{Lemma 1}\\
+  \left(\sum_{i=1}^{n+1}i^3\right)&=\left(\sum_{i=1}^{n+1}i\right)^2\tag{$(n+1)$th triangular number}\\
+\end{align*}
+
+Notice that we justified the 5th step as `Lemma 1'. This is because factoring is hard and so we will simply show that this is true in reverse, by multiplying out the square of the $(n+1)th$ triangular number:
+\begin{align*}
+  \left(\frac{(n+1)(n+2)}{2}\right)^2&=\left(\frac{n^2+3n+2}{2}\right)^2\\
+  &=\frac{(n^2+3n+2)^2}{4}\\
+  &=\frac{n^4+6n^3+13n^2+12n+4}{4}
+\end{align*}
+
+And so we have shown that $P(n+1)$ follows from $P(n)$. The PMI tells us that:
+\begin{align*}
+&P(n)\implies P(n+1)\\
+&P(1)\\
+\therefore\ &{\forall n\in \mathbb{Z}^+,\ P(n)}
+\end{align*}
+
+And so the equality holds for all positive $n$.
+
+\section*{Problem 4}
+\textbf{Problem:} Given some set of $k$ real (or complex) constants $a_i$, we define an LHCC recurrence relation $R$ of order $k$ as:
+$$x(n)=\sum_{i=1}^ka_ix(n-i)=a_1x(n-1)+\cdots+a_kx(n-k)$$
+
+Show that if two sequences satisfy $R$, then a linear combination of the two also satisfy it. Then use induction to show that a linear combination of $m$ solutions to $R$ also satisfies $R$.
+\\\\
+\textbf{Solution}
+\\\\
+\textbf{$2$ Sequence Case}
+\begin{align*}
+  y_1(n)&=a_1y_1(n-1)+\cdots+a_ky_1(n-k)\tag{given}\\
+  &=\sum_{i=1}^ka_iy_1(i)\\
+  y_2(n)&=a_1y_2(n-1)+\cdots+a_ky_2(n-k)\tag{given}\\
+  &=\sum_{i=1}^ka_iy_2(n)
+\end{align*}
+
+Now we can simply multiply the equations by any real (or complex) constants $b_1$ and $b_2$ then sum the resulting equations to show the $2$ sequence case does indeed satisfy $R$:
+\begin{align*}
+  b_1y_1(n)&=b_1\sum_{i=1}^ka_iy_1(n-i)\\
+  b_2y_2(n)&=b_2\sum_{i=1}^ka_iy_2(n-i)\\
+  b_1y_1(n)+b_2y_2(n)&=b_1\sum_{i=1}^ka_iy_1(n-i)+b_2\sum_{i=1}^{k}a_iy_2(n-i)\\
+  &=\sum_{i=1}^ka_i(b_1y_1(n-i))+\sum_{i=1}^ka_i(b_2y_2(n-i))\tag{finitary distrib. prop.}\\
+  &=\sum_{i=1}^ka_i(b_1y_1(n-i)+b_2y_2(n-i))\tag{finitary distrib. prop.}\\
+  &=a_1(b_1y_1(n-1)+b_2y_2(n-1))+\cdots+a_k(b_1y_1(n-k)+b_2y_2(n-k))
+\end{align*}
+\\\\\\
+\textbf{$m$ Sequence Case}
+
+Let $y_j(i)$ be any list of $m$ solutions to $R$ and let $b_j$ be any list of $m$ real (or complex) constants. We'll use this to define a predicate:
+\begin{align*}
+P(m)\equiv\sum_{j=1}^mb_jy_j(n)&=\sum_{i=1}^k\sum_{j=1}^ma_ib_jy_j(n-i)\\
+&=\sum_{j=1}^m\sum_{i=1}^ka_ib_jy_j(n-i)
+\end{align*}
+
+We proved $P(2)$ above for the arbitrary solutions and constants $y_1, y_2, b_1,b_2$. Now we just need to prove that $P(m)\rightarrow P(m+1)$ given some new solution $y_{m+1}(i)$ and constant $b_{m+1}$:
+\begin{align*}
+  \sum_{j=1}^mb_jy_j(n)&=\sum_{j=1}^m\sum_{i=1}^ka_ib_jy_j(n-i)\tag{given}\\
+  \sum_{j=1}^mb_jy_j(n)+b_{m+1}y_{m+1}(n)&=\left(\sum_{j=1}^m\sum_{i=1}^ka_ib_jy_j(n-i)\right)+b_{m+1}y_{m+1}(n)\\
+  \sum_{j=1}^{m+1}b_jy_j(n)&=\left(\sum_{j=1}^m\sum_{i=1}^ka_ib_jy_j(n-i)\right)+b_{m+1}y_{m+1}(n)\tag{def. finitary addition}\\
+  &=\left(\sum_{j=1}^m\sum_{i=1}^kb_jy_j(n-i)\right)+\sum_{i=1}^ka_ib_{m+1}y_{m+1}(n-i)\tag{def. of solution}\\
+  &=\sum_{j=1}^{m+1}\sum_{i=1}^kb_jy_j(n-i)\tag{def. finitary addition}
+\end{align*}
+
+And so we have shown that $P(m+1)$ follows from $P(m)$. The PMI tells us that:
+\begin{align*}
+  &P(2)\\
+  &P(m)\implies P(m+1)\\
+  \therefore\ &{\forall m\le2,\ P(m)}
+\end{align*}
+
+\section*{Problem 5}
+\textbf{Problem:} Derive the explicit formula for the Fibonacci sequence:
+$$f_1=f_2=1;\ f_n=f_{n-1}+f_{n-2}$$
+
+Then evaluate it at $n=3,4,5$.
+\\\\
+\textbf{Solution:} First we solve for the roots of the characteristic polynomial:
+\begin{align*}
+  x^2-x-1=0\\
+  r=\frac{1\pm\sqrt{5}}{2}
+\end{align*}
+
+Denoting the roots $r_1$ and $r_2$, we know that there exists constants $b_1$ and $b_2$ such that:
+$$f_n=b_1r_1^n+b_2r_2^n$$
+
+And since $f_1=f_2=1$ we can solve for the constants:
+\begin{gather*}
+  f_1=b_1r_1+b_2r_2=1\\
+  f_2=b_1r_1^2+b_2r_2^2=1\\
+  b_2=\frac{1-b_1r_1}{r_2}\\
+  b_1r_1^2+r_2(1-b_1r_1)=1
+\end{gather*}
+
+Plugging in the roots and solving for $b_1$ we find:
+$$b_1=\frac{1}{\sqrt 5}$$
+
+Plugging this back into the first equation, we can now solve for $b_2$
+$$b_2=-\frac{1}{\sqrt 5}$$
+
+This leaves us with the following explicit formula for the Fibonacci sequence:
+$$f_n=\frac{1}{\sqrt 5}\left(\left(\frac{1+\sqrt 5}{2}\right)^n-\left(\frac{1+\sqrt 5}{2}\right)^n\right)$$
+
+\end{document}

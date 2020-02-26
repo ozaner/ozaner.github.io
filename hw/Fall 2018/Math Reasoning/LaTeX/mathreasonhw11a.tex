@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 11a}
+\author{Ozaner Hansha}
+\date{December 12, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Prove that the following function $f:P(S)\to \{0,1\}^S$ is a bijection:
+$$f(A)=i_A\ \ \ \ $$
+Where $i_A:A\to\{0,1\}$ is the function:
+$$i_A(x)=[x\in A]$$
+Where $[P]=1$ if $P$ is true, and 0 if false.
+\\\\
+\textbf{Solution:} First we'll prove that the function is injective, that is it satisfies the following:
+$$(\forall A,B\subseteq P^S)\ a\not=b\implies f(a)\not=f(b)$$
+
+Notice that if $a\not=b$ we can say the following w.l.o.g:
+$$(\exists a\in A)\ a\not\in B$$
+
+Now let us consider the the following index functions:
+$$f(A)=i_A\ \ \ \ f(B)=i_B$$
+
+Notice that they have different outputs for the input $c$:
+\begin{align*}
+  i_A(a)=[a\in A]=1\\
+  i_B(a)=[a\in B]=0\\
+\end{align*}
+
+Thus, as desired, the functions are not equivalent. Now we have to prove the surjectivity of $f$:
+$$(\forall b\in\{0,1\}^S)(\exists a\in P^S)\ f(a)=b$$
+
+We'll show this by constructing an element of $P^S$ for any element in $\{0,1\}^S$. Consider a generic element $b\in\{0,1\}^S$. We can reconstruct a subset of $S$ from it in the following way:
+$$a=\{s\in S\mid b(s)=1\}$$
+
+Notice that $a$ must be a subset of $S$ since it's elements are taken solely from that set and possibly restricted further by the condition. Now we will show that $f(a)=b$. First note that:
+$$f(a)=i_a$$
+
+Now for this function $i_a(x)$ to be equal to our original $b(x)$ they must have the same output for every input $x$. This should be clear as:
+$$b(x)=[x\in a]$$
+
+This is just another way to rewrite the definition of $a$ (note that $b(x)$ can only take on the values 0 and 1 which is what lets us write this). Now we can clearly see that this is the same definition as that of $i_a(x)$ and so the functions are equal.
+
+\section*{Problem 2}
+\textbf{Problem:} Prove that $|S|\le|\{0,1\}^S|$.
+\\\\
+\textbf{Solution:} This is equivalent to proving that there exists an injective function $f:S\to\{0,1\}^S$. We can simply construct one as follows:
+$$f(x)=i_{\{x\}}$$
+
+First note that $\{x\}\subseteq S$ is clearly unique for every choice of $x\in S$. Second note that $i_y$ for any choice of $y\in P^S$ is unique as we have shown in Problem 1. Thus, since $\{x\}\in P^S$, there is an injective mapping from $S$ to $\{0,1\}^S$ by $f$.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that there does not exist a surjective function $f:S\to\{0,1\}^S$
+\\\\
+\textbf{Solution:} First note that if there doesn't exist a surjection from $S$ to its power set then there doesn't exist one from $S$ to $\{0,1\}^S$. This is because this set and the power set have the same cardinality (by Problem 1) and thus we could just apply the surjection then map from one to the other. Now, then, we just have to prove no surjective function $f:S\to P^S$ exists.
+
+We'll do this via contradiction. That is, we'll assume there to be such a surjective function $f$ and show it leads to falsehood. Our inductive hypothesis is:
+$$\left(\forall s\in S\right) f(s)\in P^S$$
+
+Note that this is equivalent to:
+$$\left(\forall s\in S\right) f(s)\subseteq S$$
+
+due to the definition of the power set. Now let us consider the following set:
+$$T=\{s\in S\mid s\not\in f(s)}$$
+
+This set is necessarily a subset of $S$ since all of it's elements are taken form it and are only further restricted. This is equivalent to $T\in P^S$. This means, due to the assumed surjectivity of $f$, that:
+$$\left(\exist a\in S\right) f(a)=T$$
+
+This however leads to a contradiction:
+\begin{align*}
+  a\in f(a)&\rightarrow a\not\in f(a)\\
+  a\not\in f(a)&\rightarrow a\in f(a)
+\end{align*}
+
+Since both these statements can't be simultaneously true, our original assumption that $f$ was surjective is false. Thus no surjective function from $S$ to its power set can exist. This extends to the set $\{0,1\}^S$ as well due ot its equivalent cardinality.
+
+\section*{Problem 4}
+\textbf{Problem:} Show that $|S|<|P^S|$.
+\\\\
+\textbf{Solution:} Note that in Problem 1 we showed a bijection exists between:
+$$|P^S|=|\{0,1\}^S|$$
+
+Combining this with our result from Problem 2 we have:
+$$|S|\le|\{0,1\}^S|=|P^S|$$
+
+and finally Problem 3 tells us that $|S|\not=|P^S|$, since surjectivity is a precondition of bijectivity, thus:
+$$|S|<|P^S|$$
+
+And we are done.
+
+\section*{Problem 5}
+\textbf{Problem:} Prove that when $S$ is finite that $|P^S|=2^n$.
+\\\\
+\textbf{Solution:} Consider the following predicate for all finite sets $S$:
+$$P(n)\equiv|S|=n\rightarrow |P^S|=2^n$$
+
+First we will show $P(0)$. Note that the antecedent can only be satisfied by a single set, the empty set:
+$$P(0)\equiv|\emptyset|=0\rightarrow |P^\emptyset|=|\{\emptyset\}|=1=2^0$$
+
+Now we will show that $P(n)\rightarrow P(n+1)$. First we will assume the antecedent for all finite sets $S$:
+$$|S|=n\rightarrow |P^S|=2^n$$
+
+Now let us consider a arbitrary new set such that $|T|=n+1$. Note that because $T$ is a finite set, it is bijective with the set $\{1,2,3\cdots,n,n+1\}$ and so we can choose one such bijection and enumerate it's elements like so:
+$$T=\{t_1,t_2,t_3,\cdots,t_n,t_{n+1}\}$$
+
+Now let us construct a set $S$:
+$$S=\{t_1,t_2,t_3,\cdots,t_n\}$$
+
+Note that $S$ has $n$ elements (is bijective with $n$) and thus satisfies the inductive hypothesis which means its power set contains $2^n$ elements. Now note:
+$$T=S\cup\{t_{n+1}\}$$
+
+as per the definition of $S$. This implies that:
+$$x\subseteq S\rightarrow x\subseteq T$$
+
+Since $S$ is a subset of $T$. Now let us count the number of subsets in $T$. First off it has at least the $2^n$ subsets of $S$ that the inductive hypothesis. And since any subset of $T$ either has or doesn't have the element $t_{n+1}$. We can construct the missing subsets of $T$ by simply unioning $\{t_{n+1}\}$ with each of $S$'s subsets.
+
+This leaves us with the $2^n$ subsets of $S$ plus the $2^n$ subsets of $S$ with $t_{n+1}$ appended. The rest is algebra:
+$$|T|=2^n+2^n=2\cdot2^n=2^{n+1}$$
+
+And we are done. We have proven the consequent, since $T$ was an arbitrary set of $n+1$ elements.
+
+\end{document}

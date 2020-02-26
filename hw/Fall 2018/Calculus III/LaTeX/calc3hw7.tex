@@ -1,0 +1,283 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#7}
+\author{Ozaner Hansha}
+\date{November 19, 2018}
+\maketitle
+
+\section*{Exercise 1}
+Consider the following matrix:
+$$A=\begin{bmatrix}
+    3 & 5 \\
+    2 & 3 \\
+\end{bmatrix}$$
+\subsection*{Part a}
+\textbf{Problem:} Find $A^{-1}$.
+\\\\
+\textbf{Solution:} $\operatorname{det}(A)=3*3-5*2=-1$ and so:
+$$A^{-1}=\begin{bmatrix}
+    -3 & 5 \\
+    2 & -3 \\
+\end{bmatrix}$$
+
+\subsection*{Part b}
+\textbf{Problem:} Solve the following equations:
+$$A\mathbf x=(3,2)\ \ \ \  A\mathbf x=(2,2)\ \ \ \  A\mathbf x=(-1,7)$$
+\textbf{Solution:} Using the inverse we computed above the solutions are simply:
+\begin{align*}
+  \begin{bmatrix}
+      -3 & 5 \\
+      2 & -3 \\
+  \end{bmatrix}(3,2)^\top&=(1,0)\\
+  \begin{bmatrix}
+      -3 & 5 \\
+      2 & -3 \\
+  \end{bmatrix}(2,2)^\top&=(4,-2)\\
+  \begin{bmatrix}
+      -3 & 5 \\
+      2 & -3 \\
+  \end{bmatrix}(-1,7)^\top&=(38,-23)\\
+\end{align*}
+
+\section*{Exercise 2}
+Consider the following matrix:
+$$A=\begin{bmatrix}
+    3 & 5 & 1 \\
+    2 & 3 & 1 \\
+    1 & 1 & 2 \\
+\end{bmatrix}$$
+\subsection*{Part a}
+\textbf{Problem:} Find $A^{-1}$.
+\\\\
+\textbf{Solution:} Consider the columns of $A=(\mathbf v_1,\mathbf v_2,\mathbf v_3)$, by computing the following cross products:
+\begin{align*}
+  \mathbf v_2\times\mathbf v_3=(5,-9,2)
+  \mathbf v_1\times\mathbf v_3=(3,-5,1)\\
+  \mathbf v_1\times\mathbf v_2=(-1,2,-1)\\
+\end{align*}
+
+We can arrange them row-wise into a matrix, then multiply it by the inverse of $\operatorname{det}(A)=-1$:
+$$A^{-1}=\begin{bmatrix}
+    -5 & 9 & -2 \\
+    -3 & 5 & -1 \\
+    1 & -2 & 1 \\
+\end{bmatrix}$$
+
+\subsection*{Part b}
+\textbf{Problem:} Solve the following equations:
+$$A\mathbf x=(3,2,1)\ \ \ \  A\mathbf x=(2,2,1)\ \ \ \  A\mathbf x=(-1,7,1)$$
+\textbf{Solution:} Now we just matrix multiply by the inverse to solve for $\mathbf x$:
+\begin{align*}
+  \begin{bmatrix}
+      -5 & 9 & -2 \\
+      -3 & 5 & -1 \\
+      1 & -2 & 1 \\
+  \end{bmatrix}(3,2,1)^\top&=(1,0,0)\\
+  \begin{bmatrix}
+      -5 & 9 & -2 \\
+      -3 & 5 & -1 \\
+      1 & -2 & 1 \\
+  \end{bmatrix}(2,2,1)^\top&=(6,-3,-1)\\
+  \begin{bmatrix}
+      -5 & 9 & -2 \\
+      -3 & 5 & -1 \\
+      1 & -2 & 1 \\
+  \end{bmatrix}(-1,7,1)^\top&=(66,-37,-14)\\
+\end{align*}
+
+\section*{Exercise 3}
+\textbf{Problem:} Prove the following for any pair of $2\times2$ matrices $A$ and $B$:
+$$\operatorname{det}(AB)=\operatorname{det}(A)\operatorname{det}(B)\ \ \ \ \ \  \operatorname{det}(A^{-1})=\operatorname{det}(A)^{-1}$$
+\textbf{Solution:} Notice that:
+\begin{align*}
+  \operatorname{det}(A)\operatorname{det}(B)&=\operatorname{det}\left(\begin{bmatrix}
+      a_1 & b_1 \\
+      c_1 & d_1 \\
+  \end{bmatrix}\right)
+  \left(\begin{bmatrix}
+      a_2 & b_2 \\
+      c_2 & d_2 \\
+  \end{bmatrix}\right)=
+  (a_1d_1-b_1c_1)(a_2d_2-b_2c_2)\\
+  &=a_1a_2d_1d_2-a_1b_2c_2d_1-a_2b_1c_1d_2+b_1b_2c_1c_2
+\end{align*}
+
+Now notice that:
+\begin{align*}
+  \operatorname{det}(AB)&=\operatorname{det}\left(\begin{bmatrix}
+      a_1 & b_1 \\
+      c_1 & d_1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+      a_2 & b_2 \\
+      c_2 & d_2 \\
+  \end{bmatrix}\right)=\operatorname{det}\left(
+  \begin{bmatrix}
+      a_1a_2+b_1c_2 & a_1b_2+b_1d_2 \\
+      c_1a_2+d_1c_2 & c_1b_2+d_1d_2 \\
+  \end{bmatrix}\right)\\
+  &=(a_1a_2+b_1c_2)(c_1b_2+d_1d_2)-(a_1b_2+b_1d_2)(c_1a_2+d_1c_2)\\
+  &=a_1a_2d_1d_2-a_1b_2c_2d_1-a_2b_1c_1d_2+b_1b_2c_1c_2
+\end{align*}
+
+And so for any pair of $2\times2$ matrices, the first identity holds. The second one can be shown more simply. First notice that:
+$$(\operatorname{det}(A))^{-1}=\operatorname{det}\left(
+\begin{bmatrix}
+    a & b \\
+    c & d \\
+\end{bmatrix}
+\right)^{-1}=(ad-bc)^{-1}$$
+
+Now notice that:
+\begin{align*}(\operatorname{det}(A^{-1})&=\operatorname{det}
+\left((ad-bc)^{-1}\begin{bmatrix}
+    d & -b \\
+    -c & a \\
+\end{bmatrix}\right)\\
+&=\left((ad-bc)^{-1}\right)^2\operatorname{det}\left(
+\begin{bmatrix}
+    d & -b \\
+    -c & a \\
+\end{bmatrix}\right)\tag{$\operatorname{det}(kA)=k^n\operatorname{det}(A)$}\\
+&=(ad-bc)^{-2}(da-(-b)(-c))\\
+&=(ad-bc)^{-1}
+\end{align*}
+
+And so the second equality holds as well.
+
+\section*{Exercise 4}
+\subsection*{Part a}
+\textbf{Problem:} Find the Jacobian of the following function, evaluate it at $(-1,1)$ then compute its inverse:
+$$\mathbf f(x,y)=((x^3-x^2)y,xy+x-y)$$
+\textbf{Solution:} First we'll compute $J\mathbf f$:
+$$J\mathbf f(x,y)=
+\begin{bmatrix}
+    3x^2y-2xy & x^3-x^2 \\
+    y+1 & x-1 \\
+\end{bmatrix}$$
+
+Evaluating at $(-1,1)$ we get:
+$$J\mathbf f(-1,1)=
+\begin{bmatrix}
+    5 & -2 \\
+    2 & -2 \\
+\end{bmatrix}$$
+
+The inverse is found just like before:
+$$(J\mathbf f(-1,1))^{-1}=
+\frac{1}{5*(-2)-(-2)*2}\begin{bmatrix}
+    -2 & 2 \\
+    -2 & 5 \\
+\end{bmatrix}=
+\frac{1}{6}\begin{bmatrix}
+    2 & -2 \\
+    2 & -5 \\
+\end{bmatrix}$$
+
+\subsection*{Part b}
+\textbf{Problem:} Find the Jacobian of the following function, evaluate it at $(-2,-3)$ then compute its inverse:
+$$\mathbf g(x,y)=\left(u^2-v^2+uv,\frac{u^3}{3}-v^2\right)$$
+\textbf{Solution:} First we'll compute $J\mathbf g$:
+$$J\mathbf g(u,v)=
+\begin{bmatrix}
+    2u+v & u-2v \\
+    u^2 & -2v \\
+\end{bmatrix}$$
+
+Evaluating at $(-2,-3)$ we get:
+$$J\mathbf f(-2,-3)=
+\begin{bmatrix}
+    -7 & 7 \\
+    4 & 6 \\
+\end{bmatrix}$$
+
+The inverse is found just like before:
+$$(J\mathbf f(-1,1))^{-1}=
+\frac{1}{(-7)*6-7*4}\begin{bmatrix}
+    6 & -7 \\
+    -4 & -7 \\
+\end{bmatrix}=
+\frac{1}{70}\begin{bmatrix}
+    -6 & 7 \\
+    4 & 7 \\
+\end{bmatrix}$$
+
+\section*{Exercise 5}
+Consider the functions $\mathbf f$ and $\mathbf g$ defined above. Notice that their codomain and domain match up meaning we can define the following composition:
+$$\mathbf h(x,y)=\mathbf g(\mathbf f(x,y))$$
+\subsection*{Part a}
+\textbf{Problem:} Give an explicit formula for $\mathbf h(x,y)$ then find the Jacobian of $\mathbf h$ at $(-1,1)$.
+\\\\
+\textbf{Solution:} Finding the explicit formula is a matter of substitution:
+\begin{align*}
+  h_1(x,y)&=y^2(x^6-2x^5+2x^4-2x^3+2x-1)+y(x^4-x^3-2x^2)-x^2\\
+  h_2(x,y)&=\frac{y^3}{3}(x^9-3x^8+3x^7-x^6)-y^2(x^2-2x+1)+2y(x^2-x)-x^2
+\end{align*}
+
+Computing the Jacobian and plugging in $(-1,1)$ we find:
+$$J\mathbf h(-1,1)=\begin{bmatrix}
+    -27 & 6 \\
+    32 & -20 \\
+\end{bmatrix}$$
+
+\subsection*{Part b}
+\textbf{Problem:} Verify that the chain rule holds for these functions at the point $\mathbf x_0=(1,2)$. That is to say:
+$$J(\mathbf g\circ\mathbf f)(\mathbf x_0)=[J(\mathbf g(\mathbf f(\mathbf x_0))][J(\mathbf f(\mathbf x_0)]$$
+\textbf{Solution:} Now notice that $\mathbf f(-1,1)=(-2,-3)$ meaning:
+$$[J(\mathbf g(\mathbf f(\mathbf x_0))][J(\mathbf f(\mathbf x_0)]=[J(\mathbf g(\mathbf f(-2,3))][J(\mathbf f(-1,1)]$$
+
+Multiplying these two matrices we find:
+$$[J(\mathbf g(\mathbf f(-2,3))][J(\mathbf f(-1,1)]=\begin{bmatrix}
+    -8 & 1 \\
+    9 & 4 \\
+\end{bmatrix}
+\begin{bmatrix}
+    -5 & -2 \\
+    2 & -2 \\
+\end{bmatrix}=
+\begin{bmatrix}
+    -27 & 6 \\
+    32 & -20 \\
+\end{bmatrix}$$
+
+And so, in accordance with our result from Part a, we have verified the chain rule.
+
+\section*{Exercise 6}
+\subsection*{Part a}
+\textbf{Problem:} Show that the following function $\mathbf m:\mathbb R^{n+1}\to\mathbb R^n$ is differentiable and calculate the Jacobian.
+$$\mathbf m(x_1,\cdots,x_n,x_{n+1})=x_{n+1}(x_1,\cdots,x_n)$$
+\textbf{Solution:} Notice that the partial derivatives of $\mathbf m$ take the form:
+$$\frac{\partial m_j}{\partial x_i}=\delta_{ij}$$
+
+Notice this leaves out the last case, which we can deal with for the whole vector:
+$$\frac{\partial \mathbf m}{\partial x_{n+1}}=(x_1,\cdots,x_n)$$
+
+And since all these partials are defined and continuous, the function is certainly differentiable. The Jacobian then is simply the organization of the above partial derivatives into an $(n+1)\times n$ matrix:
+$$J\mathbf m=
+\begin{bmatrix}
+    1 & 0 & 0 & \cdots & 0 & x_1 \\
+    0 & 1 & 0 & \cdots & 0 & x_2 \\
+    0 & 0 & 1 & \cdots & 0 & x_3 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+    0 & 0 & 0 & \cdots & 1 & x_n \\
+\end{bmatrix}$$
+
+Or column-wise $J\mathbf m=(\mathbf e_1,\cdots,\mathbf e_n,\mathbf x)$.
+
+\subsection*{Part b}
+\textbf{Problem:} Consider two differentiable functions $\mathbf f:\mathbb R^n\to\mathbb R^m$ and $\mathbf g:\mathbb R^l\to\mathbb R^k$. Now consider the function:
+$$\mathbf h(\mathbf x,\mathbf y)=(\mathbf f(\mathbf x),\mathbf g(\mathbf y))$$
+where $\mathbf h:\mathbb R^n\times\mathbb R^l\to\mathbb R^m\times\mathbb R^k$. Assuming it exists, calculate the Jacobian. Then verify that this linear map satisfies the definition of the derivative for $\mathbf h$.
+\\\\
+\textbf{Solution:}
+
+\subsection*{Part c}
+\textbf{Problem:} whatever
+\\\\
+\textbf{Solution:}
+
+\end{document}

@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 6a}
+\author{Ozaner Hansha}
+\date{October 24, 2018}
+\maketitle
+
+\section*{Problem 1}
+\subsection*{Part a}
+\textbf{Problem:} Prove that the sum of two linear functions (over real vector spaces) is linear.
+\\\\
+\textbf{Solution:} Consider two linear functions $f$ and $g$. We define their sum $f+g$ as:
+
+$$(f+g)(x)=f(x)+g(x)$$
+
+Recall we only have to prove two properties to show that $f+g$ is linear:
+\begin{gather}
+(f+g)(x+y)=(f+g)(x)+(f+g)(y)\\
+(f+g)(cx)=c(f+g)(x)
+\end{gather}
+
+Proof of property (1)
+\begin{align*}
+  (f+g)(x+y)&=f(x+y)+g(x+y)\tag{def. of $f+g$}\\
+  &=f(x)+f(y)+g(x)+g(y)\tag{Linearity of $f$ \& $g$}\\
+  &=f(x)+g(x)+f(y)+g(y)\tag{Commutativity of $+$}\\
+  &=(f+g)(x)+(f+g)(y)\tag{def. of $f+g$}\\
+\end{align*}
+
+Proof of property (2)
+\begin{align*}
+  (f+g)(cx)&=f(cx)+g(cx)\tag{def. of $f+g$}\\
+  &=cf(x)+cg(x)\tag{Linearity of $f$ \& $g$}\\
+  &=c(f(x)+g(x))\tag{Distributivity of $+$ \& $\times$}\\
+  &=c(f+g)(x)\tag{def. of $f+g$}\\
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that a scalar multiple of a linear function (over a real vector space) is linear.
+\\\\
+\textbf{Solution:} Recall we only have to prove two properties to show that $cf$ is linear:
+\begin{gather}
+cf(x+y)=cf(x)+cf(y)\\
+cf(c_0x)=c_0cf(x)
+\end{gather}
+
+Proof of property (1)
+\begin{align*}
+  cf(x+y)&=c(f(x)+f(y))\tag{Linearity of $f$}\\
+  &=cf(x)+cf(y)\tag{Distributivity of $+$ \& $\times$}\\
+\end{align*}
+
+Proof of property (2)
+\begin{align*}
+  cf(c_0x)&=c(c_0f(x))\tag{Linearity of $f$}\\
+  &=c_0cf(x)\tag{Commutativity of $\times$}\\
+\end{align*}
+
+\section*{Problem 2}
+\textbf{Problem:} In a real vector space, if the functions $f+g$ and $f-g$ are linear, prove that $f$ and $g$ must also be linear.
+\\\\
+\textbf{Solution:} Recall that we have proved that the sum of two linear functions is linear and that any scalar multiple of a linear function is also linear. These two facts are sufficient to prove the above. Note that:
+
+$$(f+g)(x)+(f-g)(x)=f(x)+g(x)+f(x)-g(x)=2f(x)$$
+
+Because $f+g$ and $f-g$ are both linear their sum, $2f(x)$ must also be linear. Now note that:
+
+$$\frac{1}{2}\cdot2f(x)=f(x)$$
+
+Because $2f(x)$ is linear, any scalar multiple of it is also linear. Thus $f(x)$ is linear.
+
+A similar argument can be made for $g$, just consider the following:
+
+$$(-1)\cdot(f-g)(x)=(-1)\cdot(f(x)-g(x))=g(x)-f(x)=(g-f)(x)$$
+
+Because $f-g$ is linear, any scalar multiple of it is also linear. Thus $g-f$ is linear. Now we simply add this function with $f+g$ to arrive at $2g$ and multiply it by $\frac{1}{2}$ to arrive at $g$, both of which are linear by the same argument used above for $f$.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that if $a+b$ and $a-b$ are even, then $a$ and $b$ are also even.
+\\\\
+\textbf{Solution:} This is false. Consider $a=b=1$:
+
+\begin{gather*}
+  a=1 \ \ \ b=1\tag{odd}\\
+  a+b=2\ \ \ a-b=0\tag{even}\\
+\end{gather*}
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that $(z-a)$ is a factor of any complex polynomial $p(z)$ with a root at $a$.
+\\\\
+\textbf{Solution:} If $p(z)$ is of degree $n>0$ then the division theorem applies to it. And so because $(z-a)$ is of degree $1$ there must exist two complex polynomials $q(z)$ and $r(z)$ such that:
+$$p(z)=q(z)(z-a)+r(z)$$
+
+Now recall that $p(a)=0$ that is, $a$ is a root of $p(z)$:
+\begin{align*}
+p(a)&=q(a)(a-a)+r(a)\\
+&=r(a)\\
+&=0
+\end{align*}
+
+The only way $r(a)=0$ is if it is a complex polynomial with degree $n>0$ and has a root at $a$ or just the constant polynomial 0. However, the division theorem states that $r(z)$ is of a degree lower than $(z-a)$ which is of degree 1. This means $r(z)$ is of degree 0 and thus must be the constant 0. We are now left with:
+$$p(z)=q(z)(z-a)$$
+
+This is the definition of being a factor, and thus $(z-a)$ is a factor of $p(z)$. But if $p(z)$ is of degree 0, then it is equal to some constant. The only way for $p(a)=0$ in this case is if $p(z)=0$. Since this is the case, every polynomial is a factor of $p(z)$ because of the zero-product property.
+
+\section*{Problem 5}
+\textbf{Problem:} Assuming every polynomial has at least one root $a$, prove that any complex polynomial $p(z)$ of degree $n\ge1$ can be expressed in terms of $n$ complex numbers denoted $a_i$ and 1 non-zero complex coefficient $c$:
+$$p(z)=c(z-a_1)(z-a_2)\cdots(z-a_n)=c\prod_{i=1}^n(z-a_i)$$
+\textbf{Solution:} Call the original polynomial $p_1(z)$, call its known root $a_1$ and call its degree $n$. If $n$ is greater than 0 than the polynomial has a factor of $(z-a_1)$ as proved above. If $n$ is still greater than 1, call the quotient polynomial that results from the procedure $p_2(z)$. Recall that the quotient polynomial is of degree $n-1$ because it is sans a degree 1 polynomial, namely $(z-a_1)$. The above holds for any polynomial of degree greater than 1. And so we can say $p_i(z)$ has a factor of $(z-a_i)$ as long as $i>1$.
+
+Because $n$ is finite, we will eventually reach the case where the quotient polynomial is of degree 0, i.e. a constant. At that point we will have $p_{n+1}=c$. Since every $(z-a_i)$ was also a factor of every $p_j(z)$ where $j\ge i$ we can say that:
+$$p(z)=c(z-a_1)(z-a_2)\cdots(z-a_n)$$
+Because we have exhausted every factor until we reached an unfactorizable polynomial, $p_{n+1}=c$, we have accounted for every factor in $p(z)$ and thus it can be written as the product of those factors.
+
+\end{document}

@@ -1,0 +1,57 @@
+---
+layout: home
+header:
+  overlay_color: "#000"
+  overlay_filter: "0"
+  overlay_image: /assets/images/splash-images/sendoff-spring-extended.png
+title: "Ozaner's Notes"
+excerpt: "A compilation of notes on math, computer science, philosophy, and other topics."
+classes: wide
+
+feature_row:
+  - image_path: assets/images/math/taylor-series.gif
+    alt: "euler"
+    title: "Understanding Euler's Formula"
+    excerpt: "A step by step derivation and explanation of Euler's famous formula requiring only a basic knowledge of calculus."
+    url: "https://medium.com/@ozanerhansha/understanding-eulers-formula-888e5f58f559"
+    btn_label: "Read More"
+    btn_class: "btn--inverse"
+
+  - title: "The Dottie Number"
+    excerpt: "An overview of an interesting, but oft-overlooked, real constant: the Dottie Number."
+    url: "/dottie-number/"
+    btn_label: "Read More"
+    btn_class: "btn--inverse"
+    image_path: assets/images/math/juliacos.png
+    alt: "dottie"
+
+  - title: "Expressing Boolean Logic in Linear Algebra"
+    excerpt: "How to express and compute boolean logic in terms of matrix algebra."
+    url: "/boolean-logic-in-linear-algebra/"
+    btn_label: "Read More"
+    btn_class: "btn--inverse"
+    image_path: assets/images/comp_sci/and-or-matrix.png
+    alt: "boollogic"
+---
+<style>
+  h1{font-weight: normal;}
+</style>
+<center><h1>Popular Posts</h1></center>
+
+{% include feature_row %}
+
+<!-- <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
+
+{% for post in posts %}
+  {% include archive-single.html %}
+{% endfor %}
+
+{% include paginator.html %} -->
+
+<!-- #   caption: "[__Sendoff Spring__](https://bulbapedia.bulbagarden.net/wiki/Sendoff_Spring) in Sinnoh" -->

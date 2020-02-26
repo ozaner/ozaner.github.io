@@ -1,0 +1,313 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Numerical Analysis HW \#2}
+\author{Ozaner Hansha}
+\date{March 7, 2019}
+\maketitle
+
+\section*{Problem 1}
+\subsection*{Part a}
+\textbf{Problem:} Perform $LUP$ factorization on the following matrix using Gaussian elimination with partial pivoting:
+
+$$A=\begin{bmatrix}
+3&-1&1\\1&3&0\\1&1&3
+\end{bmatrix}$$
+\\\\
+\textbf{Solution:} Below I demonstrate each step of Gaussian elimination performed on $A$ as it becomes $U$. Accompanying these steps is the current $L$ and $P$ matrices. Our initial matrices, i.e. step 0:
+
+$$U=\begin{bmatrix}
+3&-1&1\\1&3&0\\1&1&3
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+L=\begin{bmatrix}
+1&0&0\\\ell_{21}&1&0\\\ell_{31}&\ell_{32}&1
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+P=\begin{bmatrix}
+1&0&0\\0&1&0\\0&0&1
+\end{bmatrix}$$
+
+In step 1, we notice that no permutations need to be done as $u_{11}$ has the largest magnitude of the first column. Now we find that $\frac{u_{21}}{u_{11}}=\frac{1}{3}$ and so we set $\ell_{21}$ equal to this and perform the following row operation: $\vec u_2:=\vec u_2-\frac{1}{3}\vec u_1$, giving us:
+
+$$U=\begin{bmatrix}
+3&-1&1\\0&\frac{10}{3}&-\frac{1}{3}\\1&1&3
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+L=\begin{bmatrix}
+1&0&0\\\frac{1}{3}&1&0\\\ell_{31}&\ell_{32}&1
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+P=\begin{bmatrix}
+1&0&0\\0&1&0\\0&0&1
+\end{bmatrix}$$
+
+Now we continue with step 1, eliminating the first column of row 3. We find that $\frac{u_{31}}{u_{11}}=\frac{1}{3}$ and so we set $\ell_{31}$ equal to this and perform the following row operation: $\vec u_3:=\vec u_3-\frac{1}{3}\vec u_1$, giving us:
+
+$$U=\begin{bmatrix}
+3&-1&1\\0&\frac{10}{3}&-\frac{1}{3}\\0&\frac{4}{3}&\frac{8}{3}
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+L=\begin{bmatrix}
+1&0&0\\\frac{1}{3}&1&0\\\frac{1}{3}&\ell_{32}&1
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+P=\begin{bmatrix}
+1&0&0\\0&1&0\\0&0&1
+\end{bmatrix}$$
+
+Now for step 2, the final step, we again notice that no row permutations need to take place as $u_{22}$ has the largest magnitude of the second column.  We see that $\frac{u_{32}}{u_{22}}=\frac{2}{5}$ and so we set $\ell_{32}$ equal to this and perform the following row operation: $\vec u_3:=\vec u_3-\frac{2}{5}\vec u_2$, giving us:
+
+$$U=\begin{bmatrix}
+3&-1&1\\0&\frac{10}{3}&-\frac{1}{3}\\0&0&\frac{14}{5}
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+L=\begin{bmatrix}
+1&0&0\\\frac{1}{3}&1&0\\\frac{1}{3}&\frac{2}{5}&1
+\end{bmatrix}\ \ \ \ \ \ \ \ \ \ \ \
+P=\begin{bmatrix}
+1&0&0\\0&1&0\\0&0&1
+\end{bmatrix}$$
+
+And, as the matrix is in row echelon form, we are done. Notice that no row permutations needed to be performed and so $P=I$.
+
+\subsection*{Part b}
+\textbf{Problem:} Use MATLAB's \verb|lu| command to give the $LUP$ factorization of the following matrix:
+
+$$A=\begin{bmatrix}
+1&1&3\\3&-1&1\\1&3&0
+\end{bmatrix}$$
+\\\\
+\textbf{Solution:} Running the command \verb|[L,U,P]=lu(1 1 3;3 -1 1;1 3 0)| returned the 3 following matrices:
+
+$$U=\begin{bmatrix}
+3.0000&-1.0000&1.0000\\0&3.3333&-0.3333\\0&0&0.4000
+\end{bmatrix}\ \ \ \ \ \ \
+L=\begin{bmatrix}
+1.0000&0&0\\0.3333&1.0000&0\\0.3333&2.8000&1.0000
+\end{bmatrix}\ \ \ \ \ \ \
+P=\begin{bmatrix}
+0&1&0\\0&0&1\\1&0&0
+\end{bmatrix}$$
+
+\section*{Problem 2}
+\textbf{Problem:} Consider the $n\times n$ Hilbert matrix:
+
+$$(H_n)_{ij}=\frac{1}{i+j-1}$$
+
+Solve the linear system $H_n\vec x=\vec b$ where $\vec b=H_n\vec y$ and $y_i=\frac{1}{\sqrt n}$ for $n=8,12,16$ using MATLAB. Record the relative error, relative residual, the condition number, and the product of the last two in a table.
+\\\\
+\textbf{Solution:} Note that all matrix and vector norms $\|\cdot\|$ refer to the $L^\infty$ norm. This is reflected in the results in table below.
+\begin{center}
+\begin{tabular}{r|c|c|c|c}
+      $n$ & $\frac{\|\vec x-\vec z\|}{\|\vec x\|}$ & $\frac{\|H\vec z-\vec b\|}{\|\vec b\|}$ & $\|H\|\|H^{-1}\|$ & $\|A\|\|A^{-1}\|\frac{\|H\vec z-\vec b\|}{\|\vec b\|}$ \\
+      \hline
+      8 & 1.9237e-07 & 1.1554e-16 & 3.3873e+10 & 3.9136e-06\\
+      12 & 0.2369 & 6.1967e-17 & 3.8420e+16 & 2.3807\\
+      16 & 60.3329 & 6.5680e-16 & 7.1626e+19 & 4.7044e+04
+\end{tabular}
+\end{center}
+
+\section*{Problem 3}
+\subsection*{Part a}
+\textbf{Problem:} Give the iteration matrices for the Jacobi $M_J$ and Gauss Seidel $M_G$ methods of the following matrix:
+
+$$\begin{bmatrix}
+1&-1\\-1&4
+\end{bmatrix}$$
+\newpage
+\textbf{Solution:} Recall that the iteration matrix for the Jacobi method is:
+
+% $$\begin{align*}
+% \vec x^{(k+1)}&=D^{-1}\left(\vec b - (L+U)\vec x^{(k)}\right)\\
+% &=\begin{bmatrix}
+% 1&0\\0&4
+% \end{bmatrix}^{-1}\left(
+% \begin{bmatrix}
+% b_1\\b_2
+% \end{bmatrix} - \begin{bmatrix}
+% 0&-1\\-1&0
+% \end{bmatrix}\begin{bmatrix}
+% x^{(k)}_1\\x^{(k)}_2
+% \end{bmatrix}\right)\\
+% &=\begin{bmatrix}
+% 1&0\\0&\frac{1}{4}
+% \end{bmatrix}\left(
+% \begin{bmatrix}
+% b_1\\b_2
+% \end{bmatrix} - \begin{bmatrix}
+% -x^{(k)}_2\\-x^{(k)}_1
+% \end{bmatrix}\right)\\
+% &=\begin{bmatrix}
+% 1&0\\0&\frac{1}{4}
+% \end{bmatrix}\begin{bmatrix}
+% b_1+x^{(k)}_2\\b_2+x^{(k)}_1
+% \end{bmatrix}=
+% \begin{bmatrix}
+% b_1+x^{(k)}_2\\\frac{b_2+x^{(k)}_1}{4}
+% \end{bmatrix}
+% \end{align*}$$
+
+$$\begin{align*}
+M_J&=-D^{-1}(L+U)\\
+&=-\begin{bmatrix}
+1&0\\0&4
+\end{bmatrix}^{-1}
+\left(\begin{bmatrix}
+0&0\\-1&0
+\end{bmatrix}+
+\begin{bmatrix}
+0&-1\\0&0
+\end{bmatrix}\right)\\
+&=-\begin{bmatrix}
+1&0\\0&\frac{1}{4}
+\end{bmatrix}
+\begin{bmatrix}
+0&-1\\-1&0
+\end{bmatrix}\\
+&=\begin{bmatrix}
+0&1\\\frac{1}{4}&0
+\end{bmatrix}
+\end{align*}$$
+\\
+
+Recall that the iteration matrix for the Gauss Seidel method is:
+$$\begin{align*}
+M_G&=-(L+D)^{-1}U\\
+&=-\left(\begin{bmatrix}
+0&0\\-1&0
+\end{bmatrix}+
+\begin{bmatrix}
+1&0\\0&4
+\end{bmatrix}\right)^{-1}
+\begin{bmatrix}
+0&-1\\0&0
+\end{bmatrix}\\
+&=-\begin{bmatrix}
+1&0\\-1&4
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+0&-1\\0&0
+\end{bmatrix}\\
+&=-\frac{1}{4}\begin{bmatrix}
+4&0\\1&1
+\end{bmatrix}
+\begin{bmatrix}
+0&-1\\0&0
+\end{bmatrix}\\
+&=\begin{bmatrix}
+0&1\\0&\frac{1}{4}
+\end{bmatrix}
+\end{align*}$$
+
+\subsection*{Part b}
+\textbf{Problem:} Determine whether the Jacobi method converges.
+\\\\
+\textbf{Solution:} Recall that any iteration method converges when the spectral radius of the iteration matrix, here $M_J$, is less than 1:
+
+$$\rho(M_J)<1$$
+
+Below we will calculate the eigenvalues of $M_J$ to determine it's spectral radius (i.e. the max of its eigenvalues):
+
+$$\begin{align*}
+0&=\det(M_J-\lambda I)\\
+&=\det\left(\begin{bmatrix} 0 & 1 \\ \frac{1}{4} & 0 \end{bmatrix}-
+\begin{bmatrix} \lambda & 0 \\ 0 & \lambda \end{bmatrix}\right)\\
+&=\det\begin{pmatrix} -\lambda & 1 \\ \frac{1}{4} & -\lambda \end{pmatrix}\\
+&=\lambda^2-\frac{1}{4}
+\end{align*}$$
+
+Factoring this quadratic polynomial, we find that $\lambda=\pm\frac{1}{2}$. The spectral radius of $M_J$ is simply the maximum of the magnitudes of its eigenvalues:
+
+$$\rho(M_J)=\frac{1}{2}<1$$
+
+And so since the spectral radius of $M_J$ is less than 1, the method will converge.
+
+\section*{Problem 4}
+\subsection*{Part a}
+\textbf{Problem:} Use MATLAB to implement the power method to approximate the largest eigenvalue of the following matrix:
+
+$$A=\begin{bmatrix}
+6&4&4&1\\4&6&1&4\\4&1&6&4\\1&4&4&6
+\end{bmatrix}$$
+
+Perform the iteration 10 times and record the approximate eigenvalue, the successive difference of those approximations, and the successive ratio of those successive differences.
+\\\\
+\textbf{Solution}
+\begin{center}
+\begin{tabular}{l|c|c|c}
+      $m$ & $\lambda_1^{(m)}$ & $\lambda_1^{(m)}-\lambda_1^{(m-1)}$ & $\frac{\lambda_1^{(m)}-\lambda_1^{(m-1)}}{\lambda_1^{(m-1)}-\lambda_1^{(m-2)}}$ \\
+      \hline
+      1& 13.130434782 & - &-\\
+      2& 14.758732361 & 1.628297579e+0 &-\\
+      3& 14.972638820 & 2.139064586e-1 &0.1313681610\\
+      4& 14.996952606 & 2.431378644e-2 &0.1136655087\\
+      5& 14.999661309 & 2.708702793e-3 &0.1114060452\\
+      6& 14.999962366 & 3.010569254e-4 &0.1111443183\\
+      7& 14.999995818 & 3.345188554e-5 &0.1111148182\\
+      8& 14.999999535 & 3.716889974e-6 &0.1111115237\\
+      9& 14.999999948 & 4.129879425e-7 &0.1111111561\\
+      10& 14.999999994 & 4.588755153e-8 &0.1111111168\\
+\end{tabular}
+\end{center}
+
+\subsection*{Part b}
+\textbf{Problem:} Compute the eigenvalues of $A$ using the \verb|eig| function in MATLAB. Sort the eigenvalues in descending order. Do the ratios in part a converge to $\frac{\lambda_2}{\lambda_1}$?
+\\\\
+\textbf{Solution:} The eigenvalues of $A$ sorted in decreasing order are:
+
+$$15\le5\le5\le-1$$
+
+The ratio of the second largest eigenvalue to the largest is thus:
+
+$$\frac{\lambda_2}{\lambda_1}=\frac{5}{15}=0.333333\overline{33}$$
+
+This is clearly not what the ratios converge to.
+
+\section*{Problem 5}
+\textbf{Problem:} Give the linear system satisfied by the minimizing choices of $a_1,a_2,a_3$:
+$$E(a_1,a_2,a_3)=\int_0^1(a_1+a_2x+a_3x^2-f(x))^2\ dx$$
+
+What is the relation of this system to the Hilbert matrix in problem 2?
+\newpage
+\textbf{Solution:} To minimize this function we set its partial derivatives equal to 0:
+
+$$\begin{align*}
+\frac{\partial E}{\partial a_1}&=2\int_0^1(a_1+a_2x+a_3x^2-f(x))\ dx=0\\
+\frac{\partial E}{\partial a_2}&=2\int_0^1x(a_1+a_2x+a_3x^2-f(x))\ dx=0\\
+\frac{\partial E}{\partial a_3}&=2\int_0^1x^2(a_1+a_2x+a_3x^2-f(x))\ dx=0
+\end{align*}$$
+
+Solving these out we find:
+$$\begin{align*}
+a_1\int_0^11\ dx+a_2\int_0^1x\ dx+a_3\int_0^1x^2\ dx&=\int_0^1f(x)\ dx\\
+a_1\int_0^1x\ dx+a_2\int_0^1x^2\ dx+a_3\int_0^1x^3\ dx&=\int_0^1xf(x)\ dx\\
+a_1\int_0^1x^2\ dx+a_2\int_0^1x^3\ dx+a_3\int_0^1x^4\ dx&=\int_0^1x^2f(x)\ dx
+\end{align*}$$
+
+After integration these become:
+$$\begin{align*}
+a_1+\frac{a_2}{2}+\frac{a_3}{3}&=\int_0^1f(x)\ dx\\
+\frac{a_1}{2}+\frac{a_2}{3}+\frac{a_3}{4}&=\int_0^1xf(x)\ dx\\
+\frac{a_1}{3}+\frac{a_2}{4}+\frac{a_3}{5}&=\int_0^1x^2f(x)\ dx
+\end{align*}$$
+
+We can phrase this system of equations as the following linear system:
+
+$$\underbrace{\begin{bmatrix}
+1&\frac{1}{2}&\frac{1}{3}\\
+\frac{1}{2}&\frac{1}{3}&\frac{1}{4}\\
+\frac{1}{3}&\frac{1}{4}&\frac{1}{5}
+\end{bmatrix}}_{H}
+\underbrace{\begin{bmatrix}
+a_1\\a_2\\a_3
+\end{bmatrix}}_{\vec a}=
+\underbrace{\begin{bmatrix}
+\int_0^1f(x)\ dx\\\int_0^1xf(x)\ dx\\\int_0^1x^2f(x)\ dx
+\end{bmatrix}}_{\vec b}$$
+
+You'll notice that $H$ is the $3\times3$ Hilbert matrix. That is to say, for any $n$th order polynomial least square approximation of a continuous function $f$ over the interval $[0,1]$, the minimizing parameters $\vec a$ can be found by solving the following linear system:
+
+$$H_{n+1}\vec a=\vec b$$
+
+Where $H_n$ is the $n$th order Hilbert matrix and $b_i=\int_0^1x^{i-1}f(x)\ dx$ (indexing starts at 1).
+
+\end{document}

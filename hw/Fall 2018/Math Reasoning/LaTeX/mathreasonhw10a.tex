@@ -1,0 +1,135 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 10a}
+\author{Ozaner Hansha}
+\date{December 5, 2018}
+\maketitle
+
+\section*{Problem 1}
+Consider the following relation $R$ on an arbitrarily large universe of sets $U$:
+$$ARB\equiv(\exists f:A\to B)\ \underbrace{(\forall x,y\in A)\  f(a)=f(b)\rightarrow a=b}_{f \text{ is injective}}$$
+\subsection*{Part a}
+\textbf{Problem:} Prove that $R$ is not symmetric.
+\\\\
+\textbf{Solution:} Consider the set of all functions from $A=\{1\}$ to $B=\{1,2\}$:
+\begin{align*}
+  \operatorname{graph}(f_1)=\{(1,1)\}\\
+  \operatorname{graph}(f_2)=\{(1,2)\}
+\end{align*}
+
+Note that both functions are injective and so $ARB$. Now let us consider the set of all functions from $B$ to $A$:
+$$\operatorname{graph}(g)=\{(1,1)(2,1)\}$$
+
+Notice that there exists only one such function. Also note that this function is not injective, thus $\neg BRA$. This one counterexample is sufficient to show that $R$ is not symmetric on all universes of sets.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that $R$ is not anti-symmetric.
+\\\\
+\textbf{Solution:} Consider the set of all functions from $A=\{1\}$ to $B=\{2\}$:
+$$\operatorname{graph}(f)=\{(1,2)\}$$
+
+This function is injective, thus $ARB$. Now consider the set of all functions from $B=\{1\}$ to $A=\{2\}$:
+$$\operatorname{graph}(f)=\{(2,1)\}$$
+
+This function is also injective, thus $BRA$. However, note that $\{1\}\not=\{2\}$ (at least I hope it doesn't). And so $R$ does not satisfy anti-symmetry:
+$$ARB \wedge BRA \not\rightarrow A=B$$
+
+This one counterexample is sufficient to show that that $R$ is not anti-symmetric on all universes of sets.
+
+\section*{Problem 2}
+\textbf{Problem:} Consider the following relation based off $R$ used in problem 1 on an arbitrary universe of sets:
+$$A<_\# B\equiv ARB\wedge\neg\operatorname{isBijective}(A,B)$$
+
+Where the $\operatorname{isBijective}$ predicate simply means there exists a bijection (a function that is both injective and surjective) between $A$ and $B$. Prove this relation is a strict partial order.
+\\\\
+\textbf{Solution:} We have to prove three properties of this relation:
+\\\\
+\textbf{$\bullet$ Anti-reflexive}
+
+Proving this means showing that the following is false for any set $A$:
+$$ARA \wedge \neg\operatorname{isBijective}(A,A)$$
+
+Note that $\operatorname{isBijective}(A,A)$ is true because there does exist a bijection from any $A$ to itself, namely the identity function: $\operatorname{id}(a)=a$. Thus the statement is always false and anti-symmetry holds.
+\\\\
+\textbf{$\bullet$ Anti-symmetric}
+
+Proving this means showing the following $A,B\in U$:
+\begin{align*}
+  ARB\wedge\neg\operatorname{isBijective}(A,B)&\implies\neg( BRA\wedge\neg\operatorname{isBijective}(B,A))\\
+  &\implies \neg BRA\vee\operatorname{isBijective}(B,A)
+\end{align*}
+
+Note that $\neg\operatorname{isBijective}(A,B)$ implies $\neg\operatorname{isBijective}(B,A)$ because all bijections have bijective inverses, and so if there wasn't one for $A\to B$ then there won't be one for $B\to A$. Our only mode of attack, then, is to show that $\neg BRA$.
+
+This can be done by noting that the Schroder-Bernstein theorem states that if there is an injective function from $A\to B$ and one from $B\to A$, then there must exist some bijection between the two sets:
+$$ARB\wedge BRA\implies \operatorname{isBijective}(A,B)$$
+
+However we know that while $ARB$ is true, the consequence $\operatorname{isBijective}(A,B)$ is false. This means that $\neg BRA$. And so we are done.
+\\\\
+\textbf{$\bullet$ Transitive}
+
+This is equivalent to proving the following for any sets $A,B$ and $C$:
+$$(ARB\wedge\neg\operatorname{isBijective}(A,B))\wedge (BRC\wedge\neg\operatorname{isBijective}(B,A))\implies (ARC\wedge\neg\operatorname{isBijective}(A,C))$$
+
+Note that $ARB$ guarantees the existence of at least one injective function from $A\to B$ and so we will call one such function $f:A\to B$. We will do the same for the statement $BRA$ and call it $g:B\to C$. Now note that the composition of these two injective functions $f\circ g:A\to C$ is also a injective function (compositions of injective functions are injective). This satisfies the $ARC$ portion of the consequent.
+
+We can prove the second part of the consequent, namely $\neg\operatorname{isBijective}(A,C)$, by contradiction. First note that if $A$ and $C$ are bijective then there exists injective functions from the domain to the codomain and vice versa:
+$$\operatorname{isBijective}(A,C)\implies ARC\wedge CRA$$
+
+Now note that we are assuming that $A<_\#B$, which means there is an injective function from $A$ to $B$:
+$$A<_\#B\implies ARB$$
+
+From the transitivity of injective functions we used earlier we can say:
+$$CRA\wedge ARB\implies CRB$$
+
+However note that the antecedent we are assuming includes $B<_\#C$ which implies $BRC$ but also that $B$ and $C$ are not equinumerous:
+$$B<_\#C\equiv BRC\wedge\neg \operatorname{isBijective}(B,C)$$
+
+This implies that $\neg CRB$ because if there was an injunctive function from $C$ to $B$ then Schroder-Bernstein would tell us that the sets are indeed equinumerous. Thus we are left with a contradiction:
+$$CRB\wedge \neg CRB$$
+
+And so our original assumption that there was a bijection between $A$ and $C$ was false.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that if $(\exists n\in\mathbb N)\ |A|=n$ then:
+$$B\subsetneq A\implies |B|<|A|$$
+\textbf{Solution:} Note that a subset of a set embeds that set (i.e. $B\subseteq A\rightarrow BRA$). Also note that if $|B|\not=|A|$ (i.e. no bijection) then we can use the strict partial order we defined earlier:
+$$BRA\wedge|B|\not=|A|\equiv B<_\# A$$
+
+Now note that for all natural numbers $n$ (where $n=\{0,1,\cdots, n-1\}$): $$n<_\# B$$
+
+Via the transitive property we can see that:
+$$(\forall n\in\mathbb N)\ n<_\# B\wedge B<_\# A\implies n<_\# A$$
+
+Which is the same as saying $A$ is infinite. This, however, depends on the fact that there is no bijection between $A$ and $B$. To show this we just have to show that there is no injective function from $A$ to $B$, (i.e. $ARB$).
+This is obvious because $|A|=n$ for some finite $n$ and thus there is at least one element $a_0\not\in B$. Then $|A\setminus\{a_0\}|=n-1$. And either that set is equal to $B$ (thus equinumerous) or there is another element $a_1$ that is also not in $B$. This argument must end at some point since there are finite number of elements in $A$.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that for any two sets $A$ and $B$:
+$$(\forall n\in\mathbb N)\ B\subseteq A\wedge|B|>n\implies |A|>n$$
+\textbf{Solution:} We know that all subsets of a set embed that set, thus:
+$$B\subseteq A\implies BRA$$
+
+We also are assuming that $B$ is greater in cardinality than any finite $n$, meaning:
+$$(\forall n\in N)\ nRB$$
+
+This automatically entails that $B$ is not equinumerous with any $n$ since there is always an injection with $n+1$. We know that by the transitivity of injective functions (due to the composition of them) that:
+$$(\forall n\in N)\ nRB\wedge BRA\implies nRA$$
+
+And so now we have $|A|\ge n$ for all naturals $n$. But recall just like with $nRB$, we know that this automatically entails that $|A|\not=n$ for any finite $n$. Thus we are left with: $|A|>n$
+
+\section*{Problem 5}
+\textbf{Problem:} Prove the following:
+$$(\exists B\subsetneq A)\ ARB\iff (\forall n\in\mathbb N)\ |A|>n$$
+\textbf{Solution:} Let $P$ be the left hand proposition and $Q$ the right hand one. Note that $\neg Q$ means $A$ is finite, and $\neg P$ means there is no injective function from $A$ to $B$. We know then from problem 3 that $\neg Q\rightarrow \neg P$, and this is just the contraposition (tautology) of the forward direction $P\rightarrow Q$, and so we only need to prove the backwards direction.
+
+Note that if a set $A$ is infinite then, by the axiom of choice, it has a countable subset $\{x_1,x_2,x_3,\cdots,x_j,\cdots\}\subseteq A$. Now note that we can easily define a one-to-one map from $A$ to $A\setminus\{x_1\}$ (i.e. a proper subset of $A$) like so:
+$$f(x_j)=x_{j+1}$$
+
+Thus $ARA\setminus\{x_1\}$ meaing the backwards relation is satisfied.
+
+\end{document}

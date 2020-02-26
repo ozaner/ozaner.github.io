@@ -1,0 +1,254 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Linear Algebra HW \#2}
+\author{Ozaner Hansha}
+\date{February 10, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Recall that an $m\times n$ matrix $A$ is called upper triangular if all entries lying below the diagonal entries are zero, that is, if $a_{ij}=0$ whenever $i>j$. Prove that the set of upper triangular matrices $U$ form a subspace of $\mathbb F^{m\times n}$.
+\bigskip
+
+\noindent\textbf{Solution:} To show that $U$ forms a subspace, we must verify that it:
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item contains the zero element
+    \item is closed under addition
+    \item is closed under scalar multiplication
+\end{enumerate}
+
+a) is easy to prove since the zero vector of $\mathbb F^{m\times n}$ is simply the $m\times n$ zero matrix $\vec 0$. All entries of this matrix are the zero scalar $0\in\mathbb F$, meaning that $\vec 0_{ij}=0$ for all $i,j$ and in particular when $i>j$. Thus $\vec 0\in U$.
+
+b) Given two upper triangular matrices $\vec a,\vec b\in U$, we have that for all $i,j$ s.t. $i>j$:
+$$a_{ij}=b_{ij}=0$$
+
+As is the definition of upper triangular matrix. And so their sum, defined element wise, is also 0 for all $i>j$:
+$$a_{ij}+b_{ij}=0+0=0$$
+
+And thus $\vec a+\vec b\in U$, i.e. $U$ is closed under addition.
+
+c) Given an upper triangular matrix $\vec a\in U$, and a scalar $\lambda\in\mathbb F$ we have that for all $i,j$ s.t. $i>j$:
+$$\lambda a_{ij}=\lambda\cdot0=0$$
+
+Which is precisely the definition of an upper triangular matrix. Thus $\lambda\vec a\in U$, i.e. $U$ is closed under scalar multiplication.
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Let $u$ and $v$ be distinct vectors in a vector space $V$. Show that $\{u, v\}$ is linearly dependent if and only if $u$ or $v$ is a multiple of the other.
+\bigskip
+
+\noindent\textbf{Solution:} Now recall that two vectors $\vec u,\vec v$ are linearly independent iff there exist scalars $\lambda_1,\lambda_2$, where at least one is non-zero, such that:
+
+$$\lambda_1\vec u+\lambda_2\vec v=\vec 0$$
+
+(Lemma 1) First note that if $\vec u$ is a scalar multiple of $\vec v$, then $\vec v$ is a scalar multiple of $\vec u$ since all non-zero scalars have multiplicative inverses:
+
+$$\vec u=\lambda\vec v\implies \vec v=\lambda^{-1}\vec u$$
+
+And so it will suffice to show that at least one vector is a multiple of another.
+\newline
+
+($\Rightarrow$) for the forward direction we will assume w.l.o.g. that $\lambda_1\not=0$. This nets us the following:
+\begin{align*}
+    \lambda_1\vec u+\lambda_2\vec v=\vec 0&\implies \lambda_1\vec u=-\lambda_2\vec v\\
+    &\implies\vec u=-\frac{\lambda_2}{\lambda_1}\vec v
+\end{align*}
+
+And so $\vec u$ is a scalar multiple of $\vec v$. And by Lemma 1 we know this argument can be reversed for $\vec v$ as well.
+\newline
+
+($\Leftarrow$) for the backwards direction we will assume w.l.o.g. that $\vec u$ is a scalar multiple of $\vec v$. This nets us the following:
+\begin{align*}
+    \vec u=\lambda\vec v&\implies\vec u-\lambda\vec v=\vec 0\\
+    &\implies1\cdot\vec u-\lambda\vec v=\vec 0
+\end{align*}
+
+And so there is a pair of coefficients, namely $\lambda_1=1$ and $\lambda_2=-\lambda$, such that $\lambda_1\vec u+\lambda_2\vec v=\vec 0$.
+\newline
+
+($\Leftrightarrow$) And so these two implications, along with Lemma 1, give us the desired equivalence:
+
+$$\lambda_1\vec u+\lambda_2\vec v=\vec 0\iff (\exists\lambda_1)\,\vec u=\lambda_1\vec v\vee (\exists\lambda_2)\,\vec v=\lambda_2\vec u$$
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Show that if $S_1$ and $S_2$ are subsets of a vector space $V$ then:
+
+$$\operatorname{span}(S_1\cup S_2) = \operatorname{span}(S1) + \operatorname{span}(S2)$$
+
+\textit{Where $+$ denotes the sum of two subspaces.}
+
+\bigskip
+
+\noindent\textbf{Solution:} To prove that these two sets are equal we must show that each is a subset of the other.
+
+($\subseteq$) Let $\vec v\in\operatorname{span}(S_1\cup S_2)$. This means that, by definition, $\vec v$ is a linear combination of the vectors in $S_1\cup S_2$:
+
+$$\vec v=\overbrace{\sum_ia_i\vec x_i}^{\vec x}+\overbrace{\sum_jb_j\vec y_j}^{\vec y}$$
+
+Where $\vec x_i\in S_1$ and $\vec y_j\in S_2$. And since $\vec x$ is a linear combination of vectors in $S_1$ it is by definition a member of its span, and the same goes for $\vec y$ and $S_2$:
+$$\vec x\in\operatorname{span}(S_1)\quad\vec y\in\operatorname{span}(S_2)$$
+
+And so $\vec v$ can be expressed as the sum of a vector from $\operatorname{span}(S_1)$ and $\operatorname{span}(S_2)$ and thus is, by definition, an element of their sum:
+$$\vec v=\vec x+\vec y\in\operatorname{span}(S1) + \operatorname{span}(S2)$$
+
+($\supseteq$) Now we instead let $\vec v\in\operatorname{span}(S1) + \operatorname{span}(S2)$. We can now write $\vec v$ as the sum of two vectors $\vec x\in\operatorname{span}(S1)$ and $\vec y\in\operatorname{span}(S2)$:
+$$\vec v=\vec x+\vec y$$
+
+Note that a generic element $\vec x$ of $S_1$ is just some linear combination of its vectors and similarly for $\vec y$:
+
+$$\vec v=\overbrace{\sum_ia_i\vec x_i}^{\vec x}+\overbrace{\sum_jb_j\vec y_j}^{\vec y}$$
+
+And at this point it should be clear that this is a generic element of $\operatorname{span}(S_1\cup S_2)$ as it's a linear combination of vectors from $S_1\cup S_2$. Thus $\vec v\in\operatorname{span}(S_1\cup S_2)$
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Is the following set linearly independent or dependent?
+
+$$\left\{\begin{bmatrix}
+    1&-3\\-2&4
+\end{bmatrix},\begin{bmatrix}
+    -2&6\\4&-8
+\end{bmatrix}\right\}\subseteq \mathbb R^{2\times 2}$$
+
+\bigskip
+
+\noindent\textbf{Solution:} As we've shown in problem 2, the linear dependence of a set of two vectors can be demonstrated by showing that one is a scalar multiple of the other. In this case, that scalar is given by $-2\in\mathbb R$:
+$$-2\begin{bmatrix}
+    1&-3\\-2&4
+\end{bmatrix}=\begin{bmatrix}
+    -2&6\\4&-8
+\end{bmatrix}$$
+
+And so the set is linearly dependent.
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Is the following set a basis for $\mathcal P_2(\mathbb R)$?
+
+$$\{-x^2+2x+1,x^2-2x+4,-9x^2+18x-1\}$$
+\vspace{3pt}
+
+\noindent\textbf{Solution:} Recalling that $\mathcal P_2(\mathbb R)$ is isomorphic to $\mathbb R^3$, we can identify each polynomial as a vector of its coefficients. Putting these vectors in a matrix, we can perform Gaussian elimination to determine the matrix's rank and thus the dimension the polynomials span: 
+
+\begin{align*}
+    \begin{sysmatrix}{rrr|r}
+        -1 & 2 & 1 & 0 \\
+        1 & -2 & 4 & 0\\
+        -9 & 18 & -1 & 0 
+    \end{sysmatrix}
+    &\ro{r_2+r_1}
+    \begin{sysmatrix}{rrr|r}
+        -1 & 2 & 1 & 0 \\
+        0 & 0 & 5 & 0 \\
+        -9 & 18 & -1 & 0
+    \end{sysmatrix}\\
+    &\ro{r_3-9r_1}
+    \begin{sysmatrix}{rrr|r}
+        -1 & 2 & 1 & 0 \\
+        0 & 0 & 5 & 0\\ 
+        0 & 0 & -10 & 0
+    \end{sysmatrix}\\
+    &\ro{r_3+2r_2}
+    \begin{sysmatrix}{rrr|r}
+        -1 & 2 & 1 & 0 \\
+        0 & 0 & 5 & 0\\ 
+        0 & 0 & 0 & 0
+    \end{sysmatrix}
+\end{align*}
+
+Once reduced, we can see that the matrix has only 2 pivot rows and thus is of rank 2. Clearly then, this set does not form a basis of the 3-dimensional $\mathcal P_2(\mathbb R)$ as it only spans 2 dimensions.
+
+\subsection*{Problem 6}
+\noindent\textbf{Problem:} Find a basis, and give the dimension, of the following two subspaces of $\mathbb F^5$:
+
+\begin{enumerate}[label=\alph*)]
+    \item $W_1=\{(a_1,a_2,a_3,a_4,a_5)^\top\in\mathbb F^5\mid a_1-a_3-a_4=0\}$
+    \item $W_2=\{(a_1,a_2,a_3,a_4,a_5)^\top\in\mathbb F^5\mid a_2=a_3=a_4\wedge a_1+a_5=0\}$
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} a) For $W_1$ we have the following basis:
+$$\left\{\begin{bmatrix}
+    1\\0\\1\\0\\0
+\end{bmatrix},\begin{bmatrix}
+    0\\1\\0\\0\\0
+\end{bmatrix},\begin{bmatrix}
+    1\\0\\0\\1\\0
+\end{bmatrix},\begin{bmatrix}
+    0\\0\\0\\0\\1
+\end{bmatrix}\right\}$$
+
+Clearly each vector satisfies $a_1-a_3-a_4$ and no vector is a linear combination of the others, i.e. the set is linearly independent. Now we will show that every vector $\vec v=\in W_1$ can be written as a linear combination of these 4 vectors:
+
+\begin{align*}
+    \vec v=\begin{bmatrix}
+        a_1\\a_2\\a_3\\a_4\\a_5
+    \end{bmatrix}&=\begin{bmatrix}
+        a_3+a_4\\a_2\\a_3\\a_4\\a_5
+    \end{bmatrix}\tag{$a_1-a_3-a_4=0$}\\
+    &=a_3\begin{bmatrix}
+        1\\0\\1\\0\\0
+    \end{bmatrix}+a_2\begin{bmatrix}
+        0\\1\\0\\0\\0
+    \end{bmatrix}+a_4\begin{bmatrix}
+        1\\0\\0\\1\\0
+    \end{bmatrix}+a_5\begin{bmatrix}
+        0\\0\\0\\0\\1
+    \end{bmatrix}
+\end{align*}
+
+And so these vectors form a basis of 4 vectors, thus $W_1$ is 4-dimensional.
+
+b) For $W_2$ we have the following basis:
+
+$$\left\{\begin{bmatrix}
+    1\\0\\0\\0\\-1
+\end{bmatrix},\begin{bmatrix}
+    0\\1\\1\\1\\0    
+\end{bmatrix}\right\}$$
+
+Clearly both vectors satisfy $a_2=a_3=a_4$ and $a_1+a_5=0$ and neither vector is a scalar multiple of the other, i.e. the set is linearly independent. Now we will show that every vector $\vec v=W_2$ can be written as a linear combination of these 2 vectors:
+
+\begin{align*}
+    \vec v=\begin{bmatrix}
+        a_1\\a_2\\a_3\\a_4\\a_5
+    \end{bmatrix}&=\begin{bmatrix}
+        a_1\\a_2\\a_2\\a_2\\a_5
+    \end{bmatrix}\tag{$a_2=a_3=a_4$}\\
+    &=\begin{bmatrix}
+        a_1\\a_2\\a_2\\a_2\\-a_1
+    \end{bmatrix}\tag{$a_1+a_5=0$}\\
+    &=a_1\begin{bmatrix}
+        1\\0\\0\\0\\-1
+    \end{bmatrix}+a_2\begin{bmatrix}
+        0\\1\\1\\1\\0
+    \end{bmatrix}
+\end{align*}
+
+And so these vectors form a basis of 2 vectors, thus $W_2$ is 2-dimensional.
+
+\end{document}

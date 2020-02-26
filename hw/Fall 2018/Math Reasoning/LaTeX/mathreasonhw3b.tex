@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[top=1in, bottom=1.5in, left=1.5in, right=1.5in]{geometry}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 3b}
+\author{Ozaner Hansha}
+\date{September 26, 2018}
+\maketitle
+
+\section{Problem 1}
+\textbf{Problem:} Let $S=\{(x,y)\in\mathbb R^2\mid x^2+y^3\ge 1\}$. Let $(B_y: y\in\mathbb R)$ be the indexed family of subsets of $\mathbb R$ with $B_y=\{x\in\mathbb R\mid (x,y)\in S\}$. For each $y\in\mathbb R$, express $B_y$ as an interval or a union of intervals in $\mathbb R$.
+\\\\
+\textbf{Solution:} We can solve for the interval $B_y$ represents:
+
+\begin{align*}
+  B_y&=\{x\mid x^2+y^2\ge 1\}\\
+  &=\{x\mid x^2\ge 1-y^2\}\\
+  &=\{x\mid x\le-\sqrt{1-y^2} \wedge x\ge\sqrt{1-y^2}\}\\
+  &=(-\infty,-\sqrt{1-y^2}\big]\cup\big[\sqrt{1-y^2},\infty)
+\end{align*}
+
+However, the above fails when $y>1$ as the radicand will be negative resulting in a complex number (which has no standard order). As such we can make a conditional definition of $B_y$:
+
+$$B_y=\begin{cases}
+\emptyset, & \text{for } y>1\\
+(-\infty,-\sqrt{1-y^2}\big]\cup\big[\sqrt{1-y^2},\infty), & \text{for } y\le 1\\
+\end{cases}$$
+
+If we are adamant about the interval representation, we can represent even the null set case as a degenerate interval: $B_{y>1}=(0,0)=\emptyset$.
+
+\section{Problem 2}
+\subsection{Part a}
+\textbf{Problem:} Give two distinct real polynomials of a real variable.
+\\\\
+\textbf{Solution:} $x^2+3x+4$ and $x^{60}-\pi$.
+
+\subsection{Part b}
+\textbf{Problem:} What is the minimum information needed to specify a polynomial?
+\\\\
+\textbf{Solution:} A given real polynomial of a single real variable is fully described by an element of $\bigcup_{n\in\mathbb Z_{>0}}\mathbb R^{n}$ (i.e an $d$-tuple of real numbers where $d$ is any positive integer). $d-1$ represents the degree of the polynomial.
+
+\subsection{Part c}
+\textbf{Problem:} Use the information in part a to define a polynomial.
+\\\\
+\textbf{Solution:} Given an element of $\bigcup_{n\in\mathbb Z_{>0}}\mathbb R^{n}$ denoted $p$ with its $i$th entry denoted $p_i$ (indexing starts at 0) and its length denoted $d$, we can define a polynomial as:
+
+$$\sum_{i=0}^{d-1}p_ix^i$$
+
+\section{Problem 3}
+\subsection{Part a}
+\textbf{Problem:} Identify the free and bounded variables in the following predicate: ``For every positive integer $n$ the set $\{m\in\mathbb Z\mid m^2-r \text{ is divisible by $n$}\}$ is nonempty."
+\\\\
+\textbf{Solution:} $n$ and $m$ are bound variable while $r$ is unbound.
+
+\subsection{Part b}
+\textbf{Problem:} Identify the free and bounded variables in the following predicate: ``$x$ is not a member of $S$ and for all real numbers $\epsilon > 0$, there exists a member $y$ of $S$ such that $|x-y|<\epsilon$."
+\\\\
+\textbf{Solution:} $\epsilon$ and $y$ are bound variables while $x$ and $S$ are unbound.
+
+\subsection{Part c}
+\textbf{Problem:} Identify the free and bounded variables in the following predicate: ``For every function $f$ from $\mathbb R$ to $\mathbb R$, There is a function $g$ and a function $h$ such that for every real number $x$, $f(x)=g(x)+h(x)$ and $g(-x)=g(x)$ and $h(-x)=-h(x)$."
+\\\\
+\textbf{Solution:} $f,g,h$ and $x$ are bound variables.
+
+\section{Problem 4}
+\subsection{Part a}
+\textbf{Problem:} Give a set $A$ that contains 3 sets such that any 2 distinct sets in $A$ intersect in exactly one element, and no element belongs to more than 2 sets.
+\\\\
+\textbf{Solution:}
+
+$$\{\{1,2,3\}\{1,4,5\}\{3,4,6\}\}$$
+
+\subsection{Part b}
+\textbf{Problem:} Generalize the previous example:  For each positive integer $k\ge 3$, give an example of a collection of $k$ sets such that any 2 distinct members of the collection intersect in exactly one element and no element belongs to more than 2 sets.
+\\\\
+\textbf{Solution:} To create a collection of sets that satisfy the above, the collection must contain $k$ sets all of size $k$. The first set will simply be:
+
+$$\{1,2,3,4,\cdots,k\}$$
+
+The second set will be the first element of the 1st set followed by the integers that come after $k$ until the set is of size $k$:
+
+$$\{1,k+1,k+2,\cdots,n_1\}$$
+
+\textit{Where $n_1$ represents the last number we reach once the set is of size $k$.}
+
+The third set will be the first element of the 1st set that hasn't been used by another set (in this case the second element: 2) followed by the first element of the 2nd set that hasn't been used by another set (in this case the second element: $k+1$) followed by the integers that come after $n_1$ until the set is of size $k$:
+
+$$\{2,k+1,n_1+1,n_1+2,\cdots,n_2\}$$
+
+The fourth set will be the first element of the 1st set that hasn't been used by another set (in this case the second element: 3) followed by the first element of the 2nd set that hasn't been used by another set (in this case the second element: $k+2$) followed by the first element of the 3rd set that hasn't been used by another set (in this case the second element: $n_1+1$) followed by the integers that come after $n_2$ until the set is of size $k$:
+
+$$\{3,k+2,n_1+1,n_2+1,n_2+2,\cdots,n_3\}$$
+
+And so on. Once we reach the $k$th set, we will have constructed a collection of $k$ sets that satisfy the given conditions.
+
+\section{Problem 5}
+\textbf{Problem:} Show that $(p\wedge q)\vee r\equiv (p\vee r)\wedge(q\vee r)$.
+\\\\
+\textbf{Solution:} Here's the truth table:
+
+\begin{center}
+\begin{tabular}{cccccccc}
+$p$ & $q$ & $r$ & $p\wedge q$ & $p\vee r$ & $q\vee r$ & $(p\wedge q)\vee r$ & $(p\vee r)\wedge(q\vee r)$\\
+\midrule
+\hline
+F&F&F&F&F&F&F&F\\
+F&F&T&F&T&T&T&T\\
+F&T&F&F&F&T&F&F\\
+F&T&T&F&T&T&T&T\\
+T&F&F&F&T&F&F&F\\
+T&F&T&F&T&T&T&T\\
+T&T&F&T&T&T&T&T\\
+T&T&T&T&T&T&T&T\\
+\end{tabular}
+\end{center}
+
+\end{document}

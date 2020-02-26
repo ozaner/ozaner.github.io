@@ -1,0 +1,377 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Honors Calculus III Challenge Problems \#1}
+\author{Ozaner Hansha}
+\date{October 1, 2018}
+\maketitle
+
+\noindent The problems all refer to the following vectors in $\mathbb R^5$:
+\begin{align*}
+  \mathbf v_1&=(1, 2, 0, 2, 0)\\
+  \mathbf v_2&=(2, 1, 1, 1, 1)\\
+  \mathbf v_3&=(0, 1, -1, 1, -1)\\
+  \mathbf v_4&=(-1, -1, 0, -3, 0)\\
+  \mathbf v_5&=(1, 2, 1, 2, -1)
+\end{align*}
+
+\section*{Exercise 1}
+\textbf{Problem:} Apply the Gram-Schmidt algorithm to the vectors $\{\mathbf v_1, \mathbf v_2, \mathbf v_3, \mathbf v_4, \mathbf v_5\}$ in that order to produce the orthonormal set $\{\mathbf u_1, \mathbf u_2, \mathbf u_3, \mathbf u_4, \mathbf u_5\}$.
+\\\\
+\textbf{Solution:} Recall that the Gram-Schmidt algorithm generates an orthonormal set of vectors $U$ with the same span as a finite set of vectors $V$ by iterating through each vector $\mathbf v_i$ in $V$ and subtracting its component parallel to every $\mathbf u_i$ \textit{currently} in $U$. This guarantees the result is orthogonal to all members of $U$ (yet possibly zero). If a non-zero vector is computed from this calculation, normalize it and add it to $U$. If the result \textit{is} zero, move on to the next $\mathbf v_i$.
+
+Applying this to the set $V$ given above, we choose the first vector $\mathbf v_1$ and subtract its parallel component for all members of $U$. This is already been vacuously done as the set is currently empty. And since $\mathbf v_1\not=\mathbf 0$, we normalize it and add it to $U$:
+
+$$\mathbf u_1=\frac{\mathbf v_1}{\|\mathbf v_1\|}=\frac{(1, 2, 0, 2, 0)}{\|(1, 2, 0, 2, 0)\|}=\boxed{\frac{1}{3}(1, 2, 0, 2, 0)}$$
+
+Now we move onto the next vector in $V$, namely $\mathbf v_2$. First we subtract from it the component parallel to all members of $U,$ in this case just $\mathbf u_1$:
+\begin{align*}
+  \mathbf w_2=\mathbf v_2&-\sum_{\mathbf u\in U}\operatorname{proj}_\mathbf u(\mathbf v_2)\\
+  &-\operatorname{proj}_{\mathbf u_1}(\mathbf v_2)\tag{only $\mathbf u_1$ in $U$}\\
+  &-\frac{(\mathbf v_2\cdot\mathbf u_1)}{\|\mathbf u_1\|^2}\mathbf u_1\tag{def. of projection}\\
+  &-(\mathbf v_2\cdot\mathbf u_1)\mathbf u_1\tag{$\mathbf u$ is normal}
+\end{align*}
+
+\textit{We dub this intermediary vector $\mathbf w_2$ for convience.}
+
+Now we check if the resultant vector, $\mathbf w_2$, is non-zero:
+\begin{align*}
+  \mathbf w_2&=\mathbf v_2-(\mathbf v_2\cdot\mathbf u_1)\mathbf u_1\\
+  &=(2, 1, 1, 1, 1)-((2, 1, 1, 1, 1)\cdot \frac{1}{3}(1, 2, 0, 2, 0))\frac{1}{3}(1, 2, 0, 2, 0)\\
+  &=(2, 1, 1, 1, 1)-\frac{2}{3}(1, 2, 0, 2, 0)\\
+  &=\frac{1}{3}(4, -1, 3, -1, 3)\not=\mathbf 0
+\end{align*}
+
+The vector is indeed non-zero and thus we normalize it and add it to $U$:
+
+$$\mathbf u_2=\frac{\mathbf w_2}{\|\mathbf w_2\|}=\frac{\frac{1}{3}(4, -1, 3, -1, 3)}{\|\frac{1}{3}(4, -1, 3, -1, 3)\|}=\boxed{\frac{1}{6}(4, -1, 3, -1, 3)}$$
+
+We continue these steps as we iterate through $V$, ending at its last vector. For $\mathbf v_3$ we get:
+\begin{align*}
+  \mathbf w_3 &=\mathbf v_3-\sum_{\mathbf u\in U}\operatorname{proj}_\mathbf u(\mathbf v_3)\\
+  &=\mathbf v_3-(\mathbf v_3\cdot\mathbf u_1)\mathbf u_1-(\mathbf v_3\cdot\mathbf u_2)\mathbf u_2\\
+  &=\mathbf v_3-\frac{4}{3}\mathbf u_1+\frac{4}{3}\mathbf u_2\\
+  &=(2, 1, 1, 1, 1)-\frac{2}{9}(2,-5,2,-5,3)\\
+  &= \frac{1}{9}(4,-1,-3,-1,-3)\not=\mathbf0
+\end{align*}
+
+Again, the resulting vector is non-zero, and so we normalize it and add it to $U$:
+
+$$\mathbf u_3=\frac{\mathbf w_3}{\|\mathbf w_3\|}=\frac{\frac{1}{9}(4,-1,-3,-1,-3)}{\|\frac{1}{9}(4,-1,-3,-1,-3)\|}=\boxed{\frac{1}{6}(4,-1,-3,-1,-3)}$$
+
+For $\mathbf v_4$ we get:
+\begin{align*}
+  \mathbf w_4 &=\mathbf v_4-\sum_{\mathbf u\in U}\operatorname{proj}_\mathbf u(\mathbf v_4)\\
+  &=\mathbf v_4-(\mathbf v_4\cdot\mathbf u_1)\mathbf u_1-(\mathbf v_4\cdot\mathbf u_2)\mathbf u_2-(\mathbf v_4\cdot\mathbf u_3)\mathbf u_3\\
+  &=\mathbf v_4+3\mathbf u_1-0\mathbf u_2-0\mathbf u_3\\
+  &=(-1, -1, 0, -3, 0)+3\cdot\frac{1}{3}(1, 2, 0, 2, 0)\\
+  &= (0,1,0,-1,0)\not=\mathbf0
+\end{align*}
+
+Once more, the resulting vector is non-zero, and so we normalize it and add it to $U$:
+
+$$\mathbf u_4=\frac{\mathbf w_4}{\|\mathbf w_4\|}=\frac{(0,1,0,-1,0)}{\|(0,1,0,-1,0)\|}=\boxed{\frac{1}{\sqrt 2}(0,1,0,-1,0)}$$
+
+And finally for $\mathbf v_5$ we get:
+\begin{align*}
+  \mathbf w_5 &=\mathbf v_5-\sum_{\mathbf u\in U}\operatorname{proj}_\mathbf u(\mathbf v_5)\\
+  &=\mathbf v_5-(\mathbf v_5\cdot\mathbf u_1)\mathbf u_1-(\mathbf v_5\cdot\mathbf u_2)\mathbf u_2-(\mathbf v_5\cdot\mathbf u_3)\mathbf u_3-(\mathbf v_5\cdot\mathbf u_4)\mathbf u_4\\
+  &=\mathbf v_5-3\mathbf u_1-0\mathbf u_2-0\mathbf u_3-0\mathbf u_4\\
+  &=(1, 2, 1, 2, -1)-3\cdot\frac{1}{3}(1, 2, 0, 2, 0)\\
+  &=(0,0,1,0,-1)\not=\mathbf0
+\end{align*}
+
+And for the last time, the resulting vector is non-zero, and so we normalize it and add it to $U$:
+
+$$\mathbf u_5=\frac{\mathbf w_5}{\|\mathbf w_5\|}=\frac{(0,0,1,0,-1)}{\|(0,0,1,0,-1)\|}=\boxed{\frac{1}{\sqrt 2}(0,0,1,0,-1)}$$
+
+With that we are done. The resulting set of orthonormal vectors $U,$ whose span is equivalent to $V$, is as follows:
+\begin{align*}
+  \mathbf u_1&=\frac{1}{3}(1, 2, 0, 2, 0)\\
+  \mathbf u_2&=\frac{1}{6}(4, -1, 3, -1, 3)\\
+  \mathbf u_3&=\frac{1}{6}(4,-1,-3,-1,-3)\\
+  \mathbf u_4&=\frac{1}{\sqrt 2}(0,1,0,-1,0)\\
+  \mathbf u_5&=\frac{1}{\sqrt 2}(0,0,1,0,-1)
+\end{align*}
+
+\section*{Exercise 2}
+\subsection*{Part A}
+\textbf{Problem:} Where $\mathbf x_0=(1,1,1,0,0)$, show that the plane $P$ parameterized by the following:
+$$\mathbf x_1(s,t)=\mathbf x_0+s\mathbf v_1+t\mathbf v_2$$
+\\
+is equivalent to the solution set of the following system of equations:
+\begin{align*}
+  \mathbf u_3\cdot(\mathbf x-\mathbf x_0) &= 0\\
+  \mathbf u_4\cdot(\mathbf x-\mathbf x_0) &= 0\\
+  \mathbf u_5\cdot(\mathbf x-\mathbf x_0) &= 0
+\end{align*}
+\textbf{Solution:} Intuitively, we know that a 2D plane in 5D space is defined by the intersection of $5-2=3$ hyperplanes in $\mathbb R^5$. If we were to describe these hyperplanes in point-normal vector form, i.e:
+$$\mathbf a\cdot (\mathbf x-\mathbf x_0)=0$$
+\textit{Where $\mathbf a$ is normal to the hyperplane and $\mathbf x_0$ is some arbitrary point on the plane.}
+\\
+
+we would need to establish that $\mathbf x_0$ lies on $P$ and that $\mathbf u_3,\mathbf u_4,$ and $\mathbf u_5$ are orthogonal with each other and $P$. The former is trivial, simply consider $\mathbf x_1(s,t)$ for $s,t=0$:
+\begin{align*}
+  \mathbf x_1(0,0)&=\mathbf x_0+0\mathbf v_1+0\mathbf v_2\\
+  &=\mathbf x_0
+\end{align*}
+
+Thus $\mathbf x_0$ is on the plane $P$. In regards to the other proposition, we know that $\mathbf u_3,\mathbf u_4,$ and $\mathbf u_5$ are orthogonal to each other as they are part of the orthonormal basis we constructed in Exercise 1. Now all we have to show is that these 3 vectors are orthogonal to every vector on the plane $P$.
+
+We can do this by calling $\mathbf x:=\mathbf x_1$ and subtracting it by $\mathbf x_0$ (another point on the plane). Whatever this vector is, if dotted by an orthonormal vector the answer should be 0. We verify this below:
+\begin{align*}
+  \mathbf u_3\cdot(\mathbf x-\mathbf x_0)&=\mathbf u_3\cdot(s\mathbf v_1+t\mathbf v_2)\\
+  &=(\mathbf u_3\cdot s\mathbf v_1)+(\mathbf u_3\cdot t\mathbf v_2)\tag{distr. of dot prod.}\\
+  &=0+0\tag{consequence of Gram-Schmidt}\\
+  &=0
+\end{align*}
+
+Notice that we made the terms 0 in line 3 due to a ``consequence of Gram-Schmidt". To elaborate, this is because the Gram-Schmidt algorithm guarantees that the span of the set $U$ at any point is equal to the span of the set of vectors $V$ that have been iterated through so far. This is simply the nature of the algorithm as it subtracts all parts parallel to all the previously generated orthonormal vectors to generate new ones.
+
+It is clear then that because the vector $\mathbf u_3$ was generated from $\mathbf v_3$, it must be orthogonal to the vectors that came before it. Those vectors are $\mathbf v_1$ and $\mathbf v_2$. If this doesn't satisfy you, we can also just manually compute the dot products and observe that they indeed equal 0.
+
+The same argument follows for $\mathbf u_4$ and $\mathbf u_5$:
+\begin{align*}
+  \mathbf u_4\cdot(\mathbf x-\mathbf x_0)&=\mathbf u_4\cdot(s\mathbf v_1+t\mathbf v_2)\\
+  &=(\mathbf u_4\cdot s\mathbf v_1)+(\mathbf u_4\cdot t\mathbf v_2)\tag{distr. of dot prod.}\\
+  &=0+0\tag{consequence of Gram-Schmidt}\\
+  &=0
+\end{align*}
+\begin{align*}
+  \mathbf u_5\cdot(\mathbf x-\mathbf x_0)&=\mathbf u_5\cdot(s\mathbf v_1+t\mathbf v_2)\\
+  &=(\mathbf u_5\cdot s\mathbf v_1)+(\mathbf u_5\cdot t\mathbf v_2)\tag{distr. of dot prod.}\\
+  &=0+0\tag{consequence of Gram-Schmidt}\\
+  &=0
+\end{align*}
+
+And so the solution set of the parameterization $\mathbf x_1(s,t)$  is the same as that of the system of equations given above, both giving the same plane $P$.
+
+\subsection*{Part B}
+\textbf{Problem:} Show that the following parameterization $\tilde{\mathbf x}_1$ is of the same plane $P$ as that of $\mathbf x_1$ from Part A:
+$$\tilde{\mathbf x}_1(s,t)=\mathbf x_0+s\mathbf u_1+t\mathbf u_2$$
+\textbf{Solution:} The above is true as a consequence of the Gram-Schmidt algorithm. The only vectors in the orthonormal set $U$ after the first two vectors $\mathbf v_1$ and $\mathbf v_2$ were iterated through were $\mathbf u_1$ and $\mathbf u_2$. In other words:
+
+$$\operatorname{span}(\{\mathbf v_1,\mathbf v_2\})=\operatorname{span}(\{\mathbf u_1,\mathbf u_2\})$$
+
+And so whatever solution set is given by $\mathbf x_1$ is also given by $\tilde{\mathbf x}_1$ as the only terms that differ between the two have the same linear span and can even be written as a linear combination of the others:
+
+$$\left(\forall s,t\in\mathbb R\right)\left(\exists s',t'\in\mathbb R\right)s\mathbf v_1+t\mathbf v_2=s'\mathbf u_1+t'\mathbf u_2$$
+
+\section*{Exercise 3}
+\subsection*{Part A}
+\textbf{Problem:} Show that the following expression is independent of $s,t,u$ and $v$:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v\mathbf v_4)\cdot\mathbf u_5)^2$$
+\textbf{Solution:} Simply distribute the dot product of $\mathbf u_5$ to the other terms:
+$$((\mathbf u_5\cdot\mathbf x_0)+(\mathbf u_5\cdot s\mathbf u_1)+(\mathbf u_5\cdot t\mathbf u_2)-(\mathbf u_5\cdot u\mathbf v_3)-(\mathbf u_5\cdot v\mathbf v_4))^2$$
+
+It is clear that $(\mathbf u_5\cdot s\mathbf u_1)$ and $(\mathbf u_5\cdot t\mathbf u_2)$ are 0 as they belong to the same orthonormal set. It should also be clear from the explanation given in Excersice 2 that $(\mathbf u_5\cdot u\mathbf v_3)$ and $(\mathbf u_5\cdot v\mathbf v_4)$ are also 0 given that these vectors preceded $\mathbf u_5$ in the Gram-Schmidt process.
+
+And so we have reduced the expression to one with no mention of $s,t,u$ or $v$, thus it is independent:
+$$(\mathbf u_5\cdot\mathbf x_0)^2$$
+
+\subsection*{Part B}
+\textbf{Problem:} What is the value of the above expression?
+\\\\
+\textbf{Solution:} Evaluating the expression we find:
+$$(\mathbf u_5\cdot\mathbf x_0)^2=\left(\frac{1}{\sqrt 2}(0,0,1,0,-1)\cdot(1,1,1,0,0)\right)^2=\frac{1}{2}$$
+
+\section*{Exercise 4}
+\subsection*{Part A}
+\textbf{Problem:} Show that the following expression depends only on $v$:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v\mathbf v_4)\cdot\mathbf u_4)^2$$
+\textbf{Solution:} Again we distribute the dot product:
+$$((\mathbf u_4\cdot\mathbf x_0)+(\mathbf u_4\cdot s\mathbf u_1)+(\mathbf u_4\cdot t\mathbf u_2)-(\mathbf u_4\cdot u\mathbf v_3)-(\mathbf u_4\cdot v\mathbf v_4))^2$$
+
+For the same reasoning given in Exercise 2 and 3, we can say:
+$$(\mathbf u_4\cdot s\mathbf u_1)=(\mathbf u_4\cdot t\mathbf u_2)=(\mathbf u_4\cdot u\mathbf v_3)=0$$
+
+This leaves us with the following expression:
+$$((\mathbf u_4\cdot\mathbf x_0)-(\mathbf u_4\cdot v\mathbf v_4))^2$$
+
+This expression is indeed dependent on $v$ as when we factor it out, the dot product does not equal 0:
+\begin{align*}
+  ((\mathbf u_4\cdot\mathbf x_0)-(\mathbf u_4\cdot v\mathbf v_4))^2&=\left(\frac{1}{\sqrt 2}-v(\mathbf u_4\cdot \mathbf v_4)\right)^2\\
+  &=\left(\frac{1}{\sqrt 2}-v\left(\frac{1}{\sqrt 2}(0,1,0,-1,0)\cdot(-1, -1, 0, -3, 0)\right)\right)^2\\
+  &=\left(\frac{1}{\sqrt 2}-v\sqrt 2\right)^2\\
+\end{align*}
+\subsection*{Part B}
+\textbf{Problem:} Find a $v_0$ such that the following is true:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v_0\mathbf v_4)\cdot\mathbf u_4)^2=0$$
+\textbf{Solution:} Using the simplified expression we found above we can simply solve for $v_0$:
+$$\left(\frac{1}{\sqrt 2}-v_0\sqrt 2\right)^2\rightarrow \boxed{v_0=\frac{1}{2}}$$
+
+\section*{Exercise 5}
+\subsection*{Part A}
+\textbf{Problem:} Show that the following expression depends only on $u$ and $v$:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v\mathbf v_4)\cdot\mathbf u_3)^2$$
+\textbf{Solution:} Once again we distribute the dot product:
+$$((\mathbf u_3\cdot\mathbf x_0)+(\mathbf u_3\cdot s\mathbf u_1)+(\mathbf u_3\cdot t\mathbf u_2)-(\mathbf u_3\cdot u\mathbf v_3)-(\mathbf u_3\cdot v\mathbf v_4))^2$$
+
+For the same reasoning given in Exercise 3 and the fact that $\mathbf u_3\cdot\mathbf x_0$ evaluates to 0, we can say:
+$$(\mathbf u_3\cdot\mathbf x_0)=(\mathbf u_3\cdot s\mathbf u_1)=(\mathbf u_3\cdot t\mathbf u_2)=0$$
+
+This leaves us with the following expression:
+$$(-\mathbf u_3\cdot u\mathbf v_3-\mathbf u_3\cdot v\mathbf v_4)^2$$
+
+This expression would seem to be dependent on $u$ and $v$ but, if we evaluate $\mathbf u_3\cdot \mathbf v_4$ we see that it equals 0. As a result we are left with the following:
+
+$$(-\mathbf u_3\cdot u\mathbf v_3)^2=\left(-\frac{2}{3}u\right)^2=\frac{4}{9}u^2$$
+
+\textit{\textcolor{red}{The question states that the expression is dependent on both $u$ \textbf{and} $v$ when it is not dependent on $v$.}}
+
+\subsection*{Part B}
+\textbf{Problem:} Find a $u_0$ such that the following is true:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u_0\mathbf v_3-v_0\mathbf v_4)\cdot\mathbf u_3)^2=0$$
+
+\textit{Where $v_0$ is the same as in Exercise 4.}
+\\
+\textbf{Solution:} Using the simplified expression we found above we can simply solve for $u_0$:
+
+$$\frac{4}{9}u_0^2=0\rightarrow \boxed{u_0=0}$$
+
+\section*{Exercise 6}
+\subsection*{Part A}
+\textbf{Problem:} Show that the following expression depends only on $t,u$ and $v$:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v\mathbf v_4)\cdot\mathbf u_2)^2$$
+\textbf{Solution:} Once again we distribute the dot product:
+$$((\mathbf u_2\cdot\mathbf x_0)+(\mathbf u_2\cdot s\mathbf u_1)+(\mathbf u_2\cdot t\mathbf u_2)-(\mathbf u_2\cdot u\mathbf v_3)-(\mathbf u_2\cdot v\mathbf v_4))^2$$
+
+Because they are part of the same orthonormal set we can say:
+$$(\mathbf u_2\cdot s\mathbf u_1)=0$$
+
+Leaving us with:
+$$((\mathbf u_2\cdot\mathbf x_0)+(\mathbf u_2\cdot t\mathbf u_2)-(\mathbf u_2\cdot u\mathbf v_3)-(\mathbf u_2\cdot v\mathbf v_4))^2$$
+
+This expression would seem to be dependent on $u$ and $v$ but, if we evaluate $\mathbf u_2\cdot \mathbf v_4$ we see that it equals 0. As a result we are now left with the following:
+
+$$((\mathbf u_2\cdot\mathbf x_0)+(\mathbf u_2\cdot t\mathbf u_2)-(\mathbf u_2\cdot u\mathbf v_3))^2=\left(1+t+\frac{4}{3}u\right)^2$$
+
+\textit{\textcolor{red}{The question states that the expression is dependent on $t,u$ \textbf{and} $v$ when it is not dependent on $v$.}}
+
+\subsection*{Part B}
+\textbf{Problem:} Find a $t_0$ such that the following is true:
+$$((\mathbf x_0+s\mathbf u_1+t_0\mathbf u_2-u_0\mathbf v_3-v_0\mathbf v_4)\cdot\mathbf u_2)^2=0$$
+
+\textit{Where $u_0$ and $v_0$ are the same as in Exercise 5.}
+\\\\
+\textbf{Solution:} Using the simplified expression we found above we can solve for $t_0$:
+$$\left(1+t_0+\frac{4}{3}u_0\right)^2=(1+t_0)^2=0\rightarrow \boxed{t_0=-1}$$
+
+\section*{Exercise 7}
+\subsection*{Part A}
+\textbf{Problem:} Show that the following expression depends only on $s,u$ and $v$:
+$$((\mathbf x_0+s\mathbf u_1+t\mathbf u_2-u\mathbf v_3-v\mathbf v_4)\cdot\mathbf u_1)^2$$
+\textbf{Solution:} Once again we distribute the dot product:
+$$((\mathbf u_1\cdot\mathbf x_0)+(\mathbf u_1\cdot s\mathbf u_1)+(\mathbf u_1\cdot t\mathbf u_2)-(\mathbf u_1\cdot u\mathbf v_3)-(\mathbf u_1\cdot v\mathbf v_4))^2$$
+
+Because they are part of the same orthonormal set we can say:
+$$(\mathbf u_1\cdot t\mathbf u_2)=0$$
+
+Leaving us with:
+$$((\mathbf u_1\cdot\mathbf x_0)+(\mathbf u_1\cdot s\mathbf u_1)-(\mathbf u_1\cdot u\mathbf v_3)-(\mathbf u_1\cdot v\mathbf v_4))^2$$
+
+Evaluating the above we find:
+
+$$\left(1+s-\frac{4}{3}u+3v\right)^2$$
+
+\subsection*{Part B}
+\textbf{Problem:} Find a $s_0$ such that the following is true:
+$$((\mathbf x_0+s_0\mathbf u_1+t\mathbf u_2-u_0\mathbf v_3-v_0\mathbf v_4)\cdot\mathbf u_1)^2=0$$
+
+\textit{Where $u_0$ and $v_0$ are the same as in Exercise 5.}
+\\
+\textbf{Solution:} Using the simplified expression we found above we can simply solve for $s_0$:
+
+$$\left(1+s_0-\frac{4}{3}u_0+3v_0\right)^2=\left(1+s_0+\frac{3}{2}\right)^2=0\rightarrow \boxed{s_0=\frac{-5}{2}}$$
+
+\section*{Exercise 8}
+\textbf{Problem:} Find the distance between the plane $P$ given in Exercise 1 and plane parameterized by the following:
+$$\mathbf x_2(u,v)=u\mathbf v_3+v\mathbf v_4$$
+
+\textbf{Solution:} Given the preamble on the challenge sheet preceding Exercise 3, we know that the sum of all the expressions in Exercises 3-7 is the expression for the distance between the planes that we must minimize. That sum is:
+
+$$\frac{1}{2}+\frac{4}{9}u^2+\left(1+t+\frac{4}{3}u\right)^2+\left(1+s-\frac{4}{3}u+3v\right)^2$$
+
+% After much tedious simplification, we are left to minimize the following quadratic polynomial over two variables:
+%
+% $$P(s,t,u,v)=s^2-\frac{8su}{3}+6sv+2s+t^2+\frac{8tu}{3}+2t+4u^2-8uv+9v^2+6v+\frac{1}{\sqrt 2}+2$$
+%
+% To minimize this we find the partial derivatives with respect to $u$ and $v$ and set the equal to 0:
+%
+% \begin{align*}
+%   \frac{\partial}{\partial s}P(s,t,u,v)&=2(1+s-\frac{4u}{3}+3v)\\
+%   \frac{\partial}{\partial t}P(s,t,u,v)&=2(1+t+\frac{4u}{3})\\
+%   \frac{\partial}{\partial u}P(s,t,u,v)&=\frac{8}{3}(-s+t+3u-3v)\\
+%   \frac{\partial}{\partial v}P(s,t,u,v)&=6+6s-8u+18v
+% \end{align*}
+%
+% Now we set them equal to 0 and solve the system of equations:
+%
+% \begin{gather*}
+%   2(1+s-\frac{4u}{3}+3v)=0\\
+%   2(1+t+\frac{4u}{3})=0\\
+%   \frac{8}{3}(-s+t+3u-3v)=0\\
+%   6+6s-8u+18v=0
+% \end{gather*}
+
+But we have already minimized each term of the above expression in Exercises 3-7. The values are:
+\begin{gather*}
+  s=\frac{-5}{2}\\
+  t=-1\\
+  u=0\\
+  v=\frac{1}{2}
+\end{gather*}
+
+To find the points that minimize the distance we simply plug these values into $\tilde{\mathbf x}_1(s,t)$ and $\mathbf x_2(u,v)$. This results in the two vectors:
+
+$$\mathbf p_1=\frac{1}{2}(-1,-1,1,-3,-1)\ \ \ \mathbf p_2=\frac{1}{2}(-1,-1,0,-3,0)$$
+
+The distance between the two planes should then be $\|\mathbf p_1-\mathbf p_2\|$ which comes out to $\frac{1}{\sqrt 2}$
+
+
+
+\section*{Exercise 9}
+\subsection*{Part A}
+\textbf{Problem:} Apply the Gram-Schmidt algorithm to the vectors $\{\mathbf v_3, \mathbf v_4, \mathbf v_1, \mathbf v_2, \mathbf v_5\}$ in that order to produce the orthonormal set $\{\tilde{\mathbf u}_1, \tilde{\mathbf u}_2, \tilde{\mathbf u}_3, \tilde{\mathbf u}_4, \tilde{\mathbf u}_5\}$.
+\\\\
+\textbf{Solution:} The process was already shown in Exercise 1. I'll show the bare minimum of calculations here.
+
+For $\tilde{\mathbf u}_1$:
+$$\tilde{\mathbf u}_1=\frac{\mathbf v_3}{\|\mathbf v_3\|}=\frac{1}{2}(0,1,-1,1,-1)$$
+
+For $\tilde{\mathbf u}_2$:
+$$\mathbf w_2=\mathbf v_4-(\mathbf v_4\cdot\tilde{\mathbf u}_1)\tilde{\mathbf u}_1=(-1,0,-1,-2,-1)$$
+
+$$\tilde{\mathbf u}_2=\frac{\mathbf w_2}{\|\mathbf w_2\|}=\frac{\sqrt 7}{7}(-1,0,-1,-2,-1)$$
+
+For $\tilde{\mathbf u}_3$:
+$$\mathbf w_3=\mathbf v_1-(\mathbf v_1\cdot\tilde{\mathbf u}_1)\tilde{\mathbf u}_1-(\mathbf v_1\cdot\tilde{\mathbf u}_2)\tilde{\mathbf u}_2=\frac{1}{7}(2,1,2,-3,2)$$
+
+$$\tilde{\mathbf u}_3=\frac{\mathbf w_3}{\|\mathbf w_3\|}=\frac{\sqrt{70}}{70}(2,7,2,-3,2)$$
+
+For $\tilde{\mathbf u}_4$:
+$$\mathbf w_4=\mathbf v_2-(\mathbf v_2\cdot\tilde{\mathbf u}_1)\tilde{\mathbf u}_1-(\mathbf v_2\cdot\tilde{\mathbf u}_2)\tilde{\mathbf u}_2-(\mathbf v_2\cdot\tilde{\mathbf u}_3)\tilde{\mathbf u}_3=\frac{1}{5}(4,-1,-1,-1,-1)$$
+
+$$\tilde{\mathbf u}_4=\frac{\mathbf w_4}{\|\mathbf w_4\|}=\frac{\sqrt{5}}{10}(4,-1,-1,-1,-1)$$
+
+For $\tilde{\mathbf u}_5$:
+$$\mathbf w_5=\mathbf v_5-(\mathbf v_5\cdot\tilde{\mathbf u}_1)\tilde{\mathbf u}_1-(\mathbf v_5\cdot\tilde{\mathbf u}_2)\tilde{\mathbf u}_2-(\mathbf v_5\cdot\tilde{\mathbf u}_3)\tilde{\mathbf u}_3-(\mathbf v_5\cdot\tilde{\mathbf u}_4)\tilde{\mathbf u}_4=(0,0,1,0,-1)$$
+
+$$\tilde{\mathbf u}_5=\frac{\mathbf w_5}{\|\mathbf w_4\|}=\frac{\sqrt{2}}{2}(0,0,1,0,-1)$$
+
+\subsection*{Part B}
+\textbf{Problem:} Find a system of equations for $\operatorname{span}(\{\mathbf v_3,\mathbf v_4\})$.
+\\\\
+\textbf{Solution:} Using the orthonormal base we created in Part A, we can simply use all the vectors that are orthogonal to both $\mathbf v_3$ and $\mathbf v_4$ just like we did in Exercise 2. (i.e. need 3 orthogonal vectors in 5-space):
+
+\begin{align*}
+  \tilde{\mathbf u}_3\cdot(\mathbf x-\mathbf x_0) &= 0\\
+  \tilde{\mathbf u}_4\cdot(\mathbf x-\mathbf x_0) &= 0\\
+  \tilde{\mathbf u}_5\cdot(\mathbf x-\mathbf x_0) &= 0
+\end{align*}
+
+\end{document}

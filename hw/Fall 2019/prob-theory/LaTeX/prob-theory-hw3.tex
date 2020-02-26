@@ -1,0 +1,361 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+\newcommand*\Eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\begin{document}
+
+\title{Theory of Probability HW \#3}
+\author{Ozaner Hansha}
+\date{September 30, 2019}
+\maketitle
+
+\begin{center}
+    \Large{\textbf{Part A}}
+\end{center}
+Problems taken from Chapters 3 and 4 of the textbook.
+
+\section*{\underline{Chapter 3}}
+
+\subsection*{Problem 81}
+$A$ and $B$ play a series of games. Each game is independently won by $A$ with probability $p$ and by $B$ with probability $1-p$. They stop when the total number of wins of a player is 2 more that of the other player. The player with more wins wins the series.
+\bigskip
+
+\noindent\textbf{Part a:} Find the probability that a total of 4 games are played.
+\bigskip
+
+\noindent\textbf{Solution:} Let $G_4$ denote the event that the series ends at the 4th game. By inspection, we see that there are only 4 valid outcomes:
+
+\begin{equation*}
+    G_4=\{(A,B,A,A),(A,B,B,B),(B,A,A,A),(B,A,B,B)\}
+\end{equation*}
+
+Thus, by the additivity of disjoint probabilities, we have:
+
+\begin{align*}
+    P(G_4)&=P(\{(A,B,A,A),(A,B,B,B),(B,A,A,A),(B,A,B,B)\})\\
+    &=P(\{(A,B,A,A)\})+P(\{(A,B,B,B)\})+P(\{(B,A,A,A)\})+P(\{(B,A,B,B)\})\\
+    &=p^3(1-p)+p(1-p)^3+p^3(1-p)+p(1-p)^3\\
+    &=2(p^3(1-p)+p(1-p)^3)
+\end{align*}
+
+\bigskip
+
+\noindent\textbf{Part b:} Find the probability that $A$ is the winner of the series.
+\bigskip
+
+\noindent\textbf{Solution:} We can consider the sequence of games in chunks of 2. Consider the 4 possible outcomes of 2 games:
+
+\begin{itemize}
+    \item $(A,A)$ A wins, $P(\{(A,A)\})=p^2$
+    \item $(B,B)$ A wins, $P(\{(B,B)\})=(1-p)^2$
+    \item $(A,B)$ A wins, $P(\{(A,B)\})=p(1-p)$
+    \item $(B,A)$ A wins, $P(\{(B,A)\})=p(1-p)$
+\end{itemize}
+
+If $A$ or $B$ win both games then the series is over. If they tie, via one of two possibilities, the game continues. So, the probability that $A$ wins is given by the probability of $n$ ties in a row times the probability that $A$ wins the last 2 games summed over all $n$:
+
+\begin{align*}
+    P(A\text{ wins the series})&=\sum_{i=0}^\infty P(\text{tie})^iP(A\text{ wins twice in a row})\\
+    &=\sum_{i=0}^\infty (p(1-p)+p(1-p))^ip^2\tag{independence}\\
+    &=p^2\sum_{i=0}^\infty (2p(1-p))^i\tag{algebra}\\
+    &=\frac{p^2}{1-2p(1-p)}\tag{geometric series}
+\end{align*}
+
+\subsection*{Problem 82}
+\noindent\textbf{Problem:} In successive rolls of a pair of fair dice, suppose the sum of the faces is noted each time. What is the probability that 2 sevens will occur before 6 even numbers?
+% Let $P_{2,6}$ denote the probability of this event.
+\bigskip
+
+\noindent\textbf{Solution:} Consider a single roll of a pair of dice. Let $E$ be the event an even is rolled, $S$ be the event a 7 is rolled, and $E\cup S$ the event that either are rolled. We now compute some relevant cardinalities and probabilities:
+
+\begin{align*}
+    |E|&=18\\
+    |S|&=6\\
+    |E\cup S|&=18+6=24\tag{$ES=\varnothing$}\\
+    P(E|E\cup S)&=\frac{|E(E\cup S)|}{|E\cup S|}=\frac{|E|}{|E\cup S|}=\frac{18}{24}=\frac{3}{4}\tag{$E\subseteq E\cup S$}\\
+    P(S|E\cup S)&=\frac{|S(E\cup S)|}{|E\cup S|}=\frac{|S|}{|E\cup S|}=\frac{6}{24}=\frac{1}{4}\tag{$S\subseteq E\cup S$}
+\end{align*}
+
+Note that, since the problem is only concerned with rolls that are either even or seven, we can condition all future events on $E\cup S$ which is to say we only consider rolls that satisfy $E\cup S$. After 7 such conditioned rolls are complete, either 6 or 7 evens will have appeared xor 2 sevens have been rolled. These are the only two options and one MUST occur:
+
+\begin{align*}
+    &P(\text{6 or 7 evens rolled})+P(\text{2 sevens rolled before 6 evens})=1\\
+    \implies&P(\text{2 sevens rolled before 6 evens})=1-P(\text{6 or 7 evens rolled})
+\end{align*}
+
+Now we just have to compute the probability that 6 or 7 evens were rolled in the first 7 rolls (that satisfied $E\cup S$):
+
+\begin{align*}
+    P(\text{6 or 7 evens rolled})&=P(\text{6 evens rolled})+P(\text{7 evens rolled})\\
+    &=\underbrace{7P(E|E\cup S)^6P(S|E\cup S)}_{7\text{ ways to arrange the seven}}+P(E|E\cup S)^7\\
+    &=7\left(\frac{3}{4}\right)^6\frac{1}{4}+\left(\frac{3}{4}\right)^7\\
+    &=\frac{3^6\cdot 10}{4^7}=\frac{3645}{8192}
+\end{align*}
+
+And so our final probability is given by:
+\begin{equation*}
+    P(\text{2 sevens rolled before 6 evens})=1-\frac{3645}{8192}=\frac{4547}{8192}\approx0.555054
+\end{equation*}
+
+\subsection*{Problem 84}
+\noindent\textbf{Problem:} An investor owns shares in a stock whose present value is 25. She must sell her stock if it goes down to 10 or if it goes up to 40. If each change of price is either 1 point up with probability $0.55=\frac{11}{20}$ or down 1 point with probability $0.45=\frac{9}{20}$, and these changes are independent, what is the probability that the investor retires a winner?
+\bigskip
+
+\noindent\textbf{Solution:} Let $W$ denote the event that she retires a winner, $U$ denote the event that the stock goes up, $D$ that it goes down, and let $V$ be the value of the stock. By Bayes' theorem we have:
+
+\begin{equation*}
+    P(W|V=n)=P(W|V=n+1)P(U)+P(W|V=n-1)P(D)
+\end{equation*}
+
+If we now let $P_n=P(W|V=n)$, we have the following linear recurrence relation:
+
+\begin{align*}
+    P_n&=\frac{11}{20}P_{n+1}+\frac{9}{20}P_{n-1}\\
+    -\frac{11}{20}P_{n+1}&=-P_n+\frac{9}{20}P_{n-1}\\
+    P_{n+1}&=\frac{20}{11}P_n-\frac{9}{11}P_{n-1}
+\end{align*}
+
+The characteristic polynomial of this recurrance relation is:
+\begin{gather*}
+    r^{n+1}=\frac{20}{11}r^n-\frac{9}{11}r^{n-1}\\
+    r^{n+1}-\frac{20}{11}r^n+\frac{9}{11}r^{n-1}=0\\
+    r^{n-1}\left(r^2-\frac{20}{11}r+\frac{9}{11}\right)=0
+\end{gather*}
+
+Applying the quadratic equation, we find that the roots of the characteristic polynomial are $r=0$, $r=1$ and $r=\frac{9}{11}$. This gives us the following family of solutions to the recurrance relation:
+
+\begin{equation*}
+    \alpha\cdot1^n+\beta\left(\frac{9}{11}\right)^n+\gamma\cdot0^n=\alpha+\beta\left(\frac{9}{11}\right)^n
+\end{equation*}
+
+Now, plugging in our initial conditions $P_{40}=1$ and $P_{10}=0$, we have the following system of equations:
+
+\[
+  \begin{array}{l@{\quad}cr@{}l}
+    && \alpha+\beta\left(\frac{9}{11}\right)^{40}&=1 \\
+    && -(\alpha+\beta\left(\frac{9}{11}\right)^{10}&=0) \\ \cline{2-4}
+    && \beta\left(\frac{9}{11}\right)^{40}-\beta\left(\frac{9}{11}\right)^{10}{}&= 1
+  \end{array}
+\]
+
+Solving for $\beta$ we get:
+\begin{equation*}
+    \beta=\frac{1}{\left(\frac{9}{11}\right)^{40}-\left(\frac{9}{11}\right)^{10}}
+\end{equation*}
+
+Now we can solve for $\alpha$:
+\begin{align*}
+    &\alpha+\beta\left(\frac{9}{11}\right)^{10}=0\\
+    \implies&\alpha+\frac{\left(\frac{9}{11}\right)^{10}}{\left(\frac{9}{11}\right)^{40}-\left(\frac{9}{11}\right)^{10}}=0\\
+    \implies&\alpha=-\frac{\left(\frac{9}{11}\right)^{10}}{\left(\frac{9}{11}\right)^{40}-\left(\frac{9}{11}\right)^{10}}\\
+\end{align*}
+
+With these values of $\alpha$ and $\beta$ we can now evaluate our desired probability of $P(W|V=25)=P_{25}$:
+
+\begin{equation*}
+    P_{25}=-\frac{\left(\frac{9}{11}\right)^{10}}{\left(\frac{9}{11}\right)^{40}-\left(\frac{9}{11}\right)^{10}}+\frac{\left(\frac{9}{11}\right)^{25}}{\left(\frac{9}{11}\right)^{40}-\left(\frac{9}{11}\right)^{10}}=\frac{4177248169415651}{4383139301510300}\approx0.953027
+\end{equation*}
+
+\section*{\underline{Chapter 4}}
+
+\subsection*{Problem 19}
+\noindent\textbf{Problem:} The distribution function of the random variable $X$ is given by:
+\[F_X(x)=P(X\le x)=\begin{cases} 
+    0 & x< 0 \\
+    \frac{1}{2} & 0\leq x<1 \\
+    \frac{3}{5} & 1\leq x<2 \\
+    \frac{4}{5} & 2\leq x<3 \\
+    \frac{9}{10} & 3\leq x<3.5 \\
+    1 & x\ge3.5 
+ \end{cases}
+\]
+
+What is the probability mass function $p_X(x)$ of $X$?
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the probability mass function $p_X$ of a discrete random variable $X$ is equal to 0 everywhere except at the discountinuous jumps in the distribution function. From this we can give the non-zero values of $p_X$, completing its definition:
+
+\begin{align*}
+    p_X(0)&=F_X(0)-\lim_{x\to 0^-}F_X(x)=\frac{1}{2}-0=\frac{1}{2}\\
+    p_X(1)&=F_X(1)-F_X(0)=\frac{3}{5}-\frac{1}{2}=\frac{1}{10}\\
+    p_X(2)&=F_X(2)-F_X(1)=\frac{4}{5}-\frac{3}{5}=\frac{1}{5}\\
+    p_X(3)&=F_X(3)-F_X(2)=\frac{9}{10}-\frac{4}{5}=\frac{1}{10}\\
+    p_X(3.5)&=F_X(3.5)-F_X(3)=1-\frac{9}{10}=\frac{1}{10}
+\end{align*}
+
+\subsection*{Problem 22a}
+\noindent\textbf{Problem:} Suppose that two teams play a series of games that ends when one of them has won 2 games. Suppose that each game played is, independently, won by team $A$ with probability $p$. Find the expected number of games that are played, and show that this number is maximized when $p=\frac{1}{2}$.
+\bigskip
+
+\noindent\textbf{Solution:} Let the random variable $N$ denote the number of games that are played before one side wins. It is clear that either $N=2$ or $N=3$ as there is a two game minimum and the possibility of a tie allows for a third tie breaker game. This gives us the following expectation value:
+
+\begin{align*}
+    E[N]&=2P(N=2)+3P(N=3)\\
+    &=2(P(\{(A,A),(B,B)\}))+3(P(\{(A,B,A),(A,B,B),(B,A,A),(B,A,B)\}))\\
+    &=2(p^2+(1-p)^2))+3(p^2(1-p)+p(1-p)^2+p^2(1-p)+p(1-p)^2)\\
+    &=2p^2+2(1-p)^2+3p^2(1-p)+3p(1-p)^2+3p^2(1-p)+3p(1-p)^2\\
+    &=-2p^2+2p+2
+\end{align*}
+
+Recall that a negative quadratic polynomial, i.e. one with a negative coefficient on its squared term, is maximized at it's vertex. Now notice that, since all probabilities $p$ are nonnegative, $E[N]$ is given by a negative quadratic and so is maximized at the $p$ coordinate of its vertex:
+
+\begin{equation*}
+    \frac{-b}{2a}=\frac{-(2)}{2(-2)}=\frac{1}{2}
+\end{equation*}
+
+\textit{Where $a$ is the coefficient of $E[N]$'s $p^2$ term and $b$ of its $p$ term.}
+
+\subsection*{Problem 27}
+\noindent\textbf{Problem:} An insurance company writes a policy to the effect that an amount of money $A$ must be paid if some event $E$ occurs within a year. If the company estimates that $E$ will occur within a year with probability $p$, what should it charge the customer in order that its expected profit will be 10\% of $A$?
+\bigskip
+
+\noindent\textbf{Solution:} Let $C$ be the amount that the company charges for the policy, and let the random variable $X$ denote the company's profit. The expected profit, then, is given by:
+\begin{align*}
+    E[X]&=(C-A)P(E)+CP(E^\complement)\\
+    &=(C-A)p+C(1-p)\\
+    &=pC-pA+C-pC\\
+    &=C-pA
+\end{align*}
+
+And so, if we are to satisfy $E[X]=0.1A$, we can solve for $C$:
+\begin{align*}
+    C-pA&=0.1A\\
+    C&=0.1A+pA\\
+    &=A(0.1+p)
+\end{align*}
+
+\subsection*{Problem 32}
+\noindent\textbf{Problem:} To determine whether they have a certain disease, 100 people are to have their blood tested. However, rather than testing each individual separately, it has been decided first to place the people into groups of 10. The blood samples of the 10 people in each group will be pooled and analyzed together. If the test is negative, one test will suffice for the 10 people, whereas if the test is positive, each of the 10 people will also be individually tested and, in all, 11 tests will be made on this group. Assume that the probability that a person has the disease is 0.1 for all people, independently of each other, and compute the expected number of tests necessary for each group. (Note that we are assuming that the pooled test will be positive if at least one person in the pool has the disease.)
+\bigskip
+
+\noindent\textbf{Solution:} Let the random variable $X$ denote the number of tests a given group of patients can undergo. Note that $X$ can only ever be $1$ or $11$, the probabilities of which are given by:
+\begin{align*}
+    P(X=1)&=(1-0.1)^{10}=0.9^{10}\\
+    P(X=10)&=1-P(X=1)=1-0.9^{10}
+\end{align*}
+
+Thus, the expected number of trials is given by the following weighted sum:
+\begin{align*}
+    E[X]&=P(X=1)+11P(X=11)\\
+    &=0.9^{10}+11(1-0.9^{10})\\
+    &=11-10\cdot0.9^{10}=7.513215599
+\end{align*}
+\pagebreak
+
+\begin{center}
+    \Large{\textbf{Part B}}
+\end{center}
+Prove, or give a counterexample of, the following statements:
+\bigskip
+
+\noindent\textbf{Part a:} If $E$ and $F$ are independent, so are $E^\complement$ and $F^\complement$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider any two independent events $E$ and $F$, and consider the following chain of equalities:
+\begin{align*}
+    P(E^\complement F^\complement)&=1-P(E\cup F)\tag{def. of complement}\\
+    &=1-P(E)-P(F)+P(EF)\tag{inclusion-exclusion $n=2$}\\
+    &=1-P(E)-P(F)+P(E)P(F)\tag{$E$ and $F$ are independent}\\
+    &=(1-P(E))(1-P(F))\tag{algebra}\\
+    &=P(E^\complement)P(F^\complement)\tag{def. of complement}
+\end{align*}
+
+And so, by the definition of independence, $E^\complement$ and $F^\complement$ are independent.
+\bigskip
+
+\noindent\textbf{Part b:} If $E$ and $F$ are independent, then they are independent conditional to any event $G$. That is to say:
+
+\begin{equation*}
+    P(EF|G)=P(E|G)P(F|G)
+\end{equation*}
+
+\noindent\textbf{Solution:} This theorem is false. Consider the sample space of flipping a coin twice in a row:
+
+\begin{equation*}
+    \Omega=\{HH,HT,TH,TT\}
+\end{equation*}
+
+Where each of the 4 outcomes are equally likely. Now let $E$ be the event that the first flip is a heads, $F$ be the event that the second flip is a heads, and $G$ be the event that the flips are the same:
+
+\begin{align*}
+    E&=\{HH,HT\}\\
+    F&=\{HH,TH\}\\
+    G&=\{HH,TT\}\\
+    EF=EG=FG=EFG&=\{HH\}
+\end{align*}
+
+Note that $E$ and $F$ are independent:
+\begin{align*}
+    P(EF)&=\frac{|EF|}{|\Omega|}\tag{discrete uniform distribution}\\
+    &=\frac{1}{4}\\
+    &=\frac{2}{4}\cdot\frac{2}{4}\tag{arithmetic}\\
+    &=\frac{|E|}{|\Omega|}\frac{|F|}{|\Omega|}\\
+    &=P(E)P(F)\tag{discrete uniform distribution}
+\end{align*}
+
+Yet, we have the following conditional probabilities:
+\begin{gather*}
+    P(EF|G)=\frac{|EFG|}{|G|}=\frac{1}{2}\\
+    P(E|G)P(F|G)=\frac{|EG|}{|G|}\cdot\frac{|FG|}{|G|}=\frac{1}{2}\cdot\frac{1}{2}=\frac{1}{4}\\
+\end{gather*}
+
+And thus $E$ conditioned on $G$ is not independent of $F$ conditioned on $G$ in general:
+\begin{equation*}
+    P(EF|G)\not=P(E|G)P(F|G)
+\end{equation*}
+
+\noindent\textbf{Part c:} If $E$ and $F$ are independent conditional to the event $G$, just as in part b, then:
+
+\begin{equation*}
+    P(G|EF)=\frac{P(F|G)P(G|E)}{P(F|G)P(G|E)+P(F|G^\complement)P(G^\complement|E)}
+\end{equation*}
+\medskip
+
+\noindent\textbf{Solution:} Consider the sample space of rolling a fair die:
+
+\begin{equation*}
+    \Omega=\{1,2,3,4,5,6\}
+\end{equation*}
+
+And consider the following events:
+\begin{align*}
+    E&=\{1,2,5\} & G&=\{1,2,3,4\} & G^\complement&=\{5,6\}\\
+    F&=\{2,3,6\} & EG&=\{1,2\} & EG^\complement&=\{5\}\\
+    EFG=EF&=\{2\} & FG&=\{2,3\} & FG^\complement&=\{6\}
+\end{align*}
+
+Now note the following conditional probabilities
+
+\begin{align*}
+    P(G|EF)&=\frac{|EFG|}{|EF|}=\frac{2}{2}=1\\
+    P(F|G)&=\frac{|FG|}{|G|}=\frac{2}{4}=\frac{1}{2}\\
+    P(G|E)&=\frac{|EG|}{|E|}=\frac{2}{3}\\
+    P(F|G^\complement)&=\frac{|FG^\complement|}{|G^\complement|}=\frac{1}{2}\\
+    P(G^\complement|E)&=\frac{|EG^\complement|}{|E|}=\frac{1}{3}
+\end{align*}
+
+Plugging these into the theorem we have:
+
+\begin{equation*}
+    1\not=\frac{\frac{1}{2}\cdot\frac{2}{3}}{\frac{1}{2}\cdot\frac{2}{3}+\frac{1}{2}\cdot\frac{1}{3}}=\frac{2}{3}
+\end{equation*}
+
+And thus, as $1\not = \frac{2}{3}$, the identity does not hold under the given assumption.
+\bigskip
+
+\textit{As a side note, this identity holds iff both the following conditions do:}
+\begin{gather*}
+    P(EF|G)=P(E|G)P(F|G)\\
+    P(EF|G^\complement)=P(E|G^\complement)P(F|G^\complement)
+\end{gather*}
+
+\textit{Rather than just the first, as the problem claimed.}
+\end{document}

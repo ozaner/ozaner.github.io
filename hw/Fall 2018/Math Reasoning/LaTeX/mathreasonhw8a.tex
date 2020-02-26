@@ -1,0 +1,223 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 8a}
+\author{Ozaner Hansha}
+\date{November 7, 2018}
+\maketitle
+
+\section*{Problem 1}
+Consider the partial order $\le_A$ on the set $A$ and let $X$ be a nonempty subset of $A$.
+\subsection*{Part a}
+\textbf{Problem:} Prove that $X$ has at most one minimum element.
+\\\\
+\textbf{Solution:} Recall the definition of a minimum element $m$ is:
+$$(\exists m\in X,\forall x\in X)\ m\le_Ax$$
+We can prove the proposition in 3 cases.
+
+\subsubsection*{Case 1: $0$ minimums}
+Consider the following choice of $A$ and $\le_A$:
+\begin{gather*}
+  A=\{1,2\}\\
+  \operatorname{graph}(\le_A)=\{(1,1),(2,2)\}
+\end{gather*}
+This is indeed a valid partial order. It is clearly reflexive and anti-symmetric, and is vacuously transitive. Notice that there is no single element that is less than every other because $1\not\le_A 2$ and $2\not\le_A 1$. This mean that the set of minimums here is empty (i.e. 0 minimums). And so it is possible for posets to have no minimums.
+
+\subsubsection*{Case 2: $1$ minimum}
+Consider the following choice of $A$ and $\le_A$:
+\begin{gather*}
+  A=\{1,2\}\\
+  \operatorname{graph}(\le_A)=\{(1,1),(2,2),(1,2)\}
+\end{gather*}
+This is indeed a valid partial order. It is clearly reflexive, anti-symmetric, transitive. Notice that there is indeed an element that is less than every other: $1\le_A 1$ and $1\le_A 2$. And so there exists a minimum. This minimum is unique because the only other element $2$ is not less than $1$. And so it is possible for posets to have 1 minimum.
+
+\subsubsection*{Case 3: $n$ minimums}
+Now we will show that it is impossible for a poset to have any more than 1 minimum. We can prove this by contradiction. Assume there exists 2 distinct minimums $m_1,m_2\in X$. Note that:
+\begin{align*}
+  (\forall x\in X)\ m_1\le_A x\tag{def. of minimum}\\
+  m_2\in X\tag{given}\\
+  m_1\le_A m_2
+\end{align*}
+
+As stated, the above is not problematic. However, notice we can switch $m_1$ and $m_2$ to arrive at a similar statement:
+\begin{align*}
+  (\forall x\in X)\ m_2\le_A x\tag{def. of minimum}\\
+  m_1\in X\tag{given}\\
+  m_2\le_A m_1
+\end{align*}
+
+And so we are left with the two statements:
+\begin{align*}
+  m_1\le_A m_2\\
+  m_2\le_A m_1
+\end{align*}
+
+And by the anti-symmetric property of partial orders, $m_1=m_2$ which contradicts our original assumption. Thus it is impossible for a partial order to have 2 minimums. This bars the possibility of a poset with $n>1$ minimums. This leaves us with the conclusion that any subset of $A$ can have at most 1 minimum element.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that if $X$ has a minimum, then it is the unique minimal element of $X$.
+\\\\
+\textbf{Solution:} If a particular element $m\in X$ is a minimum then the following is true by definition:
+$$(\forall x\in X)\ m\le_A x$$
+
+We can show that this is a minimal element by noting for all $x\in X$:
+\begin{align*}
+  m\le_A x&\implies \neg(x\le_A m)\vee (m=x)\tag{anti-symmetry}\\
+  &\equiv \neg(x<_Am\vee x=m)\vee (m=x)\tag{def. of partial order}\\
+  &\equiv \neg(x<_Am)\vee (m=x)\\
+  &\equiv \neg(x<_Am)\tag{def. of a minimal element}\\
+\end{align*}
+
+Line 1 is true because of anti-symmetry. Line 2 just splits up the partial order into a strict partial order or equality. Line 3 is because $x=m$ and $x<_Am$ cannot both be true and there is already a $m=x$ part of the disjunction. Line 4 is because $(m=x)\implies \neg(x<_Am)$.
+
+And so every minimum is a minimal element. This minimal element $m$ is unique because if there was another minimal element $m_2$ then for all $x\in X$:
+\begin{align*}
+  \neg(x<_Am)\tag{$m$ is minimal}\\
+  \neg(x<_Am_2)\tag{$m_2$ is minimal}\\
+  m\le_Ax\tag{$m$ is a minimum}\\
+  m_2\in X\\
+  m\le_A m_2
+\end{align*}
+
+The last statement is clearly inconsistent with the claim that $m_2$ is a minimal element. Thus there is 1 and only 1 minimal element if there is a minimum.
+
+\section*{Problem 2}
+Consider the set $A\equiv\mathbb R\cup\{i\}$. Let $aRb$ denote the following relation on $A$:
+$$aRb\equiv (a,b\in\mathbb R\wedge a\le b)\vee (a=b=i)$$
+
+\subsection*{Part a}
+\textbf{Problem:} Prove that $R$ is a partial order.
+\\\\
+\textbf{Solution:} This is equivalent to proving its reflexivity, anti-symmetry, and transitivity. Before we prove those, note that each one has 3 cases: considering only real elements, considering only $i$, and considering a mix of the two. Since $\neg aRi$ and $\neg iRa$ for any $a\in\mathbb R$ (the definition of $R$ doesn't deal with these cases) we can rule out the third case. Also note that the real case will use $\le$ instead of $R$ and the imaginary case will use $=$ instead of $R$ as they are equivalent in their own individual cases.
+
+\subsubsection*{Reflexivity}
+In the real valued case, it's clear that the relation is reflexive. This is a consequence of the reflexivity of the normal ordering of the reals $a\le a$. And because $i=i$, the imaginary case checks out as well.
+
+\subsubsection*{Anti-symmetry}
+Again for the real case, this is just a consequence of the anti-symmetry of the normal ordering of the reals:
+$$a\le b\wedge b\le a\rightarrow a=b$$
+
+The imaginary case also checks out as
+$$i=i\wedge i=i\rightarrow i=i$$
+
+is certainly true, since the consequent is always true.
+
+\subsubsection*{Transitivity}
+Once more for the real case, transitivity is a consequence of the transitivity of the normal ordering of the reals:
+$$a\le b\wedge b\le c\rightarrow a\le c$$
+
+The imaginary case again checks out as
+$$i=i\wedge i=i\rightarrow i=i$$
+
+is certainly true, since the consequent is always true.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that $A$ has a unique minimal element but no minimum element.
+\\\\
+\textbf{Solution:} $A$ indeed has a unique minimal element, namely $i$. We can only consider $i$ in relation to itself since it is not related to any of the real elements. Thus $iRi\equiv i=i$ is enough to show that it is indeed minimal.
+
+However, note that this is the unique minimal element. We have shown above that it is the minimal element of the imaginary case, but now we'll who that the real case has no minimal element. Imagine there indeed was a minimal element $m\in\mathbb R$. It would follow that:
+\begin{align*}
+  &(\forall x\in\mathbb R)\ \neg(x\le m)\tag{def. of minimal}\\
+  &(\forall x\in\mathbb R)\ \neg(x\le m)\iff(m\le x) \tag{total ordering of $\mathbb R$}\\
+  &(\forall x\in\mathbb R)\ (m\le x)\\
+  &m-1\in\mathbb R\tag{closure of subtraction under $\mathbb R$}\\
+  &m\le m-1\\
+  &1\le 0
+\end{align*}
+
+\textit{The total ordering equivalence is justified in problem 3.}
+\\
+
+With the conclusion being plainly false, our assumption that there was a minimal element is false as well. Thus there is only one minimal element in $X$.
+
+All minimums are minimal elements and in this case we only have 1. But because $\neg iR3$ it follows that $i$ can't be a minimum since there is at least one element in $A$ that it is not related to. Thus there are no minimums in $A$.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that if $X$ is a nonempty subset of a totally ordered set $A$, then an element $x\in X$ is minimal iff it is the minimum.
+\\\\
+\textbf{Solution:} We have already proved that all minimums are unique minimal elements. Now we just need to prove the converse. This is quite straightforward. First note that (for all $x\in X$) because $\neg(x<_Am)$ then either $m<x$ or $m=x$. This is a direct consequence of $A$ being totally ordered and the asymmetry of the strict partial order. Those two statements are equivalent to $m\le_A x$ which is the definition of a minimum, and we are done.
+
+\section*{Problem 4}
+Consider the relation $R$ on the set $\mathbb Z_{>0}\times\mathbb Z_{>0}$:
+$$(a,b)R(b,c)\iff ad=bc$$
+\subsection*{Part a}
+\textbf{Problem:} Prove that $R$ is an equivalence relation.
+\\\\
+\textbf{Solution:} This is equivalent to proving its reflexivity, symmetry, and transitivity. First note that, because $a,b,c,d\not=0$, the above relation is equivalent to the following:
+$$(a,b)R(c,d)\iff ad=bc\iff \frac{a}{b}=\frac{c}{d}$$
+
+\subsubsection*{Reflexivity}
+The relation is clearly reflexive because for any pair $(a,b)$:
+$$\frac{a}{b}=\frac{a}{b}$$
+Due to the reflexivity of equality.
+
+\subsubsection*{Symmetry}
+The relation is clearly symmetric because for any two pairs $(a,b)$ and $(c,d)$
+$$\frac{a}{b}=\frac{c}{d}\implies\frac{c}{d}=\frac{a}{b}$$
+Due to the symmetry of equality.
+
+\subsubsection*{Transitivity}
+The relation is clearly transitive because for any three pairs $(a,b),(c,d)$ and $(e,f)$
+$$\left(\frac{a}{b}=\frac{c}{d}\right)\wedge\left(\frac{c}{d}=\frac{e}{f}\right)\implies\frac{a}{b}=\frac{e}{f}$$
+Due to the transitivity of equality.
+
+\subsection*{Part b}
+\textbf{Problem:} Give a characterization of the equivalence classes of $R$, and prove it is valid.
+\\\\
+\textbf{Solution:} We already gave the characterization above as it was easier to prove things with. It is easily proven by some simple arithmetic (divide both sides by $bd$). Indeed the equivalence relation given above is characterized by the ratio of $a$ to $b$. Pairs whose ratios are equivalent are in the same equivalence class. And so each equivalence class has associated some unique positive rational number to it and vice versa.
+
+\section*{Problem 5}
+Consider a relation $S$ on $\mathbb Z_{>0}$:
+$$xRy\equiv (\exists a,b\in\mathbb Z_{>0})\ xa^2=yb^2$$
+
+\subsection*{Part a}
+\textbf{Problem:} Prove that $S$ is an equivalence relation.
+\\\\
+\textbf{Solution:} This is equivalent to proving its reflexivity, symmetry, and transitivity. Like before we can give an equivalent expression to make proving things easier:
+$$(\exists a,b\in\mathbb Z_{>0})\ \ xRy\iff xa^2=yb^2\iff \left(\frac{a}{b}\right)^2x=y$$
+\subsubsection*{Reflexivity}
+Reflexivity is obvious since for any $x$:
+$$\left(\frac{1}{1}\right)^2x=x$$
+Because 1 is the multiplicative identity.
+
+\subsubsection*{Symmetry}
+Symmetry comes from the following for any $x$ and $y$:
+$$\left(\frac{a}{b}\right)^2x=y\implies\left(\frac{b}{a}\right)^2y=x$$
+Because the inverse of a squared rational is also a squared rational.
+
+\subsubsection*{Transitivity}
+Transitivity comes from the following for any $x,y$ and $z$:
+$$\left(\frac{a}{b}\right)^2x=y\wedge \left(\frac{c}{d}\right)^2y=z\implies\left(\frac{ac}{bd}\right)^2x=z$$
+Because the product of two squared rationals is also a squared rational.
+
+\subsection*{Part b}
+\textbf{Problem:} Give a characterization of the equivalence classes of $S$, and prove it is valid.
+\\\\
+\textbf{Solution:} The above equivalence relation relates two positive integers if they are equal up to a squared rational proportionality constant. And so each equivalence class contains the positive integers that differ (multiplicatively) by such a constant.
+
+Another way to look at this is by noting that each value has some unique factorization that makes use of only a finite list of primes that comprise $a,b,x$ and $y$:
+\begin{gather*}
+  x=p_1^{x_1}p_2^{x_2}\cdots p_n^{x_n}\\
+  y=p_1^{y_1}p_2^{y_2}\cdots p_n^{y_n}\\
+  a=p_1^{a_1}p_2^{a_2}\cdots p_n^{a_n}\\
+  b=p_1^{b_1}p_2^{b_2}\cdots p_n^{b_n}
+\end{gather*}
+Where $a_i,b_i,x_i,y_i$ are lists of nonnegative integers. Also, notice that when we square $a$ and $b$ we get:
+\begin{gather*}
+  a^2=p_1^{2a_1}p_2^{2a_2}\cdots p_n^{2a_n}\\
+  b^2=p_1^{2b_1}p_2^{2b_2}\cdots p_n^{2b_n}
+\end{gather*}
+
+Multiplying $x$ by $a^2$ would simply add the powers of their prime factorization, same for $y$ and $b^2$:
+\begin{gather*}
+  a^2x=p_1^{2a_1+x_1}p_2^{2a_2+x_2}\cdots p_n^{2a_n+x_n}\\
+  b^2y=p_1^{2b_1+y_n}p_2^{2b_2+y_n}\cdots p_n^{2b_n+y_n}
+\end{gather*}
+
+Thus, this relation is then equivalent to stating that $2a_i+x_i=2b_i+y_i$ for some $a,b\in\mathbb Z_{>0}$.
+
+\end{document}

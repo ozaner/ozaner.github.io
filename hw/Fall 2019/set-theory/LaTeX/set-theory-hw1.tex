@@ -1,0 +1,296 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Set Theory HW \#1}
+\author{Ozaner Hansha}
+\date{September 12, 2019}
+\maketitle
+
+% Set Theory Class notation
+% \newcommand{\pset}[1]{\mathfrak P#1}
+% \newcommand{\and}{\,\&\,}
+% \newcommand{\OR}{\text{ or }}
+
+% My Notation
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\and}{\wedge}
+\newcommand{\OR}{\vee}
+
+\section*{Problem 1}
+Exercises 1,2,3,4 from pages 6-7 in the textbook.
+\bigskip
+
+\noindent\textbf{Exercise 1:} Which of the following statements are true when $\in$ is inserted in the blank? Which are true when $\subseteq$ is inserted?
+
+\begin{enumerate}[label=(\alph*)]
+    \item $\{\varnothing\}\underline{\hspace{3mm}}\{\varnothing,\{\varnothing\}\}$
+    \item $\{\varnothing\}\underline{\hspace{3mm}}\{\varnothing,\{\{\varnothing\}\}\}$
+    \item $\{\{\varnothing\}\}\underline{\hspace{3mm}}\{\varnothing,\{\varnothing\}\}$
+    \item $\{\{\varnothing\}\}\underline{\hspace{3mm}}\{\varnothing,\{\{\varnothing\}\}\}$
+    \item $\{\{\varnothing\}\}\underline{\hspace{3mm}}\{\varnothing,\{\varnothing,\{\varnothing\}\}\}$
+\end{enumerate}
+
+\noindent\textbf{Solution:} Statements (a) and (d) are true when $\in$ is inserted in the blank. Statements (a), (b) and (c) are true when $\subseteq$ is inserted.
+\bigskip
+
+\noindent\textbf{Exercise 2:} Show that none of the three sets $\varnothing, \{\varnothing\},$ and $\{\{\varnothing\}\}$ are equal to any other.
+\bigskip
+
+\noindent\textbf{Solution:} We have 3 statements to disprove. Let's assume $\varnothing=\{\varnothing\}$. The axiom of extensionality tells us that:
+
+$$\forall x(x\in\varnothing\iff x\in\{\varnothing\})$$
+
+However, note that for the particular choice of $x=\varnothing$ we have: 
+
+$$\underbrace{\varnothing\in\varnothing}_{F}\iff \underbrace{\varnothing\in\{\varnothing\}}_{T}$$
+
+With the LHS being false because $\varnothing$ has no elements by definition and the RHS being clear. This is a contradiction and so our initial assumption is false and $\varnothing\not=\{\varnothing\}$.
+\bigskip
+
+For the next case, we'll assume $\varnothing=\{\{\varnothing\}\}$. The axiom of extensionality tells us that:
+
+$$\forall x(x\in\varnothing\iff x\in\{\{\varnothing\}\})$$
+
+However, note that for the particular choice of $x=\{\varnothing\}$ we have: 
+
+$$\underbrace{\{\varnothing\}\in\varnothing}_{F}\iff \underbrace{\{\varnothing\}\in\{\{\varnothing\}\}}_{T}$$
+
+The LHS being false because $\varnothing$ has no elements and the RHS being clear. This is a contradiction and so our initial assumption is false and $\varnothing\not=\{\{\varnothing\}\}$.
+\bigskip
+
+For the last case, we assume $\{\varnothing\}=\{\{\varnothing\}\}$. The axiom of extensionality tells us that:
+
+$$\forall x(x\in\{\varnothing\}\iff x\in\{\{\varnothing\}\})$$
+
+However, note that for the particular choice of $x=\{\varnothing\}$ we have: 
+
+$$\underbrace{\{\varnothing\}\in\{\varnothing\}}_{F}\iff \underbrace{\{\varnothing\}\in\{\{\varnothing\}\}}_{T}$$
+
+The LHS being false because $\{\varnothing\}$ only contaians $\varnothing$ and not it's singleton and the RHS being clear. This is a contradiction and so our initial assumption is false and $\{\varnothing\}\not=\{\{\varnothing\}\}$.
+\bigskip
+
+\noindent\textbf{Exercise 3:} Show that if $B\subseteq C$, then $\pset B\subseteq\pset C$.
+\bigskip
+
+\noindent\textbf{Solution:} Assume that $B\subseteq C$. Now note that:
+
+\begin{equation}
+    \forall x(x\in\pset B\iff x\subseteq B)\tag{def. of power set}
+\end{equation}
+
+And because of our assumption that $B\subseteq C$ and the transitivity of subset, we have:
+
+\begin{align*}
+    \forall x(x\in\pset B\iff x\subseteq B\subseteq C)&\implies\forall x(x\in\pset B\implies x\subseteq C)\tag{transitivity of subset}\\
+    &\iff\forall x(x\in\pset B\implies x\in\pset C)\tag{def. of power set}\\
+    &\iff\pset B\subseteq\pset C\tag{def. subset}
+\end{align*}
+\bigskip
+\noindent\textbf{Exercise 4:} Assume $x,y\in B$. Show that $\{\{x\},\{x,y\}\}\in\pset{\pset B}$
+\bigskip
+
+\noindent\textbf{Solution:} Since we are assuming $x,y\in B$, we have the following chain of implications:
+
+\begin{align*}
+    &\phantom{\implies}\underbrace{\{x\}\subseteq B}_{x\in\{x\}\rightarrow x\in B} \and\underbrace{\{x,y\}\subseteq B}_{\substack{x\in\{x,y\}\rightarrow x\in B\\y\in\{x,y\}\rightarrow y\in B}}\tag{def. of subset}\\
+    &\implies \{x\}\in\pset B\and\{x,y\}\in\pset B\tag{def. of power set}\\
+    &\implies \underbrace{\{\{x\},\{x,y\}\}\subseteq \pset B}_{\substack{\{x\}\in\{\{x\},\{x,y\}\}\rightarrow \{x\}\in\pset B\\\{x,y\}\in\{\{x\},\{x,y\}\}\rightarrow \{x,y\}\in\pset B}}\tag{def. of subset}\\
+    &\implies\{\{x\},\{x,y\}\}\in\pset{\pset B}\tag{def. of power set}
+\end{align*}
+
+\section*{Problem 2}
+Exercises 5,7 from page 9 in the textbook. Where $V_\alpha$ below refers to the rank $\alpha$ of the von Neumann hierarchy.
+\bigskip
+
+\noindent\textbf{Exercise 5:} Define the rank of a set $c$ to be the least $\alpha$ such that $c\subseteq V_\alpha$. Compute the rank of $\{\{\varnothing\}\}$ and $\{\varnothing, \{\varnothing\}, \{\varnothing, \{\varnothing\}\}\}$.
+\bigskip
+
+\noindent\textbf{Solution:} The rank of $\{\{\varnothing\}\}$ is $2$ as $V_2=\pset{V_1}=\pset \varnothing$ is the first rank in which it shows up.
+
+
+The highest ranked element of $\{\varnothing, \{\varnothing\}, \{\varnothing, \{\varnothing\}\}\}$ is $\{\varnothing, \{\varnothing\}\}$, which first appears in rank $3$. And because $\{\varnothing, \{\varnothing\}, \{\varnothing, \{\varnothing\}\}\}$ contains this rank $3$ element, it appears in $V_4=\pset{V_3}$ and so is rank $4$.
+\bigskip
+
+\noindent\textbf{Exercise 7:} List all the members of $V_3$ and $V_4$.
+\bigskip
+
+\noindent\textbf{Solution:} $V_3$ and $V_4$ are given by:
+\begin{align*}
+    V_3=\{&\varnothing, \{\varnothing\},\{\{\varnothing\}\}, \{\varnothing, \{\varnothing\}\}\}\\
+    V_4=\{&\varnothing, \{\varnothing\},\{\{\varnothing\}\}, \{\varnothing, \{\varnothing\}\}\\
+    &\{\{\{\varnothing\}\}\},\{\varnothing,\{\{\varnothing\}\}\},\\
+    &\{\{\varnothing\},\{\{\varnothing\}\}\},\{\varnothing,\{\varnothing\},\{\{\varnothing\}\}\},\\
+    &\{\{\varnothing, \{\varnothing\}\}\},\{\varnothing,\{\varnothing, \{\varnothing\}\}\},\\
+    &\{\{\varnothing\},\{\varnothing,\{\varnothing\}\}\},\{\varnothing,\{\varnothing\},\{\varnothing,\{\varnothing\}\}\},\\
+    &\{\{\{\varnothing\}\}, \{\varnothing,\{\varnothing\}\}\}, \{\varnothing,\{\{\varnothing\}\}, \{\varnothing,\{\varnothing\}\}\}\\
+    &\{\{\varnothing\},\{\{\varnothing\}\}, \{\varnothing,\{\varnothing\}\}\},\{\varnothing,\{\varnothing\},\{\{\varnothing\}\}, \{\varnothing,\{\varnothing\}\}\}\\
+    \}&
+\end{align*}
+
+\section*{Problem 3}
+A set $a$ is transitive if every member of $a$ is a subset of $a$. In other words $a$ is transitive iff:
+
+$$\forall u(u\in a\implies u\subseteq a)$$
+
+\noindent\textbf{Part i:} Prove that $\varnothing$ is transitive.
+\bigskip
+
+\noindent\textbf{Solution:} The empty set is vacuously a transitive set:
+
+$$\forall u(u\in \varnothing\implies u\subseteq \varnothing)$$
+
+The condition that $u\in \varnothing\implies u\subseteq \varnothing$ is always satisfied as the antecedent is false for any $u$, because the empty set has no elements by definition.
+\bigskip
+
+\noindent\textbf{Part ii:} Prove that the union of two transitive sets is transitive. That is to say prove that:
+
+\begin{align*}
+    \forall a\forall b\big[\big(\forall u(u\in a\implies u\subseteq a)\and\forall u(u\in b\implies u\subseteq b)\big)\\
+    \implies\forall u(u\in a\cup b\implies u\subseteq a\cup b)\big]
+\end{align*}
+
+\noindent\textbf{Solution:} Let $a$ and $b$ be transitive sets. Now let $u\in a\cup b$. This implies that:
+
+\begin{equation}
+    u\in a \OR u\in b\tag{def. of union}
+\end{equation}
+
+Also, since $a$ and $b$ are transitive, we have:
+
+\begin{gather*}
+    u\in a\implies u\subseteq a\tag{def. of transitive}\\
+    u\in b\implies u\subseteq b\tag{def. of transitive}
+\end{gather*}
+
+So we have by the constructive dilemma, i.e.:
+
+$$((p\implies q)\and(r\implies s)\and(p\OR r))\implies (q\OR s)$$
+
+the following:
+
+\begin{center}
+\begin{tabular}{c@{\,}l@{}} 
+    & $u\in a\implies u\subseteq a$ \\
+    & $u\in b\implies u\subseteq b$ \\
+    & $u\in a \OR u\in b$ \\
+    \cline{2-2}
+$\therefore$         & $u\subseteq a\OR u\subseteq b$ \\
+\end{tabular}
+\end{center}
+
+% Now, since $a\subseteq a\cup b$, if $u\subseteq a$ we have by the transitivity of subset that $u\subseteq a\cup b$. Similarly, since $b\subseteq a\cup b$, if $u\subseteq b$ we also have by the transitivity of subset that $u\subseteq a\cup b$:
+% \bigskip
+
+Now note that, by the transitivity of the subset, we have:
+
+\begin{center}
+    \begin{tabular}{c@{\,}l@{}} 
+        & $u\subseteq a$ \\
+        & $a\subseteq a\cup b$ \\
+        \cline{2-2}
+    $\therefore$         & $u\subseteq a\cup b$
+    \end{tabular}
+\end{center}
+
+And since $a\subseteq a\cup b$ is true for any $a$ and $b$ we arrive at the following implication:
+
+$$u\subseteq a\implies u\subseteq a\cup b$$
+
+And similarly we have:
+
+\begin{center}
+    \begin{tabular}{c@{\,}l@{}} 
+        & $u\subseteq b$ \\
+        & $b\subseteq a\cup b$ \\
+        \cline{2-2}
+    $\therefore$         & $u\subseteq a\cup b$
+    \end{tabular}
+\end{center}
+
+And again, since $b\subseteq a\cup b$ is true for any $a$ and $b$ we arrive at the following implication:
+
+$$u\subseteq b\implies u\subseteq a\cup b$$
+
+And so via the constructive dilemma we have:
+
+\begin{center}
+    \begin{tabular}{c@{\,}l@{}} 
+        & $u\subseteq a\implies u\subseteq a\cup b$ \\
+        & $u\subseteq b\implies u\subseteq a\cup b$ \\
+        & $u\subseteq a\OR u\subseteq b$ \\
+        \cline{2-2}
+    $\therefore$         & $u\subseteq a\cup b$ \\
+    \end{tabular}
+\end{center}
+
+And so we are done. We have shown that for any transitive sets $a$ and $b$, the following holds: 
+
+$$\forall u(u\in a\cup b\implies u\subseteq a\cup b)$$
+
+which is equivalent to the statement that $a\cup b$ is a transitive set.
+\bigskip
+
+\noindent\textbf{Part iii:} Prove that if $a$ is a transitive set then $a\cup\{a\}$ is transitive. That is, for transitive $a$, prove the following:
+
+$$\forall u(u\in a\cup\{a\}\implies u\subseteq a\cup\{a\})$$
+\bigskip
+
+\noindent\textbf{Solution:} Let $a$ be a transitive set and let $u$ be any set. We have the following:
+
+\begin{equation}
+    u\in a \cup\{a\}\iff u\in a\OR u\in\{a\}\tag{def. of union}
+\end{equation}
+
+As such, we can prove that in both cases $u\subseteq a\cup \{a\}$. For case 1 we will assume $u\in a$:
+
+Because $a$ is transitive and because $a\subseteq a\cup\{a\}$ for any $a$, we have:
+
+\begin{align*}
+    u\in a&\implies u\subseteq a\tag{$a$ is transitive}\\
+    &\implies u\subseteq a\cup\{a\}\tag{transitivity of subset}
+\end{align*}
+
+Now we need to prove the case where $u\in\{a\}$. There is only one element to check here, $u=a$:
+
+$$\underbrace{a\in\{a\}}_{T}\implies\underbrace{a\subseteq a\cup \{a\}}_{T}$$
+
+This implication is certainly true and so we have the following via the consecutive dilemma:
+
+\begin{center}
+    \begin{tabular}{c@{\,}l@{}} 
+        & $u\in a\implies u\subseteq a\cup \{a\}$ \\
+        & $u\in \{a\}\implies u\subseteq a\cup \{a\}$ \\
+        & $u\in a\OR u\in \{a\}$ \\
+        \cline{2-2}
+    $\therefore$         & $u\subseteq a\cup \{a\}$ \\
+    \end{tabular}
+\end{center}
+
+And so by assuming the antecedent $u\in a\cup\{a\}$ we proved the consequent and thus $a\cup \{a\}$ is a transitive set for any transitive set $a$.
+\bigskip
+
+\noindent\textbf{Part iv:} Prove that $\pset a$ of a transitive set $a$ is transitive. That is to say prove:
+
+$$\forall a\big(\forall u(u\in a\implies u\subseteq a)\implies\forall u(u\in\pset a\implies u\subseteq\pset a)\big)$$
+
+\noindent\textbf{Solution:} Let $b\in\pset a$, this gives us:
+
+\begin{equation}
+b\in\pset a\implies b\subseteq a\tag{def. of power set}    
+\end{equation}
+
+Now for any $x$ we have the following chain of implications:
+\begin{align*}
+x\in b&\implies x\in a\tag{def. of subset}\\
+&\implies x\subseteq a\tag{$a$ is transitive}\\
+&\implies x\in\pset a\tag{def. of power set}
+\end{align*}
+
+And so we are done. We have shown that for any set $b\in\pset a$, any one of its elements $x$ is a subset of $\pset a$.
+
+\end{document}

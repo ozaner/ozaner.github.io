@@ -1,0 +1,184 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Set Theory HW \#4}
+\author{Ozaner Hansha}
+\date{October 3, 2019}
+\maketitle
+
+% Set Theory Class notation
+% \newcommand{\pset}[1]{\mathfrak P#1}
+% \newcommand{\psetp}[1]{\mathfrak P(#1)}
+% \renewcommand{\wedge}{\,\,\&\,\,}
+% \renewcommand{\vee}{\text{ or }}
+% \newcommand{\pair}[2]{\langle#1,#2\rangle}
+% \newcommand{\triplet}[3]{\langle#1,#2,#3\rangle}
+% \renewcommand{\setminus}{-}
+
+% My Notation
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\psetp}[1]{\mathcal P(#1)}
+\newcommand{\pair}[2]{(#1,#2)}
+\newcommand{\triplet}[3]{(#1,#2,#3)}
+
+The following problems are from pages 52-54 of the textbook.
+
+\section*{Exercise 11}
+\noindent\textbf{Problem:} Prove the following version (for functions) of the extensionality principle: Assume that $F$ and $G$ are functions, dom $F=$ dom $G$, and $F(x)=G(x)$ for all $x$ in the common domain. Then $F=G$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary $x\in$ dom $F$, and now consider $\pair{x}{F(x)}$:
+
+\begin{align*}
+    &\pair{x}{F(x)}\in F\tag{def. of $F$}\\
+    \implies&\pair{x}{G(x)}\in F\tag{$F(x)=G(x)$ \& dom $F=$ dom $G$}\\
+    \implies&\pair{x}{G(x)}\in G\tag{def. of $G$}\\
+    \implies&\pair{x}{F(x)}\in G\tag{$F(x)=G(x)$ \& dom $F=$ dom $G$}\\
+\end{align*}
+
+And since all elements of $F$ are of the form $\pair{x}{F(x)}$ for some $x\in$ dom $F$, this proves that $F\subseteq G$. A symmetric argument (found by switching the $F$'s with the $G$'s) proves the other direction, giving us $F=G$.
+
+\section*{Exercise 13}
+\noindent\textbf{Problem:} Assume that $f$ and $g$ are functions with $f\subseteq g$ and dom $g\subseteq$ dom $f$. Show that $f=g$.
+\bigskip
+
+\noindent\textbf{Solution:} 
+
+\begin{align*}
+    x\in \text{dom } g&\implies \underbrace{x\in\text{dom} f}_{\text{dom }g\subseteq\text{dom } f}\wedge\underbrace{\pair{x}{g(x)}\in g}_{\text{def. of function}}\\
+    &\implies \pair{x}{f(x)}\in f\wedge\pair{x}{g(x)}\in g\tag{def. of funtion}\\
+    &\implies \pair{x}{f(x)}\in g\wedge\pair{x}{g(x)}\in g\tag{$f\subseteq g$}\\
+    &\implies f(x)=g(x)\tag{right-uniqueness of functions}\\
+\end{align*}
+
+And so we have that for all members of dom $g$, $f(x)=g(x)$. So we can say:
+\begin{align*}
+    x\in \text{dom } g&\implies x\in\text{dom }f\tag{subset}\\
+    &\implies \pair{x}{f(x)}\in f\tag{def. of function}\\
+    &\implies \pair{x}{g(x)}\in f\tag{previous result}\\
+\end{align*}
+
+And since every element of $g$ is of the form $\pair{x}{g(x)}$ where $x\in$ dom $g$, we have shown that $g\subseteq f$. This combined with the assumption that $f\subseteq g$ gives us $f=g$.
+
+\section*{Exercise 15}
+\noindent\textbf{Problem:} Let $A$ be a set of functions such that for any $f$ and $g$ in $A$, either $f\subseteq g$ or $g\subseteq f$. Show that $\bigcup A$ is a function.
+\bigskip
+
+\noindent\textbf{Solution:} We have:
+
+\begin{equation*}
+    \pair{x}{y_1},\pair{x}{y_2}\in\bigcup A\implies(\exists f,g\in A)\,\,\pair{x}{y_1}\in f\wedge\pair{x}{y_2}\in g
+\end{equation*}
+
+Now w.l.o.g, suppose $f\subseteq g$. This means that $(x,y_1)\in g$. And so we have $y_1=g(x)=y_2$, thus $\bigcup A$ is right-unique aka a function.
+
+\section*{Exercise 21}
+\noindent\textbf{Problem:} Show that $(R\circ S)\circ T=R\circ(S\circ T)$ for any sets $R,S$ and $T$.
+\bigskip
+
+\noindent\textbf{Solution:} We have the following:
+\begin{align*}
+    \pair{x}{y}\in(R\circ S)\circ T&\implies (\exists t)\,\, x(R\circ S)t\wedge tTy\\
+    &\implies (\exists t,s)\,\, xRs\wedge sSt\wedge tTy\\
+    &\implies (\exists s)\,\,xRs\wedge s(S\circ T)y\\
+    &\implies xR\circ(S\circ T)y\\
+    &\implies \pair{x}{y}\in R\circ(S\circ T)
+\end{align*}
+
+This is only one direction. The other direction follows a very similar argument. Putting both directions together we have $(R\circ S)\circ T=R\circ(S\circ T)$.
+
+\section*{Exercise 22}
+\noindent\textbf{Problem:} Show that the following are correct for any sets.
+\begin{enumerate}[label=\alph*)]
+    \item $A\subseteq B\implies F[\![A]\!]\subseteq F[\![B]\!]$
+    \item $(F\circ G)[\![A]\!]=F[\![G[\![A]\!]]\!]$
+    \item $Q\upharpoonright(A\cup B)=(Q\upharpoonright A)\cup(Q\upharpoonright B)$
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} we have the following:
+\begin{align}
+    y\in F[\![A]\!]&\implies (\exists x\in A)\,\,\pair{x}{y}\in F\tag{def. of image}\\
+    &\implies (\exists x\in B)\,\,\pair{x}{y}\in F\tag{assume $A\subseteq B$}\\
+    &\implies y\in F[\![B]\!]\tag{def. of image}
+\end{align}
+
+And so by the definition of subset we have $A\subseteq B\implies F[\![A]\!]\subseteq F[\![B]\!]$. For \textbf{b)} We have the following:
+\begin{align*}
+    y\in(F\circ G)[\![A]\!]&\implies(\exists x\in A)\,\,x(F\circ G)y\tag{def. of image}\\
+    &\implies(\exists t,\exists x\in A)\,\,xGt\wedge tFy\tag{def. of composition}\\
+    &\implies(\exists t)\,\,t\in G[\![A]\!]\wedge tFy\tag{def. of image}\\
+    &\implies y\in F[\![G[\![A]\!]]\!]\tag{def. of image}\\
+\end{align*}
+
+In the other direction we have:
+\begin{align*}
+    y\in F[\![G[\![A]\!]]\!]&\implies (\exists x\in G[\![A]\!])\,\,xFy\tag{def. of image}\\
+    &\implies (\exists z\in A)(\exists x\in G[\![A]\!])\,\,zGx\wedge xFy\tag{def. of image}\\
+    &\implies (\exists z\in A)\,\,z(G\circ F)y\tag{def. of composition}\\
+    &\implies (F\circ G)[\![A]\!]\tag{def. of image}\\
+\end{align*}
+
+Putting these two together we have $(F\circ G)[\![A]\!]=F[\![G[\![A]\!]]\!]$. And finally for \textbf{c)} we have the following:
+\begin{align*}
+    y\in Q\upharpoonright(A\cup B)&\iff(\exists x\in A\cup B)\,\,xQy\tag{def. of restriction}\\
+    &\iff(\exists x)\,\,(x\in A\vee x\in B)\wedge xQy\tag{def. of union}\\
+    &\iff y\in(Q\upharpoonright A) \vee y\in(Q\upharpoonright B)\tag{def. of restriction}\\
+    &\iff y\in(Q\upharpoonright A)\cup(Q\upharpoonright B)\tag{def. of union}
+\end{align*}
+
+And so by extensionality we have $Q\upharpoonright(A\cup B)=(Q\upharpoonright A)\cup(Q\upharpoonright B)$.
+
+\section*{Exercise 24}
+\noindent\textbf{Problem:} Show that for a function $F$:
+
+\begin{equation*}
+    F^{-1}[\![A]\!]=\{x\in\text{dom } F\mid F(x)\in A\}
+\end{equation*} 
+
+\noindent\textbf{Solution:} We have the following:
+\begin{align*}
+    x\in F^{-1}[\![A]\!]&\iff(\exists y\in A)\,\,\pair{y}{x}\in F^{-1}\tag{def. of image}\\
+    &\iff(\exists y\in A)\pair{x}{y}\in F\tag{def. of inverse}\\
+    &\iff(\exists y\in A)(x\in\text{dom } F)\wedge (y=F(x)\in A) 
+\end{align*}
+
+And so by extensionality we have $F^{-1}[\![A]\!]=\{x\in\text{dom } F\mid F(x)\in A\}$.
+
+\section*{Exercise 28}
+\noindent\textbf{Problem:} Assume that $f$ is a one-to-one function from $A$ into $B$, and that $G$ is the function with dom $G=\pset{A}$ defined by the equation $G(X)=f[\![X]\!]$. Show that $G$ is a bijective map from $\pset{A}$ to $\pset{B}$.
+\bigskip
+
+\noindent\textbf{Solution:} First we show surjectivity, consider an arbitrary $Y$:
+\begin{align*}
+    Y\in \pset{B}&\implies Y\subseteq B\tag{def. of powerset}\\
+    &\implies (\exists X\subseteq A)\,\,f[\![X]\!]=Y\tag{def. of bijective + image}\\
+    &\implies (\exists X\in\pset A)\,\,f[\![X]\!]=Y\tag{def. of powerset}\\
+    &\implies (\exists X\in\pset A)\,\,G(X)=Y\tag{def. of $G(X)$}
+\end{align*}
+
+% \begin{align*}
+%     X\in\pset{A}&\implies G(X)=f[\![X]\!]\tag{assumption}\\
+%     &\implies G(X)=\{y\in B\mid xfy\wedge x\in X\}\tag{def. of image}\\
+%     &\implies G(X)\subseteq B\tag{def. of subset}\\
+%     &\implies G(X)\in \pset{B}\tag{def. of powerset}\\
+% \end{align*}
+
+And so $G$ is surjective function from $\pset{A}$ to $\pset{B}$. Now we show injectivity. Consider two arbitrary sets $X,Y\in\pset{A}$:
+\begin{align*}
+    G(X)=G(Y)&\implies f[\![X]\!]=f[\![Y]\!]\tag{assumption}\\
+    &\implies (\forall x\in X)\,\,f(x)\in f[\![X]\!]\tag{$X\subseteq A=$ dom $f$}\\
+    &\implies (\forall x\in X)\,\,f(x)\in f[\![Y]\!]\tag{$f[\![X]\!]=f[\![Y]\!]$}\\
+    &\implies (\forall x\in X)(\exists y\in Y)\,\,\pair{y}{f(x)}\in f\wedge \pair{x}{f(x)}\in f\tag{def. of image}\\
+    &\implies (\forall x\in X)(\exists y\in Y)\,\,x=y\tag{injectivity of $f$}\\
+    &\implies (\forall x\in X)\,\,x\in Y\tag{$y\in Y$}\\
+    &\implies X\subseteq Y\tag{def. of subset}\\
+\end{align*}
+
+And so we have shown that if two sets $X,Y$ map to the same output, $X\subseteq Y$. A symmetric argument (switch the X and Y around) shows that $Y\subseteq X$ as well. And so we have that if $G(X)=G(Y)$ then $X=Y$, satisfying injectivity. This combined with the surjectivity shown earlier proves that $G$ is a one-to-one correspondence.
+\end{document}

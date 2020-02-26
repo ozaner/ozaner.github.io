@@ -1,0 +1,337 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#3}
+\author{Ozaner Hansha}
+\date{October 8, 2018}
+\maketitle
+
+\section*{Exercise 1}
+\textbf{Problem:} Consider the curve parameterized by:
+$$\mathbf x(t)=(1+2\cos t+2\sin t,1-2\cos t+\sin t,\cos t-2\sin t)$$
+Compute its $\mathbf T(t), \mathbf N(t), \mathbf B(t)$. Also compute its speed, curvature, and torsion denoted $v(t), \kappa(t),$ and $\tau(t)$ respectively.
+\\\\
+\textbf{Solution:} First we find the velocity (first derivative):
+
+$$\mathbf v(t)=(-2\sin t+2\cos t, 2\sin t+\cos t, -\sin t-2\cos t)$$
+
+The speed is simply the magnitude of $\mathbf v(t)$:
+\begin{align*}
+v(t)&=\|\mathbf v(t)\|\\
+&=\sqrt{\mathbf v(t)\cdot\mathbf v(t)}\\
+&=\sqrt{(-2\sin t+2\cos t)^2+(2\sin t+\cos t)^2+(-\sin t-2\cos t)^2}\\
+&=\sqrt{(4-8\sin t\cos t)+(1+4\sin t\cos t+3\sin^2 t)+(1+4\sin t\cos t+3\cos^2 t)}\\
+&=\sqrt{9}=3\\
+\end{align*}
+The tangent vector is just the normalized velocity:
+$$\mathbf T(t)=\frac{\mathbf v(t)}{v(t)}=\frac{1}{3}(-2\sin t+2\cos t, 2\sin t+\cos t, -\sin t-2\cos t)$$
+
+To calculate the binormal vector we first have to calculate the acceleration (second derivative) which will be perpendicular to the velocity curve, and thus the tangent curve:
+$$\mathbf a(t)=(-2\cos t-2\sin t,2\cos t-\sin t,-\cos t+2\sin t)$$
+
+Now we just have to take the normalized cross product of the velocity and acceleration:
+$$\mathbf B(t)=\frac{\mathbf v(t)\times\mathbf a(t)}{\|\mathbf v(t)\times\mathbf a(t)\|}=\frac{1}{3}(1,2,2)$$
+
+Because $\mathbf B(t)$ is a constant, $\mathbf B'(t)=0$ and thus $\tau(t)=0$. Now we compute the normal vector:
+$$\mathbf N(t)=\mathbf B(t)\times\mathbf T(t)=\frac{1}{3}(-2\sin t-2\cos t, -\sin t+2\cos t, 2\sin t-2\cos t)$$
+
+And finally we can compute the curvature by using quantities we have already calculated:
+$$\kappa(t)=\frac{\|\mathbf v(t)\times\mathbf a(t)\|}{(v(t))^3}=\frac{9}{27}=\frac{1}{3}$$
+
+\section*{Exercise 2}
+\textbf{Problem:} Consider the curve parameterized by:
+$$\mathbf x(t)=\left(2t+t^2,2t,t+t^2+\frac{t^3}{3}\right)$$
+Compute its $\mathbf T(t), \mathbf N(t), \mathbf B(t)$. Also compute its speed, curvature, and torsion denoted $v(t), \kappa(t),$ and $\tau(t)$ respectively.
+\\\\
+\textbf{Solution:} Find the velocity:
+$$\mathbf v(t)=(2t+2,2,t^2+2t+1)$$
+
+Now we find the speed:
+\begin{align*}
+v(t)&=\sqrt{(2t+2)^2+2^2+(t^2+2t+1)^2}\\
+&=\sqrt{4(t+1)^2+4+(t+1)^4}\\
+&=\sqrt{(t+1)^4+4(t+1)^2+4}\\
+&=\sqrt{((t+1)^2+2)^2}\\
+&=(t+1)^2+2\\
+\end{align*}
+
+Now the tangent vector:
+$$\mathbf T(t)=\frac{\mathbf v(t)}{v(t)}=\frac{1}{(t+1)^2+2}(2t+2,2,t^2+2t+1)$$
+
+Now the acceleration:
+$$\mathbf a(t)=(2,0,2t+2)$$
+
+Here's the binormal vector:
+$$\mathbf B(t)=\frac{\mathbf v(t)\times\mathbf a(t)}{\|\mathbf v(t)\times\mathbf a(t)\|}=\frac{1}{(t+1)^2+2}(2t+2,-t^2-2t-1,-2)$$
+
+Now we calculate the normal vector:
+$$\mathbf N(t)=\mathbf B(t)\times\mathbf T(t)=\frac{1}{(t+1)^2+2}(-t^2-2t+1,-2t-2,2t+2)$$
+
+The curvature:
+$$\kappa(t)=\frac{\|\mathbf v(t)\times\mathbf a(t)\|}{(v(t))^3}=\frac{2((t+1)^2+2)}{((t+1)^2+2)^3}=\frac{2}{((t+1)^2+2)^2}$$
+
+And finally the torsion:
+$$\tau(t)=\frac{\mathbf v(t)\cdot(\mathbf a(t)\times\mathbf a'(t))}{\|\mathbf v(t)\times\mathbf a(t)\|^2}=\frac{\mathbf a'(t)\cdot(\mathbf v(t)\times\mathbf a(t))}{\|\mathbf v(t)\times\mathbf a(t)\|^2}=\frac{8}{4((t+1)^2+2)^2}=\frac{2}{((t+1)^2+2)^2}$$
+
+Where $\mathbf a'(t)=(0,0,2)$.
+
+\section*{Exercise 3}
+\textbf{Problem:} Either the curve in Exercise 1 or 2 is a planar curve. Which one is it?
+\\\\
+\textbf{Solution:} A planar curve is planar iff its torsion is always 0. As we have shown, the torsion in Exercise 1 is 0 while the torsion in Exercise 2 depends on $t$. We can derive an equation for the plane the curve lies on from its constant binormal vector
+$$\mathbf B=\frac{1}{3}(1,2,2)$$
+
+First we'll choose some arbitrary point on the plane, say $\mathbf x(0)=(3,-1,1)$. Now we can write:
+
+$$\mathbf B\cdot(\mathbf x-\mathbf x(0))=\frac{1}{3}(1,2,2)\cdot(x-3,y+1,z-1)=0$$
+
+Solving this out we arrive at:
+$$\frac{x}{3}+\frac{2y}{3}+\frac{2z}{3}=1\equiv x+2y+2z=3$$
+
+\section*{Exercise 4}
+\textbf{Problem:} Consider the parameterization given in Exercise 2. Find the function $s(t)$ which gives the arc length traveled along the curve for $t>0$ starting at $t=0$.
+\\\\
+\textbf{Solution:} We already have the speed of the curve from Exercise 2:
+$$v(t)=(t+1)^2+2$$
+We now just integrate it from 0 to $t$:
+$$s(t)=\int_0^t v(x)\ dx=\int_0^t \left((x+1)^2+2\right)dx=2t+\frac{(t+1)^3}{3}-\frac{1}{3}$$
+
+Via some algebraic manipulation we can rewrite the expression as a depressed cubic in $t+1$:
+$$\frac{1}{3}(t+1)^3+2(t+1)-\frac{7}{3}$$
+\textbf{Extra Credit:} Use Ferro's formula for depressed cubic roots to solve for the inverse of $s(t)$ denoted $t(s)$.
+\\\\
+\textbf{Solution:} We can rewrite the equation above with the variable $u$:
+$$s=\frac{1}{3}u^3+2u-\frac{7}{3}$$
+
+Now we rearrange it in the form Ferro did:
+\begin{align*}
+  x^3+px&=q\\
+  u^3+6u&=3s+7
+\end{align*}
+
+The unique root of a depressed cubic is the following:
+$$\sqrt[3]{\frac{q}{2}+\sqrt{\frac{q^2}{4}+\frac{p^3}{27}}}+\sqrt[3]{\frac{q}{2}-\sqrt{\frac{q^2}{4}+\frac{p^3}{27}}}$$
+
+Plugging in $p=6$ and $q=3s+7$ we find:
+$$u=\sqrt[3]{\frac{3s+7}{2}+\sqrt{\frac{(3s+7)^2}{4}+8}}+\sqrt[3]{\frac{3s+7}{2}-\sqrt{\frac{(3s+7)^2}{4}+8}}$$
+
+And so if $t+1=u$ then:
+$$t(s)=\sqrt[3]{\frac{3s+7}{2}+\sqrt{\frac{(3s+7)^2}{4}+8}}+\sqrt[3]{\frac{3s+7}{2}-\sqrt{\frac{(3s+7)^2}{4}+8}}-1$$
+
+The arc length parameterization would then be $\mathbf x(t(s))$. I could write it explicitly, but it probably wouldn't be useful.
+
+\section*{Exercise 5}
+\textbf{Problem:} Consider the curve parameterized by:
+$$\mathbf x(t)=(1+t)^{-2}(1+4t+t^2,2^{3/2}t^{1/2},2t+t^2-1)$$
+Where $t>0$. Find $v(t),\kappa(t)$ and $\tau(t)$ as well as $\mathbf T(1),\mathbf N(1)$, and $\mathbf B(1)$.
+\\\\
+\textbf{Solution:} First we find the velocity:
+
+$$\mathbf v(t)=\frac{\left(2\sqrt t(1-t),\sqrt 2(1-3t),4\sqrt t\right)}{(t+1)^3\sqrt t}$$
+
+Now we compute the speed:
+\begin{align*}
+  v(t)&=\frac{1}{(t+1)^3\sqrt t}\left\|\left(2\sqrt t(1-t),\sqrt 2(1-3t),4\sqrt t\right)\right\|\\
+  &=\frac{1}{(t+1)^3\sqrt t}\sqrt{4t(t-1)^2+2(1+3t)^2+16t}\\
+  &=\frac{1}{(t+1)^3\sqrt t}\sqrt{4t^3+10t^2+8t+2}\\
+  &=\frac{1}{(t+1)^3\sqrt t}\sqrt{(4t+2)(t+1)^2}\\
+  &=\frac{\sqrt{4t+2}}{(1+t)^2\sqrt t}
+\end{align*}
+
+From this we can find the tangent vector:
+$$\mathbf T(t)=\frac{\mathbf v(t)}{v(t)}=\frac{1}{(t+1)\sqrt{4t+2}}\left((2-2t)\sqrt t,\sqrt 2(1-3t),4\sqrt t\right)$$
+
+Now we use this to find the orthogonal component of the acceleration with respect to the tangent vector:
+\begin{align*}
+\mathbf a_\perp(t)=\mathbf a(t)&-\operatorname{proj}_{\mathbf T(t)}(\mathbf a(t))\\
+&-(\mathbf a(t)\cdot\mathbf T(t))\mathbf T(t)
+\end{align*}
+
+First we need the acceleration (differentiate velocity):
+$$\mathbf a(t)=\frac{1}{(t+1)^4t^{3/2}}\left(4(t-2)t^{3/2},\frac{(15t^2-10t-1)}{\sqrt 2},-12t^2\right)$$
+
+Now we find the dot product of $\mathbf a(t)$ and $\mathbf T(t)$:
+\begin{align*}
+  \mathbf a(t)\cdot\mathbf T(t)&=\frac{-8t^2(t-2)(t-1)+(1-3t)(15t^2-10-1)-48t^{5/2}}{t^{3/2}(t+1)^5\sqrt{4t+2}}\\
+  &=\frac{-8t^4-21t^3-48t^{5/2}+29t^2-7t-1}{t^{3/2}(t+1)^5\sqrt{4t+2}}\\
+\end{align*}
+
+Using these two pieces of information we calculate the orthogonal part to be:
+$$\mathbf a_\perp(t)=\frac{1}{t(2t+1)(t+1)^4}(-9t^2-4t+1,\sqrt{2t}(3t^2-6t-5),-2(4t^2+t-1))$$
+
+Now consider the following identity:
+$$\|\mathbf a_\perp(t)\|^2=(v(t))^2\kappa(t)$$
+
+Let's find the norm squared of the orthogonal component:
+$$\|\mathbf a_\perp(t)\|^2=\frac{9t+5}{t^2(2t+1)(t+1)^5}$$
+
+% Now because the norm squared of the orthogonal component is:
+% $$\|\mathbf a_\perp(t)\|^2=\|\mathbf a(t)\|^2-(\mathbf a(t)\cdot\mathbf T(t))$$
+%
+% We can calculate $\|\mathbf a(t)\|^2$:
+% $$\|\mathbf a(t)\|^2=\frac{33t^3+33t^2+18t+1}{2t^3(1+t)^6}$$
+%
+% And subtract $\mathbf a(t)\cdot\mathbf T(t)$ from it to find:
+
+Dividing $\|\mathbf a_\perp(t)\|^2$ by the speed squared we find $\kappa(t)$ to be equal to:
+$$\kappa(t)=\frac{9t+5}{t(2t+1)(t+1)^5}$$
+
+Now we just normalize the acceleration to find the normal vector:
+\begin{align*}
+  \mathbf N(t)&=\frac{\mathbf a\perp(t)}{\|\mathbf a\perp(t)\|}\\
+  &=\kappa(t)^{-1}\frac{1}{t(2t+1)(t+1)^4}(9t^2+4t-1,\sqrt{2t}(3t^2-6t-5),2(4t^2+t-1))\\
+  &=\left(\frac{t(2t+1)(t+1)^5}{9t+5}\right)\frac{1}{t(2t+1)(t+1)^4}(9t^2+4t-1,\sqrt{2t}(3t^2-6t-5),2(4t^2+t-1))\\
+  &=\frac{t+1}{9t+5}(9t^2+4t-1,\sqrt{2t}(3t^2-6t-5),8t^2+2t-2)
+\end{align*}
+
+We can find the binormal vector by taking the cross product of the other two:
+$$\mathbf B(t)=\mathbf T(t)\times\mathbf N(t)=\frac{1}{(9t+5)^{1/2}(t+1)^{3/2}}(6t+2,-4t^{3/2}\sqrt 2,-3t^2-1)$$
+
+Plugging in $t=1$ we find:
+\begin{align*}
+  \mathbf T(1)&=\frac{1}{\sqrt 3}(0,-1,\sqrt 2)\\
+  \mathbf N(1)&=\frac{1}{\sqrt{21}}(-3,-2\sqrt 2,-2)\\
+  \mathbf B(1)&=\frac{1}{\sqrt{7}}(2,-\sqrt 2,-1)
+\end{align*}
+
+Now we just need to calculate the torsion $\tau(t)$. We can do this with the following formula:
+$$\tau(t)=\mathbf N'(t)\cdot\mathbf B(t)$$
+
+The derivative of the normal vector comes out to:
+$$\mathbf N'(t)=\frac{2}{(9t+1)^2}\left(81t^3+72t^2+13t+6,\frac{135t^4-60t^3-114t^2+12t-5}{2\sqrt {2t}},72t^3+57t^2+10t+9\right)$$
+
+Now we just compute the dot product of the binormal and normal prime vectors to find:
+$$\tau(t)=\frac{-3\sqrt{2t}(t+1)}{9t+5}$$
+
+\section*{Exercise 6}
+\subsection*{Part a}
+\textbf{Problem:} Consider a spherical curve $\mathbf x(t)$. Show that for all $t$ the following holds:
+$$\|\mathbf x(t)-\mathbf c\|\cdot\mathbf T(t)=0$$
+\textbf{Solution:} All spherical curves obey the following:
+$$\|\mathbf x(t)-\mathbf c\|=r^2$$
+
+If we differentiate both sides we get:
+$$2(\mathbf x(t)-\mathbf c)\cdot\mathbf v(t)=0$$
+
+Recall that $\mathbf v(t)=v(t)\mathbf T(t)$. Since $v(t)=0$ then so too does $\mathbf T(t)$, meaning:
+$$\|\mathbf x(t)-\mathbf c\|\cdot\mathbf T(t)=\|\mathbf x(t)-\mathbf c\|\cdot\mathbf 0=0$$
+
+\subsection*{Part b}
+\textbf{Problem:} Show that for all $t$:
+\begin{align*}
+(\mathbf x(t)-\mathbf c)\cdot\mathbf N(t)&=\frac{-1}{\kappa(t)}\\
+(\mathbf x(t)-\mathbf c)\cdot\mathbf B(t)&=\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}
+\end{align*}
+\textbf{Solution:} If we differentiate both sides of the equation we found in Part a (using the product rule) we get:
+$$\mathbf v(t)\cdot\mathbf T(t)+(\mathbf x(t)-\mathbf c)\cdot\mathbf T'(t)=0$$
+
+Recall the following identities
+$$\mathbf v(t)=v(t)\mathbf T(t)$$
+$$\mathbf T'(t)=v(t)\kappa(t)\mathbf N(t)$$
+
+Plugging these into the derivative we calculated we get:
+\begin{align*}
+  \mathbf v(t)\cdot\mathbf T(t)+(\mathbf x(t)-\mathbf c)\cdot\mathbf T'(t)&=0\\
+  (\mathbf x(t)-\mathbf c)\cdot(v(t)\kappa(t)\mathbf N(t))&=-v(t)\mathbf T(t)\cdot\mathbf T(t)\\
+  (\mathbf x(t)-\mathbf c)\cdot\mathbf N(t)&=\frac{-v(t)\mathbf T(t)\cdot\mathbf T(t)}{v(t)\kappa(t)}\\
+  (\mathbf x(t)-\mathbf c)\cdot\mathbf N(t)&=\frac{-1}{\kappa(t)}\\
+\end{align*}
+
+And we have proved the first part. The second part can be found by, again, differentiating the last equation:
+$$\mathbf v(t)\cdot\mathbf N(t)+(\mathbf x(t)-\mathbf c)\cdot\mathbf N'(t)=\frac{\kappa'(t)}{\kappa^2(t)}$$
+
+Note that $\mathbf v(t)\perp\mathbf N(t)$ meaning their dot product is 0, leaving us with:
+$$(\mathbf x(t)-\mathbf c)\cdot\mathbf N'(t)=\frac{\kappa'(t)}{\kappa^2(t)}$$
+
+Now we use the following fact:
+$$v(t)\tau(t)\mathbf B(t)-v(t)\kappa(t)\mathbf T(t)=\mathbf N'(t)$$
+
+Substituting in we arrive at:
+$$(\mathbf x(t)-\mathbf c)\cdot(v(t)\tau(t)\mathbf B(t)-v(t)\kappa(t)\mathbf T(t))=\frac{\kappa'(t)}{\kappa^2(t)}$$
+
+As we have shown in the first part, $(\mathbf x(t)-\mathbf c)\perp\mathbf N(t)$ and so we are left with:
+$$(\mathbf x(t)-\mathbf c)\cdot v(t)\tau(t)\mathbf B(t)=\frac{\kappa'(t)}{\kappa^2(t)}=(\mathbf x(t)-\mathbf c)\cdot\mathbf B(t)=\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}$$
+
+And we are done.
+
+\section*{Exercise 7}
+\textbf{Problem:} Show that for any spherical curve, the following is true:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2=r^2-\frac{1}{\kappa^2(t)}$$
+Also explain why the radius of curvature of a spherical curve cannot be bigger than the radius of the sphere it is contained in.
+\\\\
+\textbf{Solution:} Consider the orthonormal basis $\{\mathbf T(t),\mathbf N(t),\mathbf B(t)\}$. We can write any vector as the sum of its components in this basis:
+$$\mathbf x(t)-\mathbf c=((\mathbf x(t)-\mathbf c)\cdot\mathbf T(t))\mathbf T(t)+((\mathbf x(t)-\mathbf c)\cdot\mathbf N(t))\mathbf N(t)+((\mathbf x(t)-\mathbf c)\cdot\mathbf B(t))\mathbf B(t)$$
+
+Now if we just use the equations we found in the precious Exercise:
+$$\mathbf x(t)-\mathbf c=\frac{-1}{\kappa(t)}\mathbf N(t)+\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\mathbf B(t)$$
+
+So now we just compute the radius by the Pythagorean theorem (i.e the norm squared of the general vector):
+$$\|\mathbf x(t)-\mathbf c\|=r^2=\frac{1}{\kappa^2(t)}+\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2$$
+
+This is equivalent to the first statement we set out to prove:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2=r^2-\frac{1}{\kappa^2(t)}$$
+
+In regards to why the radius of curvature (i.e $\frac{1}{\kappa(t)}$) cannot be greater than $r$, notice that the left hand side of the above is non-negative. This means that the $r^2-\frac{1}{\kappa^2(t)}\ge 0$ which is equivalent to:
+$$r\ge\frac{1}{\kappa(t)}$$
+
+Geometrically this is because the intersection of the osculating plane of the curve with the sphere on which the curve lies is a circle with radius $\gamma$. At any point in time $t$, any instantaneous change on in the curve is along this circle, which means the radius of the curvature is this circle's radius: $\frac{1}{\kappa(t)}=\gamma\le r$.
+\section*{Exercise 8}
+\textbf{Problem:} Show that a spherical curve satisfies the following:
+$$\mathbf c=\mathbf x(t)+\frac{1}{\kappa(t)}\mathbf N(t)+\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\mathbf B(t)$$
+Also show that the conclusion from Exercise 7 implies $\mathbf y'(t)=0$
+\\\\
+\textbf{Solution:} The first equation is clear from splitting up $\mathbf c$ as $\mathbf x(t)-(\mathbf x(t)-\mathbf c)$ and plugging in the results form the previous exercise. If we differentiate it then use the Frenet-Seret formulas we find:
+$$v(t)\mathbf T(t)-\frac{\kappa'(t)}{\kappa^2(t)}\mathbf N(t)+\frac{1}{\kappa(t)}\mathbf N'(t)-\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\mathbf B(t)\right)'-\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\mathbf B'(t)=\mathbf 0$$
+
+We can split this up into three orthonormal components and add in some extraneous variables:
+\begin{align*}
+  \mathbf 0&=\left(v(t)-\frac{1}{\kappa(t)}v(t)\kappa(t)\right)\mathbf T(t)\\
+  &+\left(-\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}+\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}v(t)\tau(t)\right)\mathbf N(t)\\
+  &+\left(\frac{1}{\kappa(t)}v(t)\tau(t)-\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\mathbf B(t)\right)'\right)\mathbf B(t)
+\end{align*}
+
+The coefficients of these vectors must all be 0 since they are all orthonormal. In particular we find from the last coefficient that:
+$$\frac{\tau(t)}{\kappa(t)}=\frac{1}{v(t)}\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)'$$
+
+We can write the following as a consequence of Exercise 7:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)=\pm\sqrt{r^2-\frac{1}{\kappa^2(t)}}$$
+
+Differentiating both sides we get:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)'=\pm\frac{1}{\sqrt{r^2-\frac{1}{\kappa^2(t)}}}\frac{\kappa'(t)}{\kappa^3(t)}$$
+
+Plugging in for the root in the denominator we find that (regardless of sign):
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)'=\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^{-1}\frac{\kappa'(t)}{\kappa^3(t)}=\frac{v(t)\tau(t)}{\kappa(t)}$$
+
+And so whenever the equation from Exercise 7 is satisfied for $\mathbf x(t)$ and some curve $\mathbf y(t)$ is defined as shown in the problem sheet, $\mathbf y'(t)=0$ because $\mathbf y(t)$ will be constant.
+
+\section*{Exercise 9}
+\textbf{Problem:} Show that a curve is spherical iff the following is constant:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2+\frac{1}{\kappa^2(t)}$$
+\textbf{Solution:} We already know that for a curve to be spherical the following must be true:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2=r^2-\frac{1}{\kappa^2(t)}$$
+
+As so it must be the case that $\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2+\frac{1}{\kappa^2(t)}$ is a constant. Now we have to prove it in the other direction.
+
+Suppose that $\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2+\frac{1}{\kappa^2(t)}$ is constant. Let's call that value $r^2$. We have already seen that the curve $\mathbf y(t)$ defined in the problem sheet is constant. Call that constant $c$. By the Pythagorean theorem we find that:
+$$\|\mathbf x(t)-\mathbf c\|=\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2=r^2-\frac{1}{\kappa^2(t)}=r^2$$
+
+And so the curve is spherical. We have proved the condition is both necessary and sufficient.
+
+\section*{Exercise 10}
+\textbf{Problem:} Show that the curve given in Exercise 5 is spherical and find its radius and center.
+\\\\
+\textbf{Solution:} First we calculate the following:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2+\frac{1}{\kappa^2(t)}$$
+
+As shown in the previous exercise, if this value is constant then the curve is spherical and the value is its radius squared. Using exercise 5 we can see:
+$$\left(\frac{\kappa'(t)}{v(t)\tau(t)\kappa^2(t)}\right)^2=\frac{(3t^2+1)^2}{(t+1)^3(9t+5)}$$
+$$\frac{1}{\kappa^2(t)}=\frac{4(2t+1)^3}{(t+1)^3(9t+5)}$$
+
+Adding these together we find that they simplify to the constant value 1. So it is a sphere with radius 1, now we just need to find the center. Again, given the results we found previously, we can say:
+$$\mathbf c=\mathbf x(1)+\frac{1}{\kappa(1)}\mathbf N(1)-\frac{\kappa'(t)}{v(1)\tau(1)\kappa^2(1)}\mathbf B(1)$$
+
+This evaluates to $\mathbf c=(1,0,0)$
+\end{document}

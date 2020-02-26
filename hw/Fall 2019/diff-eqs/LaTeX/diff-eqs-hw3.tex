@@ -1,0 +1,528 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage{xargs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{pgfplots, pgfplotstable}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{tikz}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newenvironment{sysmatrix}[1]
+ {\left[\begin{array}{@{}#1@{}}}
+ {\end{array}\right]}
+\newcommand{\ro}[1]{%
+  \xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Differential Equations HW \#3}
+\author{Ozaner Hansha}
+\date{October 24, 2019}
+\maketitle
+
+\newcommandx{\der}[2][1=y, 2=t]{\frac{d#1}{d#2}}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\section*{Problem 1}
+\noindent\textbf{Problem:} Find the general solution to the following system:
+
+\[\begin{cases}
+    \der[x]=2x \\
+    \der=4y-x^2
+\end{cases}\]
+\bigskip
+
+\noindent\textbf{Solution:} This is a partially decoupled system, thus we can solve for $x$ first. Being separable, it is clear that the general solution to $x$ is:
+\begin{equation*}
+    x=k_1e^{2t}
+\end{equation*}
+
+% This is a partially decoupled system, thus we can solve for $x$ first since it's given by a separable equation. Its solution set is given by:
+% \begin{align*}
+%     \der[x]&=2x\\
+%     \int \frac{1}{2x}\mathop{dx}&=\int\mathop{dt}\tag{separable equation}\\
+%     \frac{\ln{|x|}}{2}&=t+C_1\tag{integration}\\
+%     \ln{|x|}&=2t+C_2\\
+%     |x|&=e^{2t}e^{C_2}\tag{exponentiation}\\
+%     x&=C_3e^{2t}\tag{$\pm e^{C_1}=C_2\not=0$}
+% \end{align*}
+
+% Including its equilibrium solution $x=0$, we have the following general solution for $x$:
+% \begin{equation*}
+%     x=Ce^{2t}
+% \end{equation*}
+
+Now we plug in our general solution for $x$ into the other ODE and solve the resulting linear ODE for $y$.
+\begin{equation*}
+    \der=4y-k_1^2e^{4t}
+\end{equation*}
+
+First we find the general solution to the homogenous equation $y'=4y$. Like before, it is separable and so the general solution is:
+\begin{equation*}
+    y_h=k_2e^{4t}
+\end{equation*}
+
+% First we find the general homogenous solution:
+% \begin{align*}
+%     \der&=4y\\
+%     \int \frac{1}{4y}\mathop{dy}&=\int\mathop{dt}\tag{separable equation}\\
+%     \frac{\ln{|y|}}{4}&=t+D_1\tag{integration}\\
+%     \ln{|y|}&=4t+D_2\\
+%     |y|&=e^{2t}e^{D_2}\tag{exponentiation}\\
+%     y&=D_3e^{4t}\tag{$\pm e^{D_2}=D_3\not=0$}
+% \end{align*}
+
+% Including its equilibrium solution $y=0$, we have the following general solution:
+% \begin{equation*}
+%     y_h=De^{4t}
+% \end{equation*}
+
+Via the method of undetermined coefficients, we know that a particular solution $y_p$ to the LDE is of the form:
+\begin{equation*}
+    y_p=\alpha te^{4t}
+\end{equation*}
+
+Plugging this into the ODE we find:
+\begin{align*}
+    \der[y_p]&=4y_p-x^2\\
+    4\alpha te^{4t}+\alpha e^{4t}&=4\alpha te^{4t}-k_1^2e^{4t}\\
+    \alpha e^{4t}&=-k_1^2e^{4t}\\
+    \alpha &=-k_1^2
+\end{align*}
+
+And so our general solution to $y$ is given by:
+\begin{equation*}
+    y=y_h+y_p=k_2e^{4t}-k_1^2te^{4t}
+\end{equation*}
+
+Putting it together, our general solution to the system of ODEs is:
+\[\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{cases}
+    x=k_1e^{2t}\\
+    y=k_2e^{4t}-k_1^2te^{4t}
+\end{cases}}\]
+
+For arbitrary constants $k_1,k_2\in\mathbb R$.
+
+\section*{Problem 2}
+\noindent\textbf{Problem:} Rewrite the following system of ODEs in matrix form:
+
+\[\begin{cases}
+    \der[p]=3p-2q-7r\\
+    \der[q]=-2p+6r\\
+    \der[r]=7q+2r
+\end{cases}\]
+\bigskip
+
+\noindent\textbf{Solution:} Defining the following variables:
+\begin{equation*}
+    \mathbf{p}(t)=\begin{bmatrix}
+        p(t) \\
+        q(t) \\
+        r(t)
+    \end{bmatrix}\,\,\,\,\,\,\,\,\,
+    \mathbf{A}=\begin{bmatrix}
+        3&-2&-7\\
+        -2&0&6\\
+        0&7&2
+    \end{bmatrix}
+\end{equation*}
+
+We can express the given system, supressing the argument $(t)$, as the following matrix ODE:
+\begin{equation*}
+    \tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\der[\mathbf{p}]=\mathbf{Ap}=\begin{bmatrix}
+        3&-2&-7\\
+        -2&0&6\\
+        0&7&2
+    \end{bmatrix}\begin{bmatrix}
+        p \\
+        q \\
+        r
+    \end{bmatrix}}
+\end{equation*}
+
+\section*{Problem 3}
+\noindent\textbf{Problem:} Consider the following system of equations:
+\[\begin{cases}
+    \der[x]=f(x,y)=-3y(1+x^2+y^2)\\
+    \der=g(x,y)=2x(1+2x^2+2y^2)
+\end{cases}\]
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item Show that $\mathbf{y}_1(t)=(\cos 6t, \sin 6t)$ is a solution of this system.
+    \item Show that if $\mathbf{y}_2(t)=(x_2(t),y_2(t))$ is another solution with $\mathbf{y}_2(1)=(0.5,0.5)$, then $x_2(t)^2+y_2(t)^2<1$ for all $t$.
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For \textbf{a)} we simply plug in the solution into the both equations of the system to verify it:
+\begin{align*}
+    \der[x]&=-3y(1+x^2+y^2)\\
+    -6\sin 6t&=-3\sin 6t(1+\cos^2 6t+\sin^2 6t)\\
+    &=-3\sin 6t(1+1)\tag{trig. identity}\\
+    &=-6\sin 6t
+\end{align*}
+\begin{align*}
+    \der&=2x(1+2x^2+2y^2)\\
+    6\cos 6t&=2\cos 6t(1+2\cos^2 6t+2\sin^2 6t)\\
+    &=2\sin 6t(1+2)\tag{trig. identity}\\
+    &=6\sin 6t
+\end{align*}
+
+To show \textbf{b)} let us first establish the uniqueness of solutions to this system. This is guaranteed by the Picard-Lindelöf theorem as long as $\frac{d(f,g)}{d(x,y)}$ exists and is continuous over some open set. This is trivial, as both $f$ and $g$ are polynomials over $x$ and $y$ and so are continuously differentiable functions with respect to $x$ and $y$.
+\bigskip
+\pagebreak
+
+Now let us graph the initial point on the $xy$ phase plane, along with the solution from part \textbf{a)}:
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xmin=-2,xmax=2,
+            ymin=-2,ymax=2,
+            legend pos=north east,
+            axis lines=center,
+            legend style={legend cell align=right,legend plot pos=right}]
+        
+        \addplot[color=BrickRed,forget plot, domain=-1:1,samples=100] {sqrt(1-x^2)};
+        \addplot[color=BrickRed,domain=-1:1,samples=100] {-sqrt(1-x^2)};
+        \addlegendentry{$\mathbf{y}_1(t)$}
+        % \addplot [black, nodes near coords=$\mathbf{y}_1(t)$,every node near coord/.style={anchor=0}] coordinates {(-.8, -.8)};
+        \addplot [black, mark = *, nodes near coords=$\mathbf{y}_2(1)$,every node near coord/.style={anchor=90}] coordinates {( 0.5, 0.5)};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+Due to uniqueness, and this being an autonomous system, no two distinct solutions can cross each other on the phase plane. As a result, whatever the solution $\mathbf{y}_2$ looks like, simply because it contains a single point in the interior of $\mathbf{y}_1$, it will never be able to cross over to its exterior.
+
+Note that the curve $\mathbf{y}_1$ traces on the phase plane is a unit circle. This means that:
+\begin{equation*}
+    (\forall t\in\mathbb R)\,\,\|\mathbf{y}_1(t)\|=1
+\end{equation*} 
+
+And since the curve $\mathbf{y}_2$ is trapped in the interior of $\mathbf{y}_1$, we have for all $t\in\mathbb R$:
+\begin{align*}
+    \|\mathbf{y}_2(t)\|<1\phantom{aaa}&\\
+    \|(x(t),y(t))\|<1\tag{def. of $\mathbf{y}_2$}\phantom{aaa}&\\
+    \sqrt{x(t)^2+y(t)^2}<1\phantom{aaa}&\tag{def. of $\|\cdot\|$}\\
+    \tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{x(t)^2+y(t)^2<1}\phantom{\,}&
+\end{align*}
+
+With the last inequality coming from the fact that $x(t)^2+y(t)^2$ is nonnegative, and that the square of any number in the interval $[0,1)$ is less than 1.
+    
+\section*{Problem 4}
+\noindent\textbf{Problem:}  In each of the following, factor the matrix $\mathbf{A}$ into a product $\mathbf{S\Lambda S^{-1}}$, with $\Lambda$ a diagonal matrix:
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item $\mathbf{A}=\begin{bmatrix}1&1\\0&0\end{bmatrix}$
+    \item $\mathbf{A}=\begin{bmatrix}5&6\\-1&-2\end{bmatrix}$
+\end{enumerate}
+
+\bigskip
+
+\noindent\textbf{Solution a):} First we start be finding the eigenvalues of $\mathbf{A}$, by finding the roots of its characteristic polynomial:
+\begin{align*}
+    0&=\det(\mathbf{A}-\lambda \mathbf{I})\\
+    &=\begin{vmatrix} 1-\lambda & 1 \\ 0 & -\lambda \end{vmatrix}\\
+    &=\lambda(\lambda-1)\\
+    &\implies \lambda=0,1
+\end{align*}
+
+We now proceed to find a basis for both eigenspaces. We start with the eigenspace associated with the eigenvalue 0:
+\begin{align*}
+    E_0(\mathbf{A})&=\text{Null}(\mathbf{A}-0\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}(\mathbf{A})\\
+    &=\text{Null}\begin{bmatrix} 0 & 1 \\ 0 & -1 \end{bmatrix}\\
+    &=\text{Null}\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}\tag{ref}\\
+    &=\text{Span}\left\{\begin{bmatrix} 1\\0\end{bmatrix}\right\}\tag{$x_2=0$, $x_1$ free}
+\end{align*}
+
+Now we do the same for the eigenspace associated with the eigenvalue 1:
+\begin{align*}
+    E_1(\mathbf{A})&=\text{Null}(\mathbf{A}-\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}\begin{bmatrix} 1 & 1 \\ 0 & 0 \end{bmatrix}\\
+    &=\text{Span}\left\{\begin{bmatrix} 1\\-1\end{bmatrix}\right\}\tag{$x_2=-x_1$}
+\end{align*}
+
+We can now express the desired matrix $\mathbf{S}$, whose columns are the eigenbasis of $\mathbf{A}$:
+\begin{equation*}
+    \mathbf{S}=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}
+\end{equation*}
+
+Its inverse $\mathbf{S}^{-1}$ is given by:
+\begin{equation*}
+\mathbf{S}^{-1}=\frac{1}{|\mathbf{S}|}\begin{bmatrix} S_{22}&-S_{12}\\-S_{21}&S_{11}\end{bmatrix}=\begin{bmatrix} 0&-1\\1&1\end{bmatrix}
+\end{equation*}
+
+And finally, $\mathbf{\Lambda}$ is given by the matrix whose diagonal entries are the cooresponding eigenvalues:
+\begin{equation*}
+    \mathbf{\Lambda}=\text{diag}\begin{bmatrix}0&1\end{bmatrix}=\begin{bmatrix} 0&0\\0&1\end{bmatrix}
+\end{equation*}
+
+And so we can express our original matrix $\mathbf{A}$ as the following eigendecomposition:
+\begin{equation*}
+\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\mathbf{A}=\mathbf{S\Lambda S^{-1}}=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\begin{bmatrix} 0&0\\0&1\end{bmatrix}\begin{bmatrix} 0&-1\\1&1\end{bmatrix}}
+\end{equation*}
+\medskip
+
+\noindent\textbf{Solution b):} Again, we start be finding the roots of $\mathbf{A}$'s characteristic polynomial:
+\begin{align*}
+    0&=\det(\mathbf{A}-\lambda \mathbf{I})\\
+    &=\begin{vmatrix} 5-\lambda & 6 \\ -1 & -2-\lambda \end{vmatrix}\\
+    &=(5-\lambda)(-2-\lambda)+6\\
+    &=\lambda^2-3\lambda-4=(\lambda-4)(\lambda+1)\\
+    &\implies \lambda=4,-1
+\end{align*}
+
+We now proceed to find a basis for both eigenspaces. We start with the eigenspace associated with the eigenvalue 4:
+\begin{align*}
+    E_4(\mathbf{A})&=\text{Null}(\mathbf{A}-4\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}\begin{bmatrix} 1 & 6 \\ -1 & -6 \end{bmatrix}\\
+    &=\text{Null}\begin{bmatrix} 1 & 6 \\ 0 & 0 \end{bmatrix}\tag{ref}\\
+    &=\text{Span}\left\{\begin{bmatrix} -6\\1\end{bmatrix}\right\}\tag{$x_1=-6x_2$}
+\end{align*}
+
+Now we do the same for the eigenspace associated with the eigenvalue -1:
+\begin{align*}
+    E_{-1}(\mathbf{A})&=\text{Null}(\mathbf{A}+\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}\begin{bmatrix} 6 & 6 \\ -1 & -1 \end{bmatrix}\\
+    &=\text{Null}\begin{bmatrix} 1 & 1 \\ 0 & 0 \end{bmatrix}\tag{ref}\\
+    &=\text{Span}\left\{\begin{bmatrix} -1\\1\end{bmatrix}\right\}\tag{$x_1=-x_2$}
+\end{align*}
+
+We can now express the desired matrix $\mathbf{S}$, whose columns are the eigenbasis of $\mathbf{A}$:
+\begin{equation*}
+    \mathbf{S}=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}
+\end{equation*}
+
+Its inverse $\mathbf{S}^{-1}$ is given by:
+\begin{equation*}
+\mathbf{S}^{-1}=\frac{1}{|\mathbf{S}|}\begin{bmatrix} S_{22}&-S_{12}\\-S_{21}&S_{11}\end{bmatrix}=-\frac{1}{5}\begin{bmatrix} 1&1\\-1&-6\end{bmatrix}
+\end{equation*}
+
+And finally, $\mathbf{\Lambda}$ is given by the matrix whose diagonal entries are the cooresponding eigenvalues:
+\begin{equation*}
+\mathbf{\Lambda}=\text{diag}\begin{bmatrix}4&-1\end{bmatrix}=\begin{bmatrix} 4&0\\0&-1\end{bmatrix}
+\end{equation*}
+
+And so we can express our original matrix $\mathbf{A}$ as the following eigendecomposition:
+\begin{equation*}
+\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\mathbf{A}=\mathbf{S\Lambda S^{-1}}=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}\begin{bmatrix} 4&0\\0&-1\end{bmatrix}\begin{bmatrix} -\frac{1}{5}&-\frac{1}{5}\\\frac{1}{5}&\frac{6}{5}\end{bmatrix}}
+\end{equation*}
+
+\section*{Problem 5}
+\noindent\textbf{Problem:} For each matrix $\mathbf{A}$ in question 4, calculate $\mathbf{A}^7$.
+\bigskip
+
+\noindent\textbf{Solution a):} As we have already decomposed $\mathbf{A}$, we can take advantage of the following property of diagonalizable matrices:
+
+\begin{align*}
+    \mathbf{A}^7&=(\mathbf{S\Lambda S^{-1}})^7\tag{eigendecomposition}\\
+    &=\mathbf{S}\mathbf{\Lambda}^7 \mathbf{S}^{-1}\tag{diagonalizable}\\
+    &=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\begin{bmatrix} 0&0\\0&1\end{bmatrix}^7\begin{bmatrix} 0&-1\\1&1\end{bmatrix}\\
+    &=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\begin{bmatrix} 0^7&0\\0&1^7\end{bmatrix}\begin{bmatrix} 0&-1\\1&1\end{bmatrix}\tag{diagonal matrix}\\
+    &=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\begin{bmatrix} 0&0\\0&1\end{bmatrix}\begin{bmatrix} 0&-1\\1&1\end{bmatrix}\\
+    &=\mathbf{S\Lambda S^{-1}}=\mathbf{A}\tag{eigendecomposition}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{bmatrix} 1&1\\0&0\end{bmatrix}}
+\end{align*}
+\medskip
+
+\noindent\textbf{Solution b):} Again, we have already decomposed $\mathbf{A}$ so we can take advantage of the following property of diagonalizable matrices:
+
+\begin{align*}
+    \mathbf{A}^7&=(\mathbf{S\Lambda S^{-1}})^7\tag{eigendecomposition}\\
+    &=\mathbf{S\Lambda}^7 \mathbf{S}^{-1}\tag{diagonalizable}\\
+    &=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}\begin{bmatrix} 4&0\\0&-1\end{bmatrix}^7\begin{bmatrix} -\frac{1}{5}&-\frac{1}{5}\\\frac{1}{5}&\frac{6}{5}\end{bmatrix}\\
+    &=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}\begin{bmatrix} 4^7&0\\0&-1^7\end{bmatrix}\begin{bmatrix} -\frac{1}{5}&-\frac{1}{5}\\\frac{1}{5}&\frac{6}{5}\end{bmatrix}\tag{diagonal matrix}\\
+    &=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}\begin{bmatrix} 16384&0\\0&-1\end{bmatrix}\begin{bmatrix} -\frac{1}{5}&-\frac{1}{5}\\\frac{1}{5}&\frac{6}{5}\end{bmatrix}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{bmatrix} 19661 & 19662 \\ -3277 & -3278 \end{bmatrix}}
+\end{align*}
+
+\section*{Problem 6}
+\noindent\textbf{Problem:} For each matrix $\mathbf{A}$ in question 4, calculate $e^{t\mathbf{A}}$.
+\bigskip
+
+\noindent\textbf{Solution a):} As we have already decomposed $\mathbf{A}$, we can take advantage of the following property of exponential matrices:
+
+\begin{align*}
+    e^{t\mathbf{A}}&=e^{t\mathbf{S\Lambda S}^{-1}}\tag{eigendecomposition}\\
+    &=\mathbf{S}e^{t\mathbf{\Lambda}}\mathbf{S}^{-1}\tag{diagonalizable}\\
+    &=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\exp{\left(\begin{bmatrix}
+        0&0\\0&t
+    \end{bmatrix}\right)}\begin{bmatrix} 0&-1\\1&1\end{bmatrix}\\
+    &=\begin{bmatrix} 1&1\\-1&0\end{bmatrix}\begin{bmatrix}
+        e^0&0\\0&e^t
+    \end{bmatrix}\begin{bmatrix} 0&-1\\1&1\end{bmatrix}\tag{diagonal matrix}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{bmatrix} e^t&e^t-1\\0&1\end{bmatrix}}
+\end{align*}
+\medskip
+
+\noindent\textbf{Solution b):} Again, we have already decomposed $\mathbf{A}$ so we can take advantage of the following property of exponential matrices:
+
+\begin{align*}
+    e^{t\mathbf{A}}&=e^{t\mathbf{S\Lambda S}^{-1}}\tag{eigendecomposition}\\
+    &=\mathbf{S}e^{t\mathbf{\Lambda}}\mathbf{S}^{-1}\tag{diagonalizable}\\
+    &=\begin{bmatrix} -6&-1\\1&1\end{bmatrix}\exp\left({\begin{bmatrix} 4t&0\\0&-t\end{bmatrix}}\right)\begin{bmatrix} -\frac{1}{5}&-\frac{1}{5}\\\frac{1}{5}&\frac{6}{5}\end{bmatrix}\\
+    &=\frac{1}{5}\begin{bmatrix} -6&-1\\1&1\end{bmatrix}{\begin{bmatrix} e^{4t}&0\\0&e^{-t}\end{bmatrix}}\begin{bmatrix} -1&-1\\1&6\end{bmatrix}\tag{diagonal matrix}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\frac{1}{5}\begin{bmatrix} 6e^{4t}-e^{-t}&6e^{4t}-6e^{-t}\\-e^{4t}+e^{-t}&-e^{4t}+6e^{-t}\end{bmatrix}}
+\end{align*}
+
+\section*{Problem 7}
+\noindent\textbf{Problem:} Solve the following IVP:
+\begin{equation*}
+    \der[\mathbf{y}]=
+    \underbrace{\begin{bmatrix}
+        4&-2\\1&1
+    \end{bmatrix}}_{\mathbf{A}}
+    \mathbf{y},\,\,\,\mathbf{y}(0)=
+    \begin{bmatrix}
+        1\\2
+    \end{bmatrix}
+\end{equation*}
+\smallskip
+
+\noindent\textbf{Solution:} First we perform eigendecomposition on $\mathbf{A}$, and to do this we first find $\mathbf{A}$'s eigenvalues:
+
+\begin{align*}
+    0&=\det(\mathbf{A}-\lambda \mathbf{I})\\
+    &=\begin{vmatrix} 4-\lambda & -2 \\ 1 & 1-\lambda \end{vmatrix}\\
+    &=(1-\lambda)(4-\lambda)+2\\
+    &=\lambda^2-5\lambda+6\\
+    &=(\lambda-2)(\lambda-3)\\
+    &\implies \lambda=2,3
+\end{align*}
+\pagebreak
+
+Now we find bases of both corresponding eigenspaces:
+
+\begin{align*}
+    E_2(\mathbf{A})&=\text{Null}(\mathbf{A}-2\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}\begin{bmatrix} 2 & -2 \\ 1 & -1 \end{bmatrix}\\
+    &=\text{Null}\begin{bmatrix} 1 & -1 \\ 0 & 0 \end{bmatrix}\tag{ref}\\
+    &=\text{Span}\left\{\begin{bmatrix} 2\\1\end{bmatrix}\right\}\tag{$x_1=x_2$}
+\end{align*}
+
+\begin{align*}
+    E_3(\mathbf{A})&=\text{Null}(\mathbf{A}-3\mathbf{I})\tag{def. of eigenspace}\\
+    &=\text{Null}\begin{bmatrix} 1 & -2 \\ 1 & -2 \end{bmatrix}\\
+    &=\text{Null}\begin{bmatrix} 1 & -2 \\ 0 & 0 \end{bmatrix}\tag{ref}\\
+    &=\text{Span}\left\{\begin{bmatrix} 2\\1\end{bmatrix}\right\}\tag{$x_1=2x_2$}
+\end{align*}
+
+Letting $S=\begin{bmatrix} 1&2\\1&1\end{bmatrix}$, we now calculate $\mathbf{S}^{-1}$:
+
+\begin{align*}
+    \mathbf{S}^{-1}&=\frac{1}{|\mathbf{S}|}\begin{bmatrix} S_{22}&-S_{12}\\-S_{21}&S_{11}\end{bmatrix}\\
+    &=-\frac{1}{1-2}\begin{bmatrix} 1&-2\\-1&1\end{bmatrix}\\
+    &=\begin{bmatrix} -1&2\\1&-1\end{bmatrix}
+\end{align*}
+
+And so we can express our original matrix $\mathbf{A}$ as the following eigendecomposition:
+
+\begin{equation*}
+    \mathbf{A}=\mathbf{S\Lambda S^{-1}}=\begin{bmatrix} 1&2\\1&1\end{bmatrix}\begin{bmatrix} 2&0\\0&3\end{bmatrix}\begin{bmatrix} -1&2\\1&-1\end{bmatrix}
+\end{equation*}
+
+We can now easily compute the matrix exponential $e^{t\mathbf{A}}$:
+
+\begin{align*}
+    e^{t\mathbf{A}}&=e^{t\mathbf{S\Lambda S}^{-1}}\tag{eigendecomposition}\\
+    &=\mathbf{S}e^{t\mathbf{\Lambda}}\mathbf{S}^{-1}\tag{diagonalizable}\\
+    &=\begin{bmatrix} 1&2\\1&1\end{bmatrix}\exp{\left(\begin{bmatrix} 2t&0\\0&3t\end{bmatrix}\right)}\begin{bmatrix} -1&2\\1&-1\end{bmatrix}\\
+    &=\begin{bmatrix} 1&2\\1&1\end{bmatrix}\begin{bmatrix} e^{2t}&0\\0&e^{3t}\end{bmatrix}\begin{bmatrix} -1&2\\1&-1\end{bmatrix}\tag{diagonal matrix}\\
+    &=\begin{bmatrix} 2e^{3t}-e^{2t}&-2e^{3t}+2e^{2t}\\e^{3t}-e^{2t}&-e^{3t}+2e^{2t}\end{bmatrix}
+\end{align*}
+
+Finally, we can express the desired solution to the given IVP as the following matrix vector product:
+
+\begin{equation*}
+    \mathbf{y}(t)=e^{t\mathbf{A}}\mathbf{y}(0)=\begin{bmatrix} 2e^{3t}-e^{2t}&-2e^{3t}+2e^{2t}\\e^{3t}-e^{2t}&-e^{3t}+2e^{2t}\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{bmatrix}3e^{2t}-2e^{3t}\\3e^{2t}-e^{3t}\end{bmatrix}}
+\end{equation*}
+
+\section*{Problem 8}
+\noindent\textbf{Problem:} Let $\mathbf{A}$ be a $2\times2$ matrix. Assume that the following vector functions:
+\begin{equation*}
+    \mathbf{y}_1(t)=
+    \begin{bmatrix}
+        e^t\\-2e^t
+    \end{bmatrix},\,\,\,\,\,\,\mathbf{y}_2(t)=
+    \begin{bmatrix}
+        3e^{-2t}\\e^{-2t}
+    \end{bmatrix}
+\end{equation*}
+
+are solutions to the system $\der[\mathbf{y}]=\mathbf{Ay}$. Solve the following IVP:
+\begin{equation*}
+    \der[\mathbf{y}]=\mathbf{Ay},\,\,\,\,\,\,\mathbf{y}(0)=
+    \begin{bmatrix}
+        1\\5
+    \end{bmatrix}
+\end{equation*}
+\smallskip
+
+\noindent\textbf{Solution:} Recall that the solution set to a homogenous system of linear ODEs forms a vector space. Also note that the two given solutions $y_1(t)$ and $y_2(t)$ span the entirety of the solution set. We can verify this by noting that the Wronskian $W(y_1,y_2)(t)\not=0$. This means that the desired solution $y(t)$ is simply a linear combination of $y_1(t)$ and $y_2(t)$:
+
+\begin{align*}
+    k_1y_1(t)+k_2y_2(t)&=y(t)\\
+    k_1y_1(0)+k_2y_2(0)&=y(0)\\
+    k_1\begin{bmatrix}
+        e^0\\-2e^0
+    \end{bmatrix}+k_2\begin{bmatrix}
+        3e^0\\e^0
+    \end{bmatrix}&=\begin{bmatrix}
+        1\\5
+    \end{bmatrix}\\
+    k_1\begin{bmatrix}
+        1\\-2
+    \end{bmatrix}+k_2\begin{bmatrix}
+        3\\1
+    \end{bmatrix}&=\begin{bmatrix}
+        1\\5
+    \end{bmatrix}
+\end{align*}
+
+We can express this system of linear equations as the following augmented matrix:
+
+\begin{align*}
+    \begin{sysmatrix}{rr|r}
+        1 & 3 & 1 \\
+        -2 & 1 & 5 \\
+    \end{sysmatrix}&\ro{r_2+2r_1}
+    \begin{sysmatrix}{rr|r}
+        1 & 3 & 1 \\
+        0 & 7 & 7 \\
+    \end{sysmatrix}\\
+    &\ro{(1/7)r_2}
+    \begin{sysmatrix}{rr|r}
+        1 & 3 & 1 \\
+        0 & 1 & 1 \\
+    \end{sysmatrix}\\
+    &\ro{r_1-3r_2}
+    \begin{sysmatrix}{rr|r}
+        1 & 0 & -2 \\
+        0 & 1 & 1 \\
+    \end{sysmatrix}\\
+\end{align*}
+
+This leaves us with the constants $k_1=-2$ and $k_2=1$. And so, our desired solution $y(t)$ is given by:
+\begin{align*}
+    y(t)&=-2y_1(t)+y_2(t)\\
+    &=-2\begin{bmatrix}
+        e^t\\-2e^t
+    \end{bmatrix}+\begin{bmatrix}
+        3e^{-2t}\\e^{-2t}
+    \end{bmatrix}\\
+    &=\tcbhighmath[boxrule=0.4pt,colframe=blue,colback=blue!10!white]{\begin{bmatrix}
+        -2e^t+3e^{-2t}\\4e^t+e^{-2t}
+    \end{bmatrix}}
+\end{align*}
+
+\end{document}

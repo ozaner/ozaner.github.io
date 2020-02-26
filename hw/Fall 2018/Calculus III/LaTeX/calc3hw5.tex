@@ -1,0 +1,221 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#5}
+\author{Ozaner Hansha}
+\date{October 29, 2018}
+\maketitle
+
+\section*{Exercise 1}
+Consider the function:
+$$f(x,y)=-xy+3y+x^2y$$
+
+\subsection*{Part a}
+\textbf{Problem:} Find the critical points of $f$.
+\\\\
+\textbf{Solution:} The critical points of $f$ are where its gradient equals 0:
+
+$$\nabla f(x,y)=(2xy-y^2,x^2-2xy+3)$$
+
+This gives us the following system of equations:
+\begin{align}
+2xy-y^2&=0\\
+x^2-2xy+3&=0
+\end{align}
+
+Note that we can factor (1) to $y(2x-y)$. This means that, if the system can be satisfied, it will only be at $y=0$ or $y=2x$. Plugging both options into (2) we get two possible equations:
+\begin{align*}
+x^2+3&=0\\
+-3x^2+3&=0
+\end{align*}
+
+The first equation has no real solutions, and the second is zero at $x=\pm1$. This leaves us with two critical points of the form $(x,2x)$:
+\begin{align*}
+  \mathbf x_{c1}&=(1,2)\\
+  \mathbf x_{c2}&=(-1,-2)
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Find the equation of the tangent plane to $z=f(x,y)$ at $(2,1)$.
+\\\\
+\textbf{Solution:} Plugging the point into the gradient we find $\nabla f(2,1)=(3,3)$. This means the normal vector of the plane is $(3,3,-1)$. Now plugging in $f(2,1)=5$ we get $\mathbf x_0=(2,1,5)$, giving us the equation for the plane:
+
+$$(3,3,1)\cdot(\mathbf x-(2,1,5))$$
+
+Or, by distributing the dot product, we get the more explicit:
+
+$$3x+3y-z=4$$
+
+\subsection*{Part c}
+\textbf{Problem:} Suppose the $+y$-axis is North, the $+x$-axis is East, and $f(x,y)$ represents the altitude at $(x,y)$. If you pour at glass of water out at $(2,1)$, where would the water flow?
+\\\\
+\textbf{Solution:} The water would flow in the opposite direction of the steepest ascent (i.e the gradient). $\nabla f(2,1)=(3,3)$ meaning the gradient is pointed at a $45^\circ$ angle in between North and East. The negative direction to that is Southwest.
+
+\subsection*{Part d}
+\setcounter{equation}{0}
+\textbf{Problem:} Find all the points $(x,y)$ such that the normal vector to the tangent plane at $(x,y)$ is a multiple of $(1,1,1)$.
+\\\\
+\textbf{Solution:} Recall that the normal to the tangent plane at $(x,y)$ is given by:
+$$(\nabla f(x,y),-1)=(2xy-y^2,x^2-2xy+3,-1)$$
+
+Because the third component of this normal vector is constant, it can only be proportional to $(1,1,1)$ if the other components equal $-1$:
+\begin{align}
+  2xy-y^2&=-1\\
+  x^2-2xy+3&=-1
+\end{align}
+
+If we subtract (1) from (2) and solve for $y^2$ we get:
+\begin{equation}
+  y^2=x^2+5
+\end{equation}
+
+Now we solve (1) for $x$ and square it:
+\begin{equation}
+  x=\frac{y^2-1}{2y}\implies x^2=\frac{y^4-2y^2+1}{4y^2}
+\end{equation}
+
+Now if we plug (4) in for $x^2$ in (3) and simplify we get:
+\begin{equation}
+  y^2=\frac{y^4-2y^2+1}{4y^2}+5\implies 3y^2-18y^2-1=0
+\end{equation}
+
+This is just a quadratic equation in $y^2$. Applying the quadratic formula garners us:
+$$y^2=3\pm\frac{2\sqrt{21}}{3}$$
+
+However only one of the above solutions is non-negative and, since we are dealing in the reals, $y^2$ can only be equal to the non-negative case. Plugging this into (3) to solve for $x^2$ we arrive at:
+$$x^2=-2+\frac{2\sqrt{21}}{3}\ \ \ \ \ \  y^2=3+\frac{2\sqrt{21}}{3}$$
+
+While at first there would appear to be 4 solutions, one for each sign combination, there are actually 2. The signs of $x$ and $y$ must match because $y^2-1>0$ and if we rearrange (1) we get $y^2-1=2xy$. The only way for both of those statements to be true in the reals is if $xy>0$, i.e. have the same sign. Thus our answers are:
+$$\left(\sqrt{-2+\frac{2\sqrt{21}}{3}},\sqrt{3+\frac{2\sqrt{21}}{3}}\right)\text{ and   } \left(-\sqrt{-2+\frac{2\sqrt{21}}{3}},-\sqrt{3+\frac{2\sqrt{21}}{3}}\right)$$
+
+\section*{Exercise 2}
+Consider the function:
+$$f(x,y)=xy^2-x^4-y^4$$
+
+\subsection*{Part a}
+\setcounter{equation}{0}
+\textbf{Problem:} Find the critical points of $f$.
+\\\\
+\textbf{Solution:} The critical points of $f$ are where its gradient equals 0:
+
+$$\nabla f(x,y)=(y^2-4x^3,2xy-4y^3)$$
+
+This gives us the following system of equations:
+\begin{align}
+y^2-4x^3&=0\\
+2xy-4y^3&=0
+\end{align}
+
+Note that we can factor (2) to $y(2x-4y^2)$. This means that, if the system can be satisfied, it will only be at $y=0$ or $x=2y^2$. Plugging both options into (1) equation we get two possible equations:
+\begin{align*}
+-4x^3&=0\\
+y^2-4(2y^2)^3=y^2-32y^6=y^2(1-32y^4)&=0
+\end{align*}
+
+The first equation implies $x=0$, and the second has zeros at $y=\pm\frac{2^{3/4}}{4}$. Plugging this $y$ into (1) we see that $x=2^{-3/2}$. This leaves us with three critical points:
+\begin{align*}
+  \mathbf x_{c1}&=(0,0)\\
+  \mathbf x_{c2}&=(2^{-3/2},2^{-5/4})\\
+  \mathbf x_{c3}&=(2^{-3/2},-2^{-5/4})
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Find the global max of $f$ and, if there is one, find all the local maximums as well.
+\\\\
+\textbf{Solution:} Any local maximum will be at a critical point (we need not check any boundary because we are considering the entire plane). We already calculated the critical points so we just need to plug them into the function:
+\begin{gather*}
+  f(\mathbfx_{c1})=0\\
+  f(\mathbfx_{c2})=f(\mathbfx_{c3})=\frac{1}{64}
+\end{gather*}
+
+And so there are two local maximums 0 and $\frac{1}{64}$ and of those the global maximum is $\frac{1}{64}$.
+
+\subsection*{Part c}
+\textbf{Problem:} Find the global minimum of $f$ and, if there is one, find all the local minimums as well.
+\\\\
+\textbf{Solution:} Note that as either $x$ or $y$ approaches $\infty$, $f(x,y)$ approaches $-\infty$. This is because the $-x^4$ and $-y^4$ grow asymptotically faster than any other term and since they are unbounded, the function has no minimum.
+
+\section*{Exercise 3}
+Consider the function:
+$$f(x,y)=\frac{x^2y}{1+x^4+y^4}$$
+
+\subsection*{Part a}
+\textbf{Problem:} Find the critical points of $f$.
+\\\\
+\textbf{Solution:} The critical points of $f$ are where its gradient equals 0:
+$$\nabla f(x,y)=\frac{x}{(x^4+y^4+1)^2}(2y(x^4-y^4-1),x(x^4-3y^4+1))$$
+
+Because of the factor in front of the vector, all points where $x=0$ are critical points. This includes $(0,0)$ which means we can ignore the factor of $2y$ and $x$ respectively in the following system of equations:
+\begin{align*}
+x^4-y^4-1&=0\\
+x^4-3y^4+1&=0
+\end{align*}
+
+If we subtract the first equation from the second we get $y^2=1$ and plugging that back into the equations we get $x^4=2$. This leaves us with 4 possible cases on top of the infinity of cases where $x=0$:
+
+$$\mathbf x_{c1}=(\sqrt[4]{2},1)\ \ \  \mathbf x_{c2}=(-\sqrt[4]{2},1)\ \ \  \mathbf x_{c3}=(\sqrt[4]{2},-1)\ \ \  \mathbf x_{c4}=(-\sqrt[4]{2},-1)$$
+
+\subsection*{Part b}
+\textbf{Problem:} Find the global max of $f$ and, if there is one, find all the local maximums as well.
+\\\\
+\textbf{Solution:} The maximums of this function must be at critical points:
+$$f(\mathbf x_{c1})=f(\mathbf x_{c2})=2^{-3/2}$$
+
+And so $2^{-3/2}$ is the global and only maximum of the function.
+
+\subsection*{Part c}
+\textbf{Problem:} Find the global minimum of $f$ and, if there is one, find all the local minimums as well.
+\\\\
+\textbf{Solution:} The minimums of this function must be at critical points:
+$$f(\mathbf x_{c3})=f(\mathbf x_{c4})=-2^{-3/2}$$
+
+And so $-2^{-3/2}$ is the global and only minimum of the function.
+
+\section*{Exercise 4}
+Consider the function:
+$$f(x,y)=\frac{x^2y+y^2}{1+x^4+y^2}$$
+
+\subsection*{Part a}
+\textbf{Problem:} Give the equations of the tangent planes to $z=f(x,y)$ at $(1,1)$ and $(-1,-1)$.
+\\\\
+\textbf{Solution:} Using the quotient rule, we first find the gradient of $f$:
+$$\nabla f(x,y)=\frac{1}{(x^4+y^2+1)^2}(2xy(x^4-2x^2y-y^2-1),x^6+x^2-x^2y^2+2yx^4+2y)$$
+
+We then evaluate both the function and the gradient to find: $\nabla f(1,1)=\frac{1}{9}(-2,5)$ and $f(1,1)=\frac{2}{3}$. This gives us the following equation for the tangent plane at $(1,1)$:
+$$(-2,5,-9)\cdot(\mathbf x-(1,1,\frac{2}{3}))$$
+
+Or solved out explicitly:
+$$-2x+5y-9z=-3$$
+
+We can do the same for $(-1,-1)$: $\nabla f(-1,-1)=\frac{1}{3}(2,-1)$ and $f(-1,-1)=0$. This gives us the following equation for the tangent plane:
+$$(2,-1,-3)\cdot(\mathbf x-(-1,-1,0))$$
+
+Or solved out explicitly:
+$$2x-y-3z=-1$$
+
+\subsection*{Part b}
+\textbf{Problem:} The two planes above intersect at some line. Give a parameterization of this line.
+\\\\
+\textbf{Solution:} We simply have to calculate 2 points on this line. First we'll take $z=0$ and solve the following:
+\begin{align*}
+  -2x+5y=-3\\
+  2x-y=-1
+\end{align*}
+
+This system gives the point $\mathbf x_0=(-1,-1,0)$. Now we'll take $y=0$ and solve the following:
+\begin{align*}
+  -2x-9z=-3\\
+  2x-3z=-1
+\end{align*}
+
+This system gives the point $\mathbf x_1=(0,0,\frac{1}{3})$. Now we just plug them into the following parameterization:
+$$\mathbf x(t)=\mathbf x_0+t(\mathbf x_0-\mathbf x_1)$$
+
+And we get (after scaling $\mathbf x_0-\mathbf x_1$ by 3):
+$$\mathbf x(t)=(-1,-1,0)+t(3,3,1)$$
+
+\end{document}

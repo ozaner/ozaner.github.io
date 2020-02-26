@@ -1,0 +1,187 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 6b}
+\author{Ozaner Hansha}
+\date{October 24, 2018}
+\maketitle
+
+In problems 1-4, let $f:A\to B$. Also $\operatorname{im}_f(X)$ refers to the image of $X\subseteq A$ under $f$ and $\operatorname{preim}_f(X)$ refers to the preimage of $X\subseteq B$ under $f$.
+
+% First, a pair of definitions that you have probably seen before.  If we have a function f: A → B, for X ⊆ A, the image of X under f, denoted imf(X), is the set {f(x):  x ∈ X}. And, for Y ⊆ B, the preimage of Y under f, denoted preimf(Y), is the set {x ∈ X:  f(x) ∈ Y}.
+
+% CAN BE FALSE, give COUNTEREX
+
+\section*{Problem 1}
+\subsection*{Part a}
+\textbf{Problem:} Prove that for any 2 subsets $X_1,X_2\subseteq A$ the following holds:
+$$\operatorname{im}_f(X_1\cup X_2)=\operatorname{im}_f(X_1)\cup\operatorname{im}_f(X_2)$$
+\textbf{Solution:} Here's a proof.
+\begin{align*}
+  &y\in\operatorname{im}_f(X_1\cup X_2)\\
+  &=(\exists x\in X_1\cup X_2)\ y\in\operatorname{im}_f(x)\tag{def. of image of a set}\\
+  &=(\exists x)(x\in X_1\vee x\in X_2)\wedge y\in\operatorname{im}_f(x)\tag{def. of set union}\\
+  &=(\exists x_1\in X_1\wedge y\in\operatorname{im}_f(x_1))\vee (\exists x_2\in X_2\wedge y\in\operatorname{im}_f(x_2)) \tag{distr. $\wedge$}\\
+  &=y\in\operatorname{im}_f(X_1)\vee y\in\operatorname{im}_f(X_2)\tag{def. of image of a set}\\
+  &=y\in(\operatorname{im}_f(X_1)\cup\operatorname{im}_f(X_2))\tag{def. of set union}
+\end{align*}
+Thus the two sets are equivalent.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that for any 2 subsets $X_1,X_2\subseteq A$ the following holds:
+$$\operatorname{im}_f(X_1\cap X_2)=\operatorname{im}_f(X_1)\cap\operatorname{im}_f(X_2)$$
+\textbf{Solution:} This is false. Consider the following function $f$ and subsets of the domain $A$ and $B$:
+\begin{gather*}
+  f:\{1,2\}\to\{1\}\\
+  f(1)=f(2)=1\\
+  A=\{1\}\subseteq\{1,2\}\\
+  B=\{2\}\subseteq\{1,2\}\\
+\end{gather*}
+
+Now we will show the counterexample:
+\begin{gather*}
+  A\cap B=\emptyset\\
+  \operatorname{im}_f(A\cap B)=\emptyset\\
+  \operatorname{im}_f(A)=\{1\}\\
+  \operatorname{im}_f(B)=\{1\}
+\end{gather*}
+
+And so because $\emptyset\not=\{1\}$ the statement is not true in general.
+
+\section*{Problem 2}
+\subsection*{Part a}
+\textbf{Problem:} Prove that for any 2 subsets $Y_1,Y_2\subseteq B$ the following holds:
+$$\operatorname{preim}_f(Y_1\cup Y_2)=\operatorname{preim}_f(Y_1)\cup\operatorname{preim}_f(Y_2)$$
+\\\\
+\textbf{Solution:} Here's a proof.
+\begin{align*}
+  &x\in\operatorname{preim}_f(Y_1\cup Y_2)\\
+  &=(\exists y\in Y_1\cup Y_2)\ x\in\operatorname{preim}_f(y)\tag{def. of preimage of a set}\\
+  &=(\exists y)(y\in Y_1\vee y\in Y_2)\wedge x\in\operatorname{preim}_f(y)\tag{def. of set union}\\
+  &=(\exists y_1\in Y_1\wedge x\in\operatorname{preim}_f(y_1))\vee (\exists y_2\in Y_2\wedge x\in\operatorname{preim}_f(y_2)) \tag{distr. $\wedge$}\\
+  &=x\in\operatorname{preim}_f(Y_1)\vee x\in\operatorname{preim}_f(Y_2)\tag{def. of preimage of a set}\\
+  &=x\in(\operatorname{preim}_f(Y_1)\cup\operatorname{preim}_f(Y_2))\tag{def. of set union}
+\end{align*}
+Thus the two sets are equivalent.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that for any 2 subsets $Y_1,Y_2\subseteq B$ the following holds:
+$$\operatorname{preim}_f(Y_1\cap Y_2)=\operatorname{preim}_f(Y_1)\cap\operatorname{preim}_f(Y_2)$$
+\\\\
+\textbf{Solution:} Here's a proof:
+\begin{align*}
+  x\in\operatorname{preim}_f(Y_1\cap Y_2)&\equiv f(x)\in Y_1\cap Y_2\\
+  &\equiv f(x)\in Y_1\wedge f(x)\in Y_2\\
+  &\equiv x\in\operatorname{preim}_f(Y_1)\wedge x\in\operatorname{preim}_f(Y_2)\\
+  &\equiv x\in(\operatorname{preim}_f(Y_1)\cap\operatorname{preim}_f(Y_2))\\
+\end{align*}
+
+And so the two statements are equivalent.
+
+\section*{Problem 3}
+\subsection*{Part a}
+\textbf{Problem:} Prove that for any subset $X\subseteq A$ the following holds:
+$$X\subseteq\operatorname{preim}_f(\operatorname{im}_f(X))$$
+\textbf{Solution:} We first need to establish the following results:
+$$A\subseteq B\implies\operatorname{im}_f(X_1)\subseteq\operatorname{im}_f(X_2)\\$$
+$$A\subseteq B\implies\operatorname{preim}_f(X_1)\subseteq\operatorname{preim}_f(X_2)$$
+% \{y\in Y\mid(\exists x\in X_1) f(x)=y\}&\not=\{y\in Y\mid(\exists x\in X_2) f(x)=y\}
+
+Here's a proof by contraposition:
+\begin{align*}
+  &\ \operatorname{im}_f(X_1)\not\subseteq\operatorname{im}_f(X_2) \tag{assume negative consequent}\\
+  &\ \implies (\exists y\in\operatorname{im}_f(X_1))(\exists x)xRy\wedge x\not\in X_2\\
+  &\implies(\exists x\not\in X_2)\ x\in X_1\\
+  &\implies X_1\not\subseteq X_2 \tag{prove negative antecedent}
+\end{align*}
+
+If we replaced image with preimage the proof would stay the same, and so both statements are true.
+\\
+
+Here is the actual proof (using the two things we proved above):
+\begin{align*}
+  x\in X&\implies\{x\}\subseteq X\\
+  &\implies\operatorname{im}_f(\{x\})\subseteq \operatorname{im}_f(X)\\
+  &\implies\operatorname{preim}_f(\operatorname{im}_f(\{x\}))\subseteq \operatorname{preim}_f(\operatorname{im}_f(X))\\
+  &\implies x\in\operatorname{preim}_f(\operatorname{im}_f(X))
+\end{align*}
+
+The chain of implications implies that the left hand side is a subset of the right hand side.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that for any subset $X\subseteq A$ the following holds:
+$$X=\operatorname{preim}_f(\operatorname{im}_f(X))$$
+\textbf{Solution:} This is false. Consider the following function $f$ and the subset of the domain $X$:
+\begin{gather*}
+  f:\{1,2\}\to\{1,2\}\\
+  f(1)=f(2)=1\\
+  X=\{1\}\subseteq\{1,2\}
+\end{gather*}
+
+Now we will show the counterexample:
+\begin{gather*}
+  \operatorname{im}_f(X)=\{1\}\\
+  \operatorname{preim}_f(\operatorname{im}_f(X))=\{1,2\}\not=\{1\}
+\end{gather*}
+
+And so because $X\not=\{1,2\}$ the statement is not true in general.
+
+\section*{Problem 4}
+\subsection*{Part a}
+\textbf{Problem:} Prove that for any subset $Y\subseteq B$ the following holds:
+$$Y\subseteq\operatorname{im}_f(\operatorname{preim}_f(Y))$$
+\textbf{Solution:} This is false. Consider the following function $f$ and the subset of the codomain $Y$:
+\begin{gather*}
+  f:\{1,2\}\to\{1,2,3\}\\
+  f(1)=f(2)=1\\
+  Y=\{1,3\}\subseteq\{1,2,3\}
+\end{gather*}
+
+Now we will show the counterexample:
+\begin{gather*}
+  \operatorname{preim}_f(Y)=\{1,2\}\\
+  \operatorname{im}_f(\operatorname{preim}_f(Y))=\{1\}\not\supseteq\{1,3\}
+\end{gather*}
+
+And so because $Y\not\subseteq\{1\}$ the statement is not true in general.
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that for any subset $Y\subseteq B$ the following holds:
+$$Y=\operatorname{im}_f(\operatorname{preim}_f(Y))$$
+\textbf{Solution:} This is false. Consider the following function $f$ and the subset of the codomain $Y$:
+\begin{gather*}
+  f:\{1,2\}\to\{1,2,3\}\\
+  f(1)=f(2)=1\\
+  Y=\{1,3\}\subseteq\{1,2,3\}
+\end{gather*}
+
+Now we will show the counterexample:
+\begin{gather*}
+  \operatorname{preim}_f(Y)=\{1,2\}\\
+  \operatorname{im}_f(\operatorname{preim}_f(Y))=\{1\}\not=\{1,3\}
+\end{gather*}
+
+And so because $Y\not=\{1\}$ the statement is not true in general.
+
+\section*{Problem 5}
+\subsection*{Part a}
+\textbf{Problem:} For any rational polynomial $p(x)$ there is a rational polynomial with integer coefficients that has the same roots.
+\\\\
+\textbf{Solution:} Notice that the roots to a rational polynomial with rational coefficients can be described as the solution(s) to the following equation:
+
+$$a_nx^n+a_{n-1}x^{n-1}+\cdots+a_1x+a_0=0$$
+
+Notice that because each $a_i$ is a rational number and because there is a finite number of these coefficients, it is always possible to find a greatest common denominator for them (simply multiply all their denominators if necessary). Notice that when we multiply the equation by this GCD, the right hand side remains 0. This means the roots are the same in our now integer coefficient rational polynomial.
+
+\subsection*{Part b}
+\textbf{Problem:} For any rational polynomial with integer coefficients $p(x)$, if $p(a)=0$ then $a\in\mathbb Z$.
+\\\\
+\textbf{Solution:} This is false. Consider the rational polynomial with integer coefficients $2x^2-5x+2$. Its zeros can be described as the solutions to the following equation:
+$$2x^2-5x+2=0$$
+The solutions to this equation are $x=\frac{1}{2}$ and $x=2$. And so the statement is false.
+
+\end{document}

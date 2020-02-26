@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 11b}
+\author{Ozaner Hansha}
+\date{December 12, 2018}
+\maketitle
+
+\section*{Problem 1}
+\subsection*{Part a}
+\textbf{Problem:} Prove that the additive inverses of every element in a field are unique:
+$$\left(\forall x\in F\right) x+a=0_F\wedge x+b=0_F\rightarrow a=b$$
+\textbf{Solution:} Consider the following chain of equalities:
+\begin{align*}
+  a&=a+0_F\tag{additive identity}\\
+  &=a+(x+b)\tag{given}\\
+  &=(a+x)+b\tag{associativity $+$}\\
+  &=(x+a)+b\tag{commutativity $+$}\\
+  &=0_F+b\tag{given}\\
+  &=b\tag{additive identity}
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Prove that the multiplicative inverses of every element in a field are unique:
+$$\left(\forall x\in F\right) x\cdot c=1_F\wedge x\cdot d=1_F\rightarrow a=b$$
+\textbf{Solution:} Consider the following chain of equalities:
+\begin{align*}
+  c&=c\cdot 1_F\tag{multiplicative identity}\\
+  &=c\cdot(x\cdot d)\tag{given}\\
+  &=(c\cdot x)\cdot d\tag{associativity $\cdot$}\\
+  &=(x\cdot c)\cdot d\tag{commutativity $\cdot$}\\
+  &=1_F\cdot d\tag{given}\\
+  &=d\tag{multiplicative identity}
+\end{align*}
+
+\section*{Problem 2}
+\subsection*{Part a}
+\textbf{Problem:} Prove that the additive identity $0_F$ in a field is an absorbing element under multiplication:
+$$\left(\forall x\in F\right) x\cdot 0_F=0_F$$
+\textbf{Solution:} First note the following:
+\begin{align*}
+  x\cdot 0_F&=x\cdot(0_F+0_F)\tag{additive identity}\\
+  &=x\cdot 0_F+x\cdot 0_F\tag{distributive property}
+\end{align*}
+
+Now we can see that:
+\begin{align*}
+  x\cdot 0_F&=x\cdot 0_F+x\cdot 0_F\\
+  x\cdot 0_F+(-x\cdot 0_F)&=x\cdot 0_F+x\cdot 0_F+(-x\cdot 0_F)\tag{additive inverse exists}\\
+  0_F&=(x\cdot 0_F+x\cdot 0_F)+(-x\cdot 0_F)\tag{additive inverse}\\
+  0_F&=x\cdot 0_F+(x\cdot 0_F+(-x\cdot 0_F))\tag{associativity}\\
+  0_F&=x\cdot 0_F+0_F\tag{additive inverse}\\
+  0_F&=x\cdot 0_F\tag{additive identity}
+\end{align*}
+
+\subsection*{Part b}
+\textbf{Problem:} Prove the following:
+$$\left(\forall x,y\in F\right) x\cdot y=0_F\rightarrow x=0_F\wedge y=0_F$$
+\\\\
+\textbf{Solution:} W.l.o.g we can split this proof into two cases, one where $x=0_F$, and one where $x\not=0_F$. These two cases exhaust the elements of the field. The first case is an immediate consequence of Part a:
+$$x=0\rightarrow xy=0$$
+
+Now we consider the case where $x\not=0$.
+\begin{align*}
+  xy&=0\\
+  x^-1(xy)&=(x^-1)0\tag{nonzero elements have multiplicative inverse}\\
+  (x^-1x)y&=(x^-1)0\tag{associativity of multiplication}\\
+  (1_F)y&=(x^-1)0\tag{multiplicative inverse}\\
+  (1_F)y&=(x^-1)0\tag{multiplicative identity}\\
+  y&=(x^-1)0\tag{multiplicative identity}\\
+  y&=0\tag{part a}\\
+\end{align*}
+
+And we are done. We showed that either $x=0_F$ or, if not, $y=0_F$. Note that this does not preclude them both being $0_F$.
+
+\section*{Problem 3}
+\textbf{Problem:} Prove that for any prime $p$, every element in $\mathbb Z_p$ has a multiplicative inverse.
+\\\\
+\textbf{Solution:} We can phrase this as:
+$$\left(\forall n\in\mathbb Z_p\right) n\not=0\rightarrow \left(\exist m\in\mathbb Z_p\right) mn=1$$
+
+So let us assume the antecedent and derive the consequent. Note that since $p$ is prime and because we are assuming $n\not=0$ the following is true:
+$$\operatorname{gcd(n,p)}=1$$
+
+This is because $p$ is prime and $n$ cannot divide it. We know that GCD's have the following property for some $a,b\in\mathbb Z$:
+$$1=\operatorname{gcd(n,p)}=an+bp$$
+
+Now let us evaluate this equation in mod $p$:
+$$[1]_p=[an+bp]_p=[an]_p+=[bp]_p=[a]_p[n]_p+[b]_p[p]_p$$
+
+Now note that $[p]_p=[0]_p$ leaving us with:
+$$[1]_p=[a]_p[n]_p$$
+
+And we are done. We have constructed an inverse of $n$, namely $a$.
+
+\section*{Problem 4}
+\textbf{Problem:} Define  $f:\mathbb Z_{\le1}\to F$ recursively as follows:  $f(1)=1_F$, and for $n\le2$, $f(n) = f(n - 1) + 1_F$. Prove that $f$ is injective. Deduce that $F$ must be infinite.
+\\\\
+\textbf{Solution:} Proving the injectivity of $f$ means proving:
+$$\left(\forall a,b\in\mathbb Z_{\le1}\right) f(a)=f(b)\rightarrow a=b$$
+
+First let us consider the following notation:
+$$\underbrace{1_F+1_F+\cdots+1_F}_{n}\equiv n_F$$
+
+Now let us consider the following proposition:
+$$P(n)\equiv n_F<n_F+1_F$$
+
+This is a consequence of $0_F<1_F$ and the order field axiom:
+$$a<b\rightarrow a+1_F<b+1_f$$
+
+using induction on these two it's clear that $P(n)$ holds for all $\mathbb Z_{\le 1}$.
+
+Now since the function $f(n)$ is increasing with every iteration, we know that only $f(1)=1_F$ because $f(1+n)=(1+n)_F$ for $n>1$. We can make the same argument inductively for all integers above $1$ meaning our function is one-to-one.
+
+\section*{Problem 5}
+\textbf{Problem:} Consider the set of real numbers of the form $p+q\sqrt 2$ where $p,q\in\mathbb Q$. Prove that this is closed under addition and multiplication and contains multiplicative and additive inverses for every element.
+\\\\
+\textbf{Solution:} It is closed under addition:
+\begin{align*}
+  &\phantom{=}(p+q\sqrt 2)+(r+s\sqrt 2)\\
+  &=(p+r)+(q\sqrt 2+s\sqrt 2)\tag{commutativity/associativity}\\
+  &=(p+r)+(q+s)\sqrt 2\tag{distributivity}
+\end{align*}
+
+Note that the rationals are closed under addition (we can always put two fractions in terms of a common denominator then add), and so $(p+r)$ and $(q+s)$ are rationals. Thus addition is closed.
+
+Now for multiplication:
+\begin{align*}
+  &\phantom{=}(p+q\sqrt 2)(r+s\sqrt 2)\\
+  &=pr+ps\sqrt 2+qr\sqrt 2+2qs\tag{foil (distributivity)}\\
+  &=(pr+2qs)+ps\sqrt 2+qr\sqrt 2\tag{commutativity/associativity}\\
+  &=(pr+2qs)+(ps+qr)\sqrt 2\tag{distributivity}
+\end{align*}
+
+Due to the closure of rationals under multiplication (multiply numerators then denominators) and addition, $(pr+2qs)$ and $(ps+qr)$ are rationals and so multiplication is closed.
+
+Now for inverse additive elements:
+$$-(p+q\sqrt 2)&=-p-q\sqrt 2$$
+
+Because multiplication is closed under the rationals, we can multiply our element by $-1$ to arrive at the inverse which is also in the field.
+
+Finally, the multiplicative inverses:
+\begin{align*}
+  \frac{1}{p+q\sqrt 2}&=\frac{1}{p+q\sqrt 2}\cdot\frac{p-q\sqrt 2}{p-q\sqrt 2}\\
+  &=\frac{p-q\sqrt 2}{p^2-2q^2}\\
+  &=\frac{p}{p^2-2q^2}+\frac{-q}{p^2-2q^2}\sqrt 2
+\end{align*}
+
+And since the rationals are closed under addition, subtraction, multiplication, and division $\frac{p}{p^2-2q^2}$ is a rational and so is $\frac{-q}{p^2-2q^2}$. Thus, all of the elements in our fields have multiplicative inverses in the field. This presupposes $p$ and $q$ are non-zero but if they were then the element of $F$ they comprise would be 0 and thus not have an inverse regardless.
+
+\end{document}

@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Intro to Math Reasoning HW 8b}
+\author{Ozaner Hansha}
+\date{November 7, 2018}
+\maketitle
+
+\section*{Problem 1}
+\textbf{Problem:} Let $\le_A$ be a partial order on $A$ and let $X$ be a nonempty subset of $A$. Prove that $m\in A$ is a minimum for $X$ iff $m$ is a lower bound for $X$ and $m\in X$.
+\\\\
+\textbf{Solution:} Note that the definition of a minimum on $X$ is:
+$$(\forall x\in X)\ m\in X\wedge m\le_Ax$$
+
+Now note that if $m$ was a lower bound of $X$ it would satisfy the following:
+$$(\forall x\in X)\ m\le_Ax$$
+
+And the conjunction of this and $m\in X$ is:
+$$(\forall x\in X)\ m\in X\wedge m\le_Ax$$
+
+And so of course, a lower bound that is also in $X$ is also a minimum and vice versa. They are equivalent statements. Minimums are just lower bounds in the set they minimize. It's directly implied by the definition...
+
+\section*{Problem 2}
+\textbf{Problem:} Let $\le_A$ be a partial order on $A$ and let $X$ be a nonempty finite subset of $A$. Prove that for all $x\in X$ there is a maximal element $m\in X$ such that $x\le_Am$.
+\\\\
+\textbf{Solution:} Recall that all finite posets are well-founded. This means, by definition, that any nonempty subset of $X$ (including $X$ itself) has a minimum and maximum element. The definition of a maximum element is the proposition we are trying to prove. If I use the well-foundedness of finite sets there is nothing to prove...
+
+\section*{Problem 3}
+\textbf{Problem:} Given some set $U$, prove that for any nonempty set $X\in P(U)$, there is a unique set $G\in P(U)$ which is the greatest lower bound of $X$ under the $\subseteq$ partial order.
+\\\\
+\textbf{Solution:} The greatest lower bound of $X$ under the subset relation would be the intersection of all nonempty subsets of $U$. This is because for a set $G$ to be a lower bound of $X$, it must be a subset of all the element in $X$. The arbitrary intersection of $n$ sets is precisely the maximal (that is containing the most elements possible) set that contains only the common elements of those $n$ sets, even for infinite $n$.
+
+It is clear then that the greatest lower bound is:
+$$\bigcap X=\{a\mid (\forall x\in X)\ a\in x\}$$
+
+And this set will always at least be the empty set (that is if the condition above never holds), which is contained in $P(X)$, thus still qualifying it for being a lower bound of $X$.
+
+\section*{Problem 4}
+\textbf{Problem:} Prove that the following relation on $\mathbb R$ is an equivalence relation:
+$$xRy\equiv (\exists k\in\mathbb Z)\ x-y=2\pi k$$
+Then give the equivalence classes of 0 and $\frac{\pi}{2}$.
+\\\\
+\textbf{Solution:} First we'll prove the 3 properties that make a partial order an equivalence relation.
+\subsubsection*{Reflexivity}
+\begin{align*}
+xRx\equiv (\exists k\in\mathbb Z)\ x-x&=2\pi k\\
+0&=2\pi k
+\end{align*}
+
+And since $2\pi k=0$ when $k=0\in\mathbb Z$, the relation is satisfied and thus reflexive.
+
+\subsubsection*{Symmetry}
+\begin{align*}
+xRy&\equiv (\exists k\in\mathbb Z)\ x-y=2\pi k\\
+&\equiv(\exists k\in\mathbb Z)\ y-x=2\pi (-k)\tag{anti-commutativity of subtraction}\\
+&\equiv yRx\tag{closure of $\mathbb Z$ under additive inverse}
+\end{align*}
+
+Thus the relation is symmetric.
+
+\subsubsection*{Transitivity}
+\begin{align*}
+xRy&\equiv (\exists k_1\in\mathbb Z)\ x-y=2\pi k_1\tag{definition}\\
+&\rightarrow (\exists k_1\in\mathbb Z)\ -y=2\pi k_1-x\tag{arithmetic}\\
+yRz&\equiv (\exists k_2\in\mathbb Z)\ y-z=2\pi k_2\tag{definition}\\
+&\rightarrow (\exists k_1\in\mathbb Z)\ y=2\pi k_2+z\tag{arithmetic}\\
+&\rightarrow(\exists k_1,k_2\in\mathbb Z)\ 0=2\pi(k_1+k_2)-x+z\tag{sum of lines 2 \& 4}\\
+&\equiv(\exists k_1,k_2\in\mathbb Z)\ z-x=2\pi(k_1+k_2)\tag{arithmetic}\\
+&\equiv(\exists k\in\mathbb Z)\ z-x=2\pi k\tag{closure of $\mathbb Z$ under addition}\\
+&\equiv zRx \tag{definition}\\
+&\equiv xRz \tag{symmetry of $R$}
+\end{align*}
+
+And so $xRy$ and $yRx$ imply $xRz$, thus the relation is transitive.
+
+\subsubsection*{Equivalence Classes}
+The equivalence classes are given below:
+\begin{align*}
+  [0]&=\{x\in\mathbb R\mid (\exists k\in\mathbb Z)\ 0-x=2\pi k\}\\
+  &=\left\{2\pi k\mid k\in\mathbb Z\right\}\\
+  \left[\frac{\pi}{2}\right]&=\left\{x\in\mathbb R\mid (\exists k\in\mathbb Z)\ \frac{\pi}{2}-x=2\pi k\right\}\\
+  &=\left\{\frac{\pi}{2}+2\pi k\mid k\in\mathbb Z\right\}\\
+\end{align*}
+
+\section*{Problem 5}
+\textbf{Problem:} Prove that the following relation on $\mathbb R$ is an equivalence relation:
+\begin{align*}
+xRy&\equiv x-y\in\mathbb Q\\
+&\equiv (\exists q\in Q)\ x-y=q
+\end{align*}
+Then give the equivalence classes of 0, $\frac{1}{2}$, and $\frac{\pi}{2}$.
+\\\\
+\textbf{Solution:} First we'll prove the 3 properties that make a partial order an equivalence relation.
+\subsubsection*{Reflexivity}
+\begin{align*}
+xRx&\equiv x-x\in\mathbb Q\\
+&\equiv 0\in\mathbb Q
+\end{align*}
+
+Which is clearly true. Thus $R$ is reflexive.
+
+\subsubsection*{Symmetry}
+\begin{align*}
+  xRy&\equiv (\exists q\in Q)\ x-y=q\\
+  &\equiv(\exists q\in Q)\ y-x=-q\tag{anti-commutativity of subtraction}\\
+  &\equiv yRx\tag{closure of $\mathbb Q$ under additive inverse}
+\end{align*}
+
+And of course $\mathbb Q$ is closed under the additive inverse because the negative of any rational number is also rational. Thus the relation is symmetric.
+
+\subsubsection*{Transitivity}
+\begin{align*}
+xRy&\equiv (\exists q_1\in Q)\ x-y=q_1\tag{definition}\\
+&\rightarrow (\exists q_1\in Q)\ -y=q_1-x\tag{arithmetic}\\
+yRz&\equiv (\exists q_2\in Q)\ y-z=q\tag{definition}\\
+&\rightarrow (\exists q_2\in Q)\ y=q_2+z\tag{arithmetic}\\
+&\rightarrow(\exists q_1,q_2\in Q)\ 0=q_1+q_2-x+z\tag{sum of lines 2 \& 4}\\
+&\equiv(\exists q_1,q_2\in Q)\ z-x=q_1+q_2\tag{arithmetic}\\
+&\equiv(\exists q\in Q)\ z-x=q\tag{closure of $\mathbb Q$ under addition}\\
+&\equiv zRx \tag{definition}\\
+&\equiv xRz \tag{symmetry of $R$}
+\end{align*}
+
+And of course $\mathbb Q$ is closed under the addition because we can always make a find a common denominator and add the numerators. Thus the relation is transitive.
+
+\subsubsection*{Equivalence Classes}
+The equivalence classes are given below:
+\begin{align*}
+  [0]&=\{x\in\mathbb R\mid (\exists q\in\mathbb Q)\ x-0=q\}=\mathbb Q\\
+  \left[\frac{1}{2}\right]&=\left\{x\in\mathbb R\mid (\exists q\in\mathbb Q)\ x-\frac{1}{2}=q\right\}=\mathbb Q\\
+  \left[\frac{\pi}{2}\right]&=\left\{x\in\mathbb R\mid (\exists q\in\mathbb Q)\ x-\frac{\pi}{2}=q\right\}\\
+  &=\left\{\frac{\pi}{2}+r\mid r\in\mathbb R\right\}\\
+\end{align*}
+
+\end{document}

@@ -1,0 +1,135 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Honors Calculus III HW \#4}
+\author{Ozaner Hansha}
+\date{October 22, 2018}
+\maketitle
+
+\section*{Exercise 1}
+\textbf{Problem:} Where is the following function continuous?
+$$f(x,y)=\begin{cases}
+          \frac{y\sin(xy)}{x^2+y^4} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} The function above is clearly continuous at all points except possibly $(0,0)$ due to a division by zero. Consider the following limit:
+
+$$\lim_{x\to\infty}f(x^{-3},x^{-1})=\lim_{x\to\infty}\frac{x^{-1}\sin(x^{-3})}{x^{-4}+x^{-4}}=\lim_{x\to\infty}\frac{x^{-1}\sin(x^{-3})}{2x^{-4}}$$
+
+We can simplify this further by taking advantage of the small angle approximation:
+
+$$\lim_{x\to 0}\sin(x)=\lim_{x\to 0}x$$
+
+We can rewrite this using infinite limits like so:
+
+$$\lim_{x\to\infty}\sin(x^{-1})=\lim_{x\to\infty}x^{-1}$$
+
+Using this, our original limit becomes:
+
+$$\lim_{x\to\infty}\frac{x^{-1}x^{-3}}{2x^{-4}}=\lim_{x\to\infty}\frac{x^{-4}}{2x^{-4}}=\lim_{x\to\infty}\frac{1}{2}=\frac{1}{2}$$
+
+Now consider the following limit:
+
+$$\lim_{x\to\infty}f(x^{-1},0)=\lim_{x\to\infty}\frac{0}{x^{-2}}=0$$
+
+And so we are left with two limits whose inputs both approach $(0,0)$ yet their outputs do not approach the same value (i.e. $\frac{1}{2}\not= 0$) and so $f$ is not continuous at $(0,0)$.
+
+\section*{Exercise 2}
+\subsection*{Part a}
+\textbf{Problem:} Is the following function continuous at $(0,0)$
+$$f(x,y)=\begin{cases}
+          \frac{x^2y^3}{x^4+y^6} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} Consider the following limit:
+
+$$\lim_{x\to\infty}f(x^{-3},x^{-2})=\lim_{x\to\infty}\frac{x^{-6}x^{-6}}{x^{-12}+x^{-12}}=\lim_{x\to\infty}\frac{x^{-12}}{2x^{-12}}=\frac{1}{2}$$
+
+Now consider this limit:
+
+$$\lim_{x\to\infty}f(x,0)=\lim_{x\to\infty}\frac{0}{x^4}=0$$
+
+Even though the inputs both approach $(0,0)$ the limits of the functions do not equal each other, thus $f$ is discontinuous at $(0,0)$.
+
+\subsection*{Part b}
+\textbf{Problem:} Is the following function continuous at $(0,0)$
+$$g(x,y)=\begin{cases}
+          \frac{x^5}{x^4+y^6} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} Notice that:
+
+$$0\le\left|g(x,y)\right|=\frac{|x|^5}{x^4+y^6}$$
+
+If we use the polar parametrizations of $x$ and $y$ we get:
+
+$$\frac{|x|^5}{x^4+y^6}=\frac{r^5|\cos^5\theta|}{r^4\cos^4\theta+r^6\sin^6\theta}=\frac{r|\cos^5\theta|}{\cos^4\theta+r^2\sin^6\theta}$$
+
+If we cancel the $\cos^4\theta$ in the numerator with the denominator we get:
+
+$$\frac{r|\cos^5\theta|}{\cos^4\theta+r^2\sin^6\theta}=\frac{r|\cos\theta|}{1+r^2\sin^2\theta\tan^4\theta}\le r=x^2+y^2$$
+
+And so we are left with the following chain of inequalities:
+
+$$0\le\left|g(x,y)\right|\le x^2+y^2$$
+
+And since it is clear that the left and right functions approach 0 as $(x,y)\to0$, we know that the middle function must as well due to the squeeze theorem. Thus $g$ is continuous at $(0,0)$.
+
+\section*{Exercise 3}
+\subsection*{Part a}
+\textbf{Problem:} Is the following function continuous at $(0,0)$
+$$f(x,y)=\begin{cases}
+          \frac{x^2y}{x^4+y^2} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} It is continuous at $(0,0)$ in the same way as the above functions, consider this limit:
+
+$$\lim_{x\to\infty}f(x^{-1},x^{-2})=\lim_{x\to\infty}\frac{x^{-2}x^{-2}}{x^{-4}+x^{-4}}=\lim_{x\to\infty}\frac{x^{-4}}{2x^{-4}}=\frac{1}{2}$$
+
+This is despite the function approaching 0 from either of the axis, meaning the function is discontinuous. To see that it is bounded note that:
+
+$$|f(x,y)|=\frac{x^2|y|}{x^4+y^2}\le\frac{x^2|y|}{2x^2y}=\frac{|y|}{2y}\le\frac{1}{2}$$
+
+And so it's bounded for the entire plane and not just the unit disc.
+
+\subsection*{Part b}
+\textbf{Problem:} Is the following function continuous at $(0,0)$
+$$g(x,y)=\begin{cases}
+          \frac{x^2y^2}{x^4+y^2} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} Yes it is, consider the following inequality:
+
+$$0\le|g(x,y)|=\frac{x^2y^2}{x^4+y^2}\le\frac{x^2y^2}{2x^2|y|}=\frac{|y|}{2}$$
+
+Since the left and right sides both have limits at 0 as $(x,y)\to(0,0)$, the squeeze theorem tells us that $g$ is continuous at $(0,0)$. To demonstrate $g$'s boundedness on the unit disc, consider the following inequality:
+
+$$|g(x,y)|\le\frac{|y|}{2}\le\frac{x^2+y^2}{2}$$
+
+Since the value $x^2+y^2$ is always 1 on the unit disc, we have shown that there is a bound of $\frac{1}{2}$ on the unit disc for $|g(x,y)|$.
+
+\section*{Exercise 4}
+\textbf{Problem:} Let $f:\mathbb R^2\to\mathbb R$ such that $f(0,0)=0$. If $f$ is continuous, is the function $g$ below also continuous:
+$$g(x,y)=\begin{cases}
+          \frac{f(x,y)}{\sqrt{x^2+y^2}} & (x,y)\not=(0,0), \\
+          0 & (x,y)=(0,0)
+          \end{cases}$$
+\textbf{Solution:} The only problem point is the origin $\mathbf 0$, so we must prove/disprove $g$ is continuous there. Since $f$ is differentiable, we know all the directional derivatives (that is, for any $\mathbf v$) exist at $\mathbf 0$:
+
+$$D_{\mathbf v}f(x,y)\Big|_{\mathbf 0}=\lim_{h\to 0}\frac{f(\mathbf 0+h\mathbf v)-f(\mathbf 0)}{h}=\lim_{h\to 0}\frac{f(h\mathbf v)}{h}=\nabla f(\mathbf 0)\cdot\mathbf v$$
+
+We can take advantage of this by calling $h:=\sqrt{x^2+y^2}$ and $\mathbf v=\frac{\mathbf x}{h}$. From this we get:
+
+$$g(h\mathbf v)=g(\mathbf x)=g(x,y)=\frac{f(x,y)}{\sqrt{x^2+y^2}}=\frac{f(h\mathbf v)}{h}$$
+
+If we take the limit of this we find:
+
+$$\lim_{h\to\infty}g(h\mathbf v)=\nabla f(\mathbf 0)\cdot\mathbf v=\|\nabla f(\mathbf 0)\|\|\mathbf v\|\cos\theta=\|\nabla f(\mathbf 0)\|\cos\theta$$
+
+We defined $\mathbf v$ to be a unit vector (since it was divided by $\sqrt{x^2+y^2}$) and so its magnitude was 1. Now we can see when $g$ is continuous at the origin. The continuity of $g$ depends on the angle of approach towards the origin and so it is not continuous. That said, if $\nabla f(\mathbf 0)=0$ then $g$ would be continuous regardless of the angle of approach as the limit would always equal 0.
+
+\end{document}

@@ -1,0 +1,300 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Theory of Probability HW \#1}
+\author{Ozaner Hansha}
+\date{September 16, 2019}
+\maketitle
+
+\begin{center}
+    \Large{\textbf{Part A}}
+\end{center}
+Problems taken from Chapters 1 and 2 of the textbook.
+
+\section*{\underline{Chapter 1}}
+
+\section*{Problem 10}
+\noindent\textbf{Problem:} In how many ways can 8 people be seated in a row if \textbf{a)} there are no restrictions on the seating arrangement? \textbf{b)} persons $A$ and $B$ must sit next to each other? \textbf{c)} there are 4 men and 4 women and no 2 men or 2 women can sit next to each other?
+\bigskip
+
+\noindent\textbf{Solution:} \textbf{a)} With no restrictions, there are $8!$ permutations of a group of 8 people and so the number of seating arrangements is given by:
+
+\begin{equation*}
+    8!=40320
+\end{equation*}
+
+\textbf{b)} If two particular people $A$ and $B$ must sit next to each other, then we can consider them a single unit. And so we have $7!$ permutations of the $AB$ group and the remaining 6 people. We then multiply this by 2 since we have a choice of either $AB$ or $BA$:
+
+\begin{equation*}
+    2\cdot 7!=10080
+\end{equation*}
+
+\textbf{c)} Disregarding the identities of the particular men and women, there are only two valid arrangements of them:
+\begin{gather*}
+    mwmwmwmw\\
+    wmwmwmwm
+\end{gather*}
+
+And for each of these two arrangements, we have to choose how to arrange the 4 men and 4 women into them, giving us:
+
+\begin{equation*}
+    2\cdot4!\cdot4!=1152
+\end{equation*}
+
+\section*{Problem 19}
+\noindent\textbf{Problem:} Seven different gifts are to be distributed among 10 children. How many distinct results are possible if no child is to receive more than one gift?
+\bigskip
+
+\noindent\textbf{Solution:} First we choose which set of 7 children get gifts from the total group of 10. Then we choose a particular gift for each of those 7 children. This is equivalent to:
+
+\begin{equation*}
+    \underbrace{\binom{10}{7}}_{\substack{\text{Who gets}\\\text{presents}}}\mkern-35mu\overbrace{7!}^{\substack{\text{Which presents}\\\text{they get}}}\mkern-35mu=604800
+\end{equation*}
+
+\section*{Problem 22}
+\noindent\textbf{Problem:} A person has 8 friends, of whom 5 will be invited to a party. \textbf{a)} How many choices of invitees are there if 2 of the friends are feuding and will not attend together? \textbf{b)} How many choices are there if 2 of the friends will only attend together?
+\bigskip
+
+\noindent\textbf{Solution:} \textbf{a)} is given by the total number of combinations of friends minus the number of combinations that have the two friends:
+
+\begin{equation*}
+    \underbrace{\binom{8}{5}}_{\substack{\text{all combos}\\ \text{of friends}}}\mkern-5mu-\underbrace{\overbrace{\binom{2}{2}}^{\substack{\text{feuding}\\ \text{friends}}}\overbrace{\binom{6}{3}}^{\substack{\text{the}\\ \text{rest}}}}_{\text{impossible cases}}=36
+\end{equation*}
+\bigskip
+
+\textbf{b)} is given by the number of combinations where the two close friends show up together plus the number of combinations where they do not:
+
+\begin{equation*}
+    \underbrace{\binom{6}{5}}_{\substack{\text{close friends}\\ \text{don't show}}}\mkern-12mu+\,\,\underbrace{\overbrace{\binom{2}{2}}^{\substack{\text{close}\\ \text{friends}}}\overbrace{\binom{6}{3}}^{\substack{\text{the}\\ \text{rest}}}}_{\substack{\text{close friends}\\ \text{show up}}}=26
+\end{equation*}
+
+\section*{\underline{Chapter 2}}
+\section*{Problem 10}
+\noindent\textbf{Problem:} 60\% of the students at a school wear wear neither a ring nor a necklace. 20\% wear a ring and 30\% wear a necklace. \textbf{a)} What's the probability that any given student is wearing a ring \textit{or} a necklace? \textbf{b)} What about a ring \textit{and} a necklace?
+\bigskip
+
+\noindent\textbf{Solution:} \textbf{a)} Letting $R$ be the event that a student wears a ring, and $N$ the event they wear a necklace, the problem statement tells us that the event a student wears neither (i.e. $R^\complement N^\complement$) is $0.6$. This implies that the probability a student wears a ring or necklace (i.e. $R\cup N$) is given by:
+
+\begin{equation*}
+    P((R^\complement N^\complement)^\complement)=P(R\cup N)=1-0.6=0.4
+\end{equation*}
+
+\textbf{b)} We can find the probability that a student wears both (i.e. $RN$) by plugging in our known probabilities into the inclusion-exclusion principle and solving for $P(RN)$:
+
+\begin{align*}
+    P(R\cup N)&=P(R)+P(N)-P(RN)\\
+    0.4&=0.2+0.3-P(RN)\\
+    \implies P(RN)&=0.1
+\end{align*}
+
+\section*{Problem 15}
+\noindent\textbf{Problem:} If it is assumed that all $\binom{52}{5}$ poker hands are equally likely, what is the probability of being dealt two pairs? (This occurs when the cards have denominations $a,a,b,b,c$ where $a,b$ and $c$ are all distinct.)
+\bigskip
+
+\noindent\textbf{Solution:} The number of combinations of valid hands is given by:
+
+\begin{equation*}
+    \underbrace{\binom{13}{2}}_{\substack{\text{Pick 2 of 13 }\\\text{denominations}}}\mkern-35mu
+    \overbrace{\binom{4}{2}}^{\substack{\text{Pick 2 suits }\\\text{for pair $a$}}}\mkern-35mu
+    \underbrace{\binom{4}{2}}_{\substack{\text{Pick 2 suits }\\\text{for pair $b$}}}\mkern-35mu
+    \overbrace{\binom{11}{1}\binom{4}{1}}^{\substack{\text{1 card of remaining }\\\text{denominations}}}\mkern-20mu=123552
+\end{equation*}
+
+As this is a uniform distribution, putting the number of valid hands over the total number of hands gives us the probability:
+
+\begin{equation*}
+    P(E)=\frac{123552}{\binom{52}{5}}=\frac{198}{4165}
+\end{equation*}
+
+\section*{Problem 43}
+\noindent\textbf{Problem:} If $n$ people including $A$ and $B$, are randomly arranged in a line, what is the probability that $A$ and $B$ are next to each other? What if the the people were randomly arranged in a circle?
+\bigskip
+
+\noindent\textbf{Solution:} By considering $AB$ as a single object, we are left with $(n-1)!$ permutations of $AB$ and the rest of the $n-2$ people. However, since $AB$ can also be internally arranged as $BA$ we have the following number of valid arrangements:
+
+\begin{equation*}
+    \overbrace{2}^{AB \leftrightarrow BA}\mkern-60mu\underbrace{(n-1)!}_{\substack{\text{arrangements of }AB\text{/}BA\\
+    \text{ and $n-2$ people}}}
+\end{equation*}
+
+Since each arrangement is equally likely, putting this over the total number of arrangements $n!$ we have the following probability:
+
+\begin{equation*}
+    P(E_n)=\frac{2(n-1)!}{n!}=\frac{2}{n}
+\end{equation*}
+
+When we permutate $n$ things in a circle, shifting the all elements of the circle by any number from $1$ to $n$ results in an equivalent permutation. As such the number of circular arrangements of $n$ elements is $\frac{n!}{n}=(n-1)!$. This gives us, via the same reasoning as above, the following probability:
+
+\begin{equation*}
+    P(E_{n\circ})=P(E_{n-1})=\frac{2(n-2)!}{(n-1)!}=\frac{2}{n-1}
+\end{equation*}
+
+\section*{Problem 53}
+\noindent\textbf{Problem:} If 8 people, consisting of 4 couples, are randomly arranged in a row, what's the probability that no person is next to their partner?
+\bigskip
+
+\noindent\textbf{Solution:} Let's label the couples from 1 to 4 and let $E_i$
+be the event that the $i$th couple sit together. Let's first compute the cardinality of the event that at least 1 couple sits next to each other via the inclusion-exclusion principle:
+
+% P\left(\left(\bigcup_{i=1}^4\right)^\complement\right)=1-
+
+\begin{equation*}
+    \left|\bigcup_{i=1}^4 E_i\right|=\sum_{k=1}^4\left(\sum_{\substack{I\subseteq[1..4]\\|I|=k}}\left|\bigcap_{i\in I} E_i\right|\right)
+\end{equation*}
+
+For any particular couple $i$, we can consider them a single group and, because there are now 7 groups and the couple has 2 internal rearrangements, the number of outcomes where they sit together is given by:
+\begin{equation*}
+    |E_i|=2\cdot 7!
+\end{equation*}
+
+A similar argument holds for any two different couples $i$ and $j$:
+
+\begin{equation*}
+    |E_iE_j|=2\cdot 2\cdot 6!=2^2\cdot6!
+\end{equation*}
+
+And in general for any set $I$ of $k$ couples we have:
+
+\begin{equation*}
+    \left|\bigcap_{\substack{i\in I}} E_i\right|=2^k(8-k)!
+\end{equation*}
+
+Plugging this into our original equation we have:
+
+\begin{equation*}
+    \left|\bigcup_{i=1}^4 E_i\right|=\sum_{k=1}^4\left(\sum_{\substack{I\subseteq[1..4]\\|I|=k}}2^k(8-k)!\right)
+\end{equation*}
+
+And since there are $\binom{4}{k}$ subsets of couples of size $k$, we have:
+
+\begin{equation*}
+    \left|\bigcup_{i=1}^4 E_i\right|=\sum_{k=1}^4\binom{4}{k}2^k(8-k)!=26496
+\end{equation*}
+
+Now note that since there are $8!$ total arrangements and each one is equally likely (i.e. this is a discrete uniform distribution) we have the following probability:
+
+\begin{equation*}
+    P\left(\bigcup_{i=1}^4 E_i\right)=\frac{\left|\bigcup_{i=1}^4 E_i\right|}{|\Omega|}=\frac{26496}{8!}=\frac{23}{35}
+\end{equation*}
+
+This is the probability that at least 1 couple sits next to each other. The probability that none do is simply its complement. Thus, our desired probability is given by:
+
+\begin{equation*}
+    P\left(\left(\bigcup_{i=1}^4 E_i\right)^\complement\right)=1-P\left(\bigcup_{i=1}^4 E_i\right)=1-\frac{23}{35}=\frac{12}{35}
+\end{equation*}
+
+\pagebreak
+
+\begin{center}
+    \Large\textbf{Part B}
+\end{center}
+
+\section*{Problem a}
+For the next three parts, suppose that we roll a pair of fair six-sided dice. Before we answer the questions, let's establish that the sample space $\Omega$ of this experiment is given by:
+
+\begin{equation*}
+    \Omega=[1..6]\times[1..6]
+\end{equation*}
+
+Also note that, because this experiment has a discrete uniform distribution, the probability of an event $E$ occurring is given by:
+
+\begin{equation*}
+    P(E)=\frac{|E|}{|\Omega|}
+\end{equation*}
+
+In this case $|\Omega|$ is, by the basic principle of counting, $6\cdot6=36$.
+\bigskip
+
+\noindent\textbf{Part I:} What is the probability that the sum of the upturned faces equals 6?
+\bigskip
+
+\noindent\textbf{Solution:} By simple enumeration, we can see that the outcomes that satisfy the event that the dice sum to $6$, which we'll denote $E_6$, is given by:
+
+\begin{equation*}
+    E_6=\{(1,5),(2,4),(3,3),(4,2),(5,1)\}
+\end{equation*}
+
+Now all we have to do is note that $|E_6|=5$ and thus the probability of it occurring is:
+
+\begin{equation*}
+    P(E_6)=\frac{|E_6|}{|\Omega|}=\frac{5}{36}
+\end{equation*}
+\medskip
+
+\noindent\textbf{Part II:} What is the probability that the sum of the upturned faces equals 7?
+\bigskip
+
+\noindent\textbf{Solution:} Again, by simple enumeration, we find that the event that the dice sum to $7$, denoted $E_7$, is given by:
+
+\begin{equation*}
+    E_7=\{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}
+\end{equation*}
+
+Again, we note that $|E_7|=6$ and thus the probability of it occurring is:
+
+\begin{equation*}
+    P(E_7)=\frac{|E_7|}{|\Omega|}=\frac{6}{36}=\frac{1}{6}
+\end{equation*}
+\medskip
+
+\noindent\textbf{Part III:} What is the probability that the sum of the upturned faces neither equals 6 nor 7?
+\bigskip
+
+\noindent\textbf{Solution:} Note that $E_6$ and $E_7$ are disjoint since two numbers can't simultaneously sum two to different numbers. As such we have the following via the disjoint addition axiom:
+
+\begin{equation*}
+    P(E_6\cup E_7)=\frac{5}{36}+\frac{6}{36}=\frac{11}{36}
+\end{equation*}
+
+And since the event that neither sum is $6$ or $7$ is simply the complement of this event, we have:
+
+\begin{equation*}
+    P((E_6\cup E_7)^\complement)=1-\frac{11}{36}=\frac{25}{36}
+\end{equation*}
+
+\section*{Problem b}
+\noindent\textbf{Problem:} Suppose that you roll a pair of fair six-sided dice $j$ times. Let $E_j$ denote the event that
+$6$ appears as a sum on the $j$th roll, but neither $6$ nor $7$ appear earlier. What is $P(Ej)$?
+\bigskip
+
+\noindent\textbf{Solution:} From part III we have that on any given roll  the probability that neither a $6$ or $7$ is:
+
+\begin{equation*}
+    P((E_6\cup E_7)^\complement)=\frac{25}{36}
+\end{equation*}
+
+And since each roll is independent of each other, the probability that this happens $j-1$ times in a row is given by $\left(\frac{25}{36}\right)^{j-1}$ and since $P(E_6)=\frac{5}{36}$ we have:
+
+\begin{equation*}
+    P(E_j)=\left(\frac{25}{36}\right)^{j-1}\frac{5}{36}
+\end{equation*}
+
+\section*{Problem c}
+\noindent\textbf{Problem:} Using the same definition of $E_j$ from problem b, interpret the event $E=\bigcup^\infty_{j=1}E_j$ and compute $P(E)$.
+\bigskip
+
+\noindent\textbf{Solution:} $E$ represents the event that a 6 is rolled after some finite amount of rolls, could be 0, where a 6 or 7 had never been rolled prior.
+
+To calculate the probability of $E$ we first note that:
+
+\begin{equation*}
+    (\forall i,j\in\mathbb N)\, i\not=j\implies (E_iE_j=\emptyset)
+\end{equation*}
+
+That is to say $(E_j)_{j=1}^\infty$ is a sequence of disjoint events. As such, we can employ the axiom of disjoint addition in the following way:
+
+\begin{align*}
+    P(E)=P\left(\bigcup_{j=1}^\infty E_j\right)&=\sum_{j=1}^\infty P(E_j)\tag{axiom of disjoint addition}\\
+    &=\sum_{j=1}^\infty \left(\frac{25}{36}\right)^{j-1}\frac{5}{36}\tag{def. of $P(E_j)$}\\
+    &=\sum_{j=0}^\infty \left(\frac{25}{36}\right)^j\frac{5}{36}\tag{change of index}\\
+    &=\frac{\left(\frac{5}{36}\right)}{1-\frac{25}{36}}=\frac{5}{11}\tag{geometric series}
+\end{align*}
+
+And we are done.
+
+\end{document}

@@ -1,0 +1,18 @@
+9876
+comp	3	0
+set	1	0
+set	15	0
+comp	10	0
+get	10	0
+get	10	0
+get	10	0
+get	10	0
+get	10	0
+set	10	0
+get	10	0
+set	1	0
+set	7	1
+set	6	0
+set	3	1
+set	13	0
+comp	7	0

@@ -1,0 +1,287 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+
+\begin{document}
+
+\title{Set Theory HW \#2}
+\author{Ozaner Hansha}
+\date{September 19, 2019}
+\maketitle
+
+% Set Theory Class notation
+% \newcommand{\pset}[1]{\mathfrak P#1}
+% \newcommand{\psetp}[1]{\mathfrak P(#1)}
+% \newcommand{\and}{\,\,\&\,\,}
+% \newcommand{\OR}{\text{ or }}
+% \newcommand{\pair}[2]{<#1,#2>}
+% \renewcommand{\setminus}{-}
+
+% My Notation
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\psetp}[1]{\mathcal P(#1)}
+\newcommand{\and}{\wedge}
+\newcommand{\OR}{\vee}
+\newcommand{\pair}[2]{(#1,#2))}
+
+\section*{Problem 1}
+Exercises 5,7,10 from page 26 in the textbook.
+\bigskip
+
+\noindent\textbf{Exercise 5:} Assume that every member of $A$ is a subset of $B$. Show that $\bigcup A\subseteq B$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $a$, by the axiom of union we have: 
+
+\begin{equation*}
+    a\in\bigcup A\implies \exists b\in A\, (a\in b)
+\end{equation*}
+
+And by the question's assumption, $b$ is a subset of $B$. Putting these two together we have:
+
+\begin{equation*}
+    ((a\in b)\and (b\subseteq B))\implies a\in B\tag{def. of subset}
+\end{equation*}
+
+And thus we have shown that for any $a\in\bigcup A$, the set $a$ must also be an element of $B$. By the definition of subset, we have $\bigcup A\subseteq B$.
+
+\bigskip
+
+\noindent\textbf{Exercise 7:} Show that for any two sets $A$ and $B$ the following holds:
+
+\begin{enumerate}[label=\alph*)]
+    \item $\pset A\cap\pset B=\psetp{A\cap B}$
+    \item $\pset A\cup\pset B\subseteq\psetp{A\cup B}$. Under what conditions does equality hold?
+\end{enumerate}
+\smallskip
+
+\noindent\textbf{Solution:} a) Consider an arbitrary set $x$ and note the following chain of logical equivalences:
+
+\begin{align*}
+    x\in\pset A\cap\pset B&\iff x\in \pset A \and x\in\pset B\tag{def. of intersection}\\
+    &\iff x\subseteq A\and x\subseteq B\tag{def. power set}\\
+    &\iff x\subseteq A\cap B\tag{def. of intersection}\\
+    &\iff x\in\psetp{A\cap B}\tag{def. power set}
+\end{align*}
+
+
+
+And so, by extensionality, we have $\pset A\cap\pset B=\psetp{A\cap B}$.
+
+b) Consider an arbitrary set $x$ and note the following chain of implications:
+
+\begin{align*}
+    x\in\pset A\cup\pset B&\iff x\in \pset A \OR x\in\pset B\tag{def. of union}\\
+    &\iff x\subseteq A\OR x\subseteq B\tag{def. power set}\\
+    &\implies x\subseteq A\cup B\tag{def. of union}\\
+    &\iff x\in\psetp{A\cap B}\tag{def. power set}
+\end{align*}
+
+And so, by the definition of subset, we have $\pset A\cup\pset B\subseteq\psetp{A\cup B}$. You'll notice that on line 3 we have an implication rather than an iff. We can only make this an iff, and thus establish equality of the two sets, if we assume that $A\subseteq B$ or $B\subseteq A$.
+\bigskip
+
+\noindent\textbf{Exercise 10:} Prove that if $a\in B$, then $\pset a\in \pset\pset\bigcup B$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $a$ and note the following:
+
+\begin{align*}
+    a\in B&\implies\forall t(t\in a\implies t\in\bigcup B)\tag{axiom of union}\\
+    &\implies a\subseteq\bigcup B\tag{def. of subset}\\
+    &\implies(a\subseteq\bigcup B)\and\forall t(t\in\pset a\implies t\subseteq a)\tag{def. of powerset}\\
+    &\implies\forall t(t\in\pset a\implies t\subseteq\bigcup B)\tag{transitivity of subset}\\
+    &\implies\forall t(t\in\pset a\implies t\in\pset{\bigcup B})\tag{def. of power set}\\
+    &\implies \pset a\subseteq \pset\bigcup B\tag{def. of subset}\\
+    &\implies \pset a\in \pset{\pset{\bigcup B}}\tag{def. of power set}\\
+\end{align*}
+
+\section*{Problem 2}
+Exercises 12,20,22,35 from pages 32-33 in the textbook.
+\bigskip
+
+\noindent\textbf{Exercise 12:} Verify the following identity:
+
+\begin{equation*}
+    C\setminus (A\cup B)=(C\setminus A)\cup(C\setminus B)
+\end{equation*}
+
+\noindent\textbf{Solution:} For the following set of equalities, the complement is taken with respect to the universe $A\cup B\cup C$:
+
+\begin{align*}
+    C\setminus(A\cap B)&=C\cap(A\cap B)^\complement\tag{relative complement}\\
+    &=C\cap(B^\complement\cup A^\complement)\tag{DeMorgan's Law}\\
+    &=(C\cap B^\complement)\cup (C\cap A^\complement)\tag{distributivity of intersction}\\
+    &=(C\setminus B)\cup (C\setminus A)\tag{relative complement}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Exercise 20:} Let $A, B$ and $C$ be sets such that $A\cup B=A\cup C$ and $A\cap B = A\cap C$. Show that $B = C$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an $x\in B$. There are two cases which exhaust all possibilities:
+
+\begin{align*}
+    x\in A&\implies x\in A\cap B\\
+    &\iff x\in A\cap C\tag{assumption}\\
+    &\implies x\in C
+\end{align*}
+
+and the other case:
+
+\begin{align*}
+    x\not\in A&\implies x\in A\cup B\\
+    &\iff x\in A\cup C\tag{assumption}\\
+    &\implies x\in C
+\end{align*}
+
+This gives us $x\in B\implies x\in C$, and by replacing all occurrences of $B$ with $C$ we have an argument for the reverse direction. Putting these together we have $B=C$.
+\bigskip
+
+\noindent\textbf{Exercise 22:} Show that if $A$ and $B$ are nonempty sets, then $\bigcap(A\cup B) = \bigcap A \cap \bigcap B$.
+\bigskip
+
+\noindent\textbf{Solution:} Note that by the axiom of union we have:
+
+\begin{align*}
+    x\in\bigcap(A\cup B)&\implies (\forall y\in A\cup B)\,x\in y\tag{def. of arbitrary intersection}\\
+    &\implies (\forall y\in A)\,x\in y\tag{$A\subseteq A\cup B$}\\
+    &\iff x\in\bigcap A\tag{def. of arbitrary intersection}
+\end{align*}
+
+Similarly we have:
+
+\begin{align*}
+    x\in\bigcap(A\cup B)&\implies (\forall y\in A\cup B)\,x\in y\tag{def. of arbitrary intersection}\\
+    &\implies (\forall y\in B)\,x\in y\tag{$B\subseteq A\cup B$}\\
+    &\iff x\in\bigcap B\tag{def. of arbitrary intersection}
+\end{align*}
+
+Putting these together we have:
+
+\begin{align*}
+    x\in\bigcap(A\cup B)&\implies x\in\bigcap A\and x\in\bigcap B\\
+    &\implies x\in\bigcap A \cap \bigcap B\tag{def. of intersection}
+\end{align*}
+
+This proves one direction. The other direction can be proved by first recalling that:
+
+\begin{align*}
+    x\in\bigcap A \cap \bigcap B&\implies x\in\bigcap A\and x\in\bigcap B\\
+    &\implies (\forall y\in A)\,x\in y\and (\forall y\in B)\,x\in y\\
+    &\implies (\forall y\in A)\,x\in y\OR (\forall y\in B)\,x\in y
+\end{align*}
+
+This allows us to state the following:
+
+\begin{align*}
+    &(\forall t\in A\cup B)\,t\in A \OR t\in B\tag{def. of union}\\
+    \implies&(\forall t\in A\cup B)\,x\in t\tag{above section}\\
+    \implies& x\in\bigcap(A\cup B)\tag{def. of arbitrary intersection}
+\end{align*}
+
+And with both sides of the implication proved, the equality holds true.
+\bigskip
+\pagebreak
+
+\noindent\textbf{Exercise 35:} Assume that $\pset A = \pset B$. Prove that $A = B$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary set $x$ and note the following chain of implications:
+
+\begin{align*}
+    x\in A&\iff\{x\}\subseteq A\tag{def. of subset}\\
+    &\iff\{x\}\in\pset A\tag{def. of powerset}\\
+    &\iff\{x\}\in\pset B\tag{assumption}\\
+    &\iff\{x\}\subseteq B\tag{def. of powerset}\\
+    &\iff x\in B\tag{def. of subset}
+\end{align*}
+
+And so by extensionality we have $A=B$.
+
+\section*{Problem 3}
+Exercises 32,33,36 from pages 33-34 in the textbook.
+\bigskip
+
+\noindent\textbf{Exercise 32:} Let $S$ be the set $\{\{a\}, \{a, b\}\}$. Evaluate and simplify:
+
+\begin{enumerate}[label=\alph*)]
+    \item $\bigcup\bigcup S$
+    \item $\bigcap\bigcap S$
+    \item $\bigcap\bigcup S\cup (\bigcup\bigcup S\setminus\bigcup\bigcap S)$
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} For a) we have:
+\begin{align*}
+    \bigcup\bigcup S&=\bigcup\bigcup\{\{a\}, \{a, b\}\}\\
+    &=\bigcup\{a,b\}\\
+    &=a\cup b
+\end{align*}
+
+For b) we have:
+\begin{align*}
+    \bigcap\bigcap S&=\bigcap\bigcap\{\{a\}, \{a, b\}\}\\
+    &=\bigcap\{a\}\\
+    &=a
+\end{align*}
+
+For c) we have:
+\begin{align*}
+    \bigcap\bigcup S\cup \left(\bigcup\bigcup S\setminus\bigcup\bigcap S\right)&=\bigcap\{a,b\}\cup \left(\bigcup\{a,b\}\setminus\bigcup\{a\}\right)\\
+    &=(a\cap b)\cup ((a\cup b)\setminus a)\\
+    &=(a\cap b)\cup (b\setminus a)\\
+    &=b
+\end{align*}
+
+\bigskip
+
+\noindent\textbf{Exercise 33:} With $S$ as in the preceding exercise, evaluate $\bigcup(\bigcup S \setminus\bigcap S)$ when $a \not= b$ and when $a = b$.
+\bigskip
+
+\noindent\textbf{Solution:} Evaluating the expression we arrive at:
+\begin{equation*}
+    \bigcup\left(\bigcup S \setminus\bigcap S\right)=\bigcup\left(\{a,b\} \setminus\{a\}\right)
+\end{equation*}
+
+For the case that $a\not= b$ we have:
+\begin{equation*}
+    \bigcup\left(\{a,b\} \setminus\{a\}\right)=\bigcup\{b\}=b
+\end{equation*}
+
+For the case that $a = b$ we have:
+\begin{equation*}
+    \bigcup\left(\{a,b\} \setminus\{a\}\right)=\bigcup\left(\{a\} \setminus\{a\}\right)=\bigcup\varnothing=\varnothing
+\end{equation*}
+
+\bigskip
+
+\noindent\textbf{Exercise 36:} Verify that for all sets $A$ and $B$ the following are correct:
+\begin{enumerate}[label=\alph*)]
+    \item $A\setminus(A\cap B) = A\setminus B$
+    \item $A\setminus(A\setminus B) = A\cap B$
+\end{enumerate}
+\smallskip
+
+\noindent\textbf{Solution:} For both a) an b) the complement is taken with respect to the universe $A\cup B$. For a) we have:
+\begin{align*}
+    A\setminus(A\cap B)&=A\cap(A\cap B)^\complement\tag{relative complement}\\
+    &=A\cap(A^\complement\cup B^\complement)\tag{DeMorgan's Law}\\
+    &=(A\cap A^\complement)\cup (A\cap B^\complement)\tag{distributivity of intersection}\\
+    &=(A\setminus A)\cup (A\setminus B)\tag{relative complement}\\
+    &=\varnothing\cup (A\setminus B)\\
+    &=A\setminus B\\
+\end{align*}
+
+For b) we have:
+\begin{align*}
+    A\setminus(A\setminus B)&=A\cap(A\setminus B)^\complement\tag{relative complement}\\
+    &=A\cap(A\cap B^\complement)^\complement\tag{relative complement}\\
+    &=A\cap(A^\complement\cup B)\tag{DeMorgan's Law}\\
+    &=(A\cap A^\complement)\cup (A\cap B)\tag{distributivity of intersection}\\
+    &=\varnothing\cup (A\cap B)\\
+    &=A\cap B\\
+\end{align*}
+
+\end{document}
