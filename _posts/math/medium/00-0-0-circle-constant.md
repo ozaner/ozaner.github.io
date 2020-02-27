@@ -1,5 +1,5 @@
 ---
-title: When Pi doesn't equal 3.14...
+title: When $\pi$ doesn't equal 3.14...
 layout: external
 date: 2018-05-10
 excerpt: An exploration of the circle constant and how it changes with different notions of distance.

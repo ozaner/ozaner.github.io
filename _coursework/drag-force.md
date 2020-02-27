@@ -14,7 +14,7 @@ The drag force, or fluid friction, is a force that opposes the motion of an obje
 When the fluid is air, we refer to the force as *aerodynamic drag* or **air resistance**. When it's water we call it *hydrodynamic drag*.
 
 ### Non-Conservative Force
-Like friction, the drag force is a non-conservative force meaning the work done by it is path dependent. And, also like friction, drag converts some energy into heat, thus it does not conserve mechanical energy.
+Like friction, drag is a non-conservative force, meaning the work done by it is path dependent. And also like friction, drag produces heat and thus does not conserve mechanical energy.
 $\renewcommand{\vec}[1]{\mathbf{#1}}$
 
 ## Drag Equation
@@ -48,7 +48,7 @@ When an object is in free-fall in a liquid, gravity is counteracted by drag unti
 
 ![terminalvel](/assets/images/physics/terminal_velocity.png)
 
-By solving for the velocity when the sum of the forces equals zero, we arrive at the terminal velocity $v_t$:
+By solving for the velocity when the sum of the forces equals zero, we arrive at the **terminal velocity** $v_t$:
 
 <details><summary>Derivation</summary><p>
 
@@ -63,7 +63,8 @@ v^2&=\frac{2mg}{\rho C_DA}&
 
 $$\boxed{v_t=\sqrt{\frac{2mg}{\rho C_dA}}}$$
 
-*This terminal velocity is more aptly described as a terminal speed, since it is just a magnitude.*
+Note that this *terminal velocity* is more aptly described as a *terminal speed*, since it is just a magnitude.
+{: .notice--info}
 
 ## Drag Coefficient
 The drag coefficient is a proportionality constant used in the drag equation and is measured empirically. Objects with more blunt faces have higher drag coefficients and objects with more streamlined designs have lower ones. Here is a diagram of different drag coefficients in a particular fluid:

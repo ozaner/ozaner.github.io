@@ -419,7 +419,7 @@ Which can be approximated by numerical integration methods to obtain the digits 
 
 <!-- [^f5]: You may have noticed I didn't include an exact representation of the solution to the quartic equation. This is because, even though there exists a generic solution to quartic polynomials, it is crazily complex and not worth using practically. Click [here](https://upload.wikimedia.org/wikipedia/commons/9/95/Quartic_Formula.jpg) to see the equation in its entirety. -->
 
-[^f6]: The definite integral is courtesy of Franklin Dyer's [question](https://math.stackexchange.com/questions/2446725/integral-representation-of-the-dottie-number) on the math StackExchange It includes his derivation as well.
+[^f6]: The definite integral is courtesy of Franklin Dyer's [question](https://math.stackexchange.com/questions/2446725/integral-representation-of-the-dottie-number) on the math StackExchange, which also includes his derivation.
 
 [1]: https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Dottie_number.svg/800px-Dottie_number.svg.png
 
