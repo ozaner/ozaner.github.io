@@ -35,12 +35,13 @@ which, when computed, will yield a family of *implicit solutions* to the differe
 
 <details>
 <summary><strong>Proof</strong></summary>
-$$\begin{align}
+
+$$\begin{align*}
 \frac{dy}{dt}&=g(t)h(y)\\
-\frac{1}{h(y)}\frac{dy}{dt}&=g(t)\tag{algebra}\\
-\int\frac{1}{h(y)}\frac{dy}{dt}\,dt&=\int g(t)\,dt\tag{integrate with $dt$}\\
-\int\frac{1}{h(y)}\,dy&=\int g(t)\,dt\tag{algebra}
-\end{align}$$
+\frac{1}{h(y)}\frac{dy}{dt}&=g(t)&\text{(algebra)}\\
+\int\frac{1}{h(y)}\frac{dy}{dt}\,dt&=\int g(t)\,dt&\text{(integrate with $dt$)}\\
+\int\frac{1}{h(y)}\,dy&=\int g(t)\,dt&\text{(algebra)}
+\end{align*}$$
 
 <!-- <i>Note that for this proof we used non-standard analysis, which uses the hyperreal numbers to define derivatives and integrals. In particular, since integration is just a infinite summation and $\frac{dy}{dt}$ is just the ratio of infinitesimals, our cancellation of $dt$ in the last step was justified.</i> -->
 <i>In the last step we multiply $\frac{dy}{dt}$ by $dt$ to get $dy$. This can be more directly justified using non-standard analysis where infinitesimal quantities are meaningful.</i>

@@ -59,12 +59,13 @@ $$y(t)=Ce^{\int f(t)\mathop{dt}}$$
 
 <details><summary><strong>Proof</strong></summary>
 The ODE $\der y=f(t)y$ is separable, and so its equilibrium solutions are given by the roots of $y$, which is just $y=0$. The non-equilibrium solutions are given by:
+
 $$\begin{align*}
-\der y&=f(t)y\tag{homogenous LDE}\\
-\int\frac{dy}{y}&=\int f(t)\mathop{dt}\tag{separable ODE}\\
-\ln y&=\int f(t)\mathop{dt} + C_1\tag{integration}\\
-y&=e^{\int f(t)\mathop{dt} + C_1}\tag{exponentiation}\\
-y&=C_2e^{\int f(t)\mathop{dt}}\\
+\der y&=f(t)y&\text{(homogenous LDE)}\\
+\int\frac{dy}{y}&=\int f(t)\mathop{dt}&\text{(separable ODE)}\\
+\ln y&=\int f(t)\mathop{dt} + C_1&\text{(integration)}\\
+y&=e^{\int f(t)\mathop{dt} + C_1}&\text{(exponentiation)}\\
+y&=C_2e^{\int f(t)\mathop{dt}}&\\
 \end{align*}$$
 
 Notice that $C_2$ is a strictly positive constant over the reals (and non-zero over the complex numbers), but when we let it equal $0$ we arrive at the sole equilibrium solution. As such, the general solution to the LDE is the following indexed by an arbitrary constant $C$:

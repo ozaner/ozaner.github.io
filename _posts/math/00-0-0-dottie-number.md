@@ -70,9 +70,9 @@ Or in English: $e$ to the power of any non-zero algebraic number is not algebrai
 We will also wish to separately establish the following identity:
 
 $$\begin{align*}
-\sin^2 \textbf{d}+\cos^2 \textbf{d} = 1 \tag{Pythagorean theorem}\\
-\sin^2 \textbf{d}+ \textbf{d}^2 = 1 \tag{\(\textbf{d}\) is a fixed point}\\
-\sin \textbf{d} = \sqrt{1-\textbf{d}^2}
+\sin^2 \textbf{d}+\cos^2 \textbf{d} &= 1&\text{(Pythagorean theorem)}\\
+\sin^2 \textbf{d}+ \textbf{d}^2 &= 1&\text{($\textbf{d}$ is a fixed point)}\\
+\sin \textbf{d} &= \sqrt{1-\textbf{d}^2}&
 \end{align*}$$
 </p>
 
@@ -80,9 +80,9 @@ $$\begin{align*}
 Now we can prove $\textbf{d}$'s transcendence using the LWT and Lemma 2:
 
 $$\begin{align*}
-e^{i\textbf{d}}&=\cos \textbf{d} + i \sin \textbf{d} \tag{Euler's formula}\\
-&=\textbf{d}+i\sin \textbf{d} \tag{\(\textbf{d}\) is a fixed point}\\
-&=\textbf{d}+i\sqrt{1-\textbf{d}^2} \tag{Lemma 2}
+e^{i\textbf{d}}&=\cos \textbf{d} + i \sin \textbf{d}&\text{(Euler's formula)}\\
+&=\textbf{d}+i\sin \textbf{d} &\text{(\(\textbf{d}\) is a fixed point)}\\
+&=\textbf{d}+i\sqrt{1-\textbf{d}^2} &\text{(Lemma 2)}
 \end{align*}
 $$
 
@@ -101,10 +101,10 @@ $$e^{i\textbf{d}}\notin \mathbb{A}$$
 Since the right side of the boxed equation is algebraic yet LWT guarantees that the left side is transcendental (because $i\textbf{d}$ is algebraic), we are left with a contradiction. Meaning our initial assumption, that $\textbf{d}$ is algebraic, was false. Via <i>reductio ad absurdum</i> we can conclude:
 
 $$\begin{align}
-&e^{i\textbf{d}}=\textbf{d}+i\sqrt{1-\textbf{d}^2} \tag{Euler's formula}\\
-&e^{i\textbf{d}}\notin \mathbb{A} \tag{LWT}\\
-&\left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right) \in \mathbb{A} \tag{def. of algebraic number}\\
-\therefore\ &\hline{\textbf{d}\notin \mathbb{A}} \tag{q.e.d}\\
+&e^{i\textbf{d}}=\textbf{d}+i\sqrt{1-\textbf{d}^2} &\text{(Euler's formula)}\\
+&e^{i\textbf{d}}\notin \mathbb{A} &\text{(LWT)}\\
+&\left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right) \in \mathbb{A} &\text{(def. of algebraic number)}\\
+\therefore\ &\hline{\textbf{d}\notin \mathbb{A}} &\text{(q.e.d)}\\
 \end{align}$$
 </p></details>
 
@@ -262,9 +262,9 @@ Included below is a step by step derivation/proof of Kaplan's series, along with
   Now knowing the $n$th derivative of $f$ at $\frac{\pi}{2}$, we can calculate the $n$th derivative of $g$ at $\frac{\pi}{2}$:
 
   $$\begin{align}
-  f\left(g\left(x\right)\right)=x \tag{inverse func.}\\
-  f'\left(g\left(x\right)\right)g'\left(x\right)=1 \tag{chain rule}\\
-  g'\left(x\right)=\frac{1}{f'\left(g\left(x\right)\right)}
+  f\left(g\left(x\right)\right)&=x &\text{(inverse func.)}\\
+  f'\left(g\left(x\right)\right)g'\left(x\right)&=1 &\text{(chain rule)}\\
+  g'\left(x\right)&=\frac{1}{f'\left(g\left(x\right)\right)}
   \end{align}$$
 
   We can use the chain and product rules repeatedly to find the $n$th derivative of $g$. The second derivative, for example, can be computed by differentiating both sides of the above equation:

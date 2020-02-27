@@ -50,12 +50,16 @@ When an object is in free-fall in a liquid, gravity is counteracted by drag unti
 
 By solving for the velocity when the sum of the forces equals zero, we arrive at the terminal velocity $v_t$:
 
-<details><summary>Derivation</summary><p>$$\begin{align*}
-F_D-F_g=0 \tag{drag and gravity cancel out}\\
-F_D=F_g\\
-\frac{\rho C_DAv^2}{2}=mg\\
-v^2=\frac{2mg}{\rho C_DAv^2}
-\end{align*}$$</p></details>
+<details><summary>Derivation</summary><p>
+
+$$\begin{align*}
+F_D-F_g&=0&\text{(when $F_D$ & $F_g$ cancel out)}\\
+F_D&=F_g&\\
+\frac{\rho C_DAv^2}{2}&=mg&\text{(def. of $F_D$ & $F_g$)}\\
+v^2&=\frac{2mg}{\rho C_DA}&
+\end{align*}$$
+
+</p></details>
 
 $$\boxed{v_t=\sqrt{\frac{2mg}{\rho C_dA}}}$$
 

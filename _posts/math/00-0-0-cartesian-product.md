@@ -194,6 +194,7 @@ Similar to its non-commutativity, we can illustrate this by noting that $((a,b),
 </details>
 
 ### Distributive Properties
+
 $$\begin{align*}
 A\times\left(B\cup C\right)&=\left(A\times B\right)\cup \left(A\times C\right)\\
 A\times\left(B\cap C\right)&=\left(A\times B\right)\cap \left(A\times C\right)\\
@@ -201,8 +202,7 @@ A\times\left(B\cap C\right)&=\left(A\times B\right)\cap \left(A\times C\right)\\
 A\times\left(B\setminus C\right)&=\left(A\times B\right)\setminus \left(A\times C\right)\\
 B\subseteq C&\leftrightarrow\left(A\times B\right)\subseteq \left(A\times C\right)\\
 \left(A\times B\right)\subseteq \left(C\times D\right)&\leftrightarrow\left(A\subseteq B\right)\land \left(C\subseteq D\right)\\
-\end{align*}
-$$
+\end{align*}$$
 
 If $A$ and $B$ are members of some universal set $U$, then their absolute complement is denoted $A^C$ and $B^C$ respectively.
 

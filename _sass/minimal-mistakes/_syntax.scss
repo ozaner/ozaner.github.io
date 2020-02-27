@@ -78,6 +78,11 @@ h4.inline {
   display: inline;
 }
 
+.MJXc-display {
+  overflow-x: auto; /* add scrollbars to wide math blocks*/
+  overflow-y: hidden; /* add scrollbars to wide math blocks*/
+}
+
 /*
    Solarized Light
    http://ethanschoonover.com/solarized

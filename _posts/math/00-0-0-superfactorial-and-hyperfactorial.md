@@ -88,9 +88,9 @@ $$P(n)\implies P(n+1)$$
 But, notice that $P(0)$ is true:
 
 $$\begin{align}
-P(0)&\equiv 0{$}\cdot H(0)=(0!)^{0+1}\\
-&\equiv1\cdot1=1\tag{empty product is $1$}\\
-&\equiv T
+P(0)&\equiv 0{$}\cdot H(0)=(0!)^{0+1}&\\
+&\equiv1\cdot1=1&\text{(empty product is $1$)}\\
+&\equiv T&
 \end{align}$$
 
 We thus have by induction:
