@@ -30,7 +30,7 @@ $$H(n)=\prod_{k=1}^{n}k^k=1^1\times2^2\times3^3\times\cdots\times n^n$$
 ## Calculator
 Below is a calculator for computing these factorials. Note that it accepts non-integer arguments as well, in which case it uses the generalizations discussed in the next section.
 
-<script type="text/javascript" id="WolframAlphaScriptbcca7832d533f6081e71aec899cc33f0" src="//www.wolframalpha.com/widget/widget.jsp?id=bcca7832d533f6081e71aec899cc33f0"></script>
+<script type="text/javascript" id="WolframAlphaScriptb7ab1f3f563599d85d9d08eade4d504c" src="//www.wolframalpha.com/widget/widget.jsp?id=b7ab1f3f563599d85d9d08eade4d504c"></script>
 
 ## Domains & Generalizations
 The domain of these three functions is the natural numbers, which includes $0$. As such, it's important to note that $0!,0{$}$, and $H(0)$ all equal $1$ by their above definitions because they are [empty products](https://en.wikipedia.org/wiki/Empty_product), i.e. a product of 0 factors.

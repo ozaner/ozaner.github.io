@@ -35,7 +35,8 @@ int search(List<T> list, T target) {
   return -1;
 }
 ````
-Notice we used `target`'s implementation of the `equals` method rather than `list.get(i)`'s. Doing this allows us to change our definition of equality by extending `T` and overloading the method. This gives us greater flexibility in our criterion for search.{: .notice--info}
+Notice we used `target`'s implementation of the `equals` method rather than `list.get(i)`'s. Doing this allows us to change our definition of equality by extending `T` and overloading the method. This gives us greater flexibility in our criterion for search.
+<!-- {: .notice--info} -->
 
 <!-- ### Python
 ````python
@@ -84,7 +85,9 @@ $$\frac{n+1}{k+1}$$
 Thus the average case complexity of sequential search is $O(\frac{n}{k})$ or $O(n)$ if we don't vary $k$.
 <p></p>
 
-<i>Note that this analysis assumes each element has an equal probability of being the target. This assumption is removed in one of the variations of sequential search shown below.</i>
+<div class="notice--info">
+  Note that this analysis assumes each element has an equal probability of being the target. This assumption is removed in one of the variations of sequential search shown below.
+</div>
 </details>
 
 ### Space Complexity

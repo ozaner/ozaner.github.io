@@ -81,7 +81,7 @@ X&=(x_1,x_2,x_3,\cdots,x_n)\\
 Y&=(y_1,y_2,y_3,\cdots,y_n)
 \end{align}$$
 
-$X$ and $Y$ are only equal if:
+We have the following:
 
 $$\begin{align}
 X=Y&\equiv\left(\forall k\in[1..n]\right) x_k=y_k\\
@@ -90,7 +90,7 @@ X=Y&\equiv\left(\forall k\in[1..n]\right) x_k=y_k\\
 
 <!-- *Where $n$ is a set as per its construction in the [natural numbers](\natural-numbers).* -->
 
-Note that for this definition to work, the two tuples have to be the same size. As such, tuples of different sizes will never be equal. Unless, of course, if their size difference is only a matter of simultaneous interpretation.
+Note that this implies that tuples of different sizes will never be equal. Unless, of course, their size difference is only a matter of simultaneous interpretation.
 
 ## Extraction
 In order to use these tuples, we have to be sure we can produce some formula to extract the their elements. The formula for extracting the $i$th element of an $n$-tuple is called the **$i$-th projection**.

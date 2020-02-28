@@ -97,7 +97,7 @@ Note that this generalizes the first definition because $n$ can be thought of as
 ### Useful Shorthand
 Note that the normal finitary product produces a set of tuples while this indexed product produces a set of functions. This distinction is important because the definition of a function depends on that finitary product.
 
-Think of the indexed product as just a useful shorthand for defining a the set of all functions from some $I$ to some set of domains $S_i$, and not a replacement for the finitary product.
+And so the indexed product is more a useful shorthand for denoting the set of all functions from some $I$ to some set of domains $S_i$, rather than a replacement of the finitary product.
 
 ## Special Products
 Below are a list of special cases of the Cartesian product:
@@ -108,7 +108,7 @@ When dealing with the repeated Cartesian product of a single set $S$, we call it
 
 $$S^n=\prod_{i=1}^nS=\underbrace{S\times S \times \cdots \times S}_{n\text{ sets}}$$
 
-Even more generally, using the indexed definition of Cartesian product, we can denote the set of all functions from a set $I$ to $S$ like so:
+More generally, using the indexed definition of Cartesian product, we can denote the set of all functions from a set $I$ to $S$ like so:
 
 $$S^I=\prod_{i\in I}S=\{f\mid f:I\to S\}$$
 
@@ -141,7 +141,7 @@ Because our product notation allows us to denote the cartesian product of <i>any
 $$\prod_{i=1}^1S=S$$
 
 <p>
-We define the unary product in this way to make our product notation more convenient (e.g. recursive definition of product has a base case of 1 set). It also matches up with our convention of [$1$-tuples](\n-tuples#1-tuples) simply being elements of a set, as mentioned in the $n$-tuples post.
+We define the unary product in this way to make our product notation more convenient (e.g. recursive definition of product has a base case of 1 set). It also matches up with our convention of <a href="\n-tuples#1-tuples">$1$-tuples</a> simply being elements of a set, as mentioned in the $n$-tuples post.
 </p>
 </details>
 
@@ -151,7 +151,7 @@ Another special case is when the index set $I=\emptyset$. This is called an empt
 
 $$\prod_\emptyset=\{f_\emptyset:\emptyset\to\emptyset\}=\{(\emptyset,\emptyset)\}$$
 
-Note that we use our own definition of function as a ordered pair of a cartesian product and a subset, although in this case both are just $\emptyset$.
+Recall that we define a function as an ordered pair of a cartesian product and a subset of that product. In this case both are $\emptyset$.
 
 <div class="notice--info">
   <i>If we were to identify functions as just their graphs, then the empty function would instead be the empty set and the nullary product would be $\{\emptyset\}$.</i>
@@ -215,16 +215,18 @@ The Cartesian product is analogous to the integer product we are familiar with i
 <!-- Before we can factor finite Cartesian products we have to remember their simultaneity of arity, i.e. that they can be interpreted in multiple ways. To avoid this, and arrive at a unique prime factorization, we have to extract the factors right to left, since the **rightmost factor** (RMF) of any Cartesian product $P$ is the same for all its possible factorizations. -->
 To find the $i$th **Cartesian Factor (CF)** of an $n$-ary Cartesian product $P$ we simply have to find the union of the $i$th index of all tuples in $P$:
 
-$$\operatorname{CF}_i^n(P)=\bigcup_{p\in P} \pi^n_i(p)=S_i$$
+$$\operatorname{CF}_i^n(P)=\bigcup_{p\in P}\{\pi^n_i(p)\}=S_i$$
 
 *Where $\pi^n_i(p)$ is the [tuple extraction function](\n-tuples#extraction).*
 
 ### Indexed Product
 In the more general case where our Cartesian product $P$ is of an indexed family $\\{S_i\\} _{i\in I}$ then we can find the $i$th factor in the following way:
 
-$$\operatorname{CF}_i(P)=\bigcup_{p\in P} p(i)=S_i$$
+$$\operatorname{CF}_i(P)=\bigcup_{p\in P}\{p(i)\}=S_i$$
 
-Note that we can recover the index set $I$ from the product $P$ by simply choosing any one of its element (a function) and looking at its first element. It will end up being the Cartesian product of its domain $I$ and codomain which is a binary product, so we can extract the first set as described in the finitary case.
+Note that we can recover the index set $I$ from the product $P$ by simply choosing any one of its elements (a function, i.e. an ordered pair) and extracting its first element. This will be the Cartesian product of its domain $I$ and codomain. We can then finally extract $I$ from this binary product as described in the finitary case. This is all to say:
+
+$$\left(\forall p\in P\right)\, \operatorname{CF}_1^2(\pi_1(p))=I$$
 
 *Also note that, unlike the finitary case, indexed products can only be interpreted one way and so only have one factorization.*
 {: .notice--info}

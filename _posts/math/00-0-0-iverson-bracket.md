@@ -34,7 +34,7 @@ The set builder notation above will end up being $\\{0\\}$ or $\\{1\\}$ dependin
 This allows us to truly equate $[P]$ with the values $0$ and $1$ in the set-theoretic sense.
 
 ## Predicate Definition
-For the predicate version of the notation we'd like a function that we can input some $x$ into and have $[P(x)]$ return either $1$ or $0$. To this we need to limit ourselves to some domain $S$ for which our $x$ is a member.
+For the predicate version of the notation we'd like a function that we can input some $x$ into and have $[P(x)]$ return either $1$ or $0$. To this end, we must limit our $x$ to some domain $S$.
 
 Also, to aid in defining $[P(x)]$ we'll call it $Q(x)$ for the time being:
 
@@ -53,7 +53,7 @@ To show that $Q$ is a function, we must show that it is right-unique. This shoul
 
 And so $Q$ is a function $Q:S\to \\{0,1\\}$. We can now define $Q(x)\equiv [P(x)]$, to return to our original notation.
 
-Note that while we do limit ourselves to some domain $S$ rather than the whole universe, this is unavoidable if we are to identify the notation $[P(x)]$ with some set, at least in ZFC.
+Note that while we do limit ourselves to some domain $S$ rather than the whole universe, this is unavoidable if we are to identify the notation $[P(x)]$ with some set, where $x$ is a free variable. At least in ZFC, that is.
 {: .notice--info}
 
 ## Arithmetic Properties
