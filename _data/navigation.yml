@@ -71,3 +71,5 @@ coursework:
         url: /drag-force/
       - title: "• Linear ODEs"
         url: /linear-ODEs/
+      - title: "• Contraction Maps"
+        url: /contraction-maps/
