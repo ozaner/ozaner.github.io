@@ -16,7 +16,7 @@ feature_row:
     btn_label: "Code Here"
     btn_class: "btn--inverse"
 
-  - image_path: /assets/images/projects/breast-cancer/dataset-original.png
+  - image_path: /assets/images/projects/breast-cancer/project-icon.png
     alt: "BreastCancer"
     title: "Breast Cancer Classification Network"
     excerpt: "A neural network trained to distinguish between benign and malignant breast cancer cells with a ~90% accuracy."

@@ -1,4 +1,7 @@
 ---
+header:
+  overlay_image: /assets/images/projects/breast-cancer/splash.jpg
+  overlay_filter: 0.2
 title: Breast Cancer Classification
 date: 2018-01-15
 excerpt: "A tutorial and explanation of my breast cancer neural network."
@@ -11,14 +14,14 @@ tags:
 ---
 
 ## Background
-I used this project as practice in cleaning up and using real world datasets to create and train a neural network. I made the model using Google's [*TensorFlow*](https://www.tensorflow.org/) library. In this post I'll attempt to explain the code, a bit of the underlying math, and finish off by measuring the accuracy of the model. The [entire program](https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/test/bcDiagnosis.py) is in my [NeuralNetwork](https://github.com/ozanerhansha/NeuralNetworks) repository on GitHub as well as at the end of this post.
+The goal of this project was to implement a **neural network** from scratch and to train it on a real world dataset pulled from the internet. In this post I'll attempt to explain the code block by block, as well as a bit of the underlying math, and then finish off by measuring the accuracy of the model.
+
+The model was made with Google's [*TensorFlow*](https://www.tensorflow.org/) library, and the [entire program](https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/test/bcDiagnosis.py) is in my [NeuralNetwork](https://github.com/ozanerhansha/NeuralNetworks) repository on GitHub as well as at the end of this post.
 
 ## The Training Data
 All the training data comes from the [Wisconsin Breast Cancer Data Set](http://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+%28diagnostic%29), hosted by the University of California's [Machine Learning Repository](http://archive.ics.uci.edu/ml/index.php).
 
-The training data consists of 569 subjects each with 3 values (mean, worst value, and standard error) for each of 10 categories:
-
-<!--more-->
+The training data consists of 569 subjects (i.e. breast cancer samples). Each sample is given by a label, benign or malignant, and 30 other values. These values are the mean, worst value, and standard error for each of 10 measurements of the sample:
 
 * Radius (mean of distances from center to points on the perimeter)
 * Texture (standard deviation of gray-scale values)
@@ -31,13 +34,7 @@ The training data consists of 569 subjects each with 3 values (mean, worst value
 * Symmetry
 * Fractal dimension (measure of edge complexity)
 
-For each of these subjects, the data also includes a label of whether the cell
-
-Our goal is to use
-
-We are going to use this data to train a **neural network** to classify
-
-Note that we don't need to know what these values mean or even how they relate to the conclusion, all we need to know is that they are correlated in some way. Given enough training examples, the neural network will learn how the various variables are related to whether the cell is malignant or benign. This self learning is the essence of machine learning. 
+It is interesting to note that we don't really need to know what these values mean and how exactly, if at all, they coorespond to the label of the sample. All we need to know is that they are correlated in some way. Given enough training examples, the neural network will learn how the various variables are related to whether the cell is malignant or benign. This self learning is the essence of machine learning.
 
 <!-- *The meaning of these values is irrelevant to our purpose. All we need to know is that we can use these $10\times3=30$ values to predict whether the given breast cancer sample is malignant or benign.* -->
 
@@ -122,7 +119,7 @@ $$\hat{y}=\text{softmax}(Wx+b)$$
 * $b$ is a vector of 'bias' values (a $2$D vector that allows the network more freedom when training, similar to the y-intercept in a linear equation).
 * The $\text{softmax}$ function is the network's [activation function](https://en.wikipedia.org/wiki/Activation_function), which introduces a nonlinearity to the network. This is integral for any neural network to learn from the data it's provided. The function also equalizes the network's confidence predictions so that they add up to 100%. The mathematical description of softmax is:
 
-![softmax graph](/assets/projects/breast-cancer/softmax.png)
+![softmax graph](/assets/images/projects/breast-cancer/softmax.png){: .align-center}
 
 Here's what the model looks like in python with [TensorFlow](https://www.tensorflow.org/):
 
@@ -176,7 +173,7 @@ Finally we create the training step. This is where we choose what optimization m
 
 This algorithm approaches the local minimum rapidly at first but then slows down once it has gotten close. Here's a visualization:
 
-![SGD](/assets/projects/breast-cancer/gradient_descent_3D_alpha.gif?style=centerme)
+![SGD](/assets/images/projects/breast-cancer/gradient_descent_3D_alpha.gif){: .align-center}
 
 And here it is in tensorflow:
 ~~~ python
