@@ -169,9 +169,11 @@ Which in bra-ket notation is simply:
 
 $$\lvert 1\rangle\otimes\lvert 0\rangle=\lvert 10\rangle$$
 
-Notice that $$10_{\text{bin}}=2_{\text{dec}}$$ and that the only $1$ in the $\lvert 10\rangle$ vector is at the $2$nd index (indexing starts at $0$). Indeed, it holds true in general that the vector representation of $n$ bits will be a $2^n$ dimensional vector with $0$'s everywhere except for a $1$ at the $i$th index, where $i$ is the value of the bit string. Explicitly, if we have a $n+1$ long bitstring $x_0x_1\cdots x_n$ that equals $i$ in decimal:
+Notice that $${10}_{\text{bin}}=2_{\text{dec}}$$ and that the only $1$ in the $\lvert 10\rangle$ vector is at the $2$nd index (indexing starts at $0$). Indeed, it holds true in general that the vector representation of $n$ bits will be a $2^n$ dimensional vector with $0$'s everywhere except for a $1$ at the $i$th index, where $i$ is the value of the bit string.
 
-$$\lvert x_0\rangle\otimes\lvert x_1\rangle\otimes\cdots\otimes\lvert x_n\rangle=\lvert x_1x_2\cdots x_n\rangle=\begin{pmatrix}
+More explicitly, given an $n$ long bitstring $$(x_i)_{i=0}^{n-1}$$ such that $(x_0x_1\cdots x_{n-1})_{\text{bin}}=i$, we have the following vector representation:
+
+$$\lvert x_0\rangle\otimes\lvert x_1\rangle\otimes\cdots\otimes\lvert x_{n-1}\rangle=\lvert x_0x_1\cdots x_{n-1}\rangle=\begin{pmatrix}
     0 \\
     \vdots \\
     0 \\
@@ -186,7 +188,7 @@ $$\lvert x_0\rangle\otimes\lvert x_1\rangle\otimes\cdots\otimes\lvert x_n\rangle
     i\text{th} \\
     (i+1)\text{th}\\
     \vdots\\
-    n\text{th}
+    (2^n-1)\text{th}
   \end{matrix}$$
 
 <!-- *As a side note, the tensor product of two rank $2$ tensors (vectors) $a$ and $b$ is equivalent to $ab^\top$.* -->

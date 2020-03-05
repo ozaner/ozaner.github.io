@@ -247,7 +247,7 @@ Analogous to the number zero, the empty set $\emptyset$ does not have a unique p
 
 ## Examples & Uses
 ### Relations
-An $n$-ary [relation](\relations) is defined as an ordered pair with the first element being an $n$-ary Cartesian product and the second a subset of that product. For example, $\le$ is a binary relation on the set $\mathbb R$:
+An $n$-ary relation is defined as an ordered pair with the first element being an $n$-ary Cartesian product and the second a subset of that product. For example, $\le$ is a binary relation on the set $\mathbb R$:
 
 $$\begin{gather}
 \le\,\,\equiv\,(\mathbb R\times\mathbb R,G)\\
@@ -268,15 +268,15 @@ $$\left|\prod_{i\in I}X_i\right|=\prod_{i\in I}\left|X_i\right|$$
 Where the left product denotes the Cartesian product while the right denotes the cardinal product.
 
 ### Cartesian Coordinates
-Every point in $2$-space represents an element of the Cartesian product of the Reals with themselves (i.e $\mathbb{R}^2$). This can be generalized to $n$-space with every point being an element of $\mathbb{R}^n$:
+Every point in $2$-space represents an element of the Cartesian product of the Reals with itself, i.e. $\mathbb{R}^2$. This can be generalized to $n$-space with every point being an element of $\mathbb{R}^n$:
 
-$$\mathbb{R}^n=\{(x_1,x_2,\cdots,x_n)\mid \forall i\in [1..n]:   x_i\in\mathbb{R}\}$$
+$$\mathbb{R}^n=\{(x_1,x_2,\cdots,x_n)\mid (\forall i\in [1..n])\,   x_i\in\mathbb{R}\}$$
 
 ![plane](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/354px-Cartesian-coordinate-system.svg.png){: .align-center}
 
-*Indeed, the graphical representation above was dubbed the Cartesian plane after the same [Descartes](https://en.wikipedia.org/wiki/René_Descartes) that used it to represent the Cartesian product $\mathbb{R}\times\mathbb{R}$.*
-{: .notice--info}
+<!-- *Indeed, the graphical representation above was dubbed the Cartesian plane after the same [Descartes](https://en.wikipedia.org/wiki/René_Descartes) that used it to represent the Cartesian product $\mathbb{R}\times\mathbb{R}$.* -->
+<!-- {: .notice--info} -->
 
-Points in $3$-space are necessary in describing the [position](/position) of objects and particles in space and thus set up the study of [motion](\kinematics), the causes of that motion and, ultimately, the rest of physics.
+Points in $3$-space are necessary in describing the position of objects and particles in space and thus set up the study of motion, the causes of that motion and, ultimately, the rest of physics.
 
-Moreover, $2$-space (and less frequently $3$-space) is used in plotting and making inferences from data as well as visualizing functions over an interval of numbers. We can even consider an infinite dimensional real space $\mathbb R^\mathbb \omega$, aka the set of all real sequences.
+Moreover $2$-space, and less frequently $3$-space, is used in plotting and making inferences from data as well as visualizing functions over an interval of numbers. We can even consider an infinite dimensional real space $\mathbb R^\mathbb \omega$, aka the set of all real sequences.

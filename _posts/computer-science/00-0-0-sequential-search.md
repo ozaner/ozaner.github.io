@@ -11,9 +11,9 @@ tags:
 
 **Sequential search**, or linear search, is a search algorithm implemented on lists. It is one of the most intuitive (some might even say naïve) approaches to search: simply look at all entries in order until the element is found.
 
-Given a **target** value, the algorithm iterates through every entry on the list and compares it to the target. If they match then it is a **successful search** and the algorithm returns true. If the end of the list is reached and no match was found, it is an **unsuccessful search** and the algorithm returns false.
+Given a **target** value, the algorithm iterates through every entry on the list and compares it to the target. If they match then it is a **successful search** and the algorithm returns `true`. If the end of the list is reached and no match was found, it is an **unsuccessful search** and the algorithm returns `false`.
 
-A useful modification of this algorithm is to return the index of the target in the list when a match is found rather than just `true`. In the case of an unsuccessful search, a special number denoting a failure would be returned instead, usually -1. While making the output more useful, this slight modification has no effect on the complexity of the algorithm. And so we might as well implement this version instead:
+A useful modification of this algorithm is to return the index of the target in the list when a match is found rather than just `true`. In the case of an unsuccessful search, a special number denoting a failure would be returned instead, usually -1. This slight modification makes our output more useful, despite having no effect on the number of steps the algorithm takes. As such, we might as well implement this version instead.
 
 ## Implementation
 ### Pseudocode
@@ -50,21 +50,23 @@ def search(L, T):
 ## Usage
 Sequential search is rarely used in practice due to better alternatives such as binary search and hash tables. That said, sequential search has the advantage of being both simple to implement and not requiring the list to be sorted. As a result, it is commonly implemented on unsorted lists as they cannot leverage any better alternatives... at least not with a classical computer.[^f1]
 
-Also, in cases where the list is small or searching is not too common, sequential search may actually prove to be a faster solution as it does not require the list in question to constantly be sorted.
+Also, in cases where the list is small or searching is not too common, sequential search may actually prove to be a faster solution as it does not require the list in question to be sorted beforehand.
 
 ## Analysis
 ### Time Complexity
-The basic and dominant operation of sequential search (and search algorithms in general) is comparison. Thus we can measure the running time of this algorithm by counting the number of comparisons made by it given a list of size $n$.
+The basic and dominant operation of sequential search (and search algorithms in general) is comparison. Thus we can measure the running time of this algorithm by counting the number of comparisons it makes given a list of size $n$.
 
 <details>
 <summary><strong>Best Case</strong><br></summary>
-The best case of sequential search is if the first element of the list is the target. In this case it takes only 1 comparison to return the successful search. Thus the best case complexity is $O(1)$.
-<p></p></details>
+<p>The best case of sequential search is if the first element of the list is the target. In this case it takes only 1 comparison to return the successful search. Thus the best case complexity is $O(1)$.</p>
+</details>
 
 <details>
 <summary><strong>Worst Case</strong><br></summary>
-The worst case of sequential search is if either the last element was the target or if the target was not even in the list. Both cases would take $n$ comparisons, with $n$ being the size of the list in question. Thus the worst case complexity is $O(n)$.
-<p></p></details>
+<p>The worst case of sequential search is if either the last element was the target or if the target was not even in the list. Both cases would take $n$ comparisons, with $n$ being the size of the list in question. Thus the worst case complexity is $O(n)$.</p>
+
+<p>But this assumes the target only appears on the list once/never. In general, it could appear $k$ times. The worst configuration for the target elements to be in is if they are all at the end of the list, in which case we would need $n-k+1$ comparisons to get to the first instance of the target. Giving us a more general worst case complexity of $O(n-k)$</p>
+</details>
 
 <details>
 <summary><strong>Average Case</strong><br></summary>
@@ -95,11 +97,11 @@ The algorithm is iterative, meaning the only space needed is the single variable
 
 We can sum this up with the following table:
 
-|Case|# of Comparisons|Time Complexity|Space Complexity|
+|Case|# of Comparisons<br>w/ 1 target|Time Complexity<br>w/ 1 target|# of Comparisons<br>w/ $k$ targets|Time Complexity<br>w/ $k$ targets|Space Complexity|
 |---|---|---|---|
-|Best|$1$|$O(1)$|$O(1)$|
-|Average|$\frac{n+1}{2}$|$O(n)$|$O(1)$|
-|Worst|$n$|$O(n)$|$O(1)$|
+|Best|$1$|$O(1)$|$1$|$O(1)$|$O(1)$|
+|Average|$\frac{n+1}{2}$|$O(n)$|$\frac{n+1}{k+1}$|$O(\frac{n}{k})$|$O(1)$|
+|Worst|$n$|$O(n)$|$n-k+1$|$O(n-k)$|$O(1)$|
 
 ## Variations
 
