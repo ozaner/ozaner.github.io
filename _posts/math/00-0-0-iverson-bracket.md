@@ -48,7 +48,7 @@ Where $S$ is the domain, $\{0,1\}$ the codomain, and $G_Q$ the graph of the func
 
 <!-- While we could simply use the same definition above and replace all instances of $P$ with $P(x)$, it might instead be more useful to define $[P(x)]$ as a full blown set-theoretic function. -->
 
-<details>
+<details class="bordered">
 <summary><strong>Proof of Function</strong></summary>
 Clearly $Q$ is a relation as $G_Q\subseteq S\times\{0,1\}$. But to show that $Q$ is a function, we must show that it is right-unique. This should be clear as for any $x\in S$, $P(x)\oplus\neg P(x)$ due to the law of the excluded middle, meaning there is only a single pair $(x,y)\in G_Q$.
 </details>

@@ -33,7 +33,7 @@ $$\int\frac{1}{h(y)} \,dy=\int g(t) \,dt$$
 
 which, when computed, will yield a family of *implicit solutions* to the differential equation (which can possibly be solved for a family of *explicit solutions*). We call this technique for solving differential equations the **separation of variables**.
 
-<details>
+<details class="bordered">
 <summary><strong>Proof</strong></summary>
 
 $$\begin{align*}

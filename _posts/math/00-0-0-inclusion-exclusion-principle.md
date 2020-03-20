@@ -21,7 +21,7 @@ $$\mu\left(\bigcup_{i=1}^nS_i\right)=\sum _{I\subseteq [1..n] \atop I\not=\empty
 
 *By finite measure space we mean $\mu(X)\lt\infty$.*
 
-<details>
+<details class="bordered">
 <summary><h3 class="inline">Proof</h3></summary>
 <!-- http://aleph.math.louisville.edu/teaching/2009FA-681/notes-090901.pdf -->
 

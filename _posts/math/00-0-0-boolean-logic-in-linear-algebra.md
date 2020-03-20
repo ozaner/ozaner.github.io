@@ -336,7 +336,7 @@ Here's an example of an operation from 2 bits to 2 to get us accustomed, the hal
 
 The outputs of the half-adder in terms of logical connectives are $S=X\oplus Y$ and $C=X\wedge Y$, where $S$ is the *sum* bit and $C$ is the *carry* bit. Below is an algebraic derivation the matrix representation of the half-adder:
 
-<details>
+<details class="bordered">
 <summary><strong>Derivation</strong></summary>
 To find the matrix that corresponds to sending two bits through a half adder, we must compute the tensor product of $X$ and $Y$ then compute and solve a series of tensor products:
 

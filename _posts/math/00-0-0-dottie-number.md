@@ -55,7 +55,7 @@ We can visualize $J_{\cos}$ by coloring its members black on the complex plane, 
 ## Transcendence
 Yet another interesting fact about $\textbf{d}$ is that it is a **transcendental** number, which is to say it is not the root of a polynomial with integer coefficients. This is quite the find as there only a handful of interesting constants proven to be transcendental. Below we present a proof of $\textbf{d}$'s transcendence:
 
-<details>
+<details class="bordered">
 <summary><strong>Proof</strong></summary>
 
 <b>Lemma 1: LWT</b><p>
@@ -125,7 +125,7 @@ We define it in this roundabout way because there is no explicit definition of $
 {: .notice--info}
 
 Included below is a step by step derivation/proof of Kaplan's series, along with how to calculate new terms manually:
-<details>
+<details class="bordered">
 <summary><strong>Derivation and Proof</strong></summary>
 <p></p>
 <b>Taylor Series of $f^{-1}$</b>

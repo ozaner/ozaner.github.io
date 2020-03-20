@@ -22,7 +22,7 @@ Utilizing the [Kuratowski definition](/n-tuples#definition) of ordered pairs, we
 
 $$A\times B \subseteq \mathcal{P}\left(\mathcal{P}\left(A\cup B\right)\right)$$
 
-<details><summary><strong>Proof</strong></summary>
+<details class="bordered"><summary><strong>Proof</strong></summary>
 First, note that $A\cup B$ is guaranteed by the axiom of union and that its power set is guaranteed by the axiom of power set.
 
 Next notice that, among many other elements, the power set of $A\cup B$ contains:

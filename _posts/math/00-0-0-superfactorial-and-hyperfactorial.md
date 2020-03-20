@@ -52,7 +52,7 @@ We can relate all three of the discussed factorial variants with the following i
 
 $$n{$}\cdot H(n)=n!^{n+1}$$
 
-<details>
+<details class="bordered">
 <summary><strong>Proof</strong></summary>
 
 We can prove the above statement, which we'll call $P(n)$, by induction:

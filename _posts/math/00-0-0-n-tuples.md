@@ -100,7 +100,7 @@ To extract the first element $\pi_1(P)$ of an ordered pair $P=(a,b)$ we can use 
 
 $$\pi_1(P)=\bigcup\bigcap P=a$$
 
-<details><summary><strong>Proof</strong></summary>
+<details class="bordered"><summary><strong>Proof</strong></summary>
   <!-- <b>Lemma 1</b>
   <p>To make proving the above statement easier, it would help to prove that the arbitrary union of a set of an element $\{x\}$ is that element $x$:
 
