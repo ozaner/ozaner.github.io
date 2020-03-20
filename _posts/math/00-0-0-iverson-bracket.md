@@ -20,7 +20,7 @@ The bracket notation can also be used with predicates:
 
 $$[P(x)]={\begin{cases}1,&{P(x)}\\0,&{\neg P(x)}\end{cases}}$$
 
-Below I give two formal definitions of the Iverson bracket. One for the propositional case and one for the predicate case.
+Below I give two set-theoretic definitions of the Iverson bracket. One for the propositional case and one for the predicate case.
 
 ## Propositional Definition
 The Iverson bracket is not a true function as there is no such set of all propositions to be its domain. We can instead think of the notation $[P]$ as being shorthand for the following set:
@@ -29,32 +29,35 @@ $$[P]\equiv\bigcup\{x\in \{0,1\}\mid(x=1\wedge P) \vee (x=0\wedge\neg P)\}$$
 
 <!-- *Where $2=\\{0,1\\}$ as per its construction in the [natural numbers](\natural-numbers).* -->
 
-The set builder notation above will end up being $\\{0\\}$ or $\\{1\\}$ depending on whether $P$ is true. The arbitrary union, denoted $\bigcup$, outside of the set 'unwraps' the singleton set so that we are left with just $0$ or $1$.
+The set builder notation above will end up being $\\{0\\}$ or $\\{1\\}$, depending on whether $P$ is true, and the arbitrary union $\bigcup$ outside of the set 'unwraps' the resulting singleton, leaving us with just $0$ or $1$.
+{:.notice--info}
 
-This allows us to truly equate $[P]$ with the values $0$ and $1$ in the set-theoretic sense.
+This definition allows us to truly equate $[P]$ with the values $0$ and $1$ in the set-theoretic sense.
 
 ## Predicate Definition
-For the predicate version of the notation we'd like a function that we can input some $x$ into and have $[P(x)]$ return either $1$ or $0$. To this end, we must limit our $x$ to some domain $S$.
+For the predicate version of the Iverson bracket, we'd like $[P(x)]$ to be some function of $x$ and always return either $0$ or $1$. To this end, we must limit our $x$ to some domain $S$.
 
-Also, to aid in defining $[P(x)]$ we'll call it $Q(x)$ for the time being:
+Also, to aid in defining $[P(x)]$ we'll call it $Q(x)$ for the time being and define $Q$ as:
 
-$$Q\equiv\{(x,y)\in S\times\{0,1\}\mid(P(x)\wedge y=1)\vee(\neg P(x)\wedge y=0)\}$$
+$$\begin{gather*}
+Q\equiv(S\times\{0,1\}, G_Q)\\
+G_Q=\{(x,y)\in S\times\{0,1\}\mid(P(x)\wedge y=1)\vee(\neg P(x)\wedge y=0)\}
+\end{gather*}$$
+
+Where $S$ is the domain, $\{0,1\}$ the codomain, and $G_Q$ the graph of the function $Q$.
 
 <!-- While we could simply use the same definition above and replace all instances of $P$ with $P(x)$, it might instead be more useful to define $[P(x)]$ as a full blown set-theoretic function. -->
 
 <details>
 <summary><strong>Proof of Function</strong></summary>
-We can see that $Q$ is a set of ordered pairs $(x,y)$ with $x\in S$ and $y\in \{0,1\}$. This implies that $Q\subset S\times \{0,1\}$. However, this only shows that $[P(x)]$ is a <a href="\relations">relation</a>.
-<p></p>
-
-To show that $Q$ is a function, we must show that it is right-unique. This should be clear as for any given $x$, $y=0\oplus y=1$. This is because $P(x)\oplus\neg P(x)$ due to the law of the excluded middle.
+Clearly $Q$ is a relation as $G_Q\subseteq S\times\{0,1\}$. But to show that $Q$ is a function, we must show that it is right-unique. This should be clear as for any $x\in S$, $P(x)\oplus\neg P(x)$ due to the law of the excluded middle, meaning there is only a single pair $(x,y)\in G_Q$.
 </details>
 <p></p>
 
-And so $Q$ is a function $Q:S\to \\{0,1\\}$. We can now define $Q(x)\equiv [P(x)]$, to return to our original notation.
+And so $Q:S\to \\{0,1\\}$ is a function. We can now define $Q(x)\equiv [P(x)]$, to return to our original notation. Note that due to the [simultaneity of arity](/relations/#simultaneity-of-arity), this definition works just as well for $n$-ary predicates, netting $n$-ary functions.
 
-Note that while we do limit ourselves to some domain $S$ rather than the whole universe, this is unavoidable if we are to identify the notation $[P(x)]$ with some set, where $x$ is a free variable. At least in ZFC, that is.
-{: .notice--info}
+Also note that while we do limit ourselves to some domain $S$ rather than the whole universe, this is unavoidable if we are to identify the notation $[P(x)]$ with (not just a function) but any set, where $x$ is a free variable. At least in ZFC, that is.
+{:.notice--info}
 
 ## Arithmetic Properties
 Below are some of the immediate properties of the Iverson bracket. We can think of these equalities as bridges between the first order logic notions of truth (true vs. false) and the arithmetic/computational notion of booleans ($0$ vs. $1$).
@@ -66,8 +69,8 @@ Below are some of the immediate properties of the Iverson bracket. We can think 
 - $[P\rightarrow Q]=1-[P]-[Q]+[P][Q]$
 - $[P\equiv Q]=1-([P]-[Q])^2$
 
-Note that these properties apply to predicates $P(x), Q(y)$ as well, as long as we hold the inputs $x,y$ constant.
-{: .notice--info}
+<!-- Note that these properties apply to predicates $P(x), Q(y)$ as well, as long as we hold the inputs $x,y$ constant.
+{: .notice--info} -->
 
 <!-- *The last three can be solved via substitution of the first three and normal propositional calculus.* -->
 
@@ -112,7 +115,7 @@ $$\max(x,y)=x[x>y]+y[x\leq y]$$
 
 <details>
 <summary><strong>Ceiling and Floor</strong></summary>
-$$\lceil x\rceil =\sum _{n}n\cdot [n-1<x\leq n]$$
+$$\lceil x\rceil =\sum _{n\in\mathbb Z}n[n-1<x\le n]$$
 
-$$\lfloor x\rfloor =\sum _{n}n\cdot [n\leq x<n+1]$$
+$$\lfloor x\rfloor =\sum _{n\in\mathbb Z}n[n\le x<n+1]$$
 </details>

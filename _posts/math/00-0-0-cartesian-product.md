@@ -64,9 +64,8 @@ $$\prod_{i=1}^nS_i=S_1\times S_2\times \cdots \times S_n$$
 
 *Note that the notion of indexed families comes from functions which depend on the definition of $n$-ary cartesian products. So it should only be taken as a useful shorthand.* -->
 
-<details>
-<summary><h3 class="inline" id="simultaneity-of-arity">Simultaneity of Arity</h3></summary>
-Recall that any $n$-tuple can be <a href="\n-tuples#simultaneous-interpretation">simultaneously interpreted</a> as a $k$-tuple where $1\le k\le n$. Likewise, this means that an $n$-ary Cartesian product:
+### Simultaneity of Arity
+Recall that any $n$-tuple can be [simultaneously interpreted](\n-tuples#simultaneous-interpretation) as a $k$-tuple where $1\le k\le n$. Likewise, this means that an $n$-ary Cartesian product:
 
 $$\prod_{i=1}^nS_i=S_1\times S_2\times \cdots \times S_n$$
 
@@ -81,7 +80,6 @@ $$U_i =
 And now we can phrase the original $n$-ary product as a product of $k$ sets:
 
 $$\prod_{i=1}^kU_i=\left(\prod^{n-k+1}_{i=1}S_i\right)\times S_{n-k+2}\times \cdots \times S_n$$
-<p></p></details>
 
 ## Indexed & Infinitary Products
 It is possible to extend the notion of the Cartesian product to allow for the product of any indexed family of sets:

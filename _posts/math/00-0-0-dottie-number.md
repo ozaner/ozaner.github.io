@@ -56,7 +56,7 @@ We can visualize $J_{\cos}$ by coloring its members black on the complex plane, 
 Yet another interesting fact about $\textbf{d}$ is that it is a **transcendental** number, which is to say it is not the root of a polynomial with integer coefficients. This is quite the find as there only a handful of interesting constants proven to be transcendental. Below we present a proof of $\textbf{d}$'s transcendence:
 
 <details>
-<summary>Proof</summary>
+<summary><strong>Proof</strong></summary>
 
 <b>Lemma 1: LWT</b><p>
 To prove $\textbf{d}$'s transcendence, we'll need to make use of the <b><a href="https://en.wikipedia.org/wiki/Lindemann%E2%80%93Weierstrass_theorem">Lindemann–Weierstrass theorem</a></b> (LWT) which states:
@@ -121,34 +121,12 @@ and $f^{-1}$ is the inverse of the function $f$ which is defined as:
 
 $$f\left(x\right)=x-\cos x$$
 
-We define it in this roundabout way because there is no explicit definition of $f^{-1}\left(x\right)$. This makes the construction of Kaplan's series all the more interesting.{: .notice--info}
+We define it in this roundabout way because there is no explicit definition of $f^{-1}\left(x\right)$, making the construction of Kaplan's series all the more interesting.
+{: .notice--info}
 
-Written out, the series looks something like this:
-
-$$\textbf{d} = \frac{\pi}{4} - \frac{\pi^3}{768} - \frac{\pi^5}{61440} - \frac{43\pi^7}{165150720} - \cdots$$
-
-We can write this more succinctly, and as Kaplan originally formulated, like so:
-
-$$\textbf{d} = \sum_{n=0}^{\infty}a_n\pi^{2n+1}$$
-
-Where $a_n$ is a sequence of rational numbers given by the above series:
-
-|$n$|$a_n$|
-|---|---|
-|$0$|$\frac{1}{4}$|
-|$1$|$-\frac{1}{768}$|
-|$2$|$-\frac{1}{61440}$|
-|$3$|$-\frac{43}{165150720}$|
-|$4$|$-\frac{233}{47563407360}$|
-|$\vdots$|
-
-The sequence $a_n$ can be found on the OEIS, with entry [A302977](https://oeis.org/A302977) corresponding to the numerators and [A306254](https://oeis.org/A306254) to the denominators.[^f5]{: .notice--info}
-
-<!-- Proof of Kaplan's Series -->
-## Proof of Kaplan's Series
 Included below is a step by step derivation/proof of Kaplan's series, along with how to calculate new terms manually:
 <details>
-<summary>Derivation and Proof</summary>
+<summary><strong>Derivation and Proof</strong></summary>
 <p></p>
 <b>Taylor Series of $f^{-1}$</b>
 <p>
@@ -348,6 +326,28 @@ Included below is a step by step derivation/proof of Kaplan's series, along with
   <i>As a side note, the reason we were able to assume that $g$ was analytic at $0$ (and thus expand its taylor series) was because $f$ was analytic at $0$ and the inverse of an analytic function is at least locally analytic.</i>
 </p>
 </details>
+<p></p>
+
+Written out, the series looks something like this:
+
+$$\textbf{d} = \frac{\pi}{4} - \frac{\pi^3}{768} - \frac{\pi^5}{61440} - \frac{43\pi^7}{165150720} - \cdots$$
+
+We can write this more succinctly, and as Kaplan originally formulated, like so:
+
+$$\textbf{d} = \sum_{n=0}^{\infty}a_n\pi^{2n+1}$$
+
+Where $a_n$ is a sequence of rational numbers given by the above series:
+
+|$n$|$a_n$|
+|---|---|
+|$0$|$\frac{1}{4}$|
+|$1$|$-\frac{1}{768}$|
+|$2$|$-\frac{1}{61440}$|
+|$3$|$-\frac{43}{165150720}$|
+|$4$|$-\frac{233}{47563407360}$|
+|$\vdots$|
+
+The sequence $a_n$ can be found on the OEIS, with entry [A302977](https://oeis.org/A302977) corresponding to the numerators and [A306254](https://oeis.org/A306254) to the denominators.[^f5]{: .notice--info}
 
 ## Calculating the Dottie Number
 ### Solve Kaplan's series

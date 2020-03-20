@@ -1,6 +1,6 @@
 ---
 header:
-  overlay_image: /assets/images/math/set-theory-splash.png
+  overlay_image: /assets/images/math/probability-splash.jpg
 title: The Inclusion-Exclusion Principle
 date: 2019-08-30
 excerpt: "Generalizing a key theorem of set theory and probability theory to measure theory."
@@ -57,7 +57,7 @@ Solving for $\mu(S_1\setminus S_2)$ and $\mu(S_2\setminus S_1)$ respectively and
 
 $$\mu(S_1\cup S_2)=\mu(S_1)+\mu(S_2)-\mu(S_1S_2)\equiv P(2)$$
 
-With $P(1)$ and $P(2)$ proved, all that's left is to prove the inductive hypothesis $P(n+1)$ assuming $P(n)$. We can do this via the following chain of equalities:
+With $P(1)$ and $P(2)$ proved, all that's left is to prove $P(n+1)$ assuming the inductive hypothesis $P(n)$. We can do this via the following chain of equalities:
 
 $$\begin{align*}
 \mu\left(\bigcup_{i=1}^{n+1}S_i\right)&=\mu\left(\left(\bigcup_{i=1}^nS_i\right)\cup S_{n+1}\right)&\text{(def. of indexed $\cup$)}\\
@@ -123,7 +123,14 @@ Because a probability space $(\Omega, \mathcal F, P)$ is a finite measure space,
 $$P\left(\bigcup_{i=1}^nE_i\right)=\sum _{I\subseteq [1..n] \atop I\not=\emptyset}\left((-1)^{|I|-1}P\left(\bigcap_{i\in I}E_i\right)\right)$$
 
 ## Cardinality Case
-To see how the principle applies to cardinality we need to define the following measure $\mu: \Sigma\to[0,\infty]$ that assigns values based on the set's cardinality:
+To see how the principle applies to cardinality, consider any finite collection sets $(S_i)^n_{i=1}$ where each set is itself finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
+
+$$\begin{gather*}
+  X=\bigcup_{i=1}^n S_i\\
+  \Sigma=\mathcal P(X)
+\end{gather*}$$
+
+Now we define the following measure $\mu: \Sigma\to[0,\infty]$ that assigns values based on the set's cardinality:
 
 <!-- $$\mu (S)={\begin{cases}\vert S\vert &{\text{if }}S{\text{ is finite}}\\+\infty &{\text{if }}S{\text{ is infinite}}\end{cases}}$$ -->
 
@@ -131,13 +138,6 @@ $$\mu(S)={\begin{cases}\vert S\vert, &|S|\in\aleph_0\\\infty, &|S|\not\in\aleph_
 
 Note that the above qualifies as a measure on *any* $\sigma$-algebra.
 {:.notice--info}
-
-Now consider any finite collection sets $(S_i)^n_{i=1}$ where each set is finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
-
-$$\begin{gather*}
-  X=\bigcup_{i=1}^n S_i\\
-  \Sigma=\mathcal P(X)
-\end{gather*}$$
 
 Then we have that $(X,\Sigma,\mu)$ is a finite measure space, since the union of finitely many finite sets is finite, i.e. $\mu(X)<\infty$. Thus, the inclusion-exclusion principle applies to such collections:
 

@@ -53,7 +53,7 @@ Now there are some obvious objections to this scenario but lets break them down:
 - *Foxes need meat to survive*: Foxes are actually omnivores, and even if they weren't and couldn't survive without meat like how humans supposedly can, shouldn't we still stop the foxes? We are now in a situation where we have a person who will slowly become less healthy over time and to prevent this has to kill tens of innocent people (whose lives and suffering should be considered equally to that of anyone else).
 - *It's different for animals, they don't know better*: Consider a mentally impaired individual who kills tens of people. Is he justified in this action despite him not knowing any better or even having the capacity to know better? Moreover, does this matter? Ultimately the question is should we stop him, which the answer is, I assume in most circles, yes.
 
-So, taking Singer argument to heart, it would seem that it is our moral duty to prevent animals from killing other animals with the same veracity we do in tracking down serial killers.
+So, taking Singer's argument to heart, it would seem that it is our moral duty to prevent animals from killing other animals with the same veracity we do in tracking down serial killers.
 
 
 ## So what is Singer *Really* Doing?

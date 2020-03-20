@@ -143,9 +143,9 @@ The second element $\pi_2(P)$ of an ordered pair $P=(a,b)$ can be found like so:
 
 $$\pi_2(P)=\bigcup\{x\in\bigcup P\mid\bigcup P\not=\bigcap P\implies x\not\in\bigcap P\}=b$$
 
-<details><summary><strong>Proof</strong></summary>
+<!-- <details><summary><strong>Proof</strong></summary>
 I'll do it later...
-</details>
+</details> -->
 
 ### Extracting Elements of $n$-tuples
 You may have noticed that the definitions above only apply to $2$-tuples. What about $n$-tuples? Well, quite intuitively, we can extract the elements of an $n$-tuple of any size by recursively using the $\pi_1$ and $\pi_2$ functions we defined above.
