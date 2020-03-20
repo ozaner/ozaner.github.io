@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{stackengine}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\begin{document}
+
+\title{Linear Algebra HW \#5}
+\author{Ozaner Hansha}
+\date{March 9, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Find $k$ such that:
+$$k\det\underbrace{\begin{pmatrix}
+  a_1&a_2&a_3\\
+  b_1&b_2&b_3\\
+  c_1&c_2&c_3\\
+\end{pmatrix}}_{A}=\det\underbrace{\begin{pmatrix}
+  b_1+c_1&b_2+c_2&b_3+c_3\\
+  a_1+c_1&a_2+c_2&a_3+c_3\\
+  a_1+b_1&a_2+b_2&a_3+b_3\\
+\end{pmatrix}}_{A'}$$
+\bigskip
+
+\noindent\textbf{Solution:} First note the following equality:
+$$\underbrace{\begin{bmatrix}
+  0&1&1\\1&0&1\\1&1&0
+\end{bmatrix}}_{E}\underbrace{\begin{bmatrix}
+  a_1&a_2&a_3\\
+  b_1&b_2&b_3\\
+  c_1&c_2&c_3\\
+\end{bmatrix}}_{A}=\underbrace{\begin{bmatrix}
+  b_1+c_1&b_2+c_2&b_3+c_3\\
+  a_1+c_1&a_2+c_2&a_3+c_3\\
+  a_1+b_1&a_2+b_2&a_3+b_3\\
+\end{bmatrix}}_{A'}$$
+
+Now, recalling that the product of determinants equals the determinant of the product, we have the following:
+$$\det E\det A=\det A'$$
+
+And so our desired constant $k=\det E$. We now calculate this determinant:
+\begin{align*}
+  \det E&=0\,{\begin{vmatrix}0&1\\1&0\end{vmatrix}}-1\,{\begin{vmatrix}1&1\\1&0\end{vmatrix}}+1\,{\begin{vmatrix}1&0\\1&1\end{vmatrix}}\\
+  &=0-(-1)+1=2
+\end{align*}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Let $A\in\mathbb C^{n\times n}$, then:
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item Prove that $\det\overline{A}=\overline{\det A}$.
+  \item Prove that if $A$ is unitary, then $\lvert\det A=1\rvert$.
+\end{enumerate}
+\bigskip
+
+\noindent\textbf{Solution:} 
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item We can prove this holds for any matrix $A\in\mathbb C^{n\times n}$ for all $n\in\mathbb N$ using induction. The base case of $n=1$ is trivial:
+    $$\det\overline{A}=\overline{a_{11}}=\overline{\det A}$$
+
+  Now we assume the inductive hypothesis, which is that $\det\overline{B}=\overline{\det B}$ for any $(n-1)\times(n-1)$ matrix $B$, and prove that this implies the same for $n\times n$ matrices:
+  \begin{align*}
+    \det A&=\sum_{i=1}^n(-1)^{i+1}a_{i1}\det A^{sub}_{i1}\tag{cofactor expansion over column 1}\\
+    \overline{\det A}&=\overline{\sum_{i=1}^n(-1)^{i+1}a_{i1}\det A^{sub}_{i1}}\\
+    &=\sum_{i=1}^n\overline{(-1)^{i+1}a_{i1}\det A^{sub}_{i1}}\tag{sum of conjugates}\\
+    &=\sum_{i=1}^n\overline{(-1)^{i+1}}\overline{a_{i1}}\overline{\det A^{sub}_{i1}}\tag{product of conjugates}\\
+    &=\sum_{i=1}^n(-1)^{i+1}\overline{a_{i1}}\det \overline{A^{sub}_{i1}}\tag{inductive hypothesis}\\
+    &=\det \overline{A}\tag{cofactor expansion over column 1}
+  \end{align*}
+
+  And so by induction we have that the desired identity holds for all complex valued square matrices.
+
+  \textit{Note that for an $(n+1)\times (n+1)$ matrix $B$, the matrix $B^{sub}_{ij}$ refers to the $n\times n$ submatrix of $B$ found by removing its $i$th row and $j$th column.}
+
+  \item For an arbitrary unitary matrix $A$ we have:
+    \begin{align*}
+      I&=AA^*\tag{def. of unitary matrix}\\
+      &=A\overline{A^\top}\tag{def. of conjugate transpose}\\
+      \det I&=\det A\det \overline{A^\top}\tag{determinant of product}\\
+      &=\det{A}\,\overline{\det{A^\top}}\tag{part \textbf{a}}\\
+      &=\det A\,\overline{\det A}\tag{transpose preserves determinant}\\
+      1&=\lvert\det A\rvert^2\tag{product of conjugates is modulus}
+    \end{align*}
+    
+    Note that the square roots of 1 are $\{1,-1\}$ but, since the modulus of a complex number is a nonnegative real, we must have that $\lvert\det A\rvert=1$.
+\end{enumerate}
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Let $\beta=\{\vec v_1,\vec v_2,\cdots,\vec v_n\}\subseteq\mathbb F^n$ where $\mathbb F$ is some field. Define $B\in\mathbb F^{n\times n}$ by $\vec b_{:j}=\vec v_j$, i.e.:
+
+$$B=\begin{bmatrix}
+  \vec v_1&\vec v_2&\cdots&\vec v_n
+\end{bmatrix}=\begin{bmatrix}
+  v_{11}&v_{21}&\cdots&v_{n1}\\
+  v_{12}&v_{22}&\cdots&v_{n2}\\
+  \vdots&\vdots&\ddots&\vdots\\
+  v_{1n}&v_{2n}&\cdots&v_{nn}
+\end{bmatrix}$$
+
+Prove that $\beta$ is a basis of $\mathbb F^n$ iff $\det(B)\not=0$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following chain of equivalent conditions:
+\begin{align*}
+  \text{$\beta$ is a basis with $n$ vectors}&\iff \text{All $n$ of $B$'s columns are linearly independent}\\
+  &\iff\text{$B$ has full rank}\\
+  &\iff\text{$B$ is invertible}\\
+  &\iff \det B\not=0
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Consider a block matrix $M\in\mathbb F^{n\times n}$ of the following form:
+
+$$M=\begin{bmatrix}
+  A&B\\0&C
+\end{bmatrix}$$
+
+where $A$ is an $n\times n$ matrix and $C$ a $k\times k$ matrix, implying that $M$ is an $(n+k)\times(n+k)$ matrix. Prove that $\det(M)=\det(A)\det(C)$.
+\bigskip
+
+\noindent\textbf{Solution:} We can prove this is true for all values of $n$ via induction. Our base case of $n=1$ is given by:
+\begin{align*}
+  \det M&=\sum_{i=1}^{1+k}(-1)^{i+1}m_{i1}\det M^{sub}_{i1}\tag{cofactor expansion over column 1}\\
+  &=(-1)^{1+1}m_{11}\det M^{sub}_{11}\tag{$i>0\rightarrow m_{i1}=0$}\\
+  &=a_{11}\det C\\
+  &=\det A\det C\tag{determinant of $1\times 1$ matrix}
+\end{align*}
+
+Now we assume the inductive hypothesis, which is that identity holds for any $(n-1)\times(n-1)$ matrix $A$, and prove that this implies the same for $n\times n$ matrices:
+\begin{align*}
+  \det M&=\sum_{i=1}^{n+k}(-1)^{i+1}m_{i1}\det M^{sub}_{i1}\tag{cofactor expansion over column 1}\\
+  &=\sum_{i=1}^{n}(-1)^{i+1}m_{i1}\det M^{sub}_{i1}\tag{$i>n\rightarrow m_{i1}=0$}\\
+  &=\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det M^{sub}_{i1}\tag{$i\le m\rightarrow m_{i1}=a_{i1}$}\\
+  &=\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det\begin{pmatrix}
+    A^{sub}_{i1}&B_{i0}^{sub}\\
+    0&C
+  \end{pmatrix}\tag{Where $B_{i0}$ is $B$ without row $i$}\\
+  &=\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det A^{sub}_{i1}\det C\tag{inductive hypothesis}\\
+  &=\left(\sum_{i=1}^{n}(-1)^{i+1}a_{i1}\det A^{sub}_{i1}\right)\det C\\
+  &=\det A\det C\tag{cofactor expansion over column 1}
+\end{align*}
+
+And so we have proved by induction that the desired identity holds for all values of $n$, regardless of $k$.
+\end{document}
