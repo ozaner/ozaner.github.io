@@ -67,9 +67,17 @@ coursework:
         url: /hw/Fall 2018/Intro to Philosophy/philosophypaper2.pdf
   - title: "Rough Notes"
     children:
-      - title: "• Drag Force"
-        url: /drag-force/
       - title: "• Linear ODEs"
         url: /linear-ODEs/
       - title: "• Contraction Maps"
         url: /contraction-maps/
+      - title: "• Drag Force"
+        url: /drag-force/
+      - title: "• Misc. Probability Problems"
+        url: /probability-problems/
+      - title: "• The Basic Principle of Counting"
+        url: /principle-of-counting/
+      - title: "• Intro Probability Notes Ch. 2"
+        url: /prob-notes-2/
+      - title: "• Intro Probability Notes Ch. 3"
+        url: /prob-notes-3/
