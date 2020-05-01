@@ -1,7 +1,9 @@
 ---
-title: Expressing Boolean Logic in Linear Algebra
+title: Expressing Boolean Logic with Matrices
 date: 2018-07-18
 excerpt: "How to express and compute boolean logic in terms of matrix algebra."
+redirect-from:
+  - /boolean-logic-in-linear-algebra/
 categories:
   - posts
 tags: 
