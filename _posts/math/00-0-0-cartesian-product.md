@@ -252,7 +252,7 @@ $$\begin{gather}
 G\subseteq\mathbb R\times\mathbb R
 \end{gather}$$
 
-This allows us to formalize statements like $4\le7$ which really means $(4,7)\in G$.
+This allows us to formalize statements like $4\le7$ as the set membership $(4,7)\in G$.
 
 ### Cardinal Multiplication
 Cartesian products are used to define the product of two cardinal numbers:
@@ -275,6 +275,6 @@ $$\mathbb{R}^n=\{(x_1,x_2,\cdots,x_n)\mid (\forall i\in [1..n])\,   x_i\in\mathb
 <!-- *Indeed, the graphical representation above was dubbed the Cartesian plane after the same [Descartes](https://en.wikipedia.org/wiki/René_Descartes) that used it to represent the Cartesian product $\mathbb{R}\times\mathbb{R}$.* -->
 <!-- {: .notice--info} -->
 
-Points in $3$-space are necessary in describing the position of objects and particles in space and thus set up the study of motion, the causes of that motion and, ultimately, the rest of physics.
+Points in $3$-space are necessary in describing the position of objects and particles in space and thus set up the study of motion, the causes of that motion, and ultimately the rest of physics.
 
 Moreover $2$-space, and less frequently $3$-space, is used in plotting and making inferences from data as well as visualizing functions over an interval of numbers. We can even consider an infinite dimensional real space $\mathbb R^\mathbb \omega$, aka the set of all real sequences.

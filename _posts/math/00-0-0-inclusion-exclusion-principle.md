@@ -123,23 +123,20 @@ Because a probability space $(\Omega, \mathcal F, P)$ is a finite measure space,
 $$P\left(\bigcup_{i=1}^nE_i\right)=\sum _{I\subseteq [1..n] \atop I\not=\emptyset}\left((-1)^{|I|-1}P\left(\bigcap_{i\in I}E_i\right)\right)$$
 
 ## Cardinality Case
-To see how the principle applies to cardinality, consider any finite collection sets $(S_i)^n_{i=1}$ where each set is itself finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
-
-$$\begin{gather*}
-  X=\bigcup_{i=1}^n S_i\\
-  \Sigma=\mathcal P(X)
-\end{gather*}$$
-
-Now we define the following measure $\mu: \Sigma\to[0,\infty]$ that assigns values based on the set's cardinality:
-
-<!-- $$\mu (S)={\begin{cases}\vert S\vert &{\text{if }}S{\text{ is finite}}\\+\infty &{\text{if }}S{\text{ is infinite}}\end{cases}}$$ -->
+To see how the principle applies to cardinality, we define the following measure $\mu:\Sigma\to[0,\infty]$ for an arbitrary measureable space $(X,\Sigma)$: 
 
 $$\mu(S)={\begin{cases}\vert S\vert, &|S|\in\aleph_0\\\infty, &|S|\not\in\aleph_0\end{cases}}$$
 
-Note that the above qualifies as a measure on *any* $\sigma$-algebra.
-{:.notice--info}
+<!-- $$\mu (S)={\begin{cases}\vert S\vert &{\text{if }}S{\text{ is finite}}\\+\infty &{\text{if }}S{\text{ is infinite}}\end{cases}}$$ -->
 
-Then we have that $(X,\Sigma,\mu)$ is a finite measure space, since the union of finitely many finite sets is finite, i.e. $\mu(X)<\infty$. Thus, the inclusion-exclusion principle applies to such collections:
+We call $\mu$ the **counting measure**, as it simply gives the cardinality of (finite) members of $\Sigma$. Now consider a finite collection sets $(S_i)^n_{i=1}$ where each set is itself finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
+
+$$\begin{aligned}
+  X=\bigcup_{i=1}^n S_i\\
+  \Sigma=\mathcal P(X)
+\end{aligned}$$
+
+then we have that $(X,\Sigma,\mu)$ is a finite measure space, since the union of finitely many finite sets is finite, i.e. $\mu(X)<\infty$. Thus, the inclusion-exclusion principle applies. Replacing $\mu$ with $\lvert\cdot\rvert$, since all elements of $\Sigma$ are finite, we have:
 
 $$\left|\bigcup_{i=1}^nS_i\right|=\sum _{I\subseteq [1..n] \atop I\not=\emptyset}\left((-1)^{|I|-1}\left|\bigcap_{i\in I}S_i\right|\right)$$
 
