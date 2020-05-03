@@ -36,7 +36,10 @@ We define $2$-tuples, more commonly known as **ordered pairs**, using the Kurato
 
 $$(x_1,x_2)=\{\{x_1\},\{x_1,x_2\}\}$$
 
-The above definition distinguishes $a$ from $b$ in that both sets in the right set contain $a$ but only one contains $b$. This is what gives the pair order.
+The above definition distinguishes $x_1$ from $x_2$ in that both sets in the right set contain $x_1$ but only one contains $x_2$. This is what gives the pair order.
+
+You'll notice in the special case that $x_1=x_2$ we have $(x_1,x_1)=\\{\\{x_1\\},\\{x_1,x_1\\}\\}=\\{\\{x_1\\}\\}$.
+{:.notice--info}
 
 ### $n$-tuples
 Using the $2$-tuple, we can define all $n$-tuples recursively as an ordered pair of an $(n-1)$-tuple and another element. The $3$-tuple, for example, would be:
@@ -93,7 +96,7 @@ X=Y&\equiv\left(\forall k\in[1..n]\right) x_k=y_k\\
 Note that this implies that tuples of different sizes will never be equal. Unless, of course, their size difference is only a matter of simultaneous interpretation.
 
 ## Extraction
-In order to use these tuples, we have to be sure we can produce some formula to extract the their elements. The formula for extracting the $i$th element of an $n$-tuple is called the **$i$-th projection**.
+In order to use these tuples, we have to be sure we can produce some formula to extract the their elements. The formula for extracting the $i$th element of an $n$-tuple is called the **$i$th projection**.
 
 ### Extracting Elements of $2$-tuples
 To extract the first element $\pi_1(P)$ of an ordered pair $P=(a,b)$ we can use the following construction:

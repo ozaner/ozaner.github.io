@@ -90,7 +90,7 @@ In words, this Cartesian product returns every function that takes an element $i
 
 $$\underbrace{\text{binary},\text{trinary},\cdots,n\text{-ary}}_{\text{finitary}},\cdots;\underbrace{\aleph_0\text{-ary},\aleph_1\text{-ary},\cdots}_{\text{infinitary}}$$
 
-Note that this generalizes the first definition because $n$ can be thought of as a set with $n$ elements as per its construction in the [natural numbers](\natural-numbers), and so we can take it to be our index set $I$. As a result, these two definitions are isomorphic for finitary products.
+Note that this generalizes the first definition because $n$ can be thought of as a set with $n$ elements as per its construction as a natural number (i.e. $n=[0..n-1]$), and so we can take it to be our index set $I$. As a result, these two definitions are isomorphic for finitary products.
 
 ### Useful Shorthand
 Note that the normal finitary product produces a set of tuples while this indexed product produces a set of functions. This distinction is important because the definition of a function depends on that finitary product.
@@ -106,7 +106,7 @@ When dealing with the repeated Cartesian product of a single set $S$, we call it
 
 $$S^n=\prod_{i=1}^nS=\underbrace{S\times S \times \cdots \times S}_{n\text{ sets}}$$
 
-More generally, using the indexed definition of Cartesian product, we can denote the set of all functions from a set $I$ to $S$ like so:
+Using the indexed definition of Cartesian product we can denote the Cartesian power, i.e. set of all functions from $I$ to $S$, like so:
 
 $$S^I=\prod_{i\in I}S=\{f\mid f:I\to S\}$$
 
@@ -120,23 +120,26 @@ $$S^I=\prod_{i\in I}S=\{f\mid f:I\to S\}$$
 
 <details>
 <summary><b>Empty Set</b></summary>
-A special case of the Cartesian product is when there is some $j$ such that $S_j=\emptyset$. When this happens the entire product collapses into the empty set. This is because there are simply no elements in $\emptyset$ to be mapped to by $f(j)$. We can state this as the following for any indexed family of sets $\{S_i\}_{i\in I}$:
+A special case of the Cartesian product is when one of the factors $S_j=\emptyset$. When this happens the entire product 'collapses' into the empty set. This is because there are simply no elements in $\emptyset$ to be mapped to by $f(j)$. We can state this as the following for any $n$-ary/indexed product:
 
-$$(\exists j\in I)\ S_j=\emptyset\implies \prod_{i\in I}S_i=\emptyset$$
+$$(\exists j\in I)\ S_j=\emptyset\implies\begin{cases}
+\displaystyle\prod_{i=1}^nS_i=\emptyset,&n\text{-ary product}\\
+\displaystyle\prod_{i\in I}^{\phantom{n}}S_i=\emptyset,&\text{Indexed product}
+\end{cases}$$
 
 Indeed this absorbing property of the empty set is the only case in which a Cartesian product could result in the empty set.
 
 <div class="notice--info">
-  <i>At least in ZFC. In ZF without the axiom of choice, it is possible that an infinite Cartesian product of nonempty sets will still produce the empty set!</i>
+  In ZF set theory, the statement "The Cartesian product of a family of nonempty sets is nonempty" is actually equivalent to the axiom of choice.
 </div>
 <p></p>
 </details>
 
 <details>
 <summary><b>Unary Product</b></summary>
-Because our product notation allows us to denote the cartesian product of <i>any</i> indexed family of sets, it is natural for us to ask what is returned when the family consists of a single set. The answer is just that set itself:
+Because our product notation allows us to denote the cartesian product of <i>any</i> indexed family of sets, it is natural for us to ask what is returned when the family consists of a single set. The answer is just that set itself. Consider $\{S_1\}$:
 
-$$\prod_{i=1}^1S=S$$
+$$\prod_{i=1}^1S_i=\prod_{i\in\{1\}}S_i=S_1$$
 
 <p>
 We define the unary product in this way to make our product notation more convenient (e.g. recursive definition of product has a base case of 1 set). It also matches up with our convention of <a href="\n-tuples#1-tuples">$1$-tuples</a> simply being elements of a set, as mentioned in the $n$-tuples post.
@@ -145,14 +148,14 @@ We define the unary product in this way to make our product notation more conven
 
 <details>
 <summary><b>Nullary Product</b></summary>
-Another special case is when the index set $I=\emptyset$. This is called an empty or <b>nullary Cartesian product</b>. The index set being empty means that there can only be one function (the empty function) in the product:
+Another special case is the product of 0 sets, that is, a product with index set $I=\emptyset$. This is called an empty or <b>nullary Cartesian product</b>. The index set being empty means that there can only be one function (the empty function) in the product:
 
 $$\prod_\emptyset=\{f_\emptyset:\emptyset\to\emptyset\}=\{(\emptyset,\emptyset)\}$$
 
 Recall that we define a function as an ordered pair of a cartesian product and a subset of that product. In this case both are $\emptyset$.
 
 <div class="notice--info">
-  <i>If we were to identify functions as just their graphs, then the empty function would instead be the empty set and the nullary product would be $\{\emptyset\}$.</i>
+  If we were to identify functions as just their graphs, then the empty function would instead be the empty set and the nullary product would be $\{\emptyset\}$.
 </div>
 
 In terms of Cartesian powers, this implies that $S^0=S^\emptyset=\{f_\emptyset\}$ for any set $S$.
