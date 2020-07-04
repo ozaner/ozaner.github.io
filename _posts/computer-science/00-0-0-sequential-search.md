@@ -1,4 +1,7 @@
 ---
+header:
+  overlay_image: /assets/images/comp_sci/lovelaceBanner.jfif
+  caption: "[__Ada Lovelace__](https://twitter.com/DocR0cket/status/962840105793835008/photo/1) by @DocR0cket"
 title: Sequential Search
 date: 2018-10-09
 excerpt: "Defining and analyzing the sequential search algorithm."

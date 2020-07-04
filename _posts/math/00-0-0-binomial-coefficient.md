@@ -175,7 +175,7 @@ It's easy to see that the binomial coefficient is just a special case of the mul
 $$\binom{n}{k}=\frac{n!}{k!(n-k)!}=\binom{n}{k,n-k}$$
 
 <!-- =\binom{n}{k_1,k_2} -->
-The multinomial coefficient can also be interpreted as the number [permutations of a multiset](/permutations#multiset-permutations), where the $i$th element appears $k_i$ times.
+The multinomial coefficient can also be interpreted as the number [permutations of a multiset](/permutations#multiset-permutations), where each element $x_i$ has multiplicity $k_i$.
 
 ### Multinomial Theorem
 This generalization of the binomial theorem allows us to expand any multinomial raised to some nonnegative integer power $n$ in the following manner:

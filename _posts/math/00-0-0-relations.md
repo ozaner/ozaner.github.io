@@ -265,7 +265,7 @@ $$\bigcap_{i=1}^n{\vphantom{\bigcup}}^* R_i\equiv\left(\prod S_i,\bigcap_{i=1}^n
 Here are some examples:
 <ul>
 <li>$<\cup^* I=\le$ The union of less than and the identity relation is less than or equal to.</li>
-<li>$\ge\cap^* >=I$ The intersection of greater than or equal to and greater than is the identity relation.</li>
+<li>$\ge\cap^* >=>$ The intersection of greater than or equal to and greater than is greater than.</li>
 <li>The union of "is father of" and "is mother of" gives "is parent of"</li>
 </ul>
 <p></p>
@@ -360,7 +360,7 @@ Note that relation composition is associative:
 
 $$X\circ (Y\circ Z)=(X\circ Y)\circ Z$$
 
-An intuitive example of relational composition can be found in kinship relations. The composition "is parent of" $\circ$ "is father of" returns the new relation "is grandfather of".
+An intuitive example of relational composition can be found in kinship relations. The composition "is father of" $\circ$ "is parent of" returns the new relation "is grandfather of".
 <p></p>
 </details>
 
