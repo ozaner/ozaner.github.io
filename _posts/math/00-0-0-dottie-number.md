@@ -30,14 +30,14 @@ What's interesting about $\textbf{d}$ is that it's not just the unique real fixe
 
 $$\forall x_0\in\mathbb{R} \left(\lim_{n\to\infty} \underbrace{\cos\circ\cos\circ\cdots\circ\cos}_{n}\ x_0=\textbf{d}\right)$$
 
-Alternatively, put in terms of an iterating function:
+Alternatively, put in terms of a sequence $x_n$:
 
 $$\begin{align*}
 x_0&\in\mathbb R\\
 x_{n+1}&=\cos x_n
 \end{align*}$$
 
-In terms of the above iteration, we have the following theorem:
+we have the following equivalent result:
 
 $$\lim_{n\to\infty}x_n=\textbf{d}$$
 
@@ -90,7 +90,7 @@ $$\boxed{e^{i\textbf{d}}=\textbf{d}+i\sqrt{1-\textbf{d}^2}}$$
 
 Let us assume that $\textbf{d}$ is algebraic. If this is the case then:
 
-$$\left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right) \in \mathbb{A}$$
+$$\left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right)\in \mathbb{A}$$
 
 This is because it consists solely of algebraic numbers $\left(\textbf{d},i,1\right)$ and basic algebraic operations $\left(+,-,\times,x^2,\sqrt{x}\right)$ and thus must be root of a polynomial with rational coefficients (i.e. algebraic).<p></p>
 
@@ -98,13 +98,13 @@ However, also assuming $\textbf{d}$ is algebraic, LWT tells us:
 
 $$e^{i\textbf{d}}\notin \mathbb{A}$$
 
-Since the right side of the boxed equation is algebraic yet LWT guarantees that the left side is transcendental (because $i\textbf{d}$ is algebraic), we are left with a contradiction. Meaning our initial assumption, that $\textbf{d}$ is algebraic, was false. Via <i>reductio ad absurdum</i> we can conclude:
+Since the right side of the boxed equation is algebraic yet LWT guarantees that the left side is transcendental (because $i\textbf{d}$ is algebraic), we are left with a contradiction. Meaning our initial assumption, that $\textbf{d}$ is algebraic, was false. We then have the following proof by contradiction:
 
 $$\begin{align}
+&\textbf{d}\in\mathbb{A}\implies \left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right) \in \mathbb{A} &\text{(def. of algebraic number)}\\
+&\textbf{d}\in\mathbb{A}\implies e^{i\textbf{d}}\notin \mathbb{A} &\text{(LWT)}\\
 &e^{i\textbf{d}}=\textbf{d}+i\sqrt{1-\textbf{d}^2} &\text{(Euler's formula)}\\
-&e^{i\textbf{d}}\notin \mathbb{A} &\text{(LWT)}\\
-&\left(\textbf{d}+i\sqrt{1-\textbf{d}^2}\right) \in \mathbb{A} &\text{(def. of algebraic number)}\\
-\therefore\ &\hline{\textbf{d}\notin \mathbb{A}} &\text{(q.e.d)}\\
+\therefore\ &\hline{\textbf{d}\notin \mathbb{A}} &\blacksquare\\
 \end{align}$$
 </p></details>
 

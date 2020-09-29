@@ -74,7 +74,7 @@ $$\begin{align*}
 
 Note that in the third to last equality, letting $I=\varnothing$ in the right summand makes it equivalent to $\mu(S_{n+1})$.
 <p></p>
-Also note that in the second to last equality, we adjust the exponent of the $-1$ to account with the cardinality of $S$ being $1$ higher than before.
+Also note that in the second to last equality, we adjust the exponent of the $-1$ to account for the cardinality of $S$ being $1$ higher than before.
 <p></p>
 Finally, note that the last equality was valid because the index over the first term was mutually exclusive to that of the second since the second always includes $n+1$. Also note that their union indeed produces the desired $\mathcal P([1..n+1])\setminus\{\emptyset\}$ giving us a single index. Trust me... it works.
 
@@ -129,7 +129,7 @@ $$\mu(S)={\begin{cases}\vert S\vert, &|S|\in\aleph_0\\\infty, &|S|\not\in\aleph_
 
 <!-- $$\mu (S)={\begin{cases}\vert S\vert &{\text{if }}S{\text{ is finite}}\\+\infty &{\text{if }}S{\text{ is infinite}}\end{cases}}$$ -->
 
-We call $\mu$ the **counting measure**, as it simply gives the cardinality of (finite) members of $\Sigma$. Now consider a finite collection sets $(S_i)^n_{i=1}$ where each set is itself finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
+We call $\mu$ the **counting measure**, as it simply gives the cardinality of (finite) members of $\Sigma$. Now consider a finite collection of sets $(S_i)^n_{i=1}$ where each set is itself finite, i.e. $\vert S_i\rvert\in\aleph_0$. If we let:
 
 $$\begin{aligned}
   X=\bigcup_{i=1}^n S_i\\

@@ -21,15 +21,15 @@ In this post we will be discussing translational kinematics in relation to **cla
 To calculate the motion of an object with continuous acceleration over time, simply refer to the definitions of velocity and acceleration:
 
 $$\begin{align}
-\vec{v}=\frac{d\vec{x}}{dt}\\
-\vec{a}=\frac{d\vec{v}}{dt}
+\vec{v}&=\frac{d\vec{x}}{dt}\\
+\vec{a}&=\frac{d\vec{v}}{dt}
 \end{align}$$
 
 Integrating these equations we get:
 
 $$\begin{align}
-\vec{x}=\int\vec{v} \,dt+\vec{x}_0\\
-\vec{v}=\int\vec{a} \,dt+\vec{v}_0
+\vec{x}&=\int\vec{v} \,dt+\vec{x}_0\\
+\vec{v}&=\int\vec{a} \,dt+\vec{v}_0
 \end{align}$$
 
 - $\vec{x}$ is the object's position as a function of time.
@@ -45,8 +45,8 @@ When acceleration is assumed to be constant, as is the case for any physical sys
 <details>
 <summary><strong>Position Independent Equation</strong></summary>
 <p>$$\begin{align}
-\vec{v}&=\int\vec{a} \,dt+\vec{v}_0 \tag{integral def. of $\vec{v}$}\\
-&=\vec{a}\int dt+\vec{v}_0 \tag{$\vec{a}$ is constant}\\
+\vec{v}&=\int\vec{a} \,dt+\vec{v}_0 &\text{(integral def. of $\vec{v}$)}\\
+&=\vec{a}\int dt+\vec{v}_0 &\text{($\vec{a}$ is constant)}\\
 &=t\vec{a}+\vec{v}_0
 \end{align}$$</p>
 <p>$$\boxed{\vec{v}=\vec{v}_0+t\vec{a}}$$</p>
@@ -55,11 +55,11 @@ When acceleration is assumed to be constant, as is the case for any physical sys
 <details>
 <summary><strong>Velocity Independent Equation</strong></summary>
 <p>$$\begin{align}
-\vec{v}&=t\vec{a}+\vec{v}_0 \tag{$\vec{x}$ independent Eq.}\\
-\vec{x}&=\int\vec{v} \,dt+\vec{x}_0 \tag{integral def. of $\vec{x}$}\\
-&=\int(t\vec{a}+\vec{v}_0) \,dt+\vec{x}_0\tag{plug in $\vec v$}\\
+\vec{v}&=t\vec{a}+\vec{v}_0 &\text{($\vec{x}$ independent Eq.)}\\
+\vec{x}&=\int\vec{v} \,dt+\vec{x}_0 &\text{(integral def. of $\vec{x}$)}\\
+&=\int(t\vec{a}+\vec{v}_0) \,dt+\vec{x}_0&\text{(plug in $\vec v$)}\\
 &=\int t\vec{a}\,dt + \int\vec{v}_0 \,dt+\vec{x}_0 \\
-&=\vec{a}\int t \,dt + t\vec{v}_0+\vec{x}_0 \tag{$\vec{a}$ is constant}\\
+&=\vec{a}\int t \,dt + t\vec{v}_0+\vec{x}_0 &\text{($\vec{a}$ is constant)}\\
 &=\frac{t^2\vec{a}}{2}+t\vec{v}_0+\vec{x}_0
 \end{align}$$</p>
 <p>$$\boxed{\vec{x}=\vec{x}_0+t\vec{v}_0+\frac{t^2\vec{a}}{2}}$$</p>
@@ -68,10 +68,10 @@ When acceleration is assumed to be constant, as is the case for any physical sys
 <details>
 <summary><strong>Acceleration Independent Equation</strong></summary>
 <p>$$\begin{align}
-\vec{v}&=t\vec{a}+\vec{v}_0 \tag{$\vec{x}$ independent Eq.}\\
-\vec{a}&=\frac{\vec{v}-\vec v_0}{t}\tag{solve for $\vec a$}\\
-\vec{x}&=\frac{t^2\vec{a}}{2}+t\vec{v}_0+\vec{x}_0 \tag{$\vec{v}$ independent Eq.}\\
-&=\frac{t^2\frac{\vec{v}-\vec v_0}{t}}{2}+t\vec{v}_0+\vec{x}_0\tag{plug in $\vec a$}\\
+\vec{v}&=t\vec{a}+\vec{v}_0 &\text{($\vec{x}$ independent Eq.)}\\
+\vec{a}&=\frac{\vec{v}-\vec v_0}{t}&\text{(solve for $\vec a$)}\\
+\vec{x}&=\frac{t^2\vec{a}}{2}+t\vec{v}_0+\vec{x}_0 &\text{($\vec{v}$ independent Eq.)}\\
+&=\frac{t^2\frac{\vec{v}-\vec v_0}{t}}{2}+t\vec{v}_0+\vec{x}_0&\text{(plug in $\vec a$)}\\
 &=t\frac{\vec v_0+\vec{v}}{2}+\vec{x}_0
 \end{align}$$</p>
 <p>$$\boxed{\vec{x}=\vec{x}_0+t\frac{\vec v_0+\vec{v}}{2}}$$</p>
@@ -80,13 +80,13 @@ When acceleration is assumed to be constant, as is the case for any physical sys
 <details>
 <summary><strong>Time Independent Equation</strong></summary>
 <p>$$\begin{align}
-\vec{v}&=t\vec{a}+\vec{v}_0 \tag{$\vec{x}$ independent Eq.}\\
-{\vec{a}}t&=\vec{v}-\vec{v}_0\tag{rearrange}\\
-\vec{x}&=t\frac{\vec v_0+\vec{v}}{2}+\vec{x}_0 \tag{$\vec{a}$ independent Eq.}\\
-2(\vec{x}-\vec{x}_0)&=t(\vec{v}+\vec{v}_0)\tag{rearrange}\\
-2\vec{a}\cdot(\vec{x}-\vec{x}_0)&=t\vec{a}\cdot (\vec{v}+\vec{v}_0)\tag{dot product w/ $\vec a$}\\
-&=(\vec{v}-\vec{v}_0)\cdot(\vec{v}+\vec{v}_0)\tag{plug in $t\vec a$}\\
-&=\vec{v} \cdot \vec{v} - \vec{v}_0 \cdot \vec{v}_0 \tag{foil dot product}\\
+\vec{v}&=t\vec{a}+\vec{v}_0 &\text{($\vec{x}$ independent Eq.)}\\
+{\vec{a}}t&=\vec{v}-\vec{v}_0&\text{(rearrange)}\\
+\vec{x}&=t\frac{\vec v_0+\vec{v}}{2}+\vec{x}_0 &\text{($\vec{a}$ independent Eq.)}\\
+2(\vec{x}-\vec{x}_0)&=t(\vec{v}+\vec{v}_0)&\text{(rearrange)}\\
+2\vec{a}\cdot(\vec{x}-\vec{x}_0)&=t\vec{a}\cdot (\vec{v}+\vec{v}_0)&\text{(dot product w/ $\vec a$)}\\
+&=(\vec{v}-\vec{v}_0)\cdot(\vec{v}+\vec{v}_0)&\text{(plug in $t\vec a$)}\\
+&=\vec{v} \cdot \vec{v} - \vec{v}_0 \cdot \vec{v}_0 &\text{(foil dot product)}\\
 &=\left \| \vec{v} \right \|^2-\left \| \vec{v}_0 \right \|^2\\
 \end{align}$$</p>
 
@@ -107,18 +107,18 @@ If we look at the acceleration independent equation, we can see it contains the 
 <details>
 <summary>Derivation</summary>
 <p>$$\begin{align}
-\overline{\vec{v}}&=\frac{\vec{x}-\vec{x}_0}{t} \tag{def. of $\overline{\vec{v}}$}\\
+\overline{\vec{v}}&=\frac{\vec{x}-\vec{x}_0}{t} &\text{(def. of $\overline{\vec{v}}$)}\\
 t\overline{\vec{v}}&=\vec{x}-\vec{x}_0\\
-\vec{x}-\vec{x}_0&=\frac{t^2\vec{a}}{2}+t\vec{v}_0 \tag{$\vec{v}$ independent Eq.}\\
+\vec{x}-\vec{x}_0&=\frac{t^2\vec{a}}{2}+t\vec{v}_0 &\text{($\vec{v}$ independent Eq.)}\\
 t\overline{\vec{v}}&=\frac{t^2\vec{a}}{2}+t\vec{v}_0\\
 \overline{\vec{v}}&=\frac{t\vec{a}}{2}+\vec{v}_0\\
-\vec{v}&=t\vec{a}+\vec{v}_0 \tag{$\vec{x}$ independent Eq.}\\
+\vec{v}&=t\vec{a}+\vec{v}_0 &\text{($\vec{x}$ independent Eq.)}\\
 t\vec{a}&=\vec{v}-\vec{v}_0\\
 \overline{\vec{v}}&=\frac{\vec{v}-\vec{v}_0}{2}+\vec{v}_0=\frac{\vec v_0+\vec{v}}{2}
 \end{align}$$</p>
 </details>
 
-$$\boxed{\overline{\vec{v}}=\frac{\vec v_0+\vec{v}}{2}}$$
+$$\overline{\vec{v}}=\frac{\vec v_0+\vec{v}}{2}$$
 
 ### Dot Product
 When deriving the time independent kinematic equation, we used the dot product when manipulating the expressions $t\vec{a}\cdot(\vec{v}+\vec{v}_0)$ and $(\vec{v}-\vec{v}_0)\cdot(\vec{v}+\vec{v}_0)$. We were justified in doing so because the dot product is both commutative and distributive.
@@ -131,10 +131,10 @@ $$\vec{v}\cdot\vec{v}=\left \| \vec{v} \right \|^2=v^2$$
 Taking into account average velocity, the simpler dot product notation, and using displacement instead of position, we can rewrite the kinematic equations for constant acceleration as:
 
 $$\begin{gather}
-&\vec{v}=\vec{v}_0+t\vec{a} \tag{$\vec{x}$ independent}\\
-&\Delta\vec{x}=t\vec{v}_0+\frac{t^2\vec{a}}{2} \tag{$\vec{v}$ independent}\\
-&\Delta\vec{x}=t\overline{\vec{v}}=t\frac{\vec v_0+\vec{v}}{2} \tag{$\vec{a}$ independent}\\
-&v^2 = v_0^2+2\vec{a}\cdot\Delta\vec{x} \tag{t independent}
+&\vec{v}=\vec{v}_0+t\vec{a} &\text{($\vec{x}$ independent)}\\
+&\Delta\vec{x}=t\vec{v}_0+\frac{t^2\vec{a}}{2} &\text{($\vec{v}$ independent)}\\
+&\Delta\vec{x}=t\overline{\vec{v}}=t\frac{\vec v_0+\vec{v}}{2} &\text{($\vec{a}$ independent)}\\
+&v^2 = v_0^2+2\vec{a}\cdot\Delta\vec{x} &\text{(t independent)}
 \end{gather}$$
 
 <!-- #### Note on Applicability of Kinematic Equations
