@@ -12,7 +12,7 @@ feature_row:
     alt: "qRNG"
     title: "qRNG: A Quantum Random Number Generator"
     excerpt: "A python API for generating random numbers using IBM's publically available quantum computers."
-    url: "https://github.com/ozanerhansha/qRNG"
+    url: "https://github.com/ozaner/qRNG"
     btn_label: "Code Here"
     btn_class: "btn--inverse"
 
@@ -44,15 +44,15 @@ feature_row2:
     alt: "eeg"
     title: "Neurosky EEG Test App"
     excerpt: "An Android app that can communicate with a Neurosky EEG headset via bluetooth, allowing the user to output a CSV of their brainwaves at different key frequencies over time."
-    url: "https://github.com/ozanerhansha/NeuroSkyTest"
+    url: "https://github.com/ozaner/NeuroSkyTest"
     btn_label: "Code Here"
     btn_class: "btn--inverse"
 
   - image_path: /assets/images/projects/digit-classifier/test_screenshots.png
     alt: "digits"
     title: "Handwritten Digit Classifier"
-    excerpt: "An android app demonstration of a model for classifying handwritten digits (0-9) using a convolutional neural network made in TensorFlow. It was trained on the [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) on about 1,000,000 examples. You can find the model [here](https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/MNIST/conv/mnist_convolutional.py)."
-    url: "https://github.com/ozanerhansha/DigitClassifier"
+    excerpt: "An android app demonstration of a model for classifying handwritten digits (0-9) using a convolutional neural network made in TensorFlow. It was trained on the [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) on about 1,000,000 examples. You can find the model [here](https://github.com/ozaner/NeuralNetworks/blob/master/src/MNIST/conv/mnist_convolutional.py)."
+    url: "https://github.com/ozaner/DigitClassifier"
     btn_label: "Code Here"
     btn_class: "btn--inverse"
 ---

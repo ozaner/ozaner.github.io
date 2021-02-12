@@ -24,7 +24,7 @@ portfolio:
   - title: "Projects"
     children:
       - title: "• qRNG"
-        url: "https://github.com/ozanerhansha/qRNG"
+        url: "https://github.com/ozaner/qRNG"
       - title: "• Breast Cancer Classification Network"
         url: "/breast-cancer-classification/"
       - title: "• FileToPNG"
@@ -32,9 +32,9 @@ portfolio:
       - title: "• Reinforcement Learning Pong AI"
         url: "/reinforcement-learning-pong/"
       - title: "• Neurosky EEG Readings App"
-        url: "https://github.com/ozanerhansha/NeuroSkyOutput"
+        url: "https://github.com/ozaner/NeuroSkyOutput"
       - title: "• Handwritten Digit Classifier App"
-        url: "https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/MNIST/conv/mnist_convolutional.py"
+        url: "https://github.com/ozaner/NeuralNetworks/blob/master/src/MNIST/conv/mnist_convolutional.py"
 
 
   # - title: "Papers"

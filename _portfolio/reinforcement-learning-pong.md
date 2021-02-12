@@ -34,7 +34,7 @@ And make no mistake, while simpler, policy networks can be just as good as DQNs.
 <!-- Encouraged by the aforementioned research, I thought I would attempt to create an ANN capable of playing pong using reinforcement learning. Using OpenAI's [Gym](https://gym.openai.com) package to model [Pong](https://gym.openai.com/envs/Pong-v0/), and Google's [*TensorFlow*](https://www.tensorflow.org/) library to construct the network, I'll attempt to explain the code, its results, and its accuracy. -->
 Encouraged by the aforementioned research, I thought I would attempt to create an ANN capable of playing pong using reinforcement learning. To do this I used OpenAI's [Gym](https://gym.openai.com) package to model [Pong](https://gym.openai.com/envs/Pong-v0/), and Google's [*TensorFlow*](https://www.tensorflow.org/) library to construct the network.
 
-The [code](https://github.com/ozanerhansha/NeuralNetworks/tree/master/src/pongRL) for this network, dubbed PongNet, is in my [NeuralNetwork](https://github.com/ozanerhansha/NeuralNetworks) repository on GitHub.
+The [code](https://github.com/ozaner/NeuralNetworks/tree/master/src/pongRL) for this network, dubbed PongNet, is in my [NeuralNetwork](https://github.com/ozaner/NeuralNetworks) repository on GitHub.
 
 ## Results
 Learning starts to appear after 1500 games (a game goes on until one player reaches 20 points) and it reaches a 50% win-rate at around 8000 games. More testing needs to be done to see the maximum accuracy of this particular network.

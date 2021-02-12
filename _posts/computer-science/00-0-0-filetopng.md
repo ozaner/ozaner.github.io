@@ -12,16 +12,16 @@ tags:
 ## What is FileToPNG?
 FileToPNG is a tool I wrote in Java that converts the raw binary representation of any file into a corresponding PNG image representation. The resulting PNG (being a lossless file type) can be sent through text, email, etc. before finally being reconstructed back into its original form.
 
-The project's GitHub repository can be found [here](https://github.com/ozanerhansha/FileToPNG).
+The project's GitHub repository can be found [here](https://github.com/ozaner/FileToPNG).
 
 While FileToPNG's main purpose was to be a tool that allowed for the sending of files over image only communication channels, I've found that, based on what type of files are put into it, the resulting images show some interesting patterns. I will elaborate on a couple of these findings in this post.
 
 <!--more-->
 
 ## The Main Algorithm
-While I have programmed a primitive UI (the code for which can be found [here](https://github.com/ozanerhansha/FileToPNG/blob/master/src/Main.java)) to make using the tool easier, it's not the main focus of FileToPNG and is really just boilerplate Java.
+While I have programmed a primitive UI (the code for which can be found [here](https://github.com/ozaner/FileToPNG/blob/master/src/Main.java)) to make using the tool easier, it's not the main focus of FileToPNG and is really just boilerplate Java.
 
-The real meat of the program is the conversion functions for PNG to File and vice versa. The code for this can be found [here](https://github.com/ozanerhansha/FileToPNG/blob/master/src/GFile.java)
+The real meat of the program is the conversion functions for PNG to File and vice versa. The code for this can be found [here](https://github.com/ozaner/FileToPNG/blob/master/src/GFile.java)
 
 The algorithm goes something like this:
 1. Convert the file into a string of bytes (8 bits = 1 byte).

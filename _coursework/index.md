@@ -28,7 +28,7 @@ Here you'll find homework, papers, and rough notes on topics from my undergradua
 ## Philosophy
 **Ethics of A.I.:**
 - [*On the CTD Principle's Implications for the Mind*](\hw\Spring%202019\Ghost%20in%20Machine\ctdpaper\main.pdf) - An argumentative paper that uses the Church-Turing-Deutsch Principle, the notion of hypercomputability, and the byproduct theory of religion, in opposition to mind-body dualism.
-- [*Atari Pong AI via Reinforcment Learning*](\hw\Spring%202019\Ghost%20in%20Machine\pongpaper\pongpaper.pdf) - A paper that gives a rudimentary overview of the construction of my [Atari Pong AI](https://github.com/ozanerhansha/NeuralNetworks) and of neural networks in general, then uses that to inform questions on the consequences of the public perception of AI in the future.
+- [*Atari Pong AI via Reinforcment Learning*](\hw\Spring%202019\Ghost%20in%20Machine\pongpaper\pongpaper.pdf) - A paper that gives a rudimentary overview of the construction of my [Atari Pong AI](https://github.com/ozaner/NeuralNetworks) and of neural networks in general, then uses that to inform questions on the consequences of the public perception of AI in the future.
 
 **Human Nature and Diversity:**
 - [*On Bloom's "Is God an Accident?"*](\hw\Spring%202019\humannaturepaper\paper.pdf) - My thoughts and critique, although pretty much just agreement, of Paul Bloom's 2005 article ["Is God an Accident?"](https://www.theatlantic.com/magazine/archive/2005/12/is-god-an-accident/304425/) which discusses the byproduct theory of religion and its evidence.

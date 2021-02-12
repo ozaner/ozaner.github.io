@@ -16,7 +16,7 @@ tags:
 ## Background
 The goal of this project was to implement a **neural network** from scratch and to train it on a real world dataset pulled from the internet. In this post I'll attempt to explain the code block by block, as well as a bit of the underlying math, and then finish off by measuring the accuracy of the model.
 
-The model was made with Google's [*TensorFlow*](https://www.tensorflow.org/) library, and the [entire program](https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/test/bcDiagnosis.py) is in my [NeuralNetwork](https://github.com/ozanerhansha/NeuralNetworks) repository on GitHub as well as at the end of this post.
+The model was made with Google's [*TensorFlow*](https://www.tensorflow.org/) library, and the [entire program](https://github.com/ozaner/NeuralNetworks/blob/master/src/test/bcDiagnosis.py) is in my [NeuralNetwork](https://github.com/ozaner/NeuralNetworks) repository on GitHub as well as at the end of this post.
 
 ## The Training Data
 All the training data comes from the [Wisconsin Breast Cancer Data Set](http://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+%28diagnostic%29), hosted by the University of California's [Machine Learning Repository](http://archive.ics.uci.edu/ml/index.php).
@@ -60,7 +60,7 @@ string_points = file_object.read().split('\n')
 string_points.pop(-1)
 ~~~
 
-If you take a look at the actual [`wdbc.data`](https://github.com/ozanerhansha/NeuralNetworks/blob/master/src/test/wdbc.data) file, you'll see that some of the subjects are clustered in groups of benign and malignant. If we trained the network with the subjects in this order, it would bias the network's guesses. To avoid this, we'll shuffle the subjects:
+If you take a look at the actual [`wdbc.data`](https://github.com/ozaner/NeuralNetworks/blob/master/src/test/wdbc.data) file, you'll see that some of the subjects are clustered in groups of benign and malignant. If we trained the network with the subjects in this order, it would bias the network's guesses. To avoid this, we'll shuffle the subjects:
 
 ~~~ python
 random.shuffle(string_points) #Randomize (avoid bias)
@@ -232,7 +232,7 @@ That said the slight increase/decrease in accuracy are just products of how the 
 Doing this for our network yields about a **90% accuracy**. Not bad. For reference, a monkey (that is, a random process) would classify the cells correctly 50% of the time (there are only two categories). That's a 40% increase over randomly guessing!
 
 ## The Full Code
-This is all the code put together and is how it appears on my [NeuralNetwork](https://github.com/ozanerhansha/NeuralNetworks) repository. All the imports have been moved to the top of the program:
+This is all the code put together and is how it appears on my [NeuralNetwork](https://github.com/ozaner/NeuralNetworks) repository. All the imports have been moved to the top of the program:
 ~~~ python
 '''
 Created on Jun 6, 2017
