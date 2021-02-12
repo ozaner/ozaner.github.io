@@ -25,7 +25,7 @@ The number of $k$-combinations of a set $S$ with $n$ elements is given by the **
 
 $$\binom{n}{k}=|\{A\subseteq S: |A|=k\}|=\frac{n^{\underline {k}}}{k!}=\underbrace{\frac{n!}{k!(n-k)!}}_{\text{only if } 0\le k\le n}$$
 
-Note this definition implies that $n<k\implies\binom{n}{k}=0$. Also note the special case $\binom{0}{0}=1$, since $\emptyset$ has one empty subset: itself.
+Note this definition implies that $n<k\implies\binom{n}{k}=0$. Also note the special case $\binom{0}{0}=1$, since $\emptyset$ has exactly one subset: itself.
 {:.notice--info}
 
 <details class="bordered">
@@ -91,11 +91,11 @@ $$\binom{n-1}{k}+\binom{n-1}{k-1}=\binom{n}{k}$$
 We can prove this via the following chain of equalities:
 
 $$\begin{align*}
-\binom{n-1}{k}+\binom{n-1}{k-1}&=\frac{(n-1)!}{k!(n-k-1)!}+\frac{(n-1)!}{(k-1)!(n-1-k+1)!}\tag{def. of binomial coefficient}\\
-&=(n-1)!\left(\frac{1}{k!(n-k-1)!}+\frac{1}{(k-1)!(n-k)!}\right)\tag{algebra}\\
-&=(n-1)!\left(\frac{n-k}{k!(n-k)!}+\frac{k}{k!(n-k)!}\right)\tag{$(n+1)!=(n+1)\cdot n!$}\\
-&=(n-1)!\left(\frac{n}{k!(n-k)!}\right)\tag{algebra}\\
-&=\frac{n!}{k!(n-k)!}=\binom{n}{k}\tag{def. of binomial coefficient}
+\binom{n-1}{k}+\binom{n-1}{k-1}&=\frac{(n-1)!}{k!(n-k-1)!}+\frac{(n-1)!}{(k-1)!(n-1-k+1)!}&\text{(def. of binomial coefficient)}\\
+&=(n-1)!\left(\frac{1}{k!(n-k-1)!}+\frac{1}{(k-1)!(n-k)!}\right)&\text{(algebra)}\\
+&=(n-1)!\left(\frac{n-k}{k!(n-k)!}+\frac{k}{k!(n-k)!}\right)&\text{($(n+1)!=(n+1)\cdot n!$)}\\
+&=(n-1)!\left(\frac{n}{k!(n-k)!}\right)&\text{(algebra)}\\
+&=\frac{n!}{k!(n-k)!}=\binom{n}{k}&\text{(def. of binomial coefficient)}
 
 \end{align*}$$
 
@@ -140,12 +140,12 @@ There are 2 special cases of this definition not seen in the finite case:
 
 Each row and column is represented by a natural number starting from $0$. The number in row $n$ and column $k$ is given by $\binom{n}{k}$.
 
-While the staggering of the rows may make this unclear, the $k$th element from the left of row $n$ is said to be in column $k$.
+While the staggering of the columns may make this unclear, the $k$th element from the left of row $n$ is said to be in column $k$.
 {:.notice--info}
 
 As we can see, by starting with just the first two rows we can iteratively construct Pascal's triangle using Pascal's rule (which we proved earlier).
 
-We can generalize Pascal's triangle to a pyramid and, more generally, an $n$ dimensional simplex via the multinomial version of Pascal's rule discussed further below.
+We can generalize Pascal's triangle to a pyramid and, more generally, an $n$ dimensional [simplex](https://en.wikipedia.org/wiki/Simplex) via the multinomial version of Pascal's rule discussed further below.
 
 <!-- fib identity shallow -->
 

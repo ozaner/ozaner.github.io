@@ -14,7 +14,7 @@ tags:
 
 At it's lowest levels, computation is usually formulated via boolean logic which, in turn, makes use of logical connectives like $\wedge,\vee, \neg$ along with the binary digits $1$ and $0$, representing true and false respectively.
 
-There is, however, an alternative: linear algebra. By representing $0$ and $1$ as vectors and logical operations/gates as matrices, we can define computation in the language of linear algebra. While at first this may seem to be nothing but a novel construction, this reformulation is precisely what opens the door to quantum computing.
+There is, however, an alternative: linear algebra. By representing $0$ and $1$ as vectors and logical operations/gates as matrices, we can define computation in the language of linear algebra. While at first this may seem to be nothin g but a novel construction, this reformulation is precisely what opens the door to quantum computing.
 
 ## 0 and 1 states
 Instead of $0$ and $1$ or `true` and `false`, we instead represent our basic states as the two standard basis vectors in 2-dimensions:
@@ -196,7 +196,7 @@ $$\lvert x_0\rangle\otimes\lvert x_1\rangle\otimes\cdots\otimes\lvert x_{n-1}\ra
 <!-- *As a side note, the tensor product of two rank $2$ tensors (vectors) $a$ and $b$ is equivalent to $ab^\top$.* -->
 
 ## Binary Gates
-Now that we can represent bit strings as vectors, it is possible construct operations that take in $2$ bits and output $1$ bit. While there are technically $2^{2^2}=16$ possible binary bit operations, we'll only construct the more useful ones like `AND`, `OR`, `XOR`, etc.
+Now that we can represent bit strings as vectors, it's possible to construct operations that take in $2$ bits and output $1$ bit. While there are technically $2^{2^2}=16$ possible binary bit operations, we'll only construct the more useful ones like `AND`, `OR`, `XOR`, etc.
 
 <details>
 <summary><strong>Disjunction (<code>OR</code>)</strong></summary>
@@ -269,7 +269,7 @@ $$
   \end{pmatrix}
 $$
 
-<i>Notice that logical equivalence the negation of <code>XOR</code>, <code>XNOR</code> (i.e $x\leftrightarrow y=\neg(x\oplus y)$) meaning all the $0$'s and $1$'s in the $\operatorname{XOR}$ matrix are simply swapped to form the equality one.</i>
+<i>Notice that logical equivalence is the negation of <code>XOR</code>, <code>XNOR</code> (i.e $x\leftrightarrow y=\neg(x\oplus y)$) meaning all the $0$'s and $1$'s in the $\operatorname{XOR}$ matrix are simply swapped to form the equality one.</i>
 
 Applying the gate to all two bit states we find:
 
@@ -286,16 +286,16 @@ Material implication is a statement of one variable's dependence on another (i.e
 
 $$
   \operatorname{IF} = \begin{pmatrix}
-    0 & 1 & 0 & 0 \\
-    1 & 0 & 1 & 1
+    0 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 1
   \end{pmatrix}
 $$
 
 Applying the gate to all two bit states we find:
 
 $$\begin{align}
-\operatorname{IF}\lvert 00\rangle&=\lvert 1\rangle & \operatorname{IF}\lvert 01\rangle&=\lvert 0\rangle\\
-\operatorname{IF}\lvert 10\rangle&=\lvert 1\rangle & \operatorname{IF}\lvert 11\rangle&=\lvert 1\rangle
+\operatorname{IF}\lvert 00\rangle&=\lvert 1\rangle & \operatorname{IF}\lvert 01\rangle&=\lvert 1\rangle\\
+\operatorname{IF}\lvert 10\rangle&=\lvert 0\rangle & \operatorname{IF}\lvert 11\rangle&=\lvert 1\rangle
 \end{align}$$
 </details><p></p>
 
@@ -330,7 +330,7 @@ Notice that because of this, we can essentially view these matrices as glorified
 ## Putting it Together
 We can now appreciate this new formulation of binary computation for what it is, an isomorphism from Booleans to vectors, logical connectives to matrices, and function composition to matrix multiplication.
 
-In general, the matrix form of a logical operation from $m$ bits to $n$ is a $2^m\times 2^n$ matrix whose $i$th column is the outputs when multiplied by the state $i$ represents. Given an input of the tensor product of $m$ basis vectors, the output is simply their product.
+In general, the matrix form of a logical operation from $m$ bits to $n$ bits is a $2^m\times 2^n$ matrix whose $i$th column is the output when multiplied by the state $i$ represents. Given an input of the tensor product of $m$ basis vectors, the output is simply their product.
 
 Here's an example of an operation from 2 bits to 2 to get us accustomed, the half-adder:
 
@@ -507,7 +507,7 @@ $$\text{Half-Adder}=
 
 ### CNOT and the Echoes of Quantum Computing
 <!-- ### Sidenote: CNOT -->
-As a final example, and lead in into quantum computing, I'll describe another 2 bit to 2 bit logic gate[^f2]: the controlled NOT or CNOT gate.
+As a final example, and lead-in to quantum computing, I'll describe another 2 bit to 2 bit logic gate[^f2]: the controlled NOT or CNOT gate.
 
 Its function is pretty simple: the gate acts as a NOT gate on the second bit, but only if the first bit is $1$. If this first bit, dubbed the *control bit*, is $0$ then the second bit, dubbed the *target bit*, won't be affected at all. The first unchanged bit and the second possibly negated bit are then outputted. The circuit notation and truth table looks like this:
 

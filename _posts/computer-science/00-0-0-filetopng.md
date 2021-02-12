@@ -26,7 +26,7 @@ The real meat of the program is the conversion functions for PNG to File and vic
 The algorithm goes something like this:
 1. Convert the file into a string of bytes (8 bits = 1 byte).
 2. Read through this list and make a pixel out of every 3 bytes. This can be done because a pixel is comprised of 3 colors (red, green, and blue) each with a value from 0-255. These 256 values can be represented in 8 bits (because 2<sup>8</sup>=256).
-4. Once a list of pixels (which should be about a 1/3 of the size of the byte list) has been made, create a square image (in .png format) out of these pixels.
+4. Once a list of pixels (which should be about 1/3 of the size of the byte list) has been made, create a square image (in .png format) out of these pixels.
 5. Account for files whose bytes aren't a multiple of 3. (I used special '2 byte' and '1 byte' pixels that have different alpha values to demarcate them)
 
 Reconstructing the images into files is as simple as reversing this process.
@@ -87,7 +87,7 @@ Interested, I did some research into N64 cartridges and found out that all 'ROM 
 
 You may also notice that the *Super Mario 64* rom is smaller than the *Mario Kart 64* one, implying that it has a smaller file size. Apparently, N64 games came on a variety of hardware with different storage capacities and capabilities. This may seem normal nowadays but in an era where all games had to work on the same piece of limited hardware, this variability is pretty amazing.
 
-Another similarity can be spotted after the last black bar, at the bottom of the images. Past this point, both the ROMs consist of 'garbage data' meant to fill up the game cartridge they were stored on. You can tell because this section looks more like the random noise then the rest of the picture.
+Another similarity can be spotted after the last black bar, at the bottom of the images. Past this point, both ROMs consist of 'garbage data' meant to fill up the game cartridge they were stored on. You can tell because this section looks more like random noise then the rest of the picture.
 
 <!-- ![xkcd](https://imgs.xkcd.com/comics/file_extensions.png?style=centerme)
 <center><i>Relevant xckd</i></center> -->

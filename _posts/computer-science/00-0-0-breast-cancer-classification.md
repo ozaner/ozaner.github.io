@@ -38,7 +38,7 @@ It is interesting to note that we don't really need to know what these values me
 
 <!-- *The meaning of these values is irrelevant to our purpose. All we need to know is that we can use these $10\times3=30$ values to predict whether the given breast cancer sample is malignant or benign.* -->
 
-All the training examples are stored on a CSV (Comma Separated Value) file called `wdbc.data`, so our first job is to import the file into our program:
+All the training examples are stored in a CSV (Comma Separated Value) file called `wdbc.data`, so our first job is to import the file into our program:
 
 ~~~ python
 import os #Used for finding file path

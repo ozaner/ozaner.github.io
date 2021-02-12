@@ -74,7 +74,7 @@ $$\begin{gather*}
 G=\{\sigma\in S\times S\mid\sigma\text{ is a bijection}\}
 \end{gather*}$$
 
-*Where denotes $\circ$ function composition over $S\times S$.*
+*Where $\circ$ denotes function composition over $S\times S$.*
 
 That this is indeed a group can be seen from the following 4 facts:
 
@@ -91,7 +91,7 @@ The number of different permutations of a set (i.e. the cardinality of it's symm
 
 Note that for a finite set with $n$ elements, we have $n$ choices for what to map the first element to, $n-1$ choices for the second element, and so on until we reach the $n$th element which has only $1$ choice left to map to.
 
-Thus, by the [principle of counting](/the-basic-principle-of-counting), the number of distinct permutations of an $n$ element set $S$ is given by the [factorial](\superfactorial-and-hyperfactorial)[^f1]:
+Thus, by the [principle of counting](/principle-of-counting), the number of distinct permutations of an $n$ element set $S$ is given by the [factorial](\superfactorial-and-hyperfactorial)[^f1]:
 
 $$|\text{Sym}(S)|=n(n-1)(n-2)\cdots3\cdot2\cdot1=n!$$
 
