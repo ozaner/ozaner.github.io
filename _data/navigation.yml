@@ -4,7 +4,7 @@ main:
     url: /
   # - title: "About"
   #   url: /about/
-  - title: "Portfolio"
+  - title: "Projects"
     url: /portfolio/
   - title: "Coursework"
     url: /coursework/
@@ -21,7 +21,7 @@ main:
 
 # sidebar for projects
 portfolio:
-  - title: "Projects"
+  - title: "All Projects"
     children:
       - title: "• qRNG"
         url: "https://github.com/ozaner/qRNG"
