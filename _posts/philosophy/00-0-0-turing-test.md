@@ -317,21 +317,21 @@ An idea presented to a mind will usually give rise to one or fewer ideas, what T
 > "Can a machine be made to be super-critical?"
 
 ### Onions have Layers
-This is all well and good, but how could one even program a mind? Or something similar enough to be called 'super-critical'? For this, Turing presents another analogy. Consider the functions of the brain we understand so well we can describe them mechanically, an objector to the idea that the brain is indeed mechanical and not dualist in some nature might say "that's not the 'real' mind which is underneath that boilerplate functionality". The best way for the scientist to rebuttal might be to look even deeper, peeling the layers of the brain back, like an onion, understanding its functions more and more. After a point though, there will be no more layers to peel back, the onion was always just layers of skin. There was no 'true' onion underneath.
+This is all well and good, but how could one even program a mind? Or something similar enough to be called 'super-critical'? For this, Turing presents another analogy. Consider the functions of the brain we understand so well that we can describe them mechanically. An objector to the idea that the brain is indeed mechanical and not dualist in some nature might say "that's not the 'real' mind. The 'real' mind is underneath that boilerplate functionality". The best way for the scientist to rebuttal might be to look even deeper, peeling the layers of the brain back, like an onion, understanding its functions more and more. After a point though, there will be no more layers to peel back, the onion was always just layers of skin. There was no 'true' onion underneath.
 
 Again, Turing doesn't claim this nor the last section to be convincing arguments. They just provide a way of at least conceiving of the mind as something not beyond physical construction. Especially to his contemporaries, who didn't have the benefit of decades of progress in computer science (much, of course, thanks to Turing), as well as the conceptual changes in our notion of the mind as physics and neuroscience have developed. And in any case, Turing notes that the only real proof that the Turing test may be passed is simply "waiting for the end of the century and then doing the experiment described."
 
 ### Programming a Mind
-In the following paragraphs, Turing notes that the main challenge in creating a 'super-critical' program is not in hardware capabilities (e.g. memory, speed) but in the actual programming itself. I think most computer scientists would agree with him, at least mostly. After all, our current advances in machine learning were only possible by the increase in data and GPU power afforded in the past decade or so. Indeed, Turing estimated that only $10^9$ bits (126 MB) would be necessary to pass the Turing test, an estimate that falls short of the gigabytes (or even terabytes) needed to run the most advanced language models.
+In the following paragraphs, Turing notes that the main challenge in creating a 'super-critical' program is not in hardware capabilities (e.g. memory, speed) but in the actual programming itself. I think most computer scientists would agree with him, at least mostly. After all, our current advances in machine learning were only possible by the increase in data and GPU power afforded in the past decade or so. Indeed, Turing estimated that only $10^9$ bits (126 MB) would be necessary to pass the Turing test, an estimate that falls short of the gigabytes (or even terabytes) needed to run/train the most advanced language models.
 
-Getting back on track, how does Turing propose we construct the program? Well begins by considering how a human mind comes to be. There are 3 components:
-- How the mind was at birth
-- The education the mind has received
-- Other experiences it has faced, that aren't education.
+Getting back on track, how does Turing propose we construct the program? Well he begins by considering how a human mind comes to be. There are 3 components:
+1. How the mind was at birth
+2. The education the mind has received
+3. Other experiences it has faced, that aren't education.
 
 *That last one is a bit of a catch-all but it seems reasonable to divide experiences between education (formal knowledge) and everything else (informal knowledge).*
 
-Turing proposes that we can reduce the program to simulating a child-like mind, akin to the initial state described above, and then subjecting it to something akin to education and possibly other experiences. Operating on this 'blank slate' as Turing seems to imagine it, seems a much easier task than reverse-engineering an adult brain.
+Turing proposes that we can reduce creating the program to 1) simulating a child-like mind, akin to the initial state described above, and then 2) subjecting it to something akin to education as well as 3) possibly other experiences. Operating on this 'blank slate' as Turing seems to imagine it, seems a much easier task than reverse-engineering an adult brain.
 
 So now we have two problems, coming up with an initial 'child' machine, and educating it. For the former Turing suggests trial and error. He likens the process to evolution by natural selection:
 - Structure of the child machine -> Hereditary Material (i.e. genes)
@@ -347,11 +347,11 @@ For all the other sections, my thoughts were integrated into my summaries of Tur
 - The brittleness of logic-based reasoning in real-life situations.
   - Rule-based AI has had a long history of failure in computer science due to its proneness to failure.
 - The overwhelming complexity of simulating brains. Even if much less than an entire simulation is necessary, computational cost still poses a much bigger problem than Turing realizes.
-  - Even the huge deep neural networks calculated on supercomputers only don't seem to be enough to, say, generate a full-length novel. Much less simulate a human's other cognitive abilities.
+  - Even the huge deep neural networks calculated on supercomputers (in their current form) don't seem to be enough to, say, generate a full-length novel. Much less simulate a human's other cognitive abilities.
 
-What seems far more tenable, to me at least, is a program that makes use of a machine learning model (either practically or entirely) that has a statistical understanding of language and thoughts. This has already been demonstrated and in completely non-trivial cases. But of course, hindsight is 20-20...
+What seems far more tenable, to me at least, is a program that makes use of a machine learning model (either partially or entirely) that has a statistical understanding of language and thoughts. This has already been demonstrated in non-trivial cases.
 
-In his defense, Turing's mention of using randomness and reinforcement learning seems right in line with contemporary approaches to AI. Further, I think if Turing was alive today and had access to this knowledge, this last section would be much different. However, maybe such hypotheticals are misguided considering so much of our knowledge is a result of his work, both directly via the theory of computing and indirectly via the advent of digital computers and their immeasurable effect on science and well... all other aspects of human life.
+But of course, hindsight is 20-20. In his defense, Turing's mention of using randomness and reinforcement learning seems right in line with contemporary approaches to AI. Further, I think if Turing was alive today and had access to this knowledge, this last section would be much different. However, maybe such hypotheticals are misguided considering so much of our knowledge is a result of his work, both directly via the theory of computing and indirectly via the advent of digital computers and their immeasurable effect on science and well... all other aspects of human life.
 
 ## Final Thoughts
 So then, where does that leave us? I think there are a couple of takeaways our discussion has revealed:
@@ -367,10 +367,13 @@ However, as with any good philosophical discussion, we are left with yet more qu
   - Even if I gave you a computer that could respond perfectly as if it were a human (maybe it even panics that it is inside a computer since it thinks it is a real human), would you believe it to be conscious? What if it even had a physical form identical to a human (on the outside)?
   - Why do we believe those around us are conscious?
 
-I have my own opinions on these questions, mostly taking the negative view that 'consciousness' isn't 'real' in some metaphysical sense and that, whatever you define consciousness to be, there exists a computer program that can simulate it. But these are claims too broad for this paper. Indeed what Turing asserted was more modest, at least by our standards. Despite this however, his claims remain controversial to this day.
+I have my own opinions on these questions, mostly taking the negative view that 'consciousness' isn't 'real' in some metaphysical sense and that, whatever you define consciousness to be, there exists a computer program that can simulate it. But these are claims too broad for this paper. What Turing asserted was more modest, at least by our standards. Yet despite this, his claims still remain controversial.
 
 <!-- That a machine could think still is, and may always be, controversial. -->
-To many, that a machine could think still is, and may always be, unthinkable.
+<!-- Indeed, it would seem that there will always be a portion of the population that finds a thinking machine unthinkable. -->
+<!-- Indeed, it would seem that, to many, that a machine could think is still unthinkable. -->
+Indeed to many, that a machine could think is still, and may very well remain, unthinkable.
+<!-- An impossibility... until it's not. -->
 
 ---
 
@@ -382,4 +385,4 @@ To many, that a machine could think still is, and may always be, unthinkable.
 
 [^f4]: If you haven't seen them already, algorithms like GPT-3, which represent the state of the art in language generation at the time of writing, are almost chillingly capable of producing believable text. I played around with a toy model of GPT-2, a much weaker model, as a project once and found that it was able to mimic not just English prose, but mimic a specific person's style of writing and even how they write equations in LaTeX!
 
-[^f5]: A modern objector might point to quantum mechanics as producing indeterministic behavior that cannot be deterministically computed but, this is easily dealt with by simply considering the probability distribution of different thoughts a person might have rather than just one thought. On top of this, the human mind is almost certainly not sensitive enough to quantum fluctuations to make this an issue considering it operates on the level of neurons, which are many orders of magnitude larger than anything quantum.
+[^f5]: A modern objector might point to quantum mechanics as producing indeterministic behavior that cannot be deterministically computed but, this is easily dealt with by simply considering the probability distribution of different thoughts a person might have rather than just one thought. On top of this, the human mind is almost certainly not sensitive enough to quantum fluctuations (at least locally) to make this an issue considering it operates on the level of neurons, which are many orders of magnitude larger than anything quantum.

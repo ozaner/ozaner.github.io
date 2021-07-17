@@ -21,9 +21,9 @@ There is no formal definition of these concepts. We just know them when we see t
 
 "Alright," you might say, "maybe humanity and jealousy are too lofty to state objectively, but can't cats be formally defined? Surely a cat has a particular genome that defines it regardless of its outward appearance, right?"
 
-But in a world where cats evolved from another species via gradual mutations to individual base pairs in their DNA (not big leaps), where do we draw the line between cat and cave-cat, so to speak.
+But in a world where cats evolved from another species via gradual mutations to individual base pairs in their DNA (not big leaps), where do we draw the line between cat and cave-cat, so to speak?
 
-Moreover is a picture of a cat a cat? It certainly represents the notion of a cat, but it doesn't exactly have genetic material. Plus, there is no formal way to tell whether a given picture is of a cat or not. No formula, no physical law of cats. We can tell a cat, real or drawn, from another animal using our *intuition*, whatever that is.
+Moreover, is a picture of a cat a cat? It certainly represents the notion of a cat, but it doesn't exactly have genetic material. Plus, there is no formal way to tell whether a given picture is of a cat or not. No formula, no physical law of cats. We can tell a cat, real or drawn, from another animal using our *intuition*, whatever that is.
 
 "But it's easy" you might say, "just look for a tail, 4 legs, pointy ears and some fur." What about hairless cats? a cat drawn with no tail? a cat who's ears are down, etc. There are so many exceptions that it's a miracle we are even able to tell cat from houseplant!
 
@@ -121,11 +121,11 @@ It also serves as a sort of refutation of the idea that some "things" are "nonph
 ### An Aside
 The idea I presented above is, of course, ridiculous and riddled with problems. It is just meant to serve as a rough idea of how one might formalize the notion of an "idea" or "concept" when, at first, it may seem that they can only exist in our minds. Indeed these concepts do only exist in our minds, but our minds are purely physical, unless you obstinately claim the contrary.
 
-One such problem I would like to somewhat address is the apparent circularity of saying "the notion of cat is encompassed by the set of all brains that are thinking of the concept of cat." This isn't as bad as it sounds because it should really be phrased as "the notion of cat is encompassed by the set of all brains that are thinking of **what the brain considers** the concept of cat." This definition draws on our own subjective ideas of cats to objectively define them. That is to say, we can take advantage of the human brain's unique capacity to introspect to help us define these concepts.[^f8]
+One such problem I would like to somewhat address is the apparent circularity of saying "the notion of cat is encompassed by the set of all brains that are thinking of the concept of cat." This isn't as bad as it sounds because it should really be phrased as "the notion of cat is encompassed by the set of all brains that are thinking of **what the brain considers** the concept of cat." This definition draws on our own subjective ideas of cats to objectively define them. That is to say, we can take advantage of the human brain's unique capacity to introspect to help us define these concepts.
 
 <!-- (In this case *our* might represent an average of all human opinions or something of the sort.) -->
 
-Another, more subtle, problem is that a certain concept or idea that occurs in a human mind may not be isolated in their brains. The human mind is a complex mechanism whose function is a product of one's body, senses, and general environment. This problem can be solved by simply replacing the idea of brain graph with the set of cells that represent the human body or even set of particles/wavefunction that comprise that human body if necessary. The brain graph formulation I used above is simply for intuitive convenience.
+Another problem is that a certain concept or idea that occurs in a human mind may not be isolated in their brains. The human mind is a complex mechanism whose function is a product of one's body, senses, and general environment. This problem can be solved by simply replacing the idea of brain graph with the set of cells that represent the human body or even set of particles/wavefunction that comprise that human body if necessary. The brain graph formulation I used above is simply for intuitive convenience.
 
 <!-- Footer -->
 

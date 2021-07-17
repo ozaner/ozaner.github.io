@@ -11,7 +11,7 @@ feature_row:
   - image_path: assets/images/projects/qRNG.png
     alt: "qRNG"
     title: "qRNG: A Quantum Random Number Generator"
-    excerpt: "A python API for generating random numbers using IBM's publically available quantum computers."
+    excerpt: "A python API for generating random numbers using IBM's publicly available quantum computers."
     url: "https://github.com/ozaner/qRNG"
     btn_label: "Code Here"
     btn_class: "btn--inverse"

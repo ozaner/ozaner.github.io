@@ -125,7 +125,7 @@ $$P\left(\bigcup_{i=1}^nE_i\right)=\sum _{I\subseteq [1..n] \atop I\not=\emptyse
 ## Cardinality Case
 To see how the principle applies to cardinality, we define the following measure $\mu:\Sigma\to[0,\infty]$ for an arbitrary measureable space $(X,\Sigma)$: 
 
-$$\mu(S)={\begin{cases}\vert S\vert, &|S|\in\aleph_0\\\infty, &|S|\not\in\aleph_0\end{cases}}$$
+$$\mu(S)={\begin{cases}\vert S\vert, &|S|<\aleph_0\\\infty, &|S|\ge\aleph_0\end{cases}}$$
 
 <!-- $$\mu (S)={\begin{cases}\vert S\vert &{\text{if }}S{\text{ is finite}}\\+\infty &{\text{if }}S{\text{ is infinite}}\end{cases}}$$ -->
 
