@@ -1,4 +1,7 @@
 ---
+header:
+  overlay_image: /assets/images/projects/filetopng/splash.png
+  overlay_filter: 0.1
 title: Compression, Images, and FileToPNG
 date: 2018-01-16
 excerpt: "A writeup of the interesting observations I've made playing around with my FileToPNG project."
