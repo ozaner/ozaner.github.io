@@ -13,7 +13,7 @@ tags:
 ---
 
 ## Background
-The following is a summary, my thoughts, and possibly a bit more, of Alan Turing's seminal paper ["Computing Machinery and Intelligence"](https://academic.oup.com/mind/article-pdf/LIX/236/433/9866119/433.pdf). Each section, denoted by a §, of this post corresponds to the same-titled section of the paper.
+The following is a summary, my thoughts, and possibly a bit more, on Alan Turing's seminal paper ["Computing Machinery and Intelligence"](https://academic.oup.com/mind/article-pdf/LIX/236/433/9866119/433.pdf). Each section, denoted by a §, of this post corresponds to the same-titled section of the paper.
 
 <!-- (http://phil415.pbworks.com/f/TuringComputing.pdf) -->
 
@@ -244,7 +244,7 @@ Turing phrases the theological objection as follows:
 
 <p>And, as it turns out, a variety of the items Turing listed have been demonstrated in recent years:
 <ul>
-<li>Machine language models have shown the capability to use words properly to create coherent passages and even entire articles (see GPT-3)[^f3].</li>
+<li>Machine language models have shown the capability to use words properly to create coherent passages and even entire articles<a href="#fn:f3"><sup>3</sup></a>.</li>
 <li>In regards to creating 'something new,' deep learning models have created original art, music, and poetry (at least as original as the art you or I could make).</li>
 <li>There are documented cases of humans falling in love with machines, usually in the form of an artificial persona. Although to be fair, this is probably more a statement about human psychology rather than the capabilities of machines. We have yet to develop machines with personalities realistic enough to be truly endearing, especially enough to fall in love with (at least to my satisfaction...).</li>
 </ul>
@@ -336,9 +336,9 @@ Turing proposes that we can reduce creating the program to 1) simulating a child
 So now we have two problems, coming up with an initial 'child' machine, and educating it. For the former Turing suggests trial and error. He likens the process to evolution by natural selection:
 - Structure of the child machine -> Hereditary Material (i.e. genes)
 - Changes -> Mutations
-- Natural Selection -> Judgement of the Experimenter.
+- Judgement of the Experimenter -> Natural Selection
 
-Crucially, an active intelligent designer (i.e. the experimenter) would be much faster in producing positive changes, or mutations, in a model than natural selection. For the problem of education, Turing has two suggestions that would hopefully work together:
+Note that, crucially, an active intelligent designer (i.e. the experimenter) would be much faster in producing positive changes, or mutations, in a model than natural selection. For the problem of education, Turing has two suggestions that would hopefully work together:
 - A system of inference and logic to deduce claims about the world.
 - A system of reward and punishment (think reinforcement learning).
 
@@ -383,6 +383,6 @@ Indeed to many, that a machine could think is still, and may very well remain, u
 
 [^f3]: Of course, our modern view of physics doesn't allow for a Laplacian demon as, even if one got around the relativistic ambiguity of 'the current state of the universe', one would also have to contend with the fact that, on quantum scales, the universe and its laws are probabilistic.
 
-[^f4]: If you haven't seen them already, algorithms like GPT-3, which represent the state of the art in language generation at the time of writing, are almost chillingly capable of producing believable text. I played around with a toy model of GPT-2, a much weaker model, as a project once and found that it was able to mimic not just English prose, but mimic a specific person's style of writing and even how they write equations in LaTeX!
+[^f4]: If you haven't seen them already, algorithms like GPT-3, which represent the state of the art in language generation at the time of writing, are almost chillingly capable of producing believable text. I played around with a toy model of GPT-2, a much weaker model, as a project once and found that it was able to mimic not just English prose, but mimic a specific person's style of writing and even how they write equations in LaTeX! (that person being me...)
 
 [^f5]: A modern objector might point to quantum mechanics as producing indeterministic behavior that cannot be deterministically computed but, this is easily dealt with by simply considering the probability distribution of different thoughts a person might have rather than just one thought. On top of this, the human mind is almost certainly not sensitive enough to quantum fluctuations (at least locally) to make this an issue considering it operates on the level of neurons, which are many orders of magnitude larger than anything quantum.

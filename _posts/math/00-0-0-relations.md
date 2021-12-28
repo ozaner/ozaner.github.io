@@ -374,11 +374,11 @@ These relations are called <b>left-invertible</b>. Similarly, when there exists 
 
 $$R\circ Y=I$$
 
-the relation is called <b>right-invertible</b>. When $R$ is both left and right invertible, it is simply called <b>invertible</b>. And when a relation is invertible, its left and right inverses and converse are all equivalent to the inverse:
+the relation is called <b>right-invertible</b>. When $R$ is both left and right invertible, it is simply called <b>invertible</b>. And when a relation is invertible, its left and right inverses and converse are all equivalent:
 
-$$R^{-1}=R^\top=X=Y$$
+$$R^\top=X=Y$$
 
-And so, we can denote the unique inverse of $R$ as simply $R^{-1}$. As an example, the composition "is child of" $\circ$ "is parent of" returns "is you" (i.e. the identity relation). As such, they are inverses of each other.
+And so, we can denote this unique inverse of $R$ as $R^{-1}$.
 <p></p>
 </details>
 

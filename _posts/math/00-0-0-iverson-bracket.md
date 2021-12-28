@@ -66,7 +66,7 @@ Below are some of the immediate properties of the Iverson bracket. We can think 
 - $[P\wedge Q]=[P][Q]$
 - $[P\vee Q]=[P]+[Q]-[P][Q]$
 - $[P\oplus Q]=([P]-[Q])^2$
-- $[P\rightarrow Q]=1-[P]-[Q]+[P][Q]$
+- $[P\rightarrow Q]=1-[P]+[P][Q]$
 - $[P\equiv Q]=1-([P]-[Q])^2$
 
 <!-- Note that these properties apply to predicates $P(x), Q(y)$ as well, as long as we hold the inputs $x,y$ constant.

@@ -12,9 +12,9 @@ tags:
   - logic
 ---
 
-At it's lowest levels, computation is usually formulated via boolean logic which, in turn, makes use of logical connectives like $\wedge,\vee, \neg$ along with the binary digits $1$ and $0$, representing true and false respectively.
+At it's lowest levels, computation is usually formulated in boolean logic which, in turn, makes use of logical connectives like $\wedge,\vee,$ and $\neg$ along with the binary digits $1$ and $0$, representing true and false respectively.
 
-There is, however, an alternative: linear algebra. By representing $0$ and $1$ as vectors and logical operations/gates as matrices, we can define computation in the language of linear algebra. While at first this may seem to be nothin g but a novel construction, this reformulation is precisely what opens the door to quantum computing.
+However, there is an alternative: linear algebra. By representing $0$ and $1$ as vectors and logical operations/gates as matrices, we can define computation in the language of linear algebra. While at first this may seem to be nothing but a novel construction, this reformulation is precisely what opens the door to quantum computing.
 
 ## 0 and 1 states
 Instead of $0$ and $1$ or `true` and `false`, we instead represent our basic states as the two standard basis vectors in 2-dimensions:
