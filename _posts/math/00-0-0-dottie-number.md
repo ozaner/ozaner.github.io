@@ -398,12 +398,21 @@ However, after the 3rd term, we run into a problem. [Abel's impossibility theore
 ### General Root Finding Algorithm
 Instead we might as well use a general root finding algorithm like [Newton's method][2] or the [bisection method][3], which allows us to calculate $\textbf{d}$ to a desired accuracy.
 
-### Integral Form
+### Analytic Solution
+Since the writing of this article, a paper published by [Stoutemyer][4] has produced an analytic expression for the Dottie number:
+
+$$\textbf{d}=\text{Inv}_1 y_0(-1)$$
+
+Where $y_0$ denotes the 0th order [Spherical Bessel Function of the 2nd Kind][5] and $\text{Inv}_1$ denotes branch 1 of it's inverse.
+
+<!-- One might also call this a closed-form expression but Bessel functions are not usually considered 'elementary' functions, thus disqualifying this expression. That said, the phrase ['closed-form'](https://en.wikipedia.org/wiki/Closed-form_expression) is vague and can mean different things in different contexts. -->
+
+<!-- ### Integral Form
 Alternatively, while there is no **closed-form expression** (i.e. an expression using a finite number of elementary functions and operations) for $\textbf{d}$, there is an integral representation[^f6] of the constant:
 
 $$\frac{1}{8+8\sqrt{1-\textbf{d}^2}}=\int_{0}^\infty \frac{3\pi^2+4(z-\sinh z)^2}{(3\pi^2+4(z-\sinh z)^2)^2+16\pi^2(z-\sinh z)^2}dz$$
 
-Which can be approximated by numerical integration methods to obtain the digits of $\textbf{d}$.
+Which can be approximated by numerical integration methods to obtain the digits of $\textbf{d}$. -->
 
 <!-- footnotes -->
 
@@ -419,10 +428,14 @@ Which can be approximated by numerical integration methods to obtain the digits 
 
 <!-- [^f5]: You may have noticed I didn't include an exact representation of the solution to the quartic equation. This is because, even though there exists a generic solution to quartic polynomials, it is crazily complex and not worth using practically. Click [here](https://upload.wikimedia.org/wikipedia/commons/9/95/Quartic_Formula.jpg) to see the equation in its entirety. -->
 
-[^f6]: The definite integral is courtesy of Franklin Dyer's [question](https://math.stackexchange.com/questions/2446725/integral-representation-of-the-dottie-number) on the math StackExchange, which also includes his derivation.
+<!-- [^f6]: The definite integral is courtesy of Franklin Dyer's [question](https://math.stackexchange.com/questions/2446725/integral-representation-of-the-dottie-number) on the math StackExchange, which also includes his derivation. -->
 
 [1]: https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Dottie_number.svg/800px-Dottie_number.svg.png
 
 [2]: https://en.wikipedia.org/wiki/Newton%27s_method
 
 [3]: https://en.wikipedia.org/wiki/Bisection_method
+
+[4]: https://arxiv.org/abs/2207.00707
+
+[5]: https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html
