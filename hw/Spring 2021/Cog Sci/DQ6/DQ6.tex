@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage{setspace}
+\usepackage[margin=0.95in]{geometry}
+\usepackage{titling}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Seminar in Cognitive Science\\ DQ \#6}
+\author{Ozaner Hansha}
+\date{March 11, 2021}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Prompt:} What are Berlyne's arousal-raising properties of aesthetics? Explain how arousal influences people’s preferences for art.
+\bigskip
+
+\noindent\textbf{Response:} D. E. Berlyne proposed that a person's \textit{arousal}, that is how alert or excited they are, strongly relates to people's perception of art. In particular, he regards the properties of novelty, surprsingness, complexity, ambiguity, and puzzlingness (collectively referred to as the \textit{collative variables}) as the most significant arousal-raising properties of art/aesthetics.
+
+Studies show that people prefer stimuli with a ``moderate'' potential for arousal. This is opposed to those stimuli with too little a potential, perceived as boring, as well as those with too high a potential, which activates human's aversion system leading to a negative perception.
+
+Therefore, if the collative variables do indeed have a strong correlation to the arousal potential of a piece of art, it stands to reason that art that balances these variables such that their overall potential is moderate will be perceived as more favorable to most people. 
+
+\subsection*{Question 2}
+\noindent\textbf{Prompt:} How is stylistic ambiguity supposed to help the network create art that is creative but not obviously designed by a computer?
+\bigskip
+
+\noindent\textbf{Response:} Stylistic ambiguity refers to how easily it is to classify a piece into a specific category of art. Since the output of CANs are attempts to maximize stylistic ambiguity, the art should be what is considered creative, as it deviates from the norm of any particular genre (i.e. its not just copying an art style).
+
+Note that these CANs also try to maximize the property of being art (i.e. try to generate pieces that to not stray too far from the whole of their training set, e.g. some static noise is certainly not 'art'). This, the hope is, results in the CAN generating art that seems realistic and not representative of the psychedelic over-aroused style computer generated art is known for (as these kinds of pieces are not in its training set and thus not part of its notion of 'art').
+
+\subsection*{Question 3}
+\noindent\textbf{Prompt:} What are dominated strategies? What is dominance-solvability? Explain the iterative process of eliminating dominated strategies to arrive at a smaller game.
+\bigskip
+
+\noindent\textbf{Response:} In a game between multiple players, a ``dominated strategy'' is one that is always worse than another strategy. As a result of this property, there is no point in picking such a strategy and we can effectively remove it from consideration, leaving us with a reduced set of possible strategies. Note that because we removed the previous set of dominated strategies, a new set of strategies may turn out to be dominated in this reduced strategy space. We can then remove them and so on.
+
+If we can repeat this process of removing dominated strategies until we are left with a single strategy for each player, then the game is called ``dominance-solvable.''
+
+\subsection*{Question 4}
+\noindent\textbf{Prompt:} How do pure coordination games differ from dominance-solvable games in game theory and in the kinds of cognitive strategies used to solve them?
+\bigskip
+
+\noindent\textbf{Response:} In pure coordination games, each player's objective is to match the actions of other players. Whether it is a competitive game or cooperative one, in a pure coordination game, the optimal choice of action is wholly dependent on the actions the other players choose. As a result, there is no mathematical way to calculate what the optimal action is (sans literally predicting your fellow players' choices) and instead other strategies must be employed.
+
+An example the paper gives is a game where two players must both name a year, color, and number. They found that, when told they were to try to match the choice of an unseen other player, they were more likely to pick 'common' answers like the current year, the color red, and the number 1. This is opposed to if they were not trying to match the other player, where their answers were more widely distributed.
+
+Making use of these ``focal points,'' as the paper refers to them, is one is one such cognitive strategy that takes form in pure coordination games.
+
+\subsection*{Question 5}
+\noindent\textbf{Prompt:} Briefly describe the activation patterns found in the frontal and parietal cortices and the proposed interpretation of this activation in terms of cognitive mechanisms (e.g., working memory).
+\bigskip
+
+\noindent\textbf{Response:} Subjects showed higher activation in the frontal and parietal cortices when playing dominance-solvable games as opposed to pure coordination ones. Considering other studies have shown that activation in this area is associated with attention, conscious perception, reasoning, and memorizing, this is exactly the area we'd expect to flare up during dominance-solvable games. Indeed, these types of games seem to require working memory due to the strategies they use being mathematical in nature and, in particular, solvable via the elimination of dominated strategies algorithm.
+
+Similarly, pure coordination games had activation patterns in the bilateral insulae and anterior cingulate cortex, both areas found to be related to empathetic feelings, and emotions of social content (like cooperation).
+\end{document}

@@ -1,0 +1,280 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#4}
+\author{Ozaner Hansha}
+\date{February 22, 2021}
+\maketitle
+
+\subsection*{Problem a}
+\noindent\textbf{Problem 15:} Find the dual problem of the following:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&20x_1+2x_2\\
+    &{\text{subject to}}
+    &&30x_{1}+5x_{2}\ge60\\
+    &
+    &&15x_{1}+10x_{2}\ge70\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} Putting this problem into matrix form we find:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\underbrace{\begin{bmatrix}
+        20\\2
+    \end{bmatrix}}_{\vec c}\cdot\vec x\\
+    &{\text{subject to}}
+    &&\underbrace{\begin{bmatrix}
+        30&5\\15&10
+    \end{bmatrix}}_{A}\vec x\ge\underbrace{\begin{bmatrix}
+        60\\70
+    \end{bmatrix}}_{\vec b}\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+The dual problem is a maximization problem rather than minimization problem, and the constants $\vec c_D,A_D,\vec b_D$ that define it are given by:
+\begin{align*}
+    \vec c_D&=\vec b\\
+    \vec b_D&=\vec c\\
+    A_D&=A^\top
+\end{align*}
+
+And so the dual problem is given by:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&\underbrace{\begin{bmatrix}
+        60\\70
+    \end{bmatrix}}_{\vec c_D=\vec b}\cdot\vec x\\
+    &{\text{subject to}}
+    &&\underbrace{\begin{bmatrix}
+        30&15\\5&10
+    \end{bmatrix}}_{A_D=A^\top}\vec x\le\underbrace{\begin{bmatrix}
+        20\\2
+    \end{bmatrix}}_{\vec b_D=\vec c}\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Problem 16:} Find the dual problem of problem 15.
+\bigskip
+
+\noindent\textbf{Solution:} You'll note that the process for finding the dual problem we used above is involutory. This means that that the dual of the dual of the primal problem is just the primal problem. To see this note the following:
+\begin{align*}
+    \vec c_{D^2}&=\vec b_D=\vec c\\
+    \vec b_{D^2}&=\vec c_D=\vec b\\
+    A_{D^2}&=A_D^\top=A
+\end{align*}
+
+And the maximization is again switched to minimization. Thus, the dual of problem 15 is just:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\underbrace{\begin{bmatrix}
+        20\\2
+    \end{bmatrix}}_{\vec c_{D^2}=\vec c}\cdot\vec x\\
+    &{\text{subject to}}
+    &&\underbrace{\begin{bmatrix}
+        30&5\\15&10
+    \end{bmatrix}}_{A_{D^2}=A}\vec x\ge\underbrace{\begin{bmatrix}
+        60\\70
+    \end{bmatrix}}_{b_{D^2}=\vec b}\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+\subsection*{Problem b}
+\noindent\textbf{Problem:} Find the dual problem of the following:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&3x_1+x_2+4x_3\\
+    &{\text{subject to}}
+    &&3x_1+3x_2+x_3\le18\\
+    &
+    &&2x_1+2x_2+4x_3=12\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} Let us first put the primal problem in a different form:
+\begin{align*}
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&3x_1+x_2+4x_3\\
+        &{\text{subject to}}
+        &&3x_1+3x_2+x_3\le18\\
+        &
+        &&2x_1+2x_2+4x_3=12\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.
+    &\implies
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&3x_1+x_2+4x_3\\
+        &{\text{subject to}}
+        &&3x_1+3x_2+x_3\le18\\
+        &
+        &&2x_1+2x_2+4x_3\le12\\
+        &
+        &&2x_1+2x_2+4x_3\ge12\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.\\
+    &\implies
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&3x_1+x_2+4x_3\\
+        &{\text{subject to}}
+        &&3x_1+3x_2+x_3\le18\\
+        &
+        &&2x_1+2x_2+4x_3\le12\\
+        &
+        &&-2x_1-2x_2-4x_3\le-12\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.\\
+    &\implies
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&\underbrace{\begin{bmatrix}
+            3\\1\\4
+        \end{bmatrix}}_{\vec c}\cdot\vec x\\
+        &{\text{subject to}}
+        &&\underbrace{\begin{bmatrix}
+            3&3&1\\2&2&4\\-2&-2&-4
+        \end{bmatrix}}_{A}\vec x\le\underbrace{\begin{bmatrix}
+            18\\12\\-12
+        \end{bmatrix}}_{\vec b}\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.
+\end{align*}
+
+And since the constants describing the dual are given by:
+\begin{align*}
+    \vec c_D&=\vec b\\
+    \vec b_D&=\vec c\\
+    A_D&=A^\top
+\end{align*}
+
+We have the dual:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\underbrace{\begin{bmatrix}
+        18\\12\\-12
+    \end{bmatrix}}_{\vec c_D=\vec b}\cdot\vec x\\
+    &{\text{subject to}}
+    &&\underbrace{\begin{bmatrix}
+        3&2&-1\\3&2&-2\\1&4&-4
+    \end{bmatrix}}_{A_D=A^\top}\vec x\ge\underbrace{\begin{bmatrix}
+        3\\1\\4
+    \end{bmatrix}}_{\vec b_D=\vec c}\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+\subsection*{Problem c}
+\noindent\textbf{Problem:} Check that $\vec x=\icol{\sfrac{5}{26}\\\sfrac{5}{2}\\\sfrac{27}{26}}$ is an optimal solution to the following linear optimization problem:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&\underbrace{\begin{bmatrix}
+        9\\14\\7
+    \end{bmatrix}}_{\vec c}\cdot\vec x\\
+    &{\text{subject to}}
+    &&\underbrace{\begin{bmatrix}
+        2&1&3\\5&4&1\\0&2&0
+    \end{bmatrix}}_{A}\vec x\le\underbrace{\begin{bmatrix}
+        6\\12\\5
+    \end{bmatrix}}_{\vec b}%\\
+    % &{\text{and}}
+    % &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} Note that the only restriction on $\vec x$ is that it satisfies the given inequality. Also note that $A,\vec b$ and $\vec c$ all have only nonnegative entries. As such, since this is a maximization problem, if a solution $\vec x_E$ exists that satisfies the following:
+\begin{equation*}
+    \begin{bmatrix}
+        2&1&3\\5&4&1\\0&2&0
+    \end{bmatrix}\vec x=\begin{bmatrix}
+        6\\12\\5
+    \end{bmatrix}
+\end{equation*}
+
+Then for any other solution $\vec x$ we'd have:
+\begin{equation*}
+    \vec c\cdot \vec x\le \vec c\cdot\vec x_E
+\end{equation*}
+
+In other words, if $\vec x_E$ exists then it it is optimal. And indeed such a $\vec x_E$ does exist as $A$ is invertible:
+\begin{align*}
+    \vec x_E&=A^{-1}\vec b\\
+    &=\begin{bmatrix}
+        -\sfrac{1}{13}&\sfrac{3}{13}&-\sfrac{11}{26}\\0&0&\sfrac{1}{2}\\\sfrac{5}{13}&-\sfrac{2}{13}&\sfrac{3}{26}
+    \end{bmatrix}\begin{bmatrix}
+        6\\12\\5
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        \sfrac{5}{26}\\\sfrac{5}{2}\\\sfrac{27}{26}
+    \end{bmatrix}
+\end{align*}
+
+And so the given solution is indeed optimal.
+
+\end{document}

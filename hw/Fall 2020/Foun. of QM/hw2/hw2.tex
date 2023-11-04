@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ HW 2}
+\author{Ozaner Hansha}
+\date{October 12, 2020}
+\maketitle
+
+For the following questions consider the wavefunction $\psi_s$ given by:
+$$\psi_s(x)=\frac{1}{4\sqrt{3}}x^2e^{-|x|/2},\quad x\in\mathbb R$$
+
+And the wave function $\psi_a$ given by:
+$$\psi_a(x)=\begin{cases}
+    \psi_s(x),&x\ge 0\\
+    -\psi_s(x),&x<0
+\end{cases}$$
+
+Also, let $X_n$ be a random variable that gives the position of a particle with wave function $\psi_n$ when measured.
+\bigskip
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Sketch $\psi_s(x)$: 
+\bigskip
+
+\noindent\textbf{Solution:} 
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={x},
+        xmin=-10,xmax=10,
+        ymin=-2,ymax=2,
+        axis lines=center,
+        legend style={legend cell align=right,legend plot pos=right}]
+      
+    \addplot[color=BrickRed,domain=-10:10,samples=100] {1/(4*sqrt(4))*x^2*e^(-abs(x)/2)};
+    \addlegendentry{$\psi_s(x)$}
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+\newpage
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Sketch $\psi_a(x)$: 
+\bigskip
+
+\noindent\textbf{Solution:} 
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={x},
+        xmin=-10,xmax=10,
+        ymin=-2,ymax=2,
+        axis lines=center,
+        legend style={legend cell align=right,legend plot pos=right}]
+      
+    \addplot[color=Purple,domain=0:10,samples=100] {1/(4*sqrt(4))*x^2*e^(-abs(x)/2)};
+    \addlegendentry{$\psi_a(x)$}
+    \addplot[color=Purple,domain=-10:0,samples=100] {-1/(4*sqrt(4))*x^2*e^(-abs(x)/2)};
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} What is the relationship between the probability distribution of $X_{s}$ and $X_{a}$?
+\bigskip
+
+\noindent\textbf{Solution:} These two random variables share the same distribution, that is:
+$$X_{s}\sim X_{a}$$
+
+To see this, let us denote the pdfs of $X_s$ and $X_a$ by $p_s$ and $p_a$ respectively. We now consider two cases:
+
+\begin{itemize}
+    \item Case 1, $x\ge0$:
+    \begin{align*}
+        p_a(x)&=|\psi_a(x)|^2\tag{pdf of a wavefunction}\\
+        &=|\psi_s(x)|^2\tag{def. of $\psi_a(x)$ for $x\ge0$}\\
+        &=p_s(x)\tag{pdf of a wavefunction}
+    \end{align*}
+    \item Case 2, $x<0$:
+    \begin{align*}
+        p_a(x)&=|\psi_a(x)|^2\tag{pdf of a wavefunction}\\
+        &=|-\psi_s(x)|^2\tag{def. of $\psi_a(x)$ for $x<0$}\\
+        &=|\psi_s(x)|^2\tag{modulus is invariant to sign}\\
+        &=p_s(x)\tag{pdf of a wavefunction}
+    \end{align*}
+\end{itemize}
+
+And so we have shown that $\forall x\in\mathbb R,\,\, p_a(x)=p_s(x)$. And since the pdfs of $X_a$ and $X_s$ are equivalent, they must share the same distribution.
+\newpage
+
+\subsection*{Question 4}
+\noindent\textbf{Problem:} What is the probability that $X_s<0$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $\psi_s(x)$ is an even function:
+\begin{align*}
+    \psi_s(-x)&=\left|\frac{1}{4\sqrt{3}}(-x)^2e^{-|-x|/2}\right|^2\tag{def. of $\psi_s$}\\
+    &=\left|\frac{1}{4\sqrt{3}}x^2e^{-|-x|/2}\right|^2\tag{$x^2=(-x)^2$}\\
+    &=\left|\frac{1}{4\sqrt{3}}x^2e^{-|x|/2}\right|^2\tag{$|x|=|-x|$}\\
+    &=\psi_s(x)\tag{def. of $\psi_s$}
+\end{align*}
+
+Now consider the following chain of equalities
+\begin{align*}
+    1&=\int_{-\infty}^\infty|\psi_s(x)|^2\,dx\tag{integral of a pdf over support is 1}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_0^\infty|\psi_s(x)|^2\,dx\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx-\int_0^{-\infty}|\psi_s(-x)|^2\,dx\tag{expansion of interval of integration by $-1$}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_{-\infty}^0|\psi_s(-x)|^2\,dx\tag{reverse interval of integration}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_{-\infty}^0|\psi_s(x)|^2\,dx\tag{$\psi_s$ is an even function}\\
+    &=2\int_{-\infty}^0|\psi_s(x)|^2\,dx\\
+    \frac{1}{2}&=\int_{-\infty}^0|\psi_s(x)|^2\,dx\\
+    &=P(X_s<0)
+\end{align*}
+
+And so, due to the symmetry of $\psi_s(x)$ about the y-axis, the desired probability is $\frac{1}{2}$.
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} For $\psi_{s+a}=\frac{\psi_s+\psi_a}{\sqrt{2}}$, what is the probability that $X_{s+a}<0$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(X_{s+a}<0)&=\int_{-\infty}^0|\psi_{s+a}(x)|^2\,dx\\
+    &=\int_{-\infty}^0\left|\frac{\psi_s+\psi_a}{\sqrt{2}}\right|^2\,dx\tag{def. of $\psi_{s+a}$}\\
+    &=\int_{-\infty}^0\left|\frac{\psi_s-\psi_s}{\sqrt{2}}\right|^2\,dx\tag{$\forall x<0,\, \psi_a(x)=-\psi_s(x)$}\\
+    &=\int_{-\infty}^0|0|^2\,dx\\
+    &=0
+\end{align*}
+
+And so, due to the two wave functions destructively interfering with each other, the desired probability is 0.
+
+\end{document}

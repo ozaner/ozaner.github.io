@@ -1,0 +1,538 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{titling}
+\usepackage{stackengine}
+\usepackage[top=1in, bottom=1.1in, left=1.1in, right=1.1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Algebra Midterm \#2}
+\author{Ozaner Hansha}
+\date{April 10, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+Consider the following linear map $T$ on $\mathcal P_2(\mathbb R)$:
+$$T(f(x))=f''(x)+f'(x)+f(x)$$
+\medskip
+
+\noindent\textbf{Part a:} Determine whether or not $T$ is invertible.
+\bigskip
+
+\noindent\textbf{Solution:} Let us first compute the matrix representative of $T$ w.r.t. to the standard basis $\beta=\{x^2,x,1\}$. First we define our coordinatization function $\Phi:\mathcal P_2(\mathbb R)\to \mathbb R^3$ like so:
+$$\Phi(ax^2+bx+c)=\begin{bmatrix}
+  a\\b\\c
+\end{bmatrix}$$
+
+Then we compute the coordinatization of each of the basis vectors under $T$:
+\begin{align*}
+  \Phi(T(x^2))&=\Phi(x^2+2x+2)=\begin{bmatrix}
+    1\\2\\2
+  \end{bmatrix}\\
+  \Phi(T(x))&=\Phi(x+1)=\begin{bmatrix}
+    0\\1\\1
+  \end{bmatrix}\\
+  \Phi(T(1))&=\Phi(1)=\begin{bmatrix}
+    0\\0\\1
+  \end{bmatrix}
+\end{align*}
+
+Finally we combine them to form the matrix representation:
+$$[T]_\beta=\begin{bmatrix}
+  \vert & \vert & \vert\\
+  \Phi(T(x^2)) & \Phi(T(x)) & \Phi(T(1)) \\
+  \vert & \vert & \vert
+\end{bmatrix}=\begin{bmatrix}
+  1&0&0\\2&1&0\\2&1&1
+\end{bmatrix}$$
+
+Now we simply compute the determinant across the first row:
+$$\operatorname{det}\begin{bmatrix}
+  1&0&0\\2&1&0\\2&1&1
+\end{bmatrix}=1\cdot(1\cdot1-0\cdot1)=1$$
+
+And because we have the following chain of equivalences:
+\begin{align*}
+  \operatorname{det}\,[T]_\beta\not=0&\iff[T]_\beta\text{ is invertible}\\
+  &\iff T\text{ is invertible}
+\end{align*}
+
+$T$ must be invertible as $\operatorname{det}\,[T]_\beta\not=0$. With this we are done.
+\bigskip
+\newpage
+
+\noindent\textbf{Part b:} Determine whether or not $T$ is diagonalizable.
+\bigskip
+
+\noindent\textbf{Solution:} First we compute the eigenvalues of $[T]_\beta$ by solving its characteristic equation:
+\begin{align*}
+  0&=p(\lambda)\\
+  &=\operatorname{det}([T]_\beta-\lambda I)\\
+  &=\operatorname{det}\begin{bmatrix}
+    1-\lambda&0&0\\2&1-\lambda&0\\2&1&1-\lambda
+  \end{bmatrix}\\
+  &=(1-\lambda)((1-\lambda)(1-\lambda)-0\cdot1)\\
+  &=(1-\lambda)^3
+\end{align*}
+
+Solving for $\lambda$ we find that $[T]_\beta$ has a single eigenvalue, $1$, with an algebraic multiplicity (AM) of 3. Now let us compute the geometric multiplicity (GM) of this eigenvalue (i.e. the dimension of its associated eigenspace):
+\begin{align*}
+  \operatorname{dim}\,\mathcal E_1&=\operatorname{dim}\operatorname{Null}([T]_\beta-1\cdot I)\tag{def. of eigenspace}\\
+  &=\operatorname{Nullity}\begin{bmatrix}
+    0&0&0\\2&0&0\\2&1&0
+  \end{bmatrix}\tag{dim of nullspace = nullity}\\
+  &=\operatorname{Nullity}\begin{bmatrix}
+    0&0&0\\1&0&0\\0&1&0
+  \end{bmatrix}=1\tag{row operations preserve nullspace}
+\end{align*}
+
+We find that the GM of the sole eigenvalue is actually less than its AM. This combined with the following chain of equivalences:
+\begin{align*}
+  \text{GM}<\text{AM for at least 1 eigenvalue of }[T]_\beta&\iff[T]_\beta\text{ is not diagonalizable}\\
+  &\iff T\text{ is not diagonalizable}
+\end{align*}
+
+Implies that $T$ is in fact not diagonalizable.
+\newpage
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Find the Jordan normal form of the following matrix:
+$$A=\begin{bmatrix}
+  0&1&-1&-1\\0&0&0&0\\0&-1&2&2\\0&1&-2&-2
+\end{bmatrix}$$
+\smallskip
+
+\noindent\textbf{Solution:} We first compute the eigenvalues of $A$ by solving its characteristic equation:
+\begin{align*}
+  0&=p(\lambda)\\
+  &=\operatorname{det}(A-\lambda I)\\
+  &=\operatorname{det}\begin{bmatrix}
+    -\lambda&1&-1&-1\\0&-\lambda&0&0\\0&-1&2-\lambda&2\\0&1&-2&-2-\lambda
+  \end{bmatrix}\\
+  &=-\lambda(-\lambda((2-\lambda)(-2-\lambda)-(2\cdot-2))\\
+  &=\lambda^4
+\end{align*}
+
+As we can see, this matrix posses a single eigenvalue, 0, with an AM of 4. Now let us compute an eigenbasis for the corresponding eigenspace:
+\begin{align*}
+  E_0&=\operatorname{Null}([T]_\beta-0\cdot I)\tag{def. of eigenspace}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    0&1&-1&-1\\0&0&0&0\\0&-1&2&2\\0&1&-2&-2
+  \end{bmatrix}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    0&0&1&1\\0&0&0&0\\0&1&0&0\\0&0&0&0
+  \end{bmatrix}\tag{row $\text{operations}^{[1]}$}\\
+  &=\text{Span}\left\{\underbrace{\begin{bmatrix} 1\\0\\0\\0\end{bmatrix}}_{v_1},\underbrace{\begin{bmatrix} 0\\0\\-1\\1\end{bmatrix}}_{v_2}\right\}\tag{$x_1$ free, $x_2=0$, $x_3=-x_4$, $x_4$ free}
+\end{align*}
+
+Now note that the Jordan chains of $v_1$ and $v_2$ are both 2 long:
+\begin{align*}
+  (A-0I)v_1&=\begin{bmatrix}0&1&-1&-1\\ 0&0&0&0\\ 0&-1&2&2\\ 0&1&-2&-2\end{bmatrix}\begin{pmatrix}1\\ 0\\ 0\\ 0\end{pmatrix}=\begin{pmatrix}0\\ 0\\ 0\\ 0\end{pmatrix}\\
+  (A-0I)v_2&=\begin{bmatrix}0&1&-1&-1\\ 0&0&0&0\\ 0&-1&2&2\\ 0&1&-2&-2\end{bmatrix}\begin{pmatrix}0\\ 0\\ -1\\ 1\end{pmatrix}=\begin{pmatrix}0\\ 0\\ 0\\ 0\end{pmatrix}
+\end{align*}
+
+As a result, we know that there is only 1 possibility for what their Jordan blocks look like: $\begin{bmatrix}0&1\\0&0\end{bmatrix}$ and $\begin{bmatrix}0&1\\0&0\end{bmatrix}$. Putting these together we have:
+$$J=\begin{bmatrix}
+  0&1&0&0\\0&0&0&0\\0&0&0&1\\0&0&0&0
+\end{bmatrix}$$
+
+$\phantom{}^{[1]}$We will now show the row operations we skipped previously:
+\begin{align*} 
+  &\left[\begin{array}{rrrr}
+    0&1&-1&-1\\
+    0&0&0&0\\
+    0&-1&2&2\\
+    0&1&-2&-2
+    \end{array} \right]
+    \xrightarrow{\substack{R_4+R_3}} 
+    \left[\begin{array}{rrrr}
+      0&1&-1&-1\\
+      0&0&0&0\\
+      0&-1&2&2\\
+      0&0&0&0
+    \end{array} \right]\\
+    &\xrightarrow{\substack{-R_3\\ R_1-R_3}} 
+    \left[\begin{array}{rrrr}
+      0&0&1&1\\
+      0&0&0&0\\
+      0&1&-2&-2\\
+      0&0&0&0
+    \end{array} \right]
+    \xrightarrow{R_3+2R_2}
+    \left[\begin{array}{rrrr} 
+      0&0&1&1\\
+      0&0&0&0\\
+      0&1&0&0\\
+      0&0&0&0
+    \end{array} \right]
+\end{align*}
+\newpage
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Give $\operatorname{det}(A^n)$, for $n\in\mathbb Z^+$, of the following matrix $A$:
+$$A=\begin{bmatrix}
+  -1&-1&1\\5&3&-3\\-2&-1&2
+\end{bmatrix}$$
+\smallskip
+
+\noindent\textbf{Solution:} To solve this, we will find the Jordan decomposition of $A$ and raise that to the $n$ power. We first compute the eigenvalues of $A$ by solving its characteristic equation:
+\begin{align*}
+  0&=p(\lambda)\\
+  &=\operatorname{det}([T]_\beta-\lambda I)\\
+  &=\operatorname{det}\begin{bmatrix}
+    -1-\lambda&-1&1\\5&3-\lambda&-3\\-2&-1&2-\lambda
+  \end{bmatrix}\\
+  &=(-1-\lambda)((3-\lambda)(2-\lambda)-3)+(5(2-\lambda)-6)+(-5+2(3-\lambda))\\
+  &=-\lambda^3+4\lambda^2-5\lambda+2\\
+  &=-(\lambda-2)(\lambda-1)^2
+\end{align*}
+
+We will now find an eigenbasis for each eigenspace, starting with $\lambda=1$:
+\begin{align*}
+  E_1(A)&=\text{Null}(A-I)\tag{def. of eigenspace}\\
+  &=\text{Null}\begin{bmatrix}
+    -2&-1&1\\5&2&-3\\-2&-1&1
+  \end{bmatrix}\\
+  &=\text{Null}\begin{bmatrix}
+    1&0&-1\\
+    0&1&1\\
+    0&0&0
+  \end{bmatrix}\tag{$\text{rref}^{[2]}$}\\
+  % &=\text{Span}\underbrace{\left\{\begin{bmatrix} 1\\-1\\1\end{bmatrix}\right\}}_{v_1}\tag{$x_1=x_3$, $x_2=-x_3$, $x_3$ free}
+  &=\text{Span}\left\{\begin{bmatrix} 1\\-1\\1\end{bmatrix}\right\}\tag{$x_1=x_3$, $x_2=-x_3$, $x_3$ free}
+\end{align*}
+
+Here we can see that the eigenvalue 2 has an AM of 2 despite having a GM of 1. This corresponds to the following Jordan block: $\begin{bmatrix}1&1\\0&1\end{bmatrix}$. Now let us compute an eigenbasis for $\lambda=2$:
+\begin{align*}
+  E_2(A)&=\text{Null}(A-2I)\tag{def. of eigenspace}\\
+  &=\text{Null}\begin{bmatrix}
+    -3&-1&1\\5&1&-3\\-2&-1&0
+  \end{bmatrix}\\
+  &=\text{Null}\begin{bmatrix}
+    1&0&-1\\
+    0&1&2\\
+    0&0&0
+  \end{bmatrix}\tag{$\text{rref}^{[3]}$}\\
+  % &=\text{Span}\underbrace{\left\{\begin{bmatrix} 1\\-2\\1\end{bmatrix}\right\}}_{v_3}\tag{$x_1=x_3$, $x_2=-2x_3$, $x_3$ free}
+  &=\text{Span}\left\{\begin{bmatrix} 1\\-2\\1\end{bmatrix}\right\}\tag{$x_1=x_3$, $x_2=-2x_3$, $x_3$ free}
+\end{align*}
+
+As the AM matches the GM, we have the following Jordan block: $[2]$. Putting both our blocks together, we then have the following JNF:
+$$J=\begin{bmatrix}
+  1&1&0\\0&1&0\\0&0&2
+\end{bmatrix}$$
+
+% Now we must find a Jordan basis coorespdoning to the above JNF. We already have 2 eigenvectors $\{v_1,v_3\}$. We simply need to find the last generalized eigenvector $v_2$ corresponding to $\lambda=1$. We can see from the JNF that we must have:
+% \begin{align*}
+%   Av_2&=v_1+v_2\\
+%   (A-I)v_2&=v_1\\
+%   \begin{bmatrix}-2&-1&1\\5&2&-3\\-2&-1&1\end{bmatrix}
+%   \begin{bmatrix}
+%     x_1\\x_2\\x_3
+%   \end{bmatrix}&=\begin{bmatrix} 1\\-2\\1\end{bmatrix}\\
+%   \begin{bmatrix}1&0&-1\\0&1&1\\0&0&0\end{bmatrix}
+%   \begin{bmatrix}
+%     x_1\\x_2\\x_3
+%   \end{bmatrix}&=\begin{bmatrix} 1\\-2\\1\end{bmatrix}\tag{rref}\\
+%   \begin{bmatrix} x_1\\x_2\\x_3\end{bmatrix}&=\begin{bmatrix} x_3+1\\-x_3-3\\x_3\end{bmatrix}
+% \end{align*}
+
+% Letting the free variable $x_3=0$, we arrive at our final Jordan basis vector $v_2=\icol{1\\-3\\0}$. We now finally have the change of basis matrix $S$ for the Jordan basis and can compute its inverse via Gaussian elimination:
+% \begin{align*} 
+%   &[S|I]= \left[\begin{array}{rrr|rrr}
+%      1 & 1 & 1 & 1 & 0 & 0 \\ 
+%      -1 & -3 & -2 & 0 & 1 & 0 \\ 
+%      1 & 0 & 1 & 0 & 0 & 1
+%     \end{array} \right]
+%     \xrightarrow{\substack{R_2+R_1\\ R_3-R_1}} 
+%     \left[\begin{array}{rrr|rrr} 
+%       1 & 1 & 1 & 1 & 0 & 0 \\ 
+%       0 & -2 & -1 & 1 & 1 & 0 \\ 
+%       0 & -1 & 0 & -1 & 0 & 1
+%     \end{array} \right]\\
+%     &\xrightarrow{\substack{R_3-R_2/2\\ 2R_3}} 
+%     \left[\begin{array}{rrr|rrr} 
+%       1 & 1 & 1 & 1 & 0 & 0 \\ 
+%       0 & -2 & -1 & 1 & 1 & 0 \\ 
+%       0 & 0 & 1 & -3 & -1 & 2 
+%     \end{array} \right]
+%     \xrightarrow{\substack{R_2+R_3\\ R_1-R_3}} 
+%     \left[\begin{array}{rrr|rrr} 
+%       1 & 1 & 0 & 4 & 1 & -2 \\ 
+%       0 & -2 & 0 & -2 & 0 & 2 \\ 
+%       0 & 0 & 1 & -3 & -1 & 2 
+%     \end{array} \right]\\
+%     &\xrightarrow{\substack{-R_2/2\\ R_1-R_2}} 
+%     \left[\begin{array}{rrr|rrr} 
+%       1 & 0 & 0 & 3 & 1 & -1 \\ 
+%       0 & 1 & 0 & 1 & 0 & -1 \\ 
+%       0 & 0 & 1 & -3 & -1 & 2 
+%   \end{array} \right]=[I|S^{-1}]
+% \end{align*}
+
+And so we can finally express $A^n$ as the following:
+\begin{align*}
+  \operatorname{det}A^n&=\operatorname{det}(SJ^nS^{-1})\tag{Jordan decomposition}\\
+  &=\operatorname{det}(J^n)\tag{$\operatorname{det}SS^{-1}=\operatorname{det}I=1$}\\
+  &=\operatorname{det}\left(\begin{bmatrix}
+    1&1&0\\0&1&0\\0&0&2
+  \end{bmatrix}^n\right)\\
+  &=\operatorname{det}\begin{bmatrix}
+    1^n&\binom{n}{1}1^{n-1}&0\\0&1^n&0\\0&0&2^n
+  \end{bmatrix}\tag{determinant of a Jordan block}\\
+  &=\operatorname{det}\begin{bmatrix}
+    1&n&0\\0&1&0\\0&0&2^n
+  \end{bmatrix}\\
+  &=2^n
+\end{align*}
+
+$\phantom{}^{[2]}$We will now show the row operations we skipped previously:
+\begin{align*} 
+  &\left[\begin{array}{rrr}
+    -2&-1&1\\5&2&-3\\-2&-1&1
+    \end{array} \right]
+    \xrightarrow{\substack{R_1\leftrightarrow R_2\\R_2+\frac{2}{5}R_1}} 
+    \left[\begin{array}{rrr}
+      5&2&-3\\
+      0&-\frac{1}{5}&-\frac{1}{5}\\
+      -2&-1&1
+    \end{array} \right]\\
+    &\xrightarrow{\substack{R_3+\frac{2}{5}R_1\\ R_3-R_2}} 
+    \left[\begin{array}{rrr}
+      5&2&-3\\
+      0&-\frac{1}{5}&-\frac{1}{5}\\
+      0&0&0
+    \end{array} \right]
+    \xrightarrow{\substack{-5R_2\\ R_1-2R_2}}
+    \left[\begin{array}{rrr} 
+      5&0&-5\\
+      0&1&1\\
+      0&0&0
+    \end{array} \right]\\
+    &\xrightarrow{R_1/5}
+    \left[\begin{array}{rrr} 
+      1&0&-1\\
+      0&1&1\\
+      0&0&0
+    \end{array} \right]
+\end{align*}
+
+$\phantom{}^{[3]}$We will now show the row operations we skipped previously:
+\begin{align*} 
+  &\left[\begin{array}{rrr}
+    -3&-1&1\\5&1&-3\\-2&-1&0
+    \end{array} \right]
+    \xrightarrow{\substack{R_1\leftrightarrow R_2\\R_2+\frac{3}{5}R_1}} 
+    \left[\begin{array}{rrr}
+      5&1&-3\\
+      0&-\frac{2}{5}&-\frac{4}{5}\\
+      -2&-1&0
+    \end{array} \right]\\
+    &\xrightarrow{\substack{R_3+\frac{2}{5}R_1\\ R_2\leftrightarrow R_3}} 
+    \left[\begin{array}{rrr}
+      5&1&-3\\
+      0&-\frac{3}{5}&-\frac{6}{5}\\
+      0&-\frac{2}{5}&-\frac{4}{5}
+    \end{array} \right]
+    \xrightarrow{\substack{R_3-\frac{2}{3}R_2\\ -\frac{5}{3}R_2}}
+    \left[\begin{array}{rrr} 
+      5&1&-3\\
+      0&1&2\\
+      0&0&0
+    \end{array} \right]\\
+    &\xrightarrow{\substack{R_1-R_2\\ R_1/5}}
+    \left[\begin{array}{rrr} 
+      1&0&-1\\
+      0&1&2\\
+      0&0&0
+    \end{array} \right]
+\end{align*}
+\newpage
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Let $T$ be a linear map on vector space $V$ whose characteristic polynomial splits, and has eigenvalues $\lambda_1,\lambda_2,\cdots,\lambda_k$. Show the following:
+$$V=K_{\lambda_1}\oplus K_{\lambda_2}\oplus\cdots\oplus K_{\lambda_k}$$
+\smallskip
+
+\noindent\textbf{Solution:} First note that for this direct sum to even be defined it must be the case that:
+$$i\not=j\implies K_{\lambda_i}\cap K_{\lambda_j}=\emptyset$$
+
+Which is indeed the case as seen in class. As a result, the dimension of the direct sum of the vector spaces is given by:
+$$\operatorname{dim}(K_{\lambda_1}\oplus K_{\lambda_2}\oplus\cdots\oplus K_{\lambda_k})=\operatorname{dim}K_{\lambda_1}+\operatorname{dim}K_{\lambda_2}+\cdots+\operatorname{dim}K_{\lambda_k}$$
+
+Also note that the dimension of a generalized eigenspace $K_{\lambda_i}$ is equal to the AM $m_i$ of its respective eigenvalue, i.e.:
+$$K_{\lambda_i}=m_i$$
+
+However, since the characteristic polynomial splits, the sum of these AMs $\sum m_i$ must equal the degree of the characteristic polynomial. And since the degree of this polynomial is precisely equal to the degree of the vector space the transformation $T$ is over, i.e. $V$, we have:
+$$\sum_{i=1}^k m_i=\operatorname{dim}V$$
+
+Putting this together we have:
+\begin{align*}
+  \operatorname{dim}\bigoplus_{i=1}^k K_{\lambda_i}&=\sum_{i=1}^k\operatorname{dim}K_{\lambda_i}\tag{dimension of direct sum}\\
+  &=\sum_{i=1}^k m_i\tag{dim of generalized eigenspace}\\
+  &=\operatorname{dim}V\tag{char. polynomial splits}
+\end{align*}
+
+Having the same dimension does not alone prove that $V=\bigoplus_{i=1}^k K_{\lambda_i}$. It is only after noting that $\bigoplus_{i=1}^k K_{\lambda_i}\subseteq V$ that we can conclude:
+$$V=\bigoplus_{i=1}^k K_{\lambda_i}=K_{\lambda_1}\oplus K_{\lambda_2}\oplus\cdots\oplus K_{\lambda_k}$$
+
+This is because any subspace (and all direct sums are subspaces) of a vector space that has equal dimension to the superspace are infact equal, i.e. for a subspace $S\subseteq V$:
+$$\operatorname{dim}S=\operatorname{dim}V\implies S=V$$ 
+
+If $\bigoplus_{i=1}^k K_{\lambda_i}\subseteq V$ isn't clear, then we can assure ourselves that it is the case by noting that any vector $v\in\bigoplus_{i=1}^k K_{\lambda_i}$ is itself a sum of vectors from the summands $v_1\in K_{\lambda_1},v_2\in K_{\lambda_2},\cdots$. Since each summand $K_{\lambda_i}\subseteq V$, and vector spaces are closed under addition, it must be that $v\in\bigoplus_{i=1}^k K_{\lambda_i}$.
+\bigskip
+\newpage
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Find the matrix $A\in M_2(\mathbb R)$ such that:
+$$A^3=\begin{bmatrix}
+  -34&-105\\14&43
+\end{bmatrix}$$
+\smallskip
+
+\noindent\textbf{Solution:} To solve this we must first find the eigendecomposition of $A^3$. First we compute the eigenvalues of $A^3$ by solving its characteristic equation:
+\begin{align*}
+  0&=p(\lambda)\\
+  &=\operatorname{det}([T]_\beta-\lambda I)\\
+  &=\operatorname{det}\begin{bmatrix}
+    -34-\lambda&-105\\14&43-\lambda
+  \end{bmatrix}\\
+  &=(-34-\lambda)(43-\lambda)+105\cdot14\\
+  &=\lambda^2-9\lambda+8\\
+  &=(\lambda-1)(\lambda-8)
+\end{align*}
+
+Now let us calculate an eigenbasis for each of the corresponding eigenspaces:
+\begin{align*}
+  E_1&=\operatorname{Null}([T]_\beta-I)\tag{def. of eigenspace}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    -35&-105\\14&42
+  \end{bmatrix}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    1&3\\0&0
+  \end{bmatrix}\tag{$\text{rref}^{[4]}$}\\
+  &=\text{Span}\left\{\begin{bmatrix} -3\\1\end{bmatrix}\right\}\tag{$x_1=-3x_2$, $x_2$ free}
+\end{align*}
+
+\begin{align*}
+  E_8&=\operatorname{Null}([T]_\beta-I)\tag{def. of eigenspace}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    -42&-105\\14&35
+  \end{bmatrix}\\
+  &=\operatorname{Null}\begin{bmatrix}
+    2&5\\0&0
+  \end{bmatrix}\tag{$\text{ref}^{[5]}$}\\
+  &=\text{Span}\left\{\begin{bmatrix} -5\\2\end{bmatrix}\right\}\tag{$2x_1=-5x_2$, $x_2$ free}
+\end{align*}
+
+We can now express $A$ as follows:
+\begin{align*}
+  A&=(A^3)^{1/3}\\
+  &=\left(\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}\begin{bmatrix}
+    1&0\\0&8
+  \end{bmatrix}\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}^{-1}\right)^{1/3}\tag{eigendecomposition}\\
+  &=\left(\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}\begin{bmatrix}
+    1&0\\0&8
+  \end{bmatrix}\begin{bmatrix}
+    -2&-5\\1&3
+  \end{bmatrix}\right)^{1/3}\tag{inverse of a $2\times2$ matrix}\\
+  &=\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}\begin{bmatrix}
+    1&0\\0&8
+  \end{bmatrix}^{1/3}\begin{bmatrix}
+    -2&-5\\1&3
+  \end{bmatrix}\tag{$n$th power of an eigendecomposition}\\
+  &=\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}\begin{bmatrix}
+    1^{1/3}&0\\0&8^{1/3}
+  \end{bmatrix}\begin{bmatrix}
+    -2&-5\\1&3
+  \end{bmatrix}\tag{$n$th power of a diagonal matrix}\\
+  &=\begin{bmatrix}
+    -3&-5\\1&2
+  \end{bmatrix}\begin{bmatrix}
+    1&0\\0&2
+  \end{bmatrix}\begin{bmatrix}
+    -2&-5\\1&3
+  \end{bmatrix}\\
+  &=\begin{bmatrix}
+    -4&-15\\2&7
+  \end{bmatrix}
+\end{align*}
+
+And we can verify that this is indeed the desired matrix $A$:
+\begin{align*}
+  AAA&=\begin{bmatrix}
+    -4&-15\\2&7
+  \end{bmatrix}\begin{bmatrix}
+    -4&-15\\2&7
+  \end{bmatrix}\begin{bmatrix}
+    -4&-15\\2&7
+  \end{bmatrix}\\
+&=\begin{bmatrix}-14&-45\\ 6&19\end{bmatrix}\begin{bmatrix}
+  -4&-15\\2&7
+\end{bmatrix}\\
+&=\begin{bmatrix}
+  -34&-105\\14&43
+\end{bmatrix}=A^3
+\end{align*}
+
+$\phantom{}^{[4]}$We will now show the row operations we skipped previously:
+\begin{align*} 
+  &\left[\begin{array}{rr}
+    -35&-105\\14&42
+    \end{array} \right]
+    \xrightarrow{\substack{R_2+\frac{2}{5}R_1\\-\frac{1}{35}R_1}} 
+    \left[\begin{array}{rrr}
+      1&3\\0&0
+    \end{array} \right]
+\end{align*}
+
+$\phantom{}^{[5]}$We will now show the row operations we skipped previously:
+\begin{align*} 
+  &\left[\begin{array}{rr}
+    -35&-105\\14&42
+    \end{array} \right]
+    \xrightarrow{\substack{R_2+\frac{1}{3}R_1\\-\frac{1}{21}R_1}} 
+    \left[\begin{array}{rrr}
+      2&5\\0&0
+    \end{array} \right]
+\end{align*}
+
+\end{document}

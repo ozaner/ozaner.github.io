@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 7}
+\author{Ozaner Hansha}
+\date{September 25, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Suppose we have a normally distributed population with unknown variance $\sigma^2$. Let $S^2$ be the sample variance of a sample with $n=5$.
+\bigskip
+
+\noindent\textbf{Part a:} Find $x_a$ such that:
+$$P\left(\frac{4S^2}{\sigma^2}>x_a\right)=.05$$
+\smallskip
+
+\noindent\textbf{Solution:} Recall that $\frac{4S^2}{\sigma^2}\sim \chi^2_4$. And so, consulting our chi-square table, we have:
+$$x_a\approx9.488$$
+\smallskip
+
+\noindent\textbf{Part b:} Find $x_b$ such that:
+$$P\left(\frac{4S^2}{\sigma^2}<x_b\right)=.05$$
+\smallskip
+
+\noindent\textbf{Solution:} First note that:
+\begin{align*}
+    .05&=P\left(\frac{4S^2}{\sigma^2}<x_b\right)\\
+    &=1-P\left(\frac{4S^2}{\sigma^2}\ge x_b\right)\tag{complement}\\
+    .95&=P\left(\frac{4S^2}{\sigma^2}\ge x_b\right)
+\end{align*}
+
+
+Again, we have that $\frac{4S^2}{\sigma^2}\sim \chi^2_4$. And so, consulting our chi-square table, we have:
+$$x_b=.711$$
+\smallskip
+
+\noindent\textbf{Part c:} If we observe our sample variance to be $s^2=12$, give a 90\% confidence interval of the population variance $\sigma^2$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following two events are mutually exclusive:
+$$P\left(\frac{4S^2}{\sigma^2}<x_b\cap\frac{4S^2}{\sigma^2}>x_a\right)=0$$
+
+And so we have the following:
+\begin{align*}
+    .05+.05&=P\left(\frac{4S^2}{\sigma^2}>x_a\right)+P\left(\frac{4S^2}{\sigma^2}<x_b\right)\\
+    .1&=P\left(\frac{4S^2}{\sigma^2}>x_a\cup\frac{4S^2}{\sigma^2}<x_b\right)\tag{mutually exclusive}\\
+    &=1-P\left(x_b<\frac{4S^2}{\sigma^2}<x_a\right)\tag{complement \& deMorgan}\\
+    .9&=P\left(x_b<\frac{4S^2}{\sigma^2}<x_a\right)\\
+    &=P\left(\frac{1}{x_b}>\frac{\sigma^2}{4S^2}>\frac{1}{x_a}\right)\tag{$\sigma^2,S^2,x_a,x_b$ are positive}\\
+    &=P\left(\frac{4S^2}{x_b}>\sigma^2>\frac{4S^2}{x_a}\right)
+\end{align*}
+
+And so, our 90\% confidence interval of $\sigma^2$ is given by:
+\begin{align*}
+    \left[\frac{4s^2}{x_a},\frac{4s^2}{x_b}\right]&=\left[\frac{4*12}{x_a},\frac{4*12}{x_b}\right]\tag{$s^2=12$}\\
+    &\approx\left[\frac{48}{9.488},\frac{48}{.711}\right]\tag{$x_a=9.488,x_b=.711$}\\
+    &\approx[5.059,67.511]
+\end{align*}
+
+\end{document}

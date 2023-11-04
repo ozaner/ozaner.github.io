@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\Final}
+\author{Ozaner Hansha}
+\date{May 7, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Part a:} Note that the definition of uniform continuity for a function $f(x)$ over $(0,\infty)$ is given by:
+$$\forall\epsilon>0,\,\exists\delta>0,\,\forall x,y\in (0,\infty),\quad |x-y|<\delta\implies |f(x)-f(y)|<\epsilon$$
+
+Negating this, we have:
+$$\exists\epsilon>0,\,\forall\delta>0,\,\exists x,y\in (0,\infty),\quad |x-y|<\delta\wedge |f(x)-f(y)|\ge\epsilon$$
+
+Which is the definition of $f(x)$ \textit{not} being uniformly continuous over $(0,\infty)$.
+\bigskip
+
+\noindent\textbf{Part b:} Consider $\epsilon=1$, and any $\delta>0$. Note that, by the archemdian principle, there exists an $n\in Z^+$ such that:
+$$\frac{1}{2n\pi}<\delta$$
+
+Call this number $x$, and call the following $y$:
+$$y=\frac{1}{(2n+1)\pi}<\frac{1}{2n\pi}<\delta$$
+
+Also note that both $x,y$ are clearly in $(0,1)$. Now note that since $x$ and $y$ are both positive and less than $\delta$ their absolute difference is also less than delta:
+\begin{align*}
+  x,y<\delta&\implies x-y<\delta\tag{x,y>0}\\
+  &\implies |x-y|<\delta\tag{x,y>0}
+\end{align*}
+
+Yet we also have that:
+\begin{align*}
+  |f(x)-f(y)|&=\left|f\left(\frac{1}{2n\pi}\right)-f\left(\frac{1}{(2n+1)\pi}\right)\right|\tag{def. of $x,y$}\\
+  &=\left|\cos\left(2n\pi\right)-\cos\left((2n+1)\pi\right)\right|\tag{def. of $f(x)$}\\
+  &=\left|1-(-1)\right|\\
+  &=2\ge\epsilon=1
+\end{align*}
+
+And so we have shown that:
+$$\exists\epsilon>0,\,\forall\delta>0,\,\exists x,y\in (0,\infty),\quad |x-y|<\delta\wedge |f(x)-f(y)|\ge\epsilon$$
+
+In particular with $\epsilon=1$.
+
+\subsection*{Problem 2}
+\noindent\textbf{Part a:} Consider an arbitrary real numbers $x,x_0$, and an arbitrary $\epsilon>0$. By the archmedian principle, we have that there exists an $n$ such that:
+$$\frac{1}{n}<\epsilon$$
+
+Note that the set $S$ of numbers for which $|f(x)-0|<\epsilon$ is given by:
+$$S=\{\frac{1}{2},\frac{1}{3},\frac{2}{3},\frac{1}{4},\cdots,\frac{3}{4},\cdots,\frac{1}{n},\cdots,\frac{n-1}{n}\}$$
+
+Crucially, this set is finite. And so we can choose the number the smallest (non-zero) distance from our $x_0$:
+$$d=\argmin_{s\in S\{x_0\}}|x_0-s|$$
+
+And so, setting $\delta=d$ we have that:
+\begin{align*}
+  0<|x-x_0|<\delta=d\implies |f(x)-0|<\frac{1}{n}<\epsilon
+\end{align*}
+
+This is the definition of the limit of $f(x)$ at an arbitrary point $x_0$. So, in other words, we have shown that:
+$$\forall x_0\in(0,1),\quad \lim_{x\to x_0}f(x)=0$$
+
+% Note that for any rational $\sfrac{p}{q}$:
+% $$f(\sfrac{p}{q})=\frac{1}{q}$$
+
+% Now consider a sequence of irrationals $a_n$ converging to $\sfrac{p}{q}$, something guaranteed to us by the density of the irrationals in $(0,1)$. Since $f(x)=0$ for irrationals $x$, we have:
+% $$\forall n,\,\,f(a_n)=0$$
+
+% And, of course, an infinite sequence of constants converges to that constant:
+% $$\lim_{n\to\infty}f(a_n)=0$$
+
+% And so the limit of $f(x)$ exists for all $x\in\R$, and is equal to 0.
+\bigskip
+
+\noindent\textbf{Part b:} As we showed in part a, the function has a limit for all its values $a\in(0,1)$:
+$$\lim_{x\to a}f(x)=0$$
+
+For rationals $\sfrac{p}{q}\in(0,1)$ (where $p$ and $q$ are co-prime), this means that $f(x)$ is discontinuous:
+$$\lim_{x\to \sfrac{p}{q}}f(x)=0\not=f(\sfrac{p}{q})=\sfrac{1}{q}$$
+
+Since $\sfrac{p}{q}\in\Q\implies f(\sfrac{p}{q})=\sfrac{1}{q}$ by the definition of $f$. But for irrationals $r\in(0,1)$, this means that $f(x)$ is continuous:
+$$\lim_{x\to r}f(x)=0=f(r)$$
+
+Since $r\in\R\setminus\Q\implies f(r)=0$ by the definition of $f$.
+
+\bigskip
+
+\noindent\textbf{Part c:} Since $f(x)$ is not continuous over the rationals, it is not differentiable over them either. In the case of the irrationals, $f(x)$ is not differentiable. To see this fix an irrational $x\in(0,1)$. Suppose $f'(x)$ exists. We should have that $f'(x)=0$ because there is a sequence of irrationals $a_n$ such that:
+
+$$\frac{f(a_n+h)-f(a_n)}{h}\to 0$$
+
+Since $f(a_n)=0$ by def. of $f$.
+\bigskip
+
+Now note that for each prime $q$, we can pick a $k_q$ to be a multiple of $\sfrac{1}{q}$ satisfying $|x-k_q|\le \sfrac{1}{q}$. We would then have that:
+$$\frac{|f(x)-f(k_q)|}{|x-k_q|}\ge1$$
+
+So $|f'(x)|\ge1$. This is a contradiction and so our assumption that $f'(x)$ existed for irrationals $x$ is false.
+
+\subsection*{Problem 3}
+\noindent\textbf{Part a:} The limit is equivalent to:
+\begin{align*}
+  \lim_{h\to0}\frac{f(2h)-f(-2h)}{h}&=\lim_{h\to0}\frac{f(0+2h)-f(0-2h)}{h}\\
+  &=\lim_{h\to0}\frac{f(0+2h)-f(0)+f(0)-f(0-2h)}{h}\\
+  &=\lim_{h\to0}\left(2\frac{f(0+2h)-f(0)}{2h}+2\frac{f(0-2h)-f(0)}{-2h}\right)\\
+  &=2\lim_{h\to0}\frac{f(0+2h)-f(0)}{2h}+2\lim_{h\to0}\frac{f(0-2h)-f(0)}{-2h}\tag{limit of sum is sum of limits}\\
+  &=2f'(0)+2f'(0)\tag{def. of derivative, change of variables}\\
+  &=4f'(0)\\
+  &=4c\tag{$f'(0)=c$}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Consider the following function $f:\R\to\R$:
+$$f(x)=\begin{cases}
+  50,&x=0\\
+  x,&\text{otherwise}
+\end{cases}$$
+
+Clearly $f(x)$ is discontinuous at $x=0$ and thus non-differentiable at $x=0$ as well, satisfying our constraint. Now observe that, despite this, the limit still exists:
+\begin{align*}
+  \lim_{h\to0}\frac{f(2h)-f(-2h)}{h}&=\lim_{h\to0}\frac{2h-(-2h)}{h}\tag{$h\not=0$}\\
+  &=\lim_{h\to0}\frac{4h}{h}\\
+  &=\lim_{h\to0}4\\
+  &=4
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} First let us compute the following limit:
+\begin{align*}
+  \lim_{x\to\infty}xf(x)&=\lim_{x\to\infty}\frac{xe^xf(x)}{e^x}\\
+  &=\lim_{x\to\infty}\frac{xe^xf'(x)+(x+1)e^xf(x)}{e^x}\tag{L'Hopitals Rule}\\
+  &=\lim_{x\to\infty}\left(xf'(x)+(x+1)f(x)\right)\\
+  &=\lim_{x\to\infty}\left(xf'(x)+f(x)+xf(x)\right)\\
+  &=\lim_{x\to\infty}\left(xf'(x)+f(x)\right)+\lim_{x\to\infty}xf(x)\\
+  &=3+\lim_{x\to\infty}xf(x)\\
+  &=3+3+\lim_{x\to\infty}xf(x)\\
+  &=3+3+\cdots+\lim_{x\to\infty}xf(x)
+\end{align*}
+
+Clearly, this limit does not exist, as assuming its existence produces a contradiction for any assumed finite limit $L$ (i.e. $L=3+L$). In fact we have shown that its limit is infinite:
+$$\lim_{x\to\infty}xf(x)=\infty$$
+
+Now note the desired limit:
+\begin{align*}
+  \lim_{x\to\infty}f(x)&=\lim_{x\to\infty}\frac{xe^xf(x)}{xe^x}\\
+  &=\lim_{x\to\infty}\frac{xe^xf'(x)+(x+1)e^xf(x)}{(x+1)e^x}\tag{L'Hopitals Rule}\\
+  &=\lim_{x\to\infty}\frac{xf'(x)+(x+1)f(x)}{x+1}\\
+  &=\lim_{x\to\infty}\frac{xf'(x)+f(x)+xf(x)}{x+1}\\
+  &=\lim_{x\to\infty}\left(xf'(x)+f(x)\right)\lim_{x\to\infty}\frac{1}{x+1}+\lim_{x\to\infty}\frac{xf(x)}{x+1}\\
+  &=3\cdot0+\lim_{x\to\infty}\frac{xf(x)}{x+1}\\
+  &=\lim_{x\to\infty}\frac{f(x)+xf'(x)}{2}\tag{L'Hopitals Rule}\\
+  &=\frac{1}{2}\lim_{x\to\infty}f(x)+xf'(x)\\
+  &=\frac{3}{2}
+\end{align*}
+
+Note that the L'Hopital's rule was the following:
+$$\lim_{x\to\infty}\frac{g(x)}{h(x)}=\lim_{x\to\infty}\frac{g'(x)}{h'(x)}$$
+
+Which only holds when both:
+\begin{align*}
+  \lim_{x\to\infty}g(x)&=\infty\\
+  \lim_{x\to\infty}h(x)&=\infty
+\end{align*}
+
+\end{document}

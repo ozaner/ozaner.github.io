@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ HW 3}
+\author{Ozaner Hansha}
+\date{October 22, 2020}
+\maketitle
+
+Consider a particle in 2D space with the following wavefunction, for some constant $A$:
+$$\psi(x,y)=\begin{cases}
+    Ae^{i(3x+4y)},&0<x<2,\,0<y<3\\
+    0,&\text{otherwise}
+\end{cases}$$
+
+Also, let the random vector $(X,Y)$ denote the position obtained by measuring the particle given by $\psi$.
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Solve for $A$.
+\bigskip
+
+\noindent\textbf{Solution:} First let us establish the following result, call it lemma 1, for any $c\in\mathbb R$:
+\begin{align*}
+    |e^{ic}|^2&=|\cos x+i\sin x|^2\tag{Euler's formula}\\
+    &=\left(\sqrt{(\cos x)^2+(\sin x)^2}\right)^2\tag{def. of modulus}\\
+    &=\left(\sqrt{1}\right)^2\tag{trig identity}\\
+    &=1
+\end{align*}
+
+With this lemma in hand we can now solve for $A$. For $\psi(x,y)$ to be a valid wavefunction, we must have:
+\begin{align*}
+    1&=\iint\displaylimits_{(x,y)\in\mathbb R^2}|\psi(x,y)|^2\,dx\,dy\tag{$\psi$ is a wavefunction}\\
+    &=\int_0^3\int_0^2\left|Ae^{i(3x+4y)}\right|^2\,dx\,dy\tag{from def. of $\psi$}\\
+    &=\int_0^3\int_0^2\left(|A|\left|e^{i(3x+4y)}\right|\right)^2\,dx\,dy\tag{multiplicativity of modulus}\\
+    &=|A|^2\int_0^3\int_0^2\left|e^{i(3x+4y)}\right|^2\,dx\,dy\tag{linearity}\\
+    &=|A|^2\int_0^3\int_0^2\,dx\,dy\tag{lemma 1}\\
+    &=|A|^2\int_0^3\eval{x}{0}{2}\,dy\\
+    &=|A|^2\eval{2y}{0}{3}\\
+    &=6|A|^2\\
+    \frac{1}{6}&=|A|^2\\
+    \frac{1}{\sqrt 6}&=|A|
+\end{align*}
+
+And so $A$ is any complex number whose modulus is equal to $\frac{1}{\sqrt{6}}$. If we limit ourselves to the positive real numbers, then $A=\frac{1}{\sqrt{6}}$.
+\bigskip
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} What is the pdf of the measured position of the particle?
+\bigskip
+
+\noindent\textbf{Solution:} The joint pdf of the measured particle $(X,Y)$ is given by:
+\begin{align*}
+    f_{X,Y}(x,y)&=|\psi(x,y)|^2\\
+    &=\left|\frac{e^{i(3x+4y)}}{\sqrt 6}\right|^2\\
+    &=\frac{\left|e^{i(3x+4y)}\right|^2}{6}\\
+    &=\frac{1}{6}
+\end{align*}
+
+With support $[0,2]\times[0,3]$. And so the position $(X,Y)$ has a uniform probability distribution over its support.
+\bigskip
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} What is the probability that $X>Y$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(X>Y)&=\iint\displaylimits_{x>y}f_{X,Y}(x,y)\,dy\,dx\\
+    &=\int_0^2\int_0^x|\psi(x,y)|^2\,dy\,dx\\
+    &=\frac{1}{6}\int_0^2\int_0^xdy\,dx\\
+    &=\frac{1}{6}\int_0^2\eval{y}{0}{x}\,dx\\
+    &=\frac{1}{6}\int_0^2x\,dx\\
+    &=\frac{1}{6}\eval{\frac{x^2}{2}}{0}{2}\\
+    &=\frac{2}{6}\\
+    &=\frac{1}{3}
+\end{align*}
+\bigskip
+
+\end{document}

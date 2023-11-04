@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#8}
+\author{Ozaner Hansha}
+\date{April 16, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Solution:} Suppose, for contradiction, that $f$ is \textit{not} uniformly continuous on $A$. Then there would exist some $\epsilon_0>0$ and sequences whose elements $x_k,y_k\in A$ such that:
+$$\lim_{k\to\infty}|x_k-y_k|=0\wedge (\forall k\in\N)\,\,|f(x_k)-f(x_y)|\ge\epsilon_0$$
+
+Now note that since $A$ is is closed and bounded, there is a convergent subsequence $x_{k_i}$ of $x_k$ such that:
+$$\lim_{i\to\infty} x_{k_i}=x\in A$$
+
+Moreover, since $x_k-y_k\to0$ as $k\to\infty$, it follows that:
+$$\lim_{i\to\infty}y_{k_i}=\lim_{i\to\infty}(x_{k_i}-(x_{k_i}-y_{k_i}))=\lim_{i\to\infty}x_{k_i}-\lim_{i\to\infty}x_{k_i}-y_{k_i}=x$$
+
+so $y_{k_i}$ also converges to $x$. And since $f$ is continuous on $A$, we have:
+$$\lim_{i\to\infty}|f(x_{k_i})-f(y_{k_i})|=|\lim_{i\to\infty}f(x_{k_i})\lim_{i\to\infty}-f(y_{k_i})|=|f(x)-f(y)|=0$$
+
+But this contradictions what we stated previously, namely:
+$$|f(x_k)-f(x_y)|\ge\epsilon_0$$
+
+Thus, $f$ must be uniformly continuous.
+
+\subsection*{Problem 2}
+\noindent\textbf{Solution:} if $f(1/2)\not=0$ then, since $[0,1]$ is compact, there is some neighborhood of points $N$ around $1/2$ such that each $x\in N$ satisfies $f(x)\not=0$. Thus $1/2$ is an accumulation point of $D$.
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} If $f(0)=0$ or $f(1)=1$ then we are done. Otherwise, define $g(x)=f(x)-x$. Certainly $g$ is continuous as it is the difference of two continuous functions. Now note the following:
+\begin{align*}
+  0&<f(0)&\tag{$f(0)=0$ case already considered}\\
+  &<f(0)-0\\
+  &<g(0)\tag{def. of $g$}\\
+  1&>f(1)\tag{$f(1)=1$ case already considered}\\
+  0&>f(1)-1\\
+  &>g(1)\tag{def. of $g$}
+\end{align*}
+
+And so we have that $g(1)<0<g(0)$, and so by the intermediate value theorem, there must be some $x\in[0,1]$ such that $g(x)=0$ which is equivalent to:
+\begin{align*}
+  g(x)&=0\\
+  f(x)-x&=0\tag{def. of $g$}\\
+  f(x)&=x
+\end{align*}
+
+And so there is some $x\in[0,1]$ such that $f(x)=x$.
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} Recall that a compact subset $E$ of $\R$ is one that is both bounded, and closed. Since $E$ is bounded, the supremum $\sup(E)=a$ must exist. This means there is a sequence $x_n\in E$ such that $x_n\to a$, since the supremum of a set lies either in it, or on its boundary. And since $E$ is closed, that $a\in E$, meaning $a=\sup(E)\in E$.
+
+\subsection*{Problem 5}
+\noindent\textbf{Solution:} A Cauchy sequence has a limit, and so $x_k\to x$. Next note that $x$ is an accumulation point of $E$ since each $x_k\in E$. Since $E$ is closed, that accumulation point $x\in E$.
+\end{document}

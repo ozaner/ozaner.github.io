@@ -1,0 +1,425 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+\usepackage{soul}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ Midterm (Corrected)}
+\author{Ozaner Hansha}
+\date{\st{November 30, 2020}\\ December 15, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Consider the following wavefunctions:
+\begin{align*}
+    \psi_s(x)&=\frac{1}{4\sqrt{3}}x^2e^{-|x|/2}\\
+    \psi_a(x)&=\begin{cases}
+        \psi_s(x),&x\ge0\\
+        -\psi_s(x),&x<0
+    \end{cases}
+\end{align*}
+
+Let $X_i$ be the measured position of a particle with wavefunction $\psi_i$.
+\bigskip
+
+\noindent\textbf{Part a:} What is $P(X_s>0)$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $\psi_s(x)$ is an even function:
+\begin{align*}
+    \psi_s(-x)&=\frac{1}{4\sqrt{3}}(-x)^2e^{-|-x|/2}\tag{def. of $\psi_s$}\\
+    &=\frac{1}{4\sqrt{3}}x^2e^{-|-x|/2}\tag{$x^2=(-x)^2$}\\
+    &=\frac{1}{4\sqrt{3}}x^2e^{-|x|/2}\tag{$|x|=|-x|$}\\
+    &=\psi_s(x)\tag{def. of $\psi_s$}
+\end{align*}
+
+Now consider the following chain of equalities
+\begin{align*}
+    1&=\int_{-\infty}^\infty|\psi_s(x)|^2\,dx\tag{integral of a pdf over support is 1}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_0^\infty|\psi_s(x)|^2\,dx\\
+    &=-\int_{\infty}^0|\psi_s(-x)|^2\,dx+\int_0^{\infty}|\psi_s(x)|^2\,dx\tag{expansion of interval of integration by $-1$}\\
+    &=\int^{\infty}_0|\psi_s(-x)|^2\,dx+\int_0^{\infty}|\psi_s(x)|^2\,dx\tag{reverse interval of integration}\\
+    &=\int^{\infty}_0|\psi_s(x)|^2\,dx+\int_0^{\infty}|\psi_s(x)|^2\,dx\tag{$\psi_s$ is an even function}\\
+    &=2\int^{\infty}_0|\psi_s(x)|^2\,dx\\
+    \frac{1}{2}&=\int^{\infty}_0|\psi_s(x)|^2\,dx\\
+    &=P(X_s>0)
+\end{align*}
+
+And so, due to the symmetry of $\psi_s(x)$ about the y-axis, the desired probability is $\frac{1}{2}$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part b:} Let $\psi_{s+a}=\frac{\psi_s+\psi_a}{\sqrt{2}}$. What is $P(X_{s+a}>0)$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(X_{s+a}>0)&=\int^{\infty}_0|\psi_{s+a}(x)|^2\,dx\\
+    &=\int^{\infty}_0\left|\frac{\psi_s+\psi_a}{\sqrt{2}}\right|^2\,dx\tag{def. of $\psi_{s+a}$}\\
+    &=\int^{\infty}_0\left|\frac{\psi_s+\psi_s}{\sqrt{2}}\right|^2\,dx\tag{$\forall x\ge0,\, \psi_a(x)=\psi_s(x)$}\\
+    &=2\int^{\infty}_0|\psi_s(x)|^2\,dx\tag{$2/\sqrt{2}=\sqrt{2}$}\\
+    &=1\tag{part a}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part c:} True or false: According to the Copenhagen interpretation, the particle under consideration here had a position $Q$ before the measurement, and when the result of the measurement is $X$, that is because $Q=X$. Explain!
+\bigskip
+
+\noindent\textbf{Solution:} False. According to the Copenhagen interpretation, the particle had no definite position before the measurement. Indeed, in this interpretation, it is the act of `measurement' (however it takes place) that `creates' the result. This is to say that, before the measurement, the wavefunction associated with the particle was in some general state $\psi$ and after the measurement it collapses to (i.e. is now in) the eigenstate $|X\rangle$.
+\bigskip
+\newpage
+
+\subsection*{Question 2}
+Consider a particle in a 2D-plane with the following wavefunction:
+\begin{align*}
+    \psi(x,y)=\begin{cases}
+        Ae^{i(5x+7y)},&0<x<9,\,0<y<4\\
+        0,&\text{otherwise}
+    \end{cases}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part a:} Solve for $A$.
+\bigskip
+
+\noindent\textbf{Solution:} First let us establish the following result, call it lemma 1, for any $c\in\mathbb R$:
+\begin{align*}
+    |e^{ic}|^2&=|\cos x+i\sin x|^2\tag{Euler's formula}\\
+    &=\left(\sqrt{(\cos x)^2+(\sin x)^2}\right)^2\tag{def. of modulus}\\
+    &=\left(\sqrt{1}\right)^2\tag{trig identity}\\
+    &=1
+\end{align*}
+
+With this lemma in hand we can now solve for $A$. For $\psi(x,y)$ to be a valid wavefunction, we must have:
+\begin{align*}
+    1&=\iint\displaylimits_{(x,y)\in\mathbb R^2}|\psi(x,y)|^2\,dx\,dy\tag{$\psi$ is a normalized wavefunction}\\
+    &=\int_0^4\int_0^9\left|Ae^{i(5x+7y)}\right|^2\,dx\,dy\tag{from def. of $\psi$}\\
+    &=\int_0^4\int_0^9\left(|A|\left|e^{i(5x+7y)}\right|\right)^2\,dx\,dy\tag{multiplicativity of modulus}\\
+    &=|A|^2\int_0^4\int_0^9\left|e^{i(5x+7y)}\right|^2\,dx\,dy\tag{linearity}\\
+    &=|A|^2\int_0^4\int_0^9\,dx\,dy\tag{lemma 1}\\
+    &=|A|^2\int_0^4\eval{x}{0}{9}\,dy\\
+    &=|A|^2\eval{9y}{0}{4}\\
+    &=36|A|^2\\
+    \frac{1}{36}&=|A|^2\\
+    \frac{1}{6}&=|A|
+\end{align*}
+
+And so $A$ is any complex number whose modulus is equal to $\frac{1}{6}$. If we limit ourselves to the positive real numbers, then $A=\frac{1}{6}$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part b:} What is the pdf of the particle's position $(X,Y)$?
+\bigskip
+
+\noindent\textbf{Solution:} The joint pdf of the measured particle $(X,Y)$ is given by:
+\begin{align*}
+    f_{X,Y}(x,y)&=|\psi(x,y)|^2\\
+    &=\left|\frac{e^{i(5x+7y)}}{3\sqrt 3}\right|^2\\
+    &=\frac{\left|e^{i(5x+7y)}\right|^2}{27}\\
+    &=\frac{1}{27}\tag{lemma 1}
+\end{align*}
+
+With support $[0,9]\times[0,4]$. And so the position $(X,Y)$ has a uniform probability distribution over its support.
+\bigskip
+
+\noindent\textbf{Part c:} What is $P(Y>X)$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(Y>X)&=\iint\displaylimits_{y>x}f_{X,Y}(x,y)\,dx\,dy\\
+    &=\int_0^4\int_0^y|\psi(x,y)|^2\,dx\,dy\\
+    &=\frac{1}{36}\int_0^4\int_0^y\,dx\,dy\\
+    &=\frac{1}{36}\int_0^4\eval{x}{0}{y}\,dy\\
+    &=\frac{1}{36}\int_0^4y\,dy\\
+    &=\frac{1}{36}\eval{\frac{y^2}{2}}{0}{4}\\
+    &=\frac{8}{36}=\frac{2}{9}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part d:} According to the Copenhagen interpretation, are the $x$ and $y$ components of the particle's position simultaneously measurable? If not, why not? If so, by virtue of what relationship between these quantum observables is it so?
+\bigskip
+
+\noindent\textbf{Solution:} The $x$ and $y$ components of the particle \textit{are} simultaneously measurable. Recall that one of the measurement axioms of the Copenhagen interpretation tells us that two operators, in this case the $x$-component of th particles positoins and the $y$-component, are simultaneously measurable presciely when they commute. And certainly the component wise position operators commute.
+
+% And certainly the component wise position operators commute:
+% \begin{align*}
+%     XY\psi&=Xy\psi\\
+%     &=xy\psi\\
+%     &=yx\psi\\
+%     &=YX\psi
+% \end{align*} 
+\newpage
+
+\subsection*{Question 3}
+Consider a particle of mass $m$ moving on the interval $[0,L]$ with boundary conditions $\psi(0)=0=\psi(L)$ and the following Hamiltonian:
+$$H=-\frac{\hbar^2}{2m}\dd[2]{x}$$
+
+Also let $\psi_n(x,t)$ be the solution to Schrödinger's equation with $\psi_n(x,0)=\phi_n(x)$ and the above boundary conditions, where $\phi_n$ is given by:
+$$\phi_n(x)=\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)$$
+\bigskip
+
+\noindent\textbf{Part a:} Solve for $\psi_3(x,t)$.
+\bigskip
+
+\noindent\textbf{Solution:} We will first solve this for for general $n$:
+\begin{align*}
+    i\hbar\pdv{\psi_n(x,t)}{t}&=H\psi_n(x,t)\tag{Schrödinger equation}\\
+    &=E_n\psi_n(x,t)\tag{$H\psi_n(x,0)=E_n\psi_n(x,0)$ \& conservation of energy}\\
+    \pdv{\psi_n(x,t)}{t}&=\frac{-iE_n}{\hbar}\psi_n(x,t)\\
+    \psi_n(x,t)&=\psi_n(x,0)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{sol. to $y'=ay$}\\
+    &=\phi_n(x)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{initial condition}\\
+    &=\exp\left(\frac{-iE_n}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)\tag{def. of $\phi_n$}
+\end{align*}
+
+We have just solved for $\psi_n$, and so plugging in 3 we have:
+\begin{align*}
+    \psi_3(x,t)&=\exp\left(\frac{-iE_3}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\\
+    &=\exp\left(\frac{-9i\hbar\pi^2}{2mL^2}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\tag{$E_n=\frac{(\hbar\pi n)^2}{2mL^2}$}\\
+\end{align*}
+\bigskip
+\newpage
+
+\noindent\textbf{Part b:} Suppose the $\psi(x,0)=\phi_1(x)$. What is the probability that the position $X$ of the particle will be found between $L/2$ and $L$ if measured at time $t$?
+\bigskip
+
+\noindent\textbf{Solution:} Note that the wavefunction $\psi_1$ that coresponds to the initial condition $\phi_1$ at $t=0$ is stationary. As a result, we can just use $|\phi_1|^2$ in lieu of $|\psi_1|^2$. Below is the probability for a measurement at taken at time $t$:
+\begin{align*}
+    P\left(\frac{L}{2}<X<L\right)&=\int_\frac{L}{2}^{L}|\psi_1(x,t)|^2\dd{x}\tag{Born rule}\\
+    &=\int_\frac{L}{2}^{L}|\phi_1(x)|^2\dd{x}\tag{stationary state}\\
+    &=\frac{2}{L}\int_\frac{L}{2}^{L}\left|\sin\left(\frac{\pi x}{L}\right)\right|^2\dd{x}\tag{$|e^{ix}|=1$ for real $x$}\\
+    &=\frac{2}{L}\int_\frac{L}{2}^{L}\sin\left(\frac{\pi x}{L}\right)^2\dd{x}\tag{$\sin(x)$ is real valued for real $x$}\\
+    &=\frac{2}{L}\eval{\frac{x}{2}-\frac{L\sin\left(\frac{2\pi x}{L}\right)}{4\pi}}{\frac{L}{2}}{L}\tag{trig identity}\\
+    &=\frac{2}{L}\left(\frac{L}{2}-\frac{L}{4}\right)\\
+    &=\frac{1}{2}
+\end{align*}
+\bigskip
+
+\subsection*{Question 3 Cont.}
+For parts c, d, and e, suppose the wavefunction $\psi$ of the particle at $t=0$ is given by:
+$$\psi=\sqrt{\frac{1}{3}}\phi_1+\sqrt{\frac{2}{3}}\phi_2$$
+\bigskip
+
+\noindent\textbf{Part c:} What is the probability distribution of the measured energy at $t=0$?
+\bigskip
+
+\noindent\textbf{Solution:} The probability of having $E_1$ would be the squared probability amplitude associated with first eigenstate $\phi_1$ and similarly for $E_2$. For $E_n$ with $n>2$ it is 0 since the amplitude of their associated eigenstates $\phi_n$ is 0 for this particular state $\psi$:
+\begin{align*}
+    P(E=E_1)&=\frac{1}{3}\\
+    P(E=E_2)&=\frac{2}{3}\\
+    P(E=\text{anything else})&=0
+\end{align*}
+
+Note that $E_n=\frac{(\hbar\pi n)^2}{2mL^2}$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part d:} Suppose the energy is measured at $t=0$ and the value $E=\frac{2\hbar^2\pi^2}{mL^2}$ is obtained. What is the new wavefunction of the particle?
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+    E&=\frac{2\hbar^2\pi^2}{mL^2}\\
+    &=\frac{4\hbar^2\pi^2}{2mL^2}\\
+    &=\frac{(2\hbar^2\pi)^2}{2mL^2}\\
+    &=E_2
+\end{align*}
+
+Recall that the eigenvalue $E_2$ corresponds to the stationaary state $\psi_2$. And since the measurement was taken at $t=0$ we have:
+$$\psi_2(x,0)=\phi_2(x)$$
+
+And so the wavefunction of the particle after it had its energy measured to be $E_2$ at $t=0$ is now:
+$$\phi_2(x)=\sqrt{\frac{2}{L}}\sin\left(\frac{2\pi x}{L}\right)$$
+\bigskip
+
+\noindent\textbf{Part e:} Suppose $A$ is some observable such that:
+\begin{align*}
+    A\phi_1&=\phi_3\\
+    A\phi_2&=\phi_4
+\end{align*}
+
+What is the expected value of $A$ in state $\psi$?
+\bigskip
+
+\noindent\textbf{Solution:} The expected value of $A$ is given by:
+\begin{align*}
+    \langle A\rangle_\psi&=\langle\psi|A|\psi\rangle\tag{def. of expected value of observable}\\
+    &=\langle\psi|A\begin{bmatrix}
+        \sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}&0&0
+    \end{bmatrix}\tag{basis of $\{\phi_i\}$, eigenstates at $t=0$}\\
+    &=\langle\psi|\begin{bmatrix}
+        &0&0\sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{observables are linear}\\
+    &=\begin{bmatrix}
+        \sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}&0&0
+    \end{bmatrix}^\dagger\begin{bmatrix}
+        &0&0\sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{def. of bra}\\
+    &=\begin{bmatrix}
+        \sqrt{\frac{1}{3}}\\\sqrt{\frac{2}{3}}\\0\\0
+    \end{bmatrix}\begin{bmatrix}
+        &0&0\sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{def. of conjugate transpose}\\
+    &=0
+\end{align*}
+\bigskip
+\newpage
+
+\subsection*{Question 4}
+Recall that the $z$ and $x$ components of the spin of a spin-$\frac{1}{2}$ are given by:
+\begin{align*}
+    \sigma_z&=\begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\\
+    \sigma_x&=\begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part a:} What are the possible values of $\sigma_x$?
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the possible values of an observable are given by the eigenvalues. We will now solve for the eigenvalues of $\sigma_x$:
+\begin{align*}
+    0&=\det(\sigma_x-\lambda I_2)\tag{characteristic equation}\\
+    &=\det\begin{pmatrix}
+        -\lambda&1\\1&-\lambda
+    \end{pmatrix}\\
+    &=\lambda^2-1\tag{det. of $2\times2$ matrix}\\
+    1&=\lambda^2\\
+    \pm1&=\lambda
+\end{align*}
+
+And so we have that the possible observed values of the $x$-component of the spin (i.e. the eigenvalues of the observable $\sigma_x$) are $1,-1$.
+\bigskip
+
+\noindent\textbf{Part b:} Suppose the particle is in a state where $\sigma_x=-1$. Give such a state.
+\bigskip
+
+\noindent\textbf{Solution:} The state $\frac{1}{\sqrt{2}}\icol{-1\\1}$ has $\sigma_x=-1$. To see this note the following:
+\begin{align*}
+    \begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix}\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}=-1\cdot\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+\end{align*} 
+
+And so we have that $|\sigma_x=-1\rangle=\frac{1}{\sqrt{2}}\icol{-1\\1}$ since it is a an eigenvector of $\sigma_x$ with eigenvalue -1.
+\bigskip
+
+\noindent\textbf{Part c:} Suppose that $\sigma_z$ is measured when the particle is in the state $|\sigma_x=-1\rangle$. What is the
+probability that $\sigma_z$ will be found to be 1?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $|\sigma_z=-1\rangle$ is given by $\icol{0\\1}$:
+\begin{align*}
+    \begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\begin{bmatrix}
+        0\\1
+    \end{bmatrix}=-1\cdot\begin{bmatrix}
+        0\\1
+    \end{bmatrix}
+\end{align*} 
+
+As such the probability of a particle $\phi$ to be measured with $\sigma_z=-1$ is given by:
+\begin{align*}
+    p_{x=-1}(\phi)=\left|\langle\phi|\sigma_z=-1\rangle\right|^2
+\end{align*}
+
+In the case of $|\sigma_x=-1\rangle$ we have:
+\begin{align*}
+    p_{z=-1}(|\sigma_x=-1\rangle)&=\left|\langle\sigma_x=-1|\sigma_z=-1\rangle\right|^2\\
+    &=\left||\sigma_z=-1\rangle^\dagger|\sigma_x=-1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        0&1
+    \end{bmatrix}\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}\right|^2\\
+    &=\left|\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+And so the probability that a particle in state $|\sigma_x=1\rangle$ has its spin's $z$-component measured to be $\sigma_z=-1$ is $\frac{1}{2}$.
+\bigskip
+
+\subsection*{Question 4 Cont.}
+For parts d, e and f, suppose the wavefunction $\psi$ of the particle is given by:
+$$\psi=\frac{1}{\sqrt{2}}\begin{bmatrix}
+    1\\1
+\end{bmatrix}=\frac{|\sigma_z=1\rangle+|\sigma_z=-1\rangle}{\sqrt{2}}$$
+\bigskip
+
+\noindent\textbf{Part d:} What is the probability that, when measured, $\sigma_z=1$?
+\bigskip
+
+\noindent\textbf{Solution:} The probability that $\sigma_z=1$ is $\frac{1}{2}$. To see this, note that $\psi$ is in an equal superposition of the eigenstates $|\sigma_z=1\rangle$ and $|\sigma_z=-1\rangle$.
+
+Since the probability amplitude corresponding to the desired eigenstate $|\sigma_z=1\rangle$ is $\frac{1}{\sqrt{2}}$ the desired probability is: 
+$$\left(\frac{1}{\sqrt{2}}\right)^2=\frac{1}{2}$$
+\bigskip
+
+\noindent\textbf{Part e:} What is the probability that, when measured, $\sigma_x=1$?
+\bigskip
+
+\noindent\textbf{Solution:} In the case of $|\sigma_x=1\rangle$ we have:
+\begin{align*}
+    p_{z=-1}(|\sigma_x=1\rangle)&=\left|\langle\sigma_x=1|\psi\rangle\right|^2\\
+    &=\left||\psi\rangle^\dagger|\sigma_x=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        \frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}\right|^2\\
+    &=\left|\frac{1}{2}+\frac{1}{2}\right|^2=1
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part f:} Suppose that when the particle is initially the state $\psi$, $\sigma_x$ is measured immediately after a measurement of $\sigma_z$. What is the probability that the result $\sigma_x=1$ will be obtained? Does this probability depend upon the initial state $\psi$ of the particle? Explain.
+\bigskip
+
+\noindent\textbf{Solution:} After measuring $\sigma_z$ on $\psi$, the state will collapse to either $|\sigma_z=1\rangle$ or $|\sigma_z=-1\rangle$ each with 50\% probability see part (d). Expressed in the $\sigma_x$ basis, our now collapsed wavefunction is in one of two states:
+\begin{align*}
+    |\sigma_z=1\rangle&=\frac{|\sigma_x=1\rangle+|\sigma_x=-1\rangle}{\sqrt{2}}\\
+    |\sigma_z=-1\rangle&=\frac{|\sigma_x=1\rangle-|\sigma_x=-1\rangle}{\sqrt{2}}
+\end{align*}
+
+After measuring $\sigma_x$ on either of these states, the probability of obtaining $\sigma_x=1$ is 50/50.
+
+Note that this probability does NOT depend on the initial state $\psi$. This is because whatever that initial state is, it will have collapsed to either $|\sigma_z=1\rangle$ or $|\sigma_z=-1\rangle$ after the first measurement. After that the same probability calculation above applies.
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} Some of the axioms of quantum theory refer to the ``measurement'' of a quantum ``observable.'' This locution is somewhat unfortunate. Explain why.
+\bigskip
+
+\noindent\textbf{Solution:} This is unfortunate because measurement implies that the state was in some definite position (or eigenvalue in general) before the `measurement' or creation was made. This is untrue as there indeed is no fact of the matter of the value of the observable before the measurement. Indeed in general the state of the wavefucntion is a superpostion of eigenstates before it is collapsed by the measurement process.
+
+
+\subsection*{Question 6}
+\noindent\textbf{Problem:} Suppose that you were to reject the idea that Shrodinger's equation alone could could constitute a physical theory. What would be the simplest way to then (nontrivially) incorporate Shrodinger's equation into a physical theory if you don't at all care whether the theory you invent describes our world? (By ``nontrivially'' I mean that Shrodinger's equation should be relevant to the predictions of the theory you propose.)
+\bigskip
+
+\noindent\textbf{Solution:} Shrodinger's equation gives the evolution of wavefunctions, which can be represented as the linear combination of basis states, where each basis state corresponds to a particular definitive reality (say the configuration of particles). At any time $t=t_0$ we could normalize $\psi(Q,t_0)$ such that the modulus of its coefficients sum to 1. We then declare that the probability that any basis state describes reality $c_i$ (where $c_i$ is the coefficient correspoding to reality $i$) at time $t_0$ is given by $|c_i|$.
+
+So our physical theory is constituted by not just Shrodinger's equation, but by our probability postulate as well.
+
+
+\end{document}

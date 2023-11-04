@@ -1,0 +1,331 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#6}
+\author{Ozaner Hansha}
+\date{March 22, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+Let $f:\R\to\R$ be a function that has a limit at 0, and that satisfies $f(x+y)=f(x)f(y)$ for all $x,y\in\R$.
+\bigskip
+
+\noindent\textbf{Part a:} Show that $f(x)$ has a limit at every point $x\in\R$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following for an arbitrary $y\in\R$:
+\begin{align*}
+  L&=\lim_{x\to0}f(x)\tag{limit exists at 0}\\
+  f(y)L&=f(y)\lim_{x\to0}f(x)\\
+  &=\lim_{x\to0}f(x)f(y)\tag{product respects limit}\\
+  &=\lim_{x\to0}f(x+y)\tag{def. of $f$}\\
+  &=\lim_{x\to y}f(x)\tag{shift limit}
+\end{align*}
+
+And so we have shown that $f(x)$ has a limit for all points $y\in\R$, namely the product $f(y)L$ where $L$ is the limit of $f(x)$ at 0.
+\bigskip
+
+\noindent\textbf{Part b:} Show the following:
+$$\lim_{x\to0}f(x)=1\vee\lim_{x\to0}f(x)=0$$
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+  L&=\lim_{x\to0}f(x)\tag{limit exists at 0}\\
+  &=\lim_{x\to0}f(2x)\tag{$x\to0\implies 2x\to0$}\\
+  &=\lim_{x\to0}f(x)f(x)\tag{def. of $f$}\\
+  &=\lim_{x\to0}f(x)\lim_{x\to0}f(x)\tag{product of limits is limit of products}\\
+  &=L^2\tag{limit exists at 0}
+\end{align*}
+
+We have no established that, whatever $L$ is, it is equal to its own square $L^2$. Recall that exactly two real numbers satisfy this property: $0$ and $1$. Thus we have that:
+$$\lim_{x\to0}f(x)=L\in\{0,1\}$$
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Consider the following function for positive integer $n$:
+$$f:(0,\infty)\to\R,\,\,f(x)=x^{\sfrac{1}{n}}$$
+
+Prove that this function is continuous over its domain.
+\bigskip
+
+\noindent\textbf{Solution:} First recall the reverse triangle inequality for $0<p<1$:
+$$||a|^p-|b|^p|\le|a-b|^p$$
+
+Now consider an arbitrary $x_0\in(0,\infty)$, an arbitrary $\epsilon>0$, and let $\delta=\epsilon^n>0$. We have:
+\begin{align*}
+  0<|x-x_0|<\delta&\implies0<|x-x_0|<\epsilon^n\tag{$\delta=\epsilon^n$}\\
+  &\implies |x-x_0|^{\frac{1}{n}}<\epsilon\tag{$n$th root is increasing}\\
+  &\implies||x|^{\frac{1}{n}}-|x_0|^{\frac{1}{n}}|<\epsilon\tag{reverse triangle inequality}\\
+  &\implies|x^{\frac{1}{n}}-x_0^{\frac{1}{n}}|<\epsilon\tag{domain is positive}
+\end{align*}
+
+This is precisely the definition of a continuous function over the domain $(0,\infty)$, and so we are done.
+
+\subsection*{Problem 3}
+\noindent\textbf{Part a:} Let $(b_n)_{n=1}^\infty$ be a sequence of rational numbers converging to $b$. Show that it is a Cauchy sequence.
+\bigskip
+
+\noindent\textbf{Solution:} Note that whenever we have:
+$$\left|\frac{p_n}{q_n}-\frac{p_m}{q_m}\right|<\frac{1}{N}$$
+
+Then we must have:
+\begin{align*}
+  \left|a^{\frac{p_n}{q_n}}-a^{\frac{p_m}{q_m}}\right|&=\frac{p_m}{q_m}\left|a^{\frac{p_n}{q_n}-\frac{p_m}{q_m}}-1\right|\tag{all positive}\\
+  &<\frac{p_m}{q_m}\cdot\max\{a^{\frac{1}{N}-1},1-a^{-\frac{1}{N}}\}
+\end{align*}
+
+Yet recall that:
+\begin{gather*}
+  \lim_{n\to\infty}\sqrt[n]{a}=1\\
+  \lim_{n\to\infty}\sqrt[n]{\frac{1}{a}}=1
+\end{gather*}
+
+And so we can always find an $N$ large enough that $\frac{p_m}{q_m}\cdot\max\{a^{\frac{1}{N}-1},1-a^{-\frac{1}{N}}\}$ is as close to an arbitrary $\epsilon>0$.
+\bigskip
+
+\noindent\textbf{Part b:} Let $(b_n)_{n=1}^\infty$ and $(b'_n)_{n=1}^\infty$ be two sequences of rational numbers both converging to $b$. Show that $(a^{b_n})_{n=1}^\infty$ and $(a^{b'_n})_{n=1}^\infty$ have the same limit.
+\bigskip
+
+\noindent\textbf{Solution:} Note that whenever we have:
+$$\left|\frac{p_n}{q_n}-\frac{p'_n}{q'_n}\right|<\frac{1}{N}$$
+
+Then we must have:
+\begin{align*}
+  \left|a^{\frac{p_n}{q_n}}-a^{\frac{p'_n}{q'_n}}\right|&=\frac{p'_n}{q'_n}\left|a^{\frac{p_n}{q_n}-\frac{p'_n}{q'_n}}-1\right|\tag{all positive}\\
+  &<\frac{p'_n}{q'_n}\cdot\max\{a^{\frac{1}{N}-1},1-a^{-\frac{1}{N}}\}
+\end{align*}
+
+Yet recall that:
+\begin{gather*}
+  \lim_{n\to\infty}\sqrt[n]{a}=1\\
+  \lim_{n\to\infty}\sqrt[n]{\frac{1}{a}}=1
+\end{gather*}
+
+And so we can always find an $N$ large enough that $\frac{p'_n}{q'_n}\cdot\max\{a^{\frac{1}{N}-1},1-a^{-\frac{1}{N}}\}$ is as close to an arbitrary $\epsilon>0$.
+\bigskip
+
+\subsection*{Problem 4}
+For some real $b>0$, consider the function:
+$$f:(0,\infty)\to\R,\quad f(x)=x^b$$
+
+\noindent\textbf{Part a:} Show that $f(x)$ is an increasing function.
+\bigskip
+
+\noindent\textbf{Solution:} We already know that $x^b$ is an increasing function for $b\in\Q^+$. Call this lemma 1. Now consider a cauchy sequence $(b_n)_{n=1}^\infty$ that converges to $b\in\R$ where each $b_n\in\Q^+$. Note the following:
+\begin{align*}
+  x>y&\implies (\forall n\in\Z^+),\,\,x^{b_n}>y^{b_n}\tag{lemma 1}\\
+  &\implies \lim_{n\to\infty}x^{b_n}\ge\lim_{n\to\infty}y^{b_n}\tag{limits exist \& respect inequalities}\\
+  &\implies x^b\ge y^b\tag{problem 3}
+\end{align*}
+
+And so we have shown that for any real $b>0$, the function $x^b$ is increasing.
+\bigskip
+
+\noindent\textbf{Part b:} Show that $f(x)$ is continuous over $\R^+$. 
+\bigskip
+
+\noindent\textbf{Solution:} First let us note the reverse triangle inequality for $p>1$:
+$$2^{p-1}||a|^p-|b|^p|\le|a-b|^p$$
+
+Consider the case where $0<b<1$. Now consider an arbitrary $x_0\in(0,\infty)$, an arbitrary $\epsilon>0$, and let $\delta=\epsilon^{\sfrac{1}{b}}>0$. We have:
+\begin{align*}
+  0<|x-x_0|<\delta&\implies0<|x-x_0|<\epsilon^{\sfrac{1}{b}}\tag{$\delta=\epsilon^{\sfrac{1}{b}}$}\\
+  &\implies |x-x_0|^b<\epsilon\tag{$x^b$ is increasing, part a}\\
+  &\implies||x|^b-|x_0|^b|<\epsilon\tag{reverse triangle inequality $0<p<1$}\\
+  &\implies|x^b-x_0^b|<\epsilon\tag{domain is positive}
+\end{align*}
+
+Finally, consider the case where $b>1$. Again we consider an arbitrary $x_0\in(0,\infty)$, an arbitrary $\epsilon>0$, and we now let $\delta=(2^{b-1}\epsilon)^{\frac{1}{b}}>0$. We have:
+\begin{align*}
+  0<|x-x_0|<\delta&\implies0<|x-x_0|<(2^{b-1}\epsilon)^{\frac{1}{b}}\tag{$\delta=(2^{b-1}\epsilon)^{\frac{1}{b}}$}\\
+  &\implies |x-x_0|^b<2^{b-1}\epsilon\tag{$x^b$ is increasing, part a}\\
+  &\implies2^{b-1}||x|^b-|x_0|^b|<2^{b-1}\epsilon\tag{reverse triangle inequality $p>1$}\\
+  &\implies|x^b-x_0^b|<\epsilon\tag{domain is positive}
+\end{align*}
+
+Since these two cases are exhaustive for $b>0$, we have from the definition of continuity that $f(x)$ is continuous on its domain.
+
+\subsection*{Problem 5}
+Consider the following function:
+$$f:\R\to\R,\quad f(x)=e^x$$
+
+\noindent\textbf{Part a:} Show that $f(x)$ is an increasing function.
+\bigskip
+
+\noindent\textbf{Solution:} Note:
+\begin{align*}
+  y>x&\implies y-x>0\\
+  &\implies e^{y-x}-1>0\\
+  &\implies e^x(e^{y-x}-1)>0\\
+  &\implies e^y-e^x>0\\
+  &\implies e^y>e^x
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Show that $\forall x,y\in\R$ we have:
+$$f(x+y)=f(x)f(y)$$
+
+\noindent\textbf{Solution:} Note:
+\begin{align*}
+  e^xe^y&=\lim_{n\to\infty}\left(1+\frac{x}{n}\right)^n\lim_{n\to\infty}\left(1+\frac{y}{n}\right)^n\\
+  &=\lim_{n\to\infty}\left(1+\frac{x+y}{n}+\frac{xy}{n^2}\right)^n\\
+  &=\lim_{n\to\infty}\left(1+\frac{x+y}{n}\right)^n\\
+  &=e^{x+y}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part c:} Show that $f(x)$ is continuous over $\R$.
+\bigskip
+
+\noindent\textbf{Solution:} Note:
+\begin{align*}
+  &1+x\le e^x\le\frac{1}{1-x}\\
+  \implies&\lim_{x\to0}1+x\le\lim_{x\to0}e^x\le\lim_{x\to0}\frac{1}{1-x}\\
+  \implies&1\le\lim_{x\to0}e^x\le1\\
+  \implies&\lim_{x\to0}e^x=1\\
+\end{align*}
+
+Which is to say $f(x)$ has a limit at 0, namely 1. Recall from problem 1 that this, plus part b, imply that $f(x)$ is continuous.
+
+\subsection*{Problem 6}
+Consider the logarithm function:
+$$f:(0,\infty)\to\R,\quad f(x)=\ln x$$
+
+\noindent\textbf{Part a:} For any positive number $x$, show that there is a unique $y$ such that $e^y=x$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that we have already shown that $e^x$ is both continuous and strictly increasing. The strictly increasing implies that it is injective, while being continuous over $\R$ implies it is surjective over $\R$. An injective, surjective function has a bijection by the Cantor-Bernstein theorem. A bijective function must have an inverse (i.e. $\ln x$) such that $f^{-1}(f(x))=x$ In other words, for any $x$, there is always a unique $y$ such that $e^y=x$.
+\bigskip
+
+\noindent\textbf{Part b:} Prove that $\ln$ is increasing.
+
+\noindent\textbf{Solution:} Note that $\ln x$ is the inverse of $e^x$. Also note that $e^x$ is strictly increasing. As a result $\ln x$ must be strictly monotone. Whether it is increasing or decreasing can simply be tested:
+\begin{align*}
+  e^0=1&\implies\ln 1=0\\
+  e^1=e&\implies\ln e=1
+\end{align*}
+
+Since $2<e<3$, i.e. $1<e$, the $\ln$ function must be increasing.
+\bigskip
+\bigskip
+
+\noindent\textbf{Part c:} Prove that $\ln$ is continuous.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary $\epsilon>0$ and let $\delta=x_0(e^\epsilon-1)$:
+\begin{align*}
+  |x-x_0|&<\delta\\
+  &<x_0(e^\epsilon-1)\tag{def. of $\delta$}\\
+  x-x_0&<x_0(e^\epsilon-1)\tag{positive domain}\\
+  x&<x_0(e^\epsilon-1)+x_0\\
+  x&<x_0(e^\epsilon-1+1)\\
+  x&<x_0e^\epsilon\\
+  \ln x&<\ln x_0e^\epsilon\tag{$\ln$ is increasing, part b}\\
+  \ln x&<\ln x_0\ln e^\epsilon\tag{$e^{x+y}=e^xe^y$}\\
+  \ln x-\ln x_0&<\ln e^\epsilon\\
+  \ln x-\ln x_0&<\epsilon\\
+  |\ln x-\ln x_0|&<\epsilon\tag{positive domain}
+\end{align*}
+
+And with that we are done.
+
+\subsection*{Problem 7}
+
+\noindent\textbf{Part a:} Compute the following limits for positive $x$:
+\begin{gather*}
+  \lim_{x\to0} ((1+x)^{\sfrac{1}{3}}-x^{\sfrac{1}{3}})\\
+  \lim_{x\to\infty} ((1+x)^{\sfrac{1}{3}}-x^{\sfrac{1}{3}})
+\end{gather*}
+
+\noindent\textbf{Solution:} Since $\frac{1}{3}$ is a positive rational less than 1, it follows from part b below that:
+\begin{gather*}
+  \lim_{x\to0} ((1+x)^{\sfrac{1}{3}}-x^{\sfrac{1}{3}})=1\\
+  \lim_{x\to\infty} ((1+x)^{\sfrac{1}{3}}-x^{\sfrac{1}{3}})=0
+\end{gather*}
+\bigskip
+
+\noindent\textbf{Part b:} Compute the following limits for a positive rational $\frac{p}{q}<1$, and positive $x$:
+\begin{gather*}
+  \lim_{x\to0} ((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})\\
+  \lim_{x\to\infty} ((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})
+\end{gather*}
+
+\noindent\textbf{Solution:} First we compute the first limit:
+\begin{align*}
+  \lim_{x\to0}((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})&=\lim_{x\to0}(1+x)^{\sfrac{p}{q}}-\lim_{x\to0}x^{\sfrac{p}{q}}\tag{$x^c$ is continuous, problem 4}\\
+  &=(\lim_{x\to0}(1+x))^{\sfrac{p}{q}}-(\lim_{x\to0}x)^{\sfrac{p}{q}}\tag{limit of power is power of limit}\\
+  &=1^{\sfrac{p}{q}}-0^{\sfrac{p}{q}}\\
+  &=1
+\end{align*}
+
+Now we compute the second limit via the squeeze theorem. First we find an upper bound:
+\begin{align*}
+  (1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}}&=||1+x|^{\frac{p}{q}}-|x|^{\frac{p}{q}}|\tag{$x\in\R^+$}\\
+  &\le|1+x-x|^{\sfrac{p}{q}}\tag{reverse triangle inequality $0<p<1$}\\
+  &=1
+\end{align*}
+
+Next we find a lower bound:
+\begin{align*}
+  (1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}}&\ge\frac{1}{(1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}}}\\
+  &=\frac{1}{||1+x|^{\frac{p}{q}}-|x|^{\frac{p}{q}}|}\tag{$x\in\R^+$}\\
+  &\ge\frac{1}{|1+x-x|^{\sfrac{p}{q}}}\tag{reverse triangle inequality $0<p<1$}\\
+  &=1
+\end{align*}
+
+And so, applying the squeeze theorem we have:
+\begin{align*}
+  &1\le(1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}}\le 1\\
+  \implies&\lim_{x\to\infty}1\le\lim_{x\to\infty}((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})\le \lim_{x\to\infty} 1\tag{squeeze theorem}\\
+  \implies&1\le\lim_{x\to\infty}((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})\le1\\
+  \implies&\lim_{x\to\infty}((1+x)^{\sfrac{p}{q}}-x^{\sfrac{p}{q}})=1\\
+\end{align*}
+\end{document}

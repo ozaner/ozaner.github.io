@@ -1,0 +1,212 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#5}
+\author{Ozaner Hansha}
+\date{March 5, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Define $f:(0,1):\to\R$ by $x\mapsto\sqrt{x}\sin\left(\frac{1}{x}\right)$. Use $\epsilon-\delta$ language to find $\lim_{x\to0}f(x)$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider a fixed $\epsilon>0$, let $\delta=\epsilon^2>0$. Then, for all $x$ such that $0<|x|<\delta$ we have:
+\begin{align*}
+  \delta&>|x|\tag{hypothesis}\\
+  \epsilon^2&>|x|\tag{def. of $\delta$}\\
+  \epsilon&>\sqrt{|x|}\\
+  &>|\sqrt{x}|\tag{$\forall x\in(0,1),\,x>0$}\\
+  &>|\sqrt{x}|\left|\sin\left(\frac{1}{x}\right)\right|\tag{$\forall c\in\R,\,0\le|\sin c|\le 1$}\\
+  &>\left|\sqrt{x}\sin\left(\frac{1}{x}\right)\right|\\
+  &>|f(x)|\tag{def. of $f(x)$}\\
+  &>|f(x)-0|
+\end{align*}
+
+In other words, we have shown:
+\begin{equation*}
+  (\forall \epsilon>0)\underbrace{(\exists\delta>0)}_{\text{namely }\epsilon^2},\,0<|x-0|<\delta\implies|f(x)-0|<\epsilon
+\end{equation*}
+
+Which is prescisly the definition of:
+\begin{equation*}
+  \lim_{x\to0}f(x)=0
+\end{equation*}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Consider a function $f:D\to\R$. Suppose that $\lim_{x\to x_o}f(x)=c$, use $\epsilon-\delta$ language to show that: 
+$$\lim_{x\to x_0}|f(x)|=|c|$$
+
+\noindent\textbf{Solution:} First let us establish the reverse triangle inequality. Consider any two reals $x,y$:
+\begin{align*}
+  |x+y-x|&\le|x|+|y-x|\tag{triangle inequality}\\
+  |y|&\le|x|+|y-x|\\
+  |y|-|x|&\le|y-x|\\
+  |y|-|x|\le|y-x|&\wedge|x|-|y|\le|x-y|\tag{$x$ and $y$ are indistinguishable}\\
+  |x|-|y|\ge-|x-y|&\wedge|x|-|y|\le|x-y|\\
+  \left||x|-|y|\right|&\le|x-y|\tag{reverse triangle inequality}
+\end{align*}
+
+With this in mind, note that by assuming $\lim_{x\to x_o}f(x)=c$ we have, $(\forall\epsilon>0)(\exists\delta>0)(\forall x\in D)$:
+\begin{align*}
+  0<|x-x_0|<\delta&\implies |f(x)-c|<\epsilon\tag{def. of limit}\\
+  &\implies ||f(x)|-|c||\le|f(x)-c|<\epsilon\tag{reverse triangle inequality}\\
+  &\implies ||f(x)|-|c||<\epsilon\tag{transitivity}
+\end{align*}
+
+Note that this is precisely the definition of:
+$$\lim_{x\to x_0}|f(x)|=|c|$$
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Define $f:(0,1)\to\R$ by $x\mapsto(1+x)^{\sfrac{1}{x}}$. Find $\lim_{x\to0}f(x)$.
+\bigskip
+
+\noindent\textbf{Solution:} First recall Bernoulli's inequality for general $r$ and $y$.
+\begin{align*}
+  (\forall r\ge 1)(\forall x\ge -1),\,\,(1+x)^r&\ge 1+rx\\
+  (\forall r\in[0,1])(\forall x\le -1),\,\,(1+x)^r&\ge 1+rx
+\end{align*}
+
+First, note the following:
+\begin{align*}
+  (1+x)^{\sfrac{1}{x}}\ge 1+\frac{x}{x}=2\tag{$r=\sfrac{1}{x}>1$ \& $x=x\ge -1$, Bernoulli's inequality}\\
+  \left(1+\frac{1}{x}\right)^x\le 1+\frac{x}{x}=2\tag{$r=x\in(0,1)$ \& $x=\sfrac{1}{x}\ge -1$, Bernoulli's inequality}
+\end{align*}
+
+Leading us to the inequality:
+\begin{equation*}
+  \left(1+\frac{1}{x}\right)^x\le2\le(1+x)^{\sfrac{1}{x}}
+\end{equation*}
+
+And now consider the following:
+\begin{align*}
+  e&=\lim_{x\to\infty}\left(1+\frac{1}{x}\right)^x\tag{def. of $e$}\\
+  &=\lim_{\sfrac{1}{u}\to\infty}\left(1+u\right)^{\sfrac{1}{u}}\tag{change of variables $\substack{u=\sfrac{1}{x}\\x=\sfrac{1}{x}}$}\\
+  &=\lim_{\left|\sfrac{1}{u}\right|\to\infty}\left(1+u\right)^{\sfrac{1}{u}}\\
+  &=\lim_{u\to0}\left(1+u\right)^{\sfrac{1}{u}}\tag{$\lim_{u\to0}\left|\frac{1}{u}\right|=\infty$}
+\end{align*}
+
+\subsection*{Problem 4}
+Let $f,g:\R\to\R$ be two functions such that:
+\begin{gather*}
+  \lim_{x\to0}f(x)=c\\
+  \lim_{x\to c}g(x)=d
+\end{gather*}
+\bigskip
+
+\noindent\textbf{Part a:} Suppose there exists $\delta>0$ such that for any $x\in(-\delta,0)\cup(0,\delta)$ we have $f(x)\not=c$. Prove the following:
+\begin{equation*}
+  \lim_{x\to 0}g\circ f(x)=d
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} Let us call the supposition above condition a. Let us now rewrite this condition, $(\exists\delta>0)$:
+\begin{align*}
+  x\in(-\delta,0)\cup(0,\delta)&\implies f(x)\not=c\tag{condition a}\\
+  0<|x|<\delta&\implies f(x)\not=c\tag{def. of absolute value}\\
+  &\implies f(x)-c\not=0\\
+  &\implies |f(x)-c|\not=0\\
+  &\implies 0<|f(x)-c|\tag{absolute value is nonnegative}
+\end{align*}
+
+Now let us prove the statement, $(\forall\epsilon_1>0)(\exists\delta_1>0)(\exists\delta>0)(\forall\epsilon_2>0)(\exists\delta_2>0)$:
+\begin{align*}
+  0<|x|<\delta_1&\implies|f(x)-c|<\epsilon_1\tag{def. of $\lim_{x\to0}f(x)=c$}\\
+  0<|x|<\delta&\implies0<|f(x)-c|<\epsilon_1\tag{condition a, let $\delta_1=\delta$}\\
+  &\implies |g(f(x))-d|<\epsilon_2\tag{def. of $\lim_{x\to c}g(x)=d$, let $x=f(x)$, let $\delta_2=\epsilon_1$}
+\end{align*}
+
+Simplifying, we have:
+\begin{equation*}
+  (\forall\epsilon_2>0)(\exists\delta>0),\,\,0<|x|<\delta\implies|f(x)-d|<\epsilon_2
+\end{equation*}
+
+Which is precisely the definition of:
+\begin{equation*}
+  \lim_{x\to 0}g\circ f(x)=d
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Part b:} Without condition a, find an example where:
+\begin{equation*}
+  \lim_{x\to 0}g\circ f(x)\not=d
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} Let us define our functions and constants:
+\begin{align*}
+  f(x)&=0\\
+  g(x)&=\begin{cases}
+    1,&x=0\\
+    0,&\text{otherwise}
+  \end{cases}\\
+  c&=0\\
+  d&=0
+\end{align*}
+
+Now let us verify that these definitions satisfy the conditions of the problem:
+\begin{gather*}
+  \lim_{x\to0}f(x)=\lim_{x\to0}0=0=c\\
+  \neg(\exists\delta,\,\,0<|x|<\delta\implies f(x)\not=c)\tag{$\forall x, f(x)=0=c$}\\
+  \lim_{x\to c}g(x)=\lim_{x\to 0}\left(\begin{cases}
+    1,&x=0\\
+    0,&\text{otherwise}\\
+  \end{cases}\right)=0=d
+\end{gather*}
+
+Now note the following:
+\begin{align*}
+  \lim_{x\to0}g(f(x))=\lim_{x\to0}g(0)=\lim_{x\to0}1=1\not=0=d
+\end{align*}
+
+And so we have produced our counterexample.
+
+\end{document}

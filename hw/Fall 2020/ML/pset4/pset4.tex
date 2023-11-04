@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\grad}[1]{\nabla_{#1}}
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em} % This is your set screw
+
+\begin{document}
+
+\title{Machine Learning\\ Problem Set 4}
+\author{Ozaner Hansha}
+\date{November 19, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Part a:} Show that the weighted training error with updated weights is equal to $\frac{1}{2}$. (See problem set for details).
+\bigskip
+
+\noindent\textbf{Solution:} First, to make our math a bit cleaner, consider the following sets:
+\begin{align*}
+  S&=\{i\mid y_i\not=h_{M+1}(\vec x_i)\}\\
+  S^\complement&=\{i\mid y_i=h_{M+1}(\vec x_i)\}
+\end{align*}
+
+Now, before we prove the desired statement, consider the following lemmas:
+\begin{align*}
+  \alpha_{M+1}&=\frac{1}{2}\log\left(\frac{1-\epsilon_{M+1}}{\epsilon_{M+1}}\right)\tag{def. of $\alpha_{M+1}$}\\
+  \exp(2\alpha_{M+1})&=\frac{1-\epsilon_{M+1}}{\epsilon_{M+1}}\\
+  \exp(-2\alpha_{M+1})&=\frac{\epsilon_{M+1}}{1-\epsilon_{M+1}}\tag{lemma 1}\\
+  \\
+  1&=\sum_{i=1}^nW_i^{(M)}\tag{weights are normalized}\\
+  &=\sum_{i\in S}W_i^{(M)}+\sum_{i\in S^\complement}W_i^{(M)}\tag{partition of sum}\\
+  \sum_{i\in S^\complement}W_i^{(M)}&=1-\sum_{i\in S}W_i^{(M)}\tag{lemma 2}
+\end{align*}
+
+We can finally give the following chain of equalities:
+\allowdisplaybreaks
+\begin{align*}
+  \epsilon'_{M+1}&=\sum_{i\in S}W^{(M+1)}_i\tag{def. of WTE w/ UW}\\
+  &=\sum_{i\in S}\frac{W^{(M)}_i\exp(-\alpha_{M+1}y_ih_{M+1}(\vec x_i))}{\sum_{j=1}^nW_j^{(M)}\exp(-\alpha_{M+1}y_jh_{M+1}(\vec x_j))}\tag{def. of $W_i^{M+1}$}\\
+  &=\sum_{i\in S}\frac{W^{(M)}_i\exp(\alpha_{M+1})}{\sum_{j=1}^nW_j^{(M)}\exp(-\alpha_{M+1}y_jh_{M+1}(\vec x_j))}\tag{$\substack{(\forall i\in S)\,\,y_ih_{M+1}(\vec x_i)=-1\\\text{i.e. misclassifications}}$}\\
+  &=\frac{\exp(\alpha_{M+1})}{\sum_{i=1}^nW_i^{(M)}\exp(-\alpha_{M+1}y_ih_{M+1}(\vec x_i))}\sum_{i\in S}W_i^{(M)}\\
+  &=\frac{\exp(\alpha_{M+1})\sum_{i\in S}W_i^{(M)}}{\sum_{i\in S}W_i^{(M)}\exp(-\alpha_{M+1}y_ih_{M+1}(\vec x_i))+\sum_{i\in S^\complement}W_i^{(M)}\exp(-\alpha_{M+1}y_ih_{M+1}(\vec x_i))}\tag{partition of sum}\\
+  &=\frac{\exp(\alpha_{M+1})\sum_{i\in S}W_i^{(M)}}{\exp(\alpha_{M+1})\sum_{i\in S}W_i^{(M)}+\exp(-\alpha_{M+1})\sum_{i\in S^\complement}W_i^{(M)}}\tag{$\substack{(\forall i\in S)\,\,y_ih_{M+1}(\vec x_i)=-1\\(\forall i\in S^\complement)\,\,y_ih_{M+1}(\vec x_i)=1}$}\\
+  &=\frac{\sum_{i\in S}W_i^{(M)}}{\sum_{i\in S}W_i^{(M)}+\exp(-2\alpha_{M+1})\sum_{i\in S^\complement}W_i^{(M)}}\\
+  &=\frac{\sum_{i\in S}W_i^{(M)}}{\sum_{i\in S}W_i^{(M)}+\frac{\epsilon_{M+1}}{1-\epsilon_{M+1}}\left(1-\sum_{i\in S}W_i^{(M)}\right)}\tag{lemma 1 \& 2}\\
+  &=\frac{\epsilon_{M+1}}{\epsilon_{M+1}+\frac{\epsilon_{M+1}}{1-\epsilon_{M+1}}(1-\epsilon_{M+1})}\tag{def. of $\epsilon_{M+1}$}\\
+  &=\frac{\epsilon_{M+1}}{\epsilon_{M+1}+\epsilon_{M+1}}=\frac{1}{2}
+\end{align*}
+
+And so we are done.
+\bigskip
+
+\noindent\textbf{Part b:} Would it be valid for our ensemble to have $h_{m}=h_{m+1}$ for some $m$? 
+\bigskip
+
+\noindent\textbf{Solution:} Continuing from part a, consider what would happen if we choose $h_{M+2}=h_{M+1}$ (this is identical to the question as we have just set $m=M+1$). We first calculate the weighted training update error $\epsilon_{M+2}$ of our new classifier:
+\begin{align*}
+  \epsilon_{M+2}&=\sum_{i:y_i\not=h_{M+2}(\vec x_i)}W_i^{(M+1)}\tag{def. of WTE}\\
+  &=\sum_{i:y_i\not=h_{M+1}(\vec x_i)}W_i^{(M+1)}\tag{$h_{M+2}=h_{M+1}$}\\
+  &=\epsilon'_{M+1}\tag{def. of WTE w/ UW}\\
+  &=\frac{1}{2}\tag{part a}
+\end{align*}
+
+Now let us compute the weighting $\alpha_{M+2}$ our new classifier will have in the ensemble:
+\begin{align*}
+  \alpha_{M+2}&=\frac{1}{2}\log\frac{1-\epsilon_{M+2}}{\epsilon_{M+2}}\tag{def. of $\alpha_{M+2}$}\\
+  &=\frac{1}{2}\log\frac{1-\frac{1}{2}}{\frac{1}{2}}\tag{$\epsilon_{M+2}=\frac{1}{2}$}\\
+  &=\frac{1}{2}\log1\\
+  &=0
+\end{align*}
+
+And so, our choice of classifier $h_{M+2}=h_{M+1}$ is a degenerate one since our ensemble at step $M+2$ is identical to the one at $M+1$:
+\begin{align*}
+  H_{M+2}(\vec x)&=\sum^{M+2}_{m=1}\alpha_{m}h_{m}(\vec x)\tag{def. of ensemble}\\
+  &=\left(\sum^{M+1}_{m=1}\alpha_{m}h_{m}(\vec x)\right)+\alpha_{M+2}h_{M+2}(\vec x)\\
+  &=\sum^{M+1}_{m=1}\alpha_{m}h_{m}(\vec x)\tag{$\alpha_{M+2}=0$}\\
+  &=H_{M+1}(\vec x)\tag{def. of ensemble}
+\end{align*}
+
+And so there is no point in choosing the classifier in round $m+1$ of AdaBoost to be identical to the one in round $m$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part c:} Can we have $h_{m+k}=h_{m}$ for some $k>1$? Why or why not?
+\bigskip
+
+\noindent\textbf{Solution:} While we have shown in part b that the classifier in round $m+k$ cannot be identical to that of round $m$ for $k=1$, this does not hold for general $k>1$. To see this, consider the weighted training error of $h_{m+k}$:
+$$\epsilon_{m+k}=\sum_{i:y_i\not=h_{m+k}(\vec x_i)}W^{(m+k-1)}$$
+
+Since $k>1$, the weights $W^{(m+k-1)}$ are not necessarily equal to $W^{(m)}$ and so $\epsilon_{m+k}$ isn't necessarily $\frac{1}{2}$. Below we calculate the bounds of $\epsilon_{m+k}$:
+\begin{align*}
+  1&=\sum_{i=1}^nW^{(m+k)}_i\tag{weights are normalized}\\
+  &=\sum_{i:y_i\not=h_{m+k}(\vec x_i)}W^{(m+k)}_i+\sum_{i:y_i=h_{m+k}(\vec x_i)}W^{(m+k)}_i\tag{partition of sum}\\
+  1&\ge\sum_{i:y_i\not=h_{m+k}(\vec x_i)}W^{(m+k)}_i\ge0\tag{weights are positive}\\
+  1&\ge\epsilon_{m+k}\ge0\tag{def. of WTE}
+\end{align*}
+
+In other words, $\epsilon_{m+k}\in[0,1]$. Now consider the weighting of our classifier $h_{m+k}$:
+
+$$\alpha_{m+k}=\frac{1}{2}\log\frac{1-\epsilon_{m+k}}{\epsilon_{m+k}}$$
+
+Note that the value of $\alpha_{m+k}$ could be anywhere from $[0,\infty)$ for $\epsilon_{m+k}\in[0,1]$.
+\bigskip
+
+And so, even though our classifier at step $m+k$ is identical to that of step $m$, it is entirely possible that the classifier can produce a WTE not equal to $\frac{1}{2}$ and thus a ensemble weighting not equal to 0. As such it may be a reasonable choice of classifier.
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Show that the choice of $\alpha_m$ at time step $m$ in AdaBoost minimizes the empirical exponential loss of the ensemble given the selection of the classifier $h_m$.
+\bigskip
+
+\noindent\textbf{Solution:} Let us first note the following lemma:
+\begin{align*}
+  (\forall c\in[0,1])\,\,ce^x+(1-c)e^{-x}\text{ is convex}\tag{lemma 3}
+\end{align*}
+
+Now we will find the $\alpha_m$ that minimizes the empirical exponential loss of $H_m$ given $H_{m-1}$ and $h_m$:
+\begin{align*}
+  \argmin_{\alpha_m}L(H_m)&=\argmin_{\alpha_m}\sum_{i=1}^ne^{-y_iH_m(\vec x_i)}\tag{def. of exponential loss}\\
+  &=\argmin_{\alpha_m}\sum_{i=1}^ne^{-y_i(H_{m-1}(\vec x_i)+\alpha_mh_m(\vec x_i))}\\
+  &=\argmin_{\alpha_m}\sum_{i=1}^ne^{-y_i(H_{m-1}(\vec x_i))}e^{-y_i\alpha_mh_m(\vec x_i)}\\
+  &=\argmin_{\alpha_m}\sum_{i=1}^nW^{(m-1)}_ie^{-y_i\alpha_mh_m(\vec x_i)}\tag{$W^{(m-1)}_i\propto e^{-y_i(H_{m-1}(\vec x_i))}$}\\
+  &=\argmin_{\alpha_m}\sum_{i:y_i\not=h_m(\vec x_i)}^nW^{(m-1)}_ie^{-y_i\alpha_mh_m(\vec x_i)}\\
+  \displaybreak
+  &\qquad\quad\qquad+\sum_{i:y_i=h_m(\vec x_i)}^nW^{(m-1)}_ie^{-y_i\alpha_mh_m(\vec x_i)}\tag{partition sum}\\
+  &=\argmin_{\alpha_m}\quad e^{\alpha_m}\mkern-18mu\sum_{i:y_i\not=h_m(\vec x_i)}^nW^{(m-1)}_i+e^{-\alpha_m}\mkern-18mu\sum_{i:y_i=h_m(\vec x_i)}^nW^{(m-1)}_i\tag{$\substack{(\forall i\in S)\,\,y_ih_{m}(\vec x_i)=-1\\(\forall i\in S^\complement)\,\,y_ih_{m}(\vec x_i)=1}$}\\
+  &=\argmin_{\alpha_m}\quad e^{\alpha_m}\epsilon_m+e^{-\alpha_m}(1-\epsilon)\tag{lemma 2 and def. of WTE}\\
+  &=\alpha_m\text{ s.t. }\dv{x}e^{\alpha_m}\epsilon_m+e^{-\alpha_m}(1-\epsilon)=0\tag{lemma 3 \& min of convex func.}\\
+  &=\alpha_m\text{ s.t. }e^{\alpha_m}\epsilon_m-e^{-\alpha_m}(1-\epsilon)=0\\
+  &=\alpha_m\text{ s.t. }e^{\alpha_m}\epsilon_m=e^{-\alpha_m}(1-\epsilon)\\
+  &=\alpha_m\text{ s.t. }\frac{e^{\alpha_m}}{e^{-\alpha_m}}=\frac{1-\epsilon}{\epsilon_m}\\
+  &=\alpha_m\text{ s.t. }\frac{1}{e^{-2\alpha_m}}=\frac{1-\epsilon}{\epsilon_m}\\
+  &=\alpha_m\text{ s.t. }2\alpha_m=\log\frac{1-\epsilon}{\epsilon_m}\\
+  &=\frac{1}{2}\log\frac{1-\epsilon_m}{\epsilon_m}
+\end{align*}
+
+And so we are done.
+
+\subsection*{Question 3}
+\noindent\textbf{Part a:} Show that logistic regression on a linear combination of feature vectors can be phrased in terms of kernel values, forming a kernel logistic regression (KLR).
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+  \hat p(y=1\mid\vec x;\vec w)&=\sigma\left(\sum_{j=1}^dw_j\phi_j(\vec x)\right)\tag{logistic regression model}\\
+  &=\sigma\left(\vec w^\top\bm\phi(\vec x)\right)\\
+  &=\sigma\left(\sum_{i=1}^n\alpha_i\bm\phi(\vec x_i)^\top\bm\phi(\vec x)\right)\tag{representor theorem}\\
+  &=\sigma\left(\sum_{i=1}^n\alpha_iK(\vec x_i,\vec x)\right)\tag{def. of kernel}\\
+\end{align*}
+
+And so we have reformulated our logistic regression into a kernelized one. Note that in line 3 we invoke the representor theorem which tells us that our weight vector is some linear combination of our training data.
+\bigskip
+
+\noindent\textbf{Part b:} Give the gradient of the log loss of the KLR model with $L_2$ regularization. Show that it too can be phrased in terms of kernel values, meaning that gradient descent over KLR can be done with just kernel values.
+\bigskip
+
+\noindent\textbf{Solution:} Before we continue, note the following notation:
+$$K_j(\vec x)=K(\vec x_j,\vec x)\implies\bm\alpha^\top\vec K(\vec x)=\sum_{j=1}^n\alpha_jK(\vec x_j,\vec x)$$
+
+The gradient of the log loss function w.r.t to the parameters $\bm\alpha$ is given by:
+\allowdisplaybreaks[0]
+\begin{align*}
+  \grad{\bm\alpha}L(\hat p_{\bm\alpha})&=\grad{\bm\alpha}\left(\lambda\|\bm\alpha\|^2+\frac{-1}{n}\sum_{i=1}^ny_i\log(\hat p_{\bm\alpha}(\vec x_i))+(1-y_i)\log(1-\hat p_{\bm\alpha}(\vec x_i))\right)\tag{regularized log loss}\\
+  &=\grad{\bm\alpha}\lambda\|\bm\alpha\|^2-\frac{1}{n}\sum_{i=1}^ny_i\grad{\bm\alpha}\log(\hat p_{\bm\alpha}(\vec x_i))+(1-y_i)\grad{\bm\alpha}\log(1-\hat p_{\bm\alpha}(\vec x_i))\\
+  &=2\lambda\bm\alpha-\frac{1}{n}\sum_{i=1}^ny_i\grad{\bm\alpha}\log(\sigma(\bm\alpha^\top\vec K(\vec x_i)))+(1-y_i)\grad{\bm\alpha}\log(1-\sigma(\bm\alpha^\top\vec K(\vec x_i)))\\
+  &=2\lambda\bm\alpha-\frac{1}{n}\sum_{i=1}^ny_i\grad{\bm\alpha}\log(\sigma(\bm\alpha^\top\vec K(\vec x_i)))+(1-y_i)\grad{\bm\alpha}\log(\sigma(-\bm\alpha^\top\vec K(\vec x_i)))\tag{$\sigma$ is odd}\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^ny_i\grad{\bm\alpha}\log(1+\exp(-\bm\alpha^\top\vec K(\vec x_i)))+(1-y_i)\grad{\bm\alpha}\log(1+\exp(\bm\alpha^\top\vec K(\vec x_i)))\tag{def. of $\sigma$}\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^ny_i\sigma(\bm\alpha^\top\vec K(\vec x_i))\grad{\bm\alpha}\exp(-\bm\alpha^\top\vec K(\vec x_i))\\
+  &\qquad+(1-y_i)\sigma(-\bm\alpha^\top\vec K(\vec x_i))\grad{\bm\alpha}\exp(\bm\alpha^\top\vec K(\vec x_i))\tag{chain rule}\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^n-y_i\sigma(\bm\alpha^\top\vec K(\vec x_i))\exp(-\bm\alpha^\top\vec K(\vec x_i))\grad{\bm\alpha}\bm\alpha^\top\vec K(\vec x_i)\\
+  &\qquad+(1-y_i)\sigma(-\bm\alpha^\top\vec K(\vec x_i))\exp(\bm\alpha^\top\vec K(\vec x_i))\grad{\bm\alpha}\bm\alpha^\top\vec K(\vec x_i)\tag{chain rule}\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^n-y_i\sigma(\bm\alpha^\top\vec K(\vec x_i))\exp(-\bm\alpha^\top\vec K(\vec x_i))\vec K(\vec x_i)\\
+  &\qquad+(1-y_i)\sigma(-\bm\alpha^\top\vec K(\vec x_i))\exp(\bm\alpha^\top\vec K(\vec x_i))\vec K(\vec x_i)\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^n\frac{(1-y_i)\vec K(\vec x_i)\exp(\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(\bm\alpha^\top\vec K(\vec x_i))}-\frac{y_i\vec K(\vec x_i)\exp(-\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(-\bm\alpha^\top\vec K(\vec x_i))}\tag{def. of $\sigma$}\\
+  &=2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^n\left(\frac{(1-y_i)\exp(\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(\bm\alpha^\top\vec K(\vec x_i))}-\frac{y_i\exp(-\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(-\bm\alpha^\top\vec K(\vec x_i))}\right)\vec K(\vec x_i)
+\end{align*} 
+
+While complicated, we can see that the gradient depends on the training data $X$ via the kernel values $\vec K(\vec x_i)$. And thus the same is true for training a KLR model using gradient descent:
+\begin{align*}
+  \bm\alpha^{(t+1)}&=\bm\alpha^{(t)}-\eta\grad{\bm\alpha}\\
+  &=\bm\alpha^{(t)}-\eta\left(2\lambda\bm\alpha+\frac{1}{n}\sum_{i=1}^n\left(\frac{(1-y_i)\exp(\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(\bm\alpha^\top\vec K(\vec x_i))}-\frac{y_i\exp(-\bm\alpha^\top\vec K(\vec x_i))}{1+\exp(-\bm\alpha^\top\vec K(\vec x_i))}\right)\vec K(\vec x_i)\right)
+\end{align*}
+
+\end{document}

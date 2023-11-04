@@ -1,0 +1,377 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#2}
+\author{Ozaner Hansha}
+\date{February 8, 2021}
+\maketitle
+
+\subsection*{Problem a}
+\noindent\textbf{Problem 15:} Find a continuous function defined in the region $(\sfrac{x}{2})^2+(\sfrac{y}{3})^2<1$ (i.e. the interior of an ellipse) that is bounded, but has neither a maximum nor minimum.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the function $f(x,y)=x+y$.
+\begin{itemize}
+    \item \textbf{Defined:} Clearly this function is defined on entire real plane, and thus certainly the interior of the given ellipse.
+    \item \textbf{Bounded:} Consider the interior of a box surronding the region of intrest:
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$x$,
+            ylabel=$y$,
+            xmin=-4,xmax=4,
+            ymin=-4,ymax=4,
+            axis lines=center,
+            legend pos=outer north east,
+            legend style={legend cell align=right,legend plot pos=right}]
+    
+        % \plot[name path=G1, thick,samples=100,domain=-2:10,
+        %     forget plot,draw=none] {12-6*x};
+        % \plot[name path=G2,thick,samples=100,domain=-2:10,
+        %     forget plot,draw=none] {20};
+        % \addplot[fill=purple,
+        %     opacity=.3,
+        %     forget plot,]
+        %     fill between [of=G1 and G2, soft clip={domain=0:1.5}];
+    
+        \addplot [domain=-3:3,samples=100,blue,line width=0.7pt]{3};
+        \addplot [domain=-3:3,samples=100,blue,line width=0.7pt]{-3};
+        \addplot[blue,thick,forget plot] coordinates{(-3,-3) (-3,3)};
+        \addplot[blue,thick,forget plot] coordinates{(3,-3) (3,3)};
+        \plot[name path=G1, thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {3};
+        \plot[name path=G2,thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {-3};
+        \addplot[fill=blue,
+            opacity=.3,
+            forget plot,]
+            fill between [of=G1 and G2, soft clip={domain=-3:3}];
+
+        \addplot [name path=A1,dashed,domain=-pi:pi,samples=200,red,line width=0.7pt]({2*sin(deg(x))}, {3*cos(deg(x))});
+        \plot[name path=A2,thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {-3};
+        \addplot[fill=red,
+            opacity=.3,
+            forget plot,]
+            fill between [of=A1 and A2, soft clip={domain=-3:3}];
+
+        %points
+        \node[label={300:(3,3)},circle,fill,inner sep=1.5pt] at (axis cs:3,3) {};
+        \node[label={300:(-3,-3)},circle,fill,inner sep=1.5pt] at (axis cs:-3,-3) {};
+    
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    
+    The function $x+y$ takes a maximum at $(3,3)$ in the square region since the two coordinates can be adjusted independently within the range $[-3,3]$ and $3$ is the maximum of that interval. Simlar reasoning goes for the minimum at $(-3,-3)$. Since $f$ has a maximum and minimum in the square region, it is clearly bounded. And since the elliptical region is clearly a subset of that square region, $f$ must also be bounded in this region as well.
+    \item \textbf{No max or min:} First note that for any point in the elliptical region, by simply reflecting this point across the x or y axis to be in the first quadrant, it's value will be higher in the first quadrant. As such, we know that if there was a maximum, it would be in the first quadrant. Next note that, in the first quadrant, $f(x,y)$ grows larger as the distance from the origin increases. If we claimed to have a maximum $(x_m,y_m)$ then, by averaging it with the point $(x_b,y_b)$ on the boundary closest to it, we could produce another point within the region but farther from the origin than $(x_m,y_m)$ meaning it was in fact NOT a maximum:
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$x$,
+            ylabel=$y$,
+            xmin=-1,xmax=4,
+            ymin=-2,ymax=4,
+            axis lines=center,
+            legend pos=outer north east,
+            legend style={legend cell align=right,legend plot pos=right}]
+
+        \addplot [name path=A1,dashed,domain=-pi:pi,samples=200,red,line width=0.7pt]({2*sin(deg(x))}, {3*cos(deg(x))});
+        \plot[name path=A2,thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {-3};
+        \addplot[fill=red,
+            opacity=.3,
+            forget plot,]
+            fill between [of=A1 and A2, soft clip={domain=-3:3}];
+
+        %points
+        \node[label={270:($x_m,y_m$)},circle,fill,inner sep=1.5pt] at (axis cs:1.2,1.2) {};
+        \node[label={40:($x_b,y_b$)},circle,fill,inner sep=1.5pt] at (axis cs:1.64,1.64) {};
+        \node[label={0:$\left(\frac{x_m+x_b}{2},\frac{y_m+y_b}{2}\right)$},circle,fill,inner sep=1.5pt] at (axis cs:1.4,1.4) {};
+    
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    Similar reasoning holds for minimums since $f$ is at its lowest in the third quadrant. These two facts put together mean that $f$ has no maximum or minimum in the elliptical region since a smaller/higher point can always be produced due to the density of the reals. 
+\end{itemize}
+\bigskip
+
+\noindent\textbf{Problem 19:} Give the following linear optimization problem in canonical form:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&4x_1-2x_2 \\
+    &{\text{subject to}}
+    &&2x_1+3x_2\ge21\\
+    &
+    &&3x_1+5x_2\ge21\\
+    &{\text{and}}
+    &&x_1\ge-4,x_2\le5
+\end{aligned}$$
+\medskip
+
+\noindent\textbf{Solution:} Below we transform the problem to canonical form:
+\begin{align*}
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&4x_1-2x_2 \\
+        &{\text{subject to}}
+        &&2x_1+3x_2\ge21\\
+        &
+        &&3x_1+5x_2\ge21\\
+        &{\text{and}}
+        &&x_1\ge-4,x_2\le5
+    \end{aligned}\right.}_{\text{initial problem}}&\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&4x_1-2x_2 \\
+        &{\text{subject to}}
+        &&2x_1+3x_2\ge21\\
+        &
+        &&3x_1+5x_2\ge21\\
+        &{\text{and}}
+        &&x_1+4\ge0,5-x_2\ge0
+    \end{aligned}\right.}_{\text{rewrite boundary conditions}}\\
+    \implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&4x_1-2x_2\\
+        &{\text{subject to}}
+        &&2x_1+3x_2\ge21\\
+        &
+        &&3x_1+5x_2\ge21\\
+        &{\text{and}}
+        &&y_1\ge0,y_2\ge0
+    \end{aligned}\right.}_{\text{define }y_1=x_1+4,\,\,y_2=5-x_2}
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&4y_1-16-2y_2-10 \\
+        &{\text{subject to}}
+        &&2y_1-8+3y_2+15\ge21\\
+        &
+        &&3y_1-12+5y_2+25\ge21\\
+        &{\text{and}}
+        &&y_1\ge0,y_2\ge0
+    \end{aligned}\right.}_{x_1=y_1-4,\,\,x_2=y_2+5}\\
+    \implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&4y_1-2y_2 \\
+        &{\text{subject to}}
+        &&2y_1+3y_2\ge14\\
+        &
+        &&3y_1+5y_2\ge8\\
+        &{\text{and}}
+        &&y_1\ge0,y_2\ge0
+    \end{aligned}\right.}_{\text{simplify constants}}
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Minimize}}
+        &&-4y_1+2y_2 \\
+        &{\text{subject to}}
+        &&-2y_1-3y_2\le-14\\
+        &
+        &&-3y_1-5y_2\le-8\\
+        &{\text{and}}
+        &&y_1\ge0,y_2\ge0
+    \end{aligned}\right.}_{\text{reverse objective \& constraints}}\\
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Minimize}}
+        &&-4y_1+2y_2 \\
+        &{\text{subject to}}
+        &&-2y_1-3y_2+y_3=-14\\
+        &
+        &&-3y_1-5y_2+y_4=-8\\
+        &{\text{and}}
+        &&y_1\ge0,y_2\ge0,y_3\ge0,y_4\ge0
+    \end{aligned}\right.}_{\text{add slack variables } y_3,y_4}
+\end{align*}
+
+We can now give the problem in vectorized canonical form:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\begin{bmatrix}
+        -4&2&0&0
+    \end{bmatrix}^\top\vec y\\
+    &{\text{subject to}}
+    &&\begin{bmatrix}
+        -2&-3&1&0\\
+        -3&-5&0&1%\\
+        % 0&0&0&0\\
+        % 0&0&0&0
+    \end{bmatrix}\vec y=\begin{bmatrix}
+        -14\\-8%\\0\\0
+    \end{bmatrix}\\
+    &{\text{and}}
+    &&\vec{y}\ge0
+\end{aligned}$$
+
+\subsection*{Problem b}
+\noindent\textbf{Problem:} Can you construct a canonical linear optimization problem that has exactly two feasible solutions? Exactly three? Exactly $k$ where $k$ is a fixed integer?
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the set of feasible solutions to a canonical linear optimization problem are the $\vec x$ that satisfy its constraints $A\vec x=\vec b$ and boundary conditions $\vec x\ge 0$.
+
+Now recall that a system of linear equations, like $A\vec x=\vec b$, can only have 0, 1, or infinitely many different solutions depending on the rank of $A$ and $[A|\vec b]$.
+
+Now let us consider the further restriction of these solutions to those that satisfy $\vec x\ge 0$. Which is to say, those in the first quadrant for 2 dimensions, octant for 3, or orthant in general. There are three cases to consider:
+\begin{itemize}
+    \item 0 solutions to system: Since the solutions of the system that fall in the first orthant are a subset of the solutions to the system, there are 0 feasible solutions.
+    \item 1 solution to the system: Since the solutions of the system  that fall in the first orthant are a subset of the solutions to the system, there is at most 1 feasible solution.
+    \item Infinite solutions to the system: The hyperplane of solutions to the system $A\vec x=\vec b$ can either intersect the first orthant or not. If it does not there are no feasible solutions. If it does then, since the boundary conditions are linear, there yet again can only be 0, 1, or infinitely many places they intersect. Thus leaving 0,1, or infinitely many feasible solutions.
+    % \begin{itemize}
+    %     \item Intersects the orthant at $\vec 0$, giving 1 feasible solution.
+    %     \item Does not intersect the orthant at all, giving 0 feasible solutions.
+    %     \item Intersects the first orthant it any other way. As two hyperplanes that intersect more than once must be be overlapping on at least some axis, there are thus an infinite number of feasible solutions.
+    % \end{itemize}
+\end{itemize}
+
+And so, regardless of the constraints and boundary conditions, a linear optimization problem can only ever have 0, 1, or infintiely many solutions. This precludes it form having exactly $k$ solutions for $k>1$.
+
+\subsection*{Problem c}
+Consider the oil problem with just two refineries and two markets with the following data: market $m_1$ demands 120 units of oil and pays \$3 per unit, while market $m_2$ demands 100 units of oil and pays \$4 per unit. Refinery $r_1$ can supply up to 80 units of oil, while $r_2$ supplies at most 160. It costs \$2 to ship from either refinery to $m_2$, and the cost of shipping to $m_1$ is \$1 from $r_1$ and \$3 from $r_2$.
+\bigskip
+
+\noindent\textbf{Part a:} Phrase the above as a linear optimization problem.
+\bigskip
+
+\noindent\textbf{Solution:} Note that $x_{ab}$ denotes the amount of oil being sent from refinery $r_a$ to market $m_b$. Since there are two of each we have $2\cdot2=4$ variables to consider: 
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&\underbrace{3(x_{11}+x_{21})+4(x_{12}+x_{22})}_{\text{revenue}}-\underbrace{(x_{11}+3x_{21}+2(x_{12}+x_{22}))}_{\text{cost}} \\
+    &{\text{subject to}}
+    &&x_{11}+x_{12}\le80\,\,\,\,\text{($r_1$ supply)}\\
+    &
+    &&x_{21}+x_{22}\le160\,\,\text{($r_2$ demand)}\\
+    &
+    &&x_{11}+x_{21}\ge120\,\,\text{($m_1$ supply)}\\
+    &
+    &&x_{12}+x_{22}\ge100\,\,\text{($m_2$ demand)}\\
+    &{\text{and}}
+    &&\vec x\ge 0\qquad\qquad\text{(no negative oil)}
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Part b:} Put the linear optimization problem from part a in canonical form. How many slack variables were introduced? What is the size of the new coefficient matrix compared to the old one?
+\bigskip
+
+\noindent\textbf{Solution:} 
+\begin{align*}
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&2x_{11}+2x_{12}+2x_{22}\\
+        &{\text{subject to}}
+        &&x_{11}+x_{12}\le80\\
+        &
+        &&x_{21}+x_{22}\le160\\
+        &
+        &&x_{11}+x_{21}\ge120\\
+        &
+        &&x_{12}+x_{22}\ge100\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.}_{\text{initial problem, objective simplified}}
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Minimize}}
+        &&-2x_{11}-2x_{12}-2x_{22}\\
+        &{\text{subject to}}
+        &&x_{11}+x_{12}\le80\\
+        &
+        &&x_{21}+x_{22}\le160\\
+        &
+        &&-x_{11}-x_{21}\le-120\\
+        &
+        &&-x_{12}-x_{22}\le-100\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.}_{\substack{\text{reverse objective \& constraints}\\\text{standard form}}}\\
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Minimize}}
+        &&-2x_{11}-2x_{12}-2x_{22}\\
+        &{\text{subject to}}
+        &&x_{11}+x_{12}+z_1=80\\
+        &
+        &&x_{21}+x_{22}+z_2=160\\
+        &
+        &&-x_{11}-x_{21}+z_3=-120\\
+        &
+        &&-x_{12}-x_{22}+z_4=-100\\
+        &{\text{and}}
+        &&\vec x\ge 0, \vec z\ge0
+    \end{aligned}\right.}_{\substack{\text{add slack variables } z_1,z_2,z_3,z_4\\\text{canonical form}}}
+\end{align*}
+
+As we can see, the standard form has 4 variables: $x_{11},x_{12},x_{21},x_{22}$. Both $A$ and $\vec x$ are given by:
+$$A=\begin{bmatrix}
+    1&1&0&0\\0&0&1&1\\-1&0&-1&0\\0&-1&0&-1
+\end{bmatrix}\quad \vec x=\begin{bmatrix}
+    x_{11}\\x_{12}\\x_{21}\\x_{22}
+\end{bmatrix}$$
+
+However the canonical problem introduces 4 slack variables ($z_1,z_2,z_3,z_4$), bring the total number of variables up to 8. Both $A$ and $\icol{\vec x\\\vec z}$ are given by:
+$$A=\begin{bmatrix}
+    1&1&0&0&1&0&0&0\\0&0&1&1&0&1&0&0\\-1&0&-1&0&0&0&1&0\\0&-1&0&-1&0&0&0&1\\
+    % 0&0&0&0&0&0&0&0\\0&0&0&0&0&0&0&0\\0&0&0&0&0&0&0&0\\0&0&0&0&0&0&0&0
+\end{bmatrix}\quad \begin{bmatrix}
+    \vec x\\\vec z
+\end{bmatrix}=\begin{bmatrix}
+    x_{11}\\x_{12}\\x_{21}\\x_{22}\\z_1\\z_2\\z_3\\z_4
+\end{bmatrix}$$
+
+In the standard formulation the coefficient matrix is $4\times 4$ while in the canonical formulation it is $4\times 8$.
+
+\end{document}

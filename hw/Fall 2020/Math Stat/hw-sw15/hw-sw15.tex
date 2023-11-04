@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 15}
+\author{Ozaner Hansha}
+\date{November 24, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Suppose we have a Poisson population $X_i\sim\text{Pois}(\lambda)$. Our null hypothesis $H_0$ is that $\lambda=2$ and our alternative hypothesis $H_1$ is that $\lambda=1$. Given an i.i.d. sample $X$ of $n=7$, use the Neyman-Pearson lemma to produce a most powerful critical region $C$ for $\alpha=.01$ to test these hypotheses.
+\bigskip
+
+
+\noindent\textbf{Solution:} Note that the ratio of the likelihood of the null and alternative hypotheses must be less than some finite constant $k$ (since we can only observe items in the support):
+\begin{align*}
+    k&\ge\frac{L(\lambda_0)}{L(\lambda_1)}\\
+    &=\frac{\prod_{i=1}^nP(X_i;\lambda=\lambda_0)}{\prod_{i=1}^nP(X_i;\lambda=\lambda_1)}\tag{def. of likelihood}\\
+    &=\prod_{i=1}^n\frac{P(X_i;\lambda=\lambda_0)}{P(X_i;\lambda=\lambda_1)}\tag{associativity}\\
+    &=\prod_{i=1}^n\frac{\lambda_0^{X_i}e^{-\lambda_0}/X_i!}{\lambda_1^{X_i}e^{-\lambda_1}/X_i!}\tag{pmf of Poisson RV}\\
+    &=\prod_{i=1}^n\left(\frac{\lambda_0}{\lambda_1}\right)^{X_i}e^{\lambda_1-\lambda_0}\\
+    \ln k&\ge\ln\prod_{i=1}^n\left(\frac{\lambda_0}{\lambda_1}\right)^{X_i}e^{\lambda_1-\lambda_0}\tag{$\ln$ is monotone increasing}\\
+    &=\sum_{i=1}^nX_i(\ln\lambda_0-\ln\lambda_1)+\lambda_1-\lambda_0\\
+    &=n(\lambda_1-\lambda_0)+(\ln\lambda_0-\ln\lambda_1)\sum_{i=1}^nX_i\\
+    \frac{\ln k-n(\lambda_1-\lambda_0)}{\ln\lambda_0-\ln\lambda_1}&\ge\sum_{i=1}X_i\\
+    \frac{\ln k+7}{\ln2}&\ge\sum_{i=1}X_i\\
+    k'&\ge\sum_{i=1}X_i\tag{let LHS $=k'$}
+\end{align*}
+
+Note that since both our hypotheses are simple, the Neyman-Pearson lemma tells us that the most powerful test for testing them is given by the above inequality for some constant $k'$:
+$$\sum_{i=1}^nX_i\le k'$$
+
+What that $k'$ is depends on our $\alpha$ which, in this case, is equal to $.01$. Below we will solve for $k'$:
+\begin{align*}
+    \alpha&=P(\text{Type I error})\tag{def. of $\alpha$}\\
+    &=P(\neg\hat H_0\mid H_0)\tag{def. of Type I error}\\
+    &=P\left(\sum_{i=1}^nX_i>k'\mid H_0\right)\tag{Neyman-Pearson lemma}\\
+    &=P\left(\sum_{i=1}^nX_i>k'\mid \lambda=\lambda_0\right)\tag{given null hypothesis}\\
+    &=1-p_Y(k')\tag{$Y=\sum_{i=1}^nX_i\sim\text{Pois}(n\lambda_0)$, i.i.d $X_i$}\\
+    .01&=1-p_Y(k')\tag{desired $\alpha$}\\
+    .99&=p_Y(k')
+\end{align*}
+
+And so to solve for $k'$ we must find the 99th quantile of the Poisson cdf with $\lambda=n\lambda_0=14$. Using a calculator, we find that:
+$$k'=q(.99;\lambda=14)\approx22.88387$$
+
+And so our most powerful test of the hypotheses that splits $\mathbb R$ into regions $R_0$ and $R_1$ is given by:
+\begin{align*}
+    \sum_{i=1}^7X_i\le 22.88387\\
+    \bar X\le3.26912\tag{divide both sides by $n=7$}
+\end{align*}
+
+If the sample passes this test we accept the alternative hypothesis, else we reject it.
+
+\end{document}

@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#10}
+\author{Ozaner Hansha}
+\date{April 30, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Solution:} First let us prove a lemma for $n\in\Z^+$:
+\begin{align*}
+  -|x^n|&\le x^n\sin(\sfrac{1}{x})\le |x^n|\tag{$-1\le\sin(x)\le1$}\\
+  -\lim_{x\to0}|x^n|&\le\lim_{x\to0}x^n\sin(\sfrac{1}{x})\le\lim_{x\to0}|x^n|\tag{squeeze theorem}\\
+  0&\le\lim_{x\to0}x^n\sin(\sfrac{1}{x})\le0\\
+  \implies&\lim_{x\to0}x^n\sin(\sfrac{1}{x})=0\tag{lemma 1}
+\end{align*}
+Note that this lemma applies equally well when we replace $\sin$ with $\cos$.
+\bigskip
+
+Now to prove the theorem, first note that $\frac{1}{x}$, $x^3$, and $\sin x$ are all differentiable over $\R\setminus\{0\}$. This implies that $x^3\sin(\sfrac{1}{x})$ is differentiable over $\R\setminus\{0\}$ due to the product and composition of differentiable functions being differentiable.
+
+So we have shown that $h(x)$ is differentiable, and thus continuous, over $\R\setminus\{0\}$. Now, all that's left is is to deal with $x=0$. First we will prove that $h(x)$ is differentiable at $x=0$:
+\begin{align*}
+  \lim_{t\to0}\frac{h(0+t)-h(0)}{t-0}&=\lim_{t\to0}\frac{h(t)-h(0)}{t}\\
+  &=\lim_{t\to0}\frac{t^3\sin(\sfrac{1}{t})-0}{t}\tag{def. of $h$}\\
+  &=\lim_{t\to0}t^2\sin(\sfrac{1}{t})\\
+  &=0\tag{lemma 1}
+\end{align*}
+
+And so $h'(x)$ exists at $x=0$ and is equal to 0, meaning $h(x)$ is continuous at $x=0$ as well. Now we will prove that $h'(x)$ is continuous:
+\begin{align*}
+  3x^2\sin\frac{1}{x}-x\cos\frac{1}{x}&=3x^2\sin\frac{1}{x}+x^3\cos\frac{1}{x}\cdot\left(-\frac{1}{x^2}\right)\tag{chain-rule}\\
+  &=3x^2\sin\frac{1}{x}-x\cos\frac{1}{x}
+\end{align*}
+
+Again, this function is clearly differentiable, and thus continuous, over $\R\setminus\{0\}$ due to the composition, addition, and product of differentiable functions being differentiable. We will now show that it is continuous at $x=0$:
+\begin{align*}
+  \lim_{x\to0}h'(x)&=\lim_{x\to0}\left(3x^2\sin\frac{1}{x}-x\cos\frac{1}{x}\right)\\
+  &=3\lim_{x\to0}x^2\sin\frac{1}{x}-\lim_{x\to0}x\cos\frac{1}{x}\\
+  &=0-0\tag{lemma 1}\\
+  &=h'(0)
+\end{align*}
+
+Finally we will now show that, despite $h'(x)$ being continuous everywhere, it is \textit{not} differentiable at $x=0$:
+\begin{align*}
+  \lim_{t\to0}\frac{h'(0+t)-h(0)}{t}&=\lim_{t\to0}\frac{3t^2\sin\frac{1}{t}-t\cos\frac{1}{x}-0}{t}\\
+  &=\lim_{t\to0}3t\sin\frac{1}{t}-\cos\frac{1}{x}\\
+  &=3\lim_{t\to0}t\sin\frac{1}{t}-\lim_{t\to0}\cos\frac{1}{x}\\
+  &=-\lim_{t\to0}\cos\frac{1}{x}
+\end{align*}
+
+Clearly, if $\lim_{t\to0}\cos\frac{1}{x}$ doesn't exist, then the derivative doesn't either. To see that this limit DNE, consider the following sequences and their values when plugged into our function:
+\begin{align*}
+  a_n&=\frac{1}{2n\pi},\qquad a_n\to0\\
+  b_n&=\frac{1}{(2n+1)\pi},\qquad b_n\to0\\
+  (\forall n\in\N)&\quad\cos \frac{1}{a_n}=\cos 2n\pi=1\\
+  (\forall n\in\N)&\quad\cos \frac{1}{b_n}=\cos (2n+1)\pi=-1
+\end{align*}
+
+Note that we have two sequences $a_n,b_n$ that tend towards 0 yet $\cos\sfrac{1}{a_n}\to 1$ and $\cos\sfrac{1}{b_n}\to-1$. This is a violation of sequential continuity and thus the limit DNE.
+
+\subsection*{Problem 2}
+\noindent\textbf{Solution:} As in problem 1, we know that $f(x)$ is differentiable over $\R\setminus\{0\}$ as it is the composition, sum, and product of differentiable functions over that same set. Now we will show that $f(x)$ is differentiable over $x=0$ as well:
+\begin{align*}
+  \lim_{t\to0}\frac{f(0+t)-f(0)}{t}&=\lim_{t\to0}\frac{t+2t^2\sin(\sfrac{1}{t})-0}{t}\\
+  &=\lim_{t\to0}1+2t\sin(\sfrac{1}{t})\\
+  &=1+2\lim_{t\to0}t\sin(\sfrac{1}{t})\\
+  &=1\tag{lemma 1}
+\end{align*}
+
+And so $f'(x)$ exists at $x=0$ and is equal to 1. Even further, the $a$ we desire is equal to 0. First note that $f(a)=f(0)=1>0$. Now we will prove that $x=0$ has no neighborhood in which $f(x)$ is increasing.
+
+Consider an arbitrary $\epsilon>0$. Note that, by the archmedian property, there exists an $n\in\Z^+$ that satisfies the following:
+$$a_n=\frac{1}{2n\pi}<\epsilon$$
+
+Note that the existence of this $a_n$ also implies:
+$$b_n=\frac{1}{(2n+1)\pi}<\epsilon$$
+
+Note however that:
+\begin{align*}
+  f'(a_n)&=1+4a_n\sin\frac{1}{a_n}-2\cos\frac{1}{a_n}\tag{derivative of $f(x)$}\\
+  &=1+\frac{4}{2n\pi}\sin2n\pi-2\cos2n\pi\tag{def. of $a_n$}\\
+  &=1+0-2\\
+  &=1\\
+  f'(b_n)&=1+4b_n\sin\frac{1}{b_n}-2\cos\frac{1}{b_n}\tag{derivative of $f(x)$}\\
+  &=1+\frac{4}{(2n+1)\pi}\sin((2n+1)\pi)-2\cos((2n+1)\pi)\tag{def. of $b_n$}\\
+  &=1+0+2\\
+  &=3
+\end{align*}
+
+And so notice that for any $\epsilon>0$:
+$$\exists a_n,b_n\in(0-\epsilon,0+\epsilon)\quad b_n<a_n\wedge f'(b_n)>f'(a_n)$$
+
+And so clearly, there is no neighborhood around 0 for which $f'(x)$ is increasing, as we can always produce a counterexample.
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} Consider the following function and its derivative:
+\begin{align*}
+  f(x)&=(1+x)^a\\
+  f'(x)&=a(1+x)^{a-1}
+\end{align*}
+
+Now note that for any $x\in\R$, $f(x)$ is continuous on $[0,x]$ and differentiable on $(0,x)$. And so the MVT tells us that $\exists c\in(0,x)$ such that:
+$$f'(c)=\frac{f(x)-f(0)}{x-0}$$
+
+With this fact in mind, consider the following:
+\begin{align*}
+  f'(c)&=\frac{f(x)-f(0)}{x-0}\tag{MVT}\\
+  a(1+c)^{a-1}&=\frac{(1+x)^a-1}{x}\tag{def. of $f$ and $f'$}\\
+  (1+c)^{a-1}&=\frac{(1+x)^a-1}{ax}
+\end{align*}
+
+Now note that because $c\in(0,x)$, i.e. $c$ is positive, we have:
+$$0<a<1\implies (1+c)^{a-1}<1$$
+
+Since $1+c>1$ and its being raised to a negative power $a-1$. And so we have:
+\begin{align*}
+  0<a<1&\implies (1+c)^{a-1}<1\tag{see above}\\
+  &\implies \frac{(1+x)^a-1}{ax}<1\tag{see above}\\
+  &\implies (1+x)^a<ax+1
+\end{align*}
+
+And we are done.
+
+\subsection*{Problem 4}
+\noindent\textbf{Part a:} Consider the following for an arbitrary $x\in\R$:
+\begin{align*}
+  \lim_{h\to0}\frac{f(x+h)-f(x)}{h}&=\lim_{h\to0}\frac{f(x)f(h)-f(x)f(0)}{h}\tag{def. of $f$}\\
+  &=f(x)\lim_{h\to0}\frac{f(h)-f(0)}{h}\tag{linearity of limit}\\
+  &=f(x)f'(0)\tag{def. of $f'(0)$ \& assume $f'(0)$ exists}
+\end{align*}
+
+And so we have shown that $f'(x)$ exists for any $x\in\R$ and that it is equivalent to $f(x)f'(0)$.
+\bigskip
+
+\noindent\textbf{Part b:} First note the following:
+\begin{align*}
+  f(0)&=f(0+0)\\
+  &=f(0)^2\tag{def. of $f$}\\
+  &\in\{0,1\}
+\end{align*}
+
+If $f(0)=0$ then we'd have the following for any real number $x$:
+$$f(x)=f(x+0)=f(x)f(0)=0$$
+
+And so $f$ would be identically 0. Barring this trivial case then, we have that $f(0)=1$. Now note the following for any $n\in\Z^+$:
+$$f(n)=f(\underbrace{1+1+\cdots+1}_{n\text{ times}})=\underbrace{f(1)f(1)\cdots f(1)}_{n\text{ times}}=f(1)^n$$
+
+Now note the following:
+\begin{align*}
+  f(-1)&=f(1-2)\\
+  &=f(1)f(-2)\\
+  &=f(1)f(-1)f(-1)\\
+  1&=f(1)f(-1)\\
+  f(1)^{-1}&=f(-1)
+\end{align*}
+
+And so, we have that for $n\in\Z$
+$$f(n)=f(\underbrace{-1-1-\cdots-1}_{n\text{ times}})=f(-1)^{-n}=(f(1)^{-1})^{-n}=f(1)^{n}$$
+
+Now note the following for $q,n\in\Z$:
+\begin{align*}
+  f(n)&=f(\underbrace{\sfrac{1}{q}+\sfrac{1}{q}+\cdots+\sfrac{1}{q}}_{qn\text{ times}})\\
+  &=f(\sfrac{1}{q})^{qn}\\
+  f(1)^n&=f(\sfrac{1}{q})^{qn}\tag{proven above for all $n\in Z$}\\
+  f(1)&=f(\sfrac{1}{q})^q\\
+  f(1)^{\sfrac{1}{q}}&=f(\sfrac{1}{q})
+\end{align*}
+
+And so we can now prove this identity for rationals $\sfrac{p}{q}\in\Q$:
+$$f(\sfrac{p}{q})=f(\underbrace{\sfrac{1}{q}+\sfrac{1}{q}+\cdots+\sfrac{1}{q}}_{p\text{ times}})=f(\sfrac{1}{q})^p=(f(1)^{\sfrac{1}{q}})^p=f(1)^{\sfrac{p}{q}}$$
+
+Now, finally, recall that the rationals are dense in the reals and that $f$ is continuous (as a result of being differentiable). This means that for any $x\in\R$ we can find a sequence $r_n\in\Q$ that will converge to $x$ while satisfying:
+$$\forall n\in\N,\quad f(r_n)=f(1)^{r_n}$$
+
+Thus, we have that $f(x)=f(1)^x$ for all real numbers $x$. Now note that $f(x)$ is strictly positive:
+\begin{align*}
+  f(x)=f(\sfrac{x}{2}+\sfrac{x}{2})=f(\sfrac{x}{2})^2>0\tag{$f(x)\not=0$}
+\end{align*}
+
+As such, $f(1)>0$ and so $\exists k,\quad \ln f(1)=k$. And so we can say:
+\begin{align*}
+  f(x)&=f(1)^x\tag{we proved this for all reals}\\
+  &=(\exp\ln f(1))^x\tag{$\exp\ln f(x)=f(x)$}\\
+  &=(\exp k)^x\\
+  &=e^{kx}
+\end{align*}
+
+To wrap this up, let us note that:
+\begin{align*}
+  f'(x)&=ke^{kx}\\
+  f'(0)&=k\\
+  c&=k\tag{def. of $c$}
+\end{align*}
+
+And with that we can finally conclude that $f$, barring the trivial 0 case, must be given by:
+$$f(x)=e^{cx}$$
+
+\subsection*{Problem 5}
+\noindent\textbf{Part a:} Consider $f(x)=\ln x$, which is indeed defined on $(0,\infty)$. Let us first verify that this is the correct choice of $f(x)$:
+\begin{align*}
+  \lim_{x\to\infty}xf'(x)&=\lim_{x\to\infty}x\frac{1}{x}\tag{$\dv{x}\ln x=\frac{1}{x}$}\\
+  &=\lim_{x\to\infty}1\\
+  &=1
+\end{align*}
+
+And so our desired limit is:
+\begin{align*}
+  \lim_{x\to\infty}f(x)&=\lim_{x\to\infty}\ln x=\infty\tag{$\ln$ can grow arbitrarily large as $x\to\infty$}
+\end{align*}
+
+Or more specifically, we know that for every $c>0$, there is an $x>0$ such  that $\ln x>c$.
+\bigskip
+
+% \noindent\textbf{Part b:} Consider $f(x)=-\sfrac{1}{x}$, which is indeed defined on $(0,\infty)$. Let us first verify that this is the correct choice of $f(x)$:
+% \begin{align*}
+%   \lim_{x\to\infty}x^2f'(x)&=\lim_{x\to\infty}x^2\frac{1}{x^2}\tag{$\dv{x}\frac{-1}{x}=\frac{1}{x^2}$}\\
+%   &=\lim_{x\to\infty}1\\
+%   &=1
+% \end{align*}
+
+% And so our desired limit is:
+% \begin{align*}
+%   \lim_{x\to\infty}f(x)&=-\lim_{x\to\infty}\frac{1}{x}=0\tag{$\sfrac{1}{x}$ can grow arbitrarily small as $x\to\infty$}
+% \end{align*}
+
+% Or more specifically, we know that for every $c>0$, there is an $x>0$ such  that $\sfrac{1}{x}<c$.
+\end{document}

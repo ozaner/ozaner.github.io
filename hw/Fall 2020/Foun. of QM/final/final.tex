@@ -1,0 +1,447 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ Final}
+\author{Ozaner Hansha}
+\date{December 15, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Consider the following wavefunctions:
+\begin{align*}
+    \psi_s(x)&=\frac{1}{4\sqrt{3}}x^2e^{-|x|/2}\\
+    \psi_a(x)&=\begin{cases}
+        \psi_s(x),&x\ge0\\
+        -\psi_s(x),&x<0
+    \end{cases}
+\end{align*}
+
+Let $X_i$ be the measured position of a particle with wavefunction $\psi_i$.
+\bigskip
+
+\noindent\textbf{Part a:} What is $P(X_a<0)$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $\psi_s(x)$ is an even function:
+\begin{align*}
+    \psi_s(-x)&=\frac{1}{4\sqrt{3}}(-x)^2e^{-|-x|/2}\tag{def. of $\psi_s$}\\
+    &=\frac{1}{4\sqrt{3}}x^2e^{-|-x|/2}\tag{$x^2=(-x)^2$}\\
+    &=\frac{1}{4\sqrt{3}}x^2e^{-|x|/2}\tag{$|x|=|-x|$}\\
+    &=\psi_s(x)\tag{def. of $\psi_s$}
+\end{align*}
+
+Now consider the following chain of equalities
+\begin{align*}
+    1&=\int_{-\infty}^\infty|\psi_a(x)|^2\,dx\tag{integral of a pdf over support is 1}\\
+    &=\int_{-\infty}^0|\psi_a(x)|^2\,dx+\int_0^\infty|\psi_a(x)|^2\,dx\\
+    &=\int_{-\infty}^0|\psi_a(x)|^2\,dx-\int^{-\infty}_0|\psi_a(-x)|^2\,dx\tag{expansion of interval of integration by $-1$}\\
+    &=\int_{-\infty}^0|\psi_a(x)|^2\,dx+\int_{-\infty}^0|\psi_a(-x)|^2\,dx\tag{reverse interval of integration}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_{-\infty}^0|\psi_s(-x)|^2\,dx\tag{$\psi_a=\psi_s$ for $x\ge0$}\\
+    &=\int_{-\infty}^0|\psi_s(x)|^2\,dx+\int_{-\infty}^0|\psi_s(x)|^2\,dx\tag{$\psi_s$ is an even function}\\
+    &=2\int_{-\infty}^0|\psi_s(x)|^2\,dx\\
+    \frac{1}{2}&=\int_{-\infty}^0|\psi_s(x)|^2\,dx\\
+    &=\int_{-\infty}^0|-\psi_a(x)|^2\,dx\tag{$\psi_a=-\psi_s$ for $x<0$}\\
+    &=\int_{-\infty}^0|\psi_a(x)|^2\,dx\\
+    &=P(X_a<0)
+\end{align*}
+
+And so the desired probability is $\frac{1}{2}$.
+\bigskip
+
+\noindent\textbf{Part b:} Let $\psi_{s+a}=\frac{\psi_s+\psi_a}{\sqrt{2}}$. What is $P(X_{s+a}<0)$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(X_{s+a}<0)&=\int_{-\infty}^0|\psi_{s+a}(x)|^2\,dx\\
+    &=\int_{-\infty}^0\left|\frac{\psi_s+\psi_a}{\sqrt{2}}\right|^2\,dx\tag{def. of $\psi_{s+a}$}\\
+    &=\int_{-\infty}^0\left|\frac{\psi_s-\psi_s}{\sqrt{2}}\right|^2\,dx\tag{$\forall x<0,\, \psi_a(x)=-\psi_s(x)$}\\
+    &=0
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part c:} True or false: According to Bohmian mechanics the particle under consideration here had a position Q before the measurement, and when the result of the measurement is $X$ that is because $Q=X$. Explain!
+\bigskip
+
+\noindent\textbf{Solution:} True. According to Bohmian mechanics, the particle always has a definite position $Q$ which evolves according to the guiding equation. Even if we cannot predict with certainty what $Q$ wil be before hand, it is \textit{not} our measurement which causes the result. $X=Q$ because the position was already $Q$.
+\bigskip
+
+\subsection*{Question 2}
+Consider a particle in a 2D-plane with the following wavefunction:
+\begin{align*}
+    \psi(x,y)=\begin{cases}
+        Ae^{i(5x+2y)},&0<x<9,\,0<y<5\\
+        0,&\text{otherwise}
+    \end{cases}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part a:} Solve for $A$.
+\bigskip
+
+\noindent\textbf{Solution:} First let us establish the following result, call it lemma 1, for any $c\in\mathbb R$:
+\begin{align*}
+    |e^{ic}|^2&=|\cos x+i\sin x|^2\tag{Euler's formula}\\
+    &=\left(\sqrt{(\cos x)^2+(\sin x)^2}\right)^2\tag{def. of modulus}\\
+    &=\left(\sqrt{1}\right)^2\tag{trig identity}\\
+    &=1
+\end{align*}
+
+With this lemma in hand we can now solve for $A$. For $\psi(x,y)$ to be a valid wavefunction, we must have:
+\begin{align*}
+    1&=\iint\displaylimits_{(x,y)\in\mathbb R^2}|\psi(x,y)|^2\,dx\,dy\tag{$\psi$ is a normalized wavefunction}\\
+    &=\int_0^5\int_0^9\left|Ae^{i(5x+2y)}\right|^2\,dx\,dy\tag{from def. of $\psi$}\\
+    &=\int_0^5\int_0^9\left(|A|\left|e^{i(5x+2y)}\right|\right)^2\,dx\,dy\tag{multiplicativity of modulus}\\
+    &=|A|^2\int_0^5\int_0^9\left|e^{i(5x+2y)}\right|^2\,dx\,dy\tag{linearity}\\
+    &=|A|^2\int_0^5\int_0^9\,dx\,dy\tag{lemma 1}\\
+    &=|A|^2\int_0^5\eval{x}{0}{9}\,dy\\
+    &=|A|^2\eval{9y}{0}{5}\\
+    &=45|A|^2\\
+    \frac{1}{45}&=|A|^2\\
+    \frac{1}{3\sqrt{5}}&=|A|
+\end{align*}
+
+And so $A$ is any complex number whose modulus is equal to $\frac{1}{3\sqrt{5}}$. If we limit ourselves to the positive real numbers, then $A=\frac{1}{3\sqrt{5}}$.
+\bigskip
+
+\noindent\textbf{Part b:} What is the pdf of the particle's position $(X,Y)$?
+\bigskip
+
+\noindent\textbf{Solution:} The joint pdf of the measured particle $(X,Y)$ is given by:
+\begin{align*}
+    f_{X,Y}(x,y)&=|\psi(x,y)|^2\\
+    &=\left|\frac{e^{i(5x+7y)}}{3\sqrt{5}}\right|^2\\
+    &=\frac{\left|e^{i(5x+7y)}\right|^2}{45}\\
+    &=\frac{1}{45}\tag{lemma 1}
+\end{align*}
+
+With support $[0,9]\times[0,5]$. And so the position $(X,Y)$ has a uniform probability distribution over its support.
+\bigskip
+\newpage
+
+\noindent\textbf{Part c:} What is $P(Y>X)$?
+\bigskip
+
+\noindent\textbf{Solution:} The desired probability is given by:
+\begin{align*}
+    P(Y>X)&=\iint\displaylimits_{y>x}f_{X,Y}(x,y)\,dx\,dy\\
+    &=\int_0^5\int_0^yf_{X,Y}(x,y)\,dx\,dy\\
+    &=\frac{1}{45}\int_0^5\int_0^y\,dx\,dy\\
+    &=\frac{1}{45}\int_0^5\eval{x}{0}{y}\,dy\\
+    &=\frac{1}{45}\int_0^5y\,dy\\
+    &=\frac{1}{45}\eval{\frac{y^2}{2}}{0}{5}\\
+    &=\frac{25}{2\cdot45}=\frac{5}{18}
+\end{align*}
+\bigskip
+
+\subsection*{Question 3}
+Consider a particle of mass $m$ moving on the interval $[0,L]$ with boundary conditions $\psi(0)=0=\psi(L)$ and the following Hamiltonian:
+$$H=-\frac{\hbar^2}{2m}\dv[2]{x}$$
+
+Also let $\psi_n(x,t)$ be the solution to Schrödinger's equation with $\psi_n(x,0)=\phi_n(x)$ and the above boundary conditions, where $\phi_n$ is given by:
+$$\phi_n(x)=\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)$$
+\bigskip
+
+\noindent\textbf{Part a:} Solve for $\psi_4(x,t)$.
+\bigskip
+
+\noindent\textbf{Solution:} We will first solve this for for general $n$:
+\begin{align*}
+    i\hbar\pdv{\psi_n(x,t)}{t}&=H\psi_n(x,t)\tag{Schrödinger equation}\\
+    &=E_n\psi_n(x,t)\tag{$H\psi_n(x,0)=E_n\psi_n(x,0)$ \& conservation of energy}\\
+    \pdv{\psi_n(x,t)}{t}&=\frac{-iE_n}{\hbar}\psi_n(x,t)\\
+    \psi_n(x,t)&=\psi_n(x,0)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{sol. to $y'=ay$}\\
+    &=\phi_n(x)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{initial condition}\\
+    &=\exp\left(\frac{-iE_n}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)\tag{def. of $\phi_n$}
+\end{align*}
+
+We have just solved for $\psi_n$, and so plugging in 4 we have:
+\begin{align*}
+    \psi_4(x,t)&=\exp\left(\frac{-iE_4}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{4\pi x}{L}\right)\\
+    &=\exp\left(\frac{-16i\hbar^2\pi^2}{2mL^2}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{4\pi x}{L}\right)\tag{$E_n=\frac{(\hbar\pi n)^2}{2mL^2}$}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Suppose the $\psi(x,0)=\phi_2(x)$. What is the probability that the position $X$ of the particle will be found between $L/2$ and $3L/4$ if measured at time $t$?
+\bigskip
+
+\noindent\textbf{Solution:} Note that the wavefunction $\psi_2$ that coresponds to the initial condition $\phi_2$ at $t=0$ is stationary. As a result, we can just use $|\phi_2|^2$ in lieu of $|\psi_2|^2$. Below is the probability for a measurement at taken at time $t$:
+\begin{align*}
+    P\left(\frac{L}{2}<X<\frac{3L}{4}\right)&=\int_\frac{L}{2}^\frac{3L}{4}|\psi_2(x,t)|^2\dd{x}\tag{Born rule}\\
+    &=\int_\frac{L}{2}^\frac{3L}{4}|\phi_2(x)|^2\dd{x}\tag{stationary state}\\
+    &=\frac{2}{L}\int_\frac{L}{2}^\frac{3L}{4}\left|\sin\left(\frac{4\pi x}{L}\right)\right|^2\dd{x}\tag{$|e^{ix}|=1$ for real $x$}\\
+    &=\frac{2}{L}\int_\frac{L}{2}^\frac{3L}{4}\sin\left(\frac{4\pi x}{L}\right)^2\dd{x}\tag{$\sin(x)$ is real valued for real $x$}\\
+    &=\frac{2}{L}\eval{\frac{x}{2}-\frac{L\sin\left(\frac{8\pi x}{L}\right)}{16\pi}}{\frac{L}{2}}{\frac{3L}{4}}\tag{trig identity}\\
+    &=\frac{2}{L}\left(\frac{3L}{8}-\frac{L}{4}\right)\\
+    &=\frac{2}{8}=\frac{1}{4}
+\end{align*}
+\bigskip
+
+\subsection*{Question 3 Cont.}
+For parts c, d, and e, suppose the wavefunction $\psi$ of the particle at $t=0$ is given by:
+$$\psi=\sqrt{\frac{1}{3}}\phi_1+\sqrt{\frac{2}{3}}\phi_4$$
+\bigskip
+
+\noindent\textbf{Part c:} What is the probability distribution of the measured energy at $t=0$?
+\bigskip
+
+\noindent\textbf{Solution:} The probability of having $E_1$ would be the squared probability amplitude associated with first eigenstate $\phi_1$ and similarly for $E_4$. For $E_n$ with $n\not\in\{1,4\}$ it is 0 since the amplitude of their associated eigenstates $\phi_n$ is 0 for this particular state $\psi$:
+\begin{align*}
+    P(E=E_1)&=\frac{1}{3}\\
+    P(E=E_4)&=\frac{2}{3}\\
+    P(E=\text{anything else})&=0
+\end{align*}
+
+Note that $E_n=\frac{(\hbar\pi n)^2}{2mL^2}$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part d:} Suppose the energy is measured at $t=0$ and the value $E=\frac{8\hbar^2\pi^2}{mL^2}$ is obtained. What is the new wavefunction of the particle?
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+    E&=\frac{8\hbar^2\pi^2}{mL^2}\\
+    &=\frac{16\hbar^2\pi^2}{2mL^2}\\
+    &=\frac{(4\hbar^2\pi)^2}{2mL^2}\\
+    &=E_4\tag{def. of $E_4$}
+\end{align*}
+
+Recall that the eigenvalue $E_4$ corresponds to $\phi_4$. And since the measurement was taken at $t=0$ we have:
+$$\psi_4(x,0)=\phi_4(x)$$
+
+And so the wavefunction of the particle after it had its energy measured to be $E_4$ at $t=0$ is now:
+\begin{align*}
+    \psi_4(x)=\exp\left(\frac{-iE_4}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{4\pi x}{L}\right)\tag{$E_4=\frac{(4\hbar^2\pi)^2}{2mL^2}$}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part e:} Suppose $A$ is some observable such that:
+\begin{align*}
+    A\phi_1&=\phi_4\\
+    A\phi_4&=\phi_3
+\end{align*}
+
+What is the expected value of $A$ in state $\psi$?
+\bigskip
+
+\noindent\textbf{Solution:} The expected value of $A$ is given by:
+\begin{align*}
+    \langle A\rangle_\psi&=\langle\psi|A|\psi\rangle\tag{def. of expected value of observable}\\
+    &=\langle\psi|A\begin{bmatrix}
+        \sqrt{\frac{1}{3}}&0&0&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{basis of $\{\phi_i\}$, eigenstates at $t=0$}\\
+    &=\langle\psi|\begin{bmatrix}
+        0&0&\sqrt{\frac{2}{3}}&\sqrt{\frac{1}{3}}
+    \end{bmatrix}\tag{observables are linear}\\
+    &=\begin{bmatrix}
+        \sqrt{\frac{1}{3}}&0&0&\sqrt{\frac{2}{3}}
+    \end{bmatrix}^\dagger\begin{bmatrix}
+        &0&0\sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{def. of bra}\\
+    &=\begin{bmatrix}
+        \sqrt{\frac{1}{3}}\\0\\0\\\sqrt{\frac{2}{3}}
+    \end{bmatrix}\begin{bmatrix}
+        &0&0\sqrt{\frac{1}{3}}&\sqrt{\frac{2}{3}}
+    \end{bmatrix}\tag{def. of conjugate transpose}\\
+    &=\frac{2}{3}
+\end{align*}
+\bigskip
+\newpage
+
+\subsection*{Question 4}
+Recall that the $z$ and $y$ components of the spin of a spin-$\frac{1}{2}$ are given by:
+\begin{align*}
+    \sigma_z&=\begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\\
+    \sigma_y&=\begin{bmatrix}
+        0&-i\\i&0
+    \end{bmatrix}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part a:} What are the possible values of $\sigma_y$?
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the possible values of an observable are given by the eigenvalues. We will now solve for the eigenvalues of $\sigma_y$:
+\begin{align*}
+    0&=\det(\sigma_y-\lambda I_2)\tag{characteristic equation}\\
+    &=\det\begin{pmatrix}
+        -\lambda&-i\\i&-\lambda
+    \end{pmatrix}\\
+    &=\lambda^2-1\tag{det. of $2\times2$ matrix}\\
+    1&=\lambda^2\\
+    \pm 1&=\lambda
+\end{align*}
+
+And so we have that the possible observed values of the $y$-component of the spin (i.e. the eigenvalues of the observable $\sigma_y$) are $1$ and $-1$.
+\bigskip
+
+\noindent\textbf{Part b:} Suppose the particle is in a state where $\sigma_y=1$. Give such a state.
+\bigskip
+
+\noindent\textbf{Solution:} The state $\frac{1}{\sqrt{2}}\icol{-i\\1}$ has $\sigma_y=1$. To see this note the following:
+\begin{align*}
+    \begin{bmatrix}
+        0&-i\\i&0
+    \end{bmatrix}\begin{bmatrix}
+        -\frac{i}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}=1\cdot\begin{bmatrix}
+        -\frac{i}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+\end{align*} 
+
+And so we have that $|\sigma_y=1\rangle=\frac{1}{\sqrt{2}}\icol{-i\\1}$ since it is a an eigenvector of $\sigma_y$ with eigenvalue 1.
+\bigskip
+
+\noindent\textbf{Part c:} Suppose that $\sigma_z$ is measured when the particle is in the state $|\sigma_y=1\rangle$. What is the
+probability that $\sigma_z$ will be found to be 1?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $|\sigma_z=1\rangle$ is given by $\frac{1}{\sqrt{2}}\icol{1\\0}$:
+\begin{align*}
+    \begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\begin{bmatrix}
+        1\\0
+    \end{bmatrix}=1\cdot\begin{bmatrix}
+        1\\0
+    \end{bmatrix}
+\end{align*} 
+
+As such, the probability of a particle $\phi$ to be measured with $\sigma_z=1$ is given by:
+\begin{align*}
+    p_{z=1}(\phi)=\left|\langle\phi|\sigma_z=1\rangle\right|^2
+\end{align*}
+
+In the case of $|\sigma_y=1\rangle$ we have:
+\begin{align*}
+    p_{z=1}(|\sigma_y=1\rangle)&=\left|\langle\sigma_y=1|\sigma_z=1\rangle\right|^2\\
+    &=\left||\sigma_y=1\rangle^\dagger|\sigma_z=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        -\frac{i}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        1\\0
+    \end{bmatrix}\right|^2\\
+    &=\left|-\frac{i}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+And so the probability that a particle in state $|\sigma_y=1\rangle$ has its spin's $z$-component measured to be $\sigma_z=1$ is $\frac{1}{2}$.
+\bigskip
+
+\noindent\textbf{Part d:} Suppose the particle is in the state $\psi=|\sigma_z=1\rangle$. If $\sigma_y$ is measured, what is the probability that it will be found to be $-1$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that the state $\frac{1}{\sqrt{2}}\icol{i\\1}$ has $\sigma_y=-1$:
+\begin{align*}
+    \begin{bmatrix}
+        0&-i\\i&0
+    \end{bmatrix}\begin{bmatrix}
+        \frac{i}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}=-1\cdot\begin{bmatrix}
+        \frac{i}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+\end{align*} 
+
+And so in the case of measuring $|\sigma_y=-1\rangle$ we have:
+\begin{align*}
+    p_{z=1}(|\sigma_y=-1\rangle)&=\left|\langle\sigma_y=-1|\sigma_z=1\rangle\right|^2\\
+    &=\left||\sigma_y=-1\rangle^\dagger|\sigma_z=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        \frac{i}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        1\\0
+    \end{bmatrix}\right|^2\\
+    &=\left|\frac{i}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+So the probability of measuring $\sigma_y=-1$ is $\frac{1}{2}$.
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} Some of the axioms of quantum theory refer to the ``measurement'' of a quantum ``observable.'' This locution is somewhat unfortunate. Explain why.
+\bigskip
+
+\noindent\textbf{Solution:} This is unfortunate because measurement implies that the state was in some definite position (or eigenvalue in general) before the `measurement' or `creation' was made. This is untrue as there indeed is no fact of the matter of the value of the observable before the measurement (at least in orthodox QM). Indeed, in general, the state of the wavefunction is a superpostion of eigenstates before it is collapsed by the measurement process.
+
+\subsection*{Question 6}
+\noindent\textbf{Problem:} True or false: The no-hidden-variables theorems, and in particular Bell's inequality and Hardy's theorem, show that a deterministic reformulation of quantum mechanics is impossible. Explain.
+\bigskip
+
+\noindent\textbf{Solution:} False. The immediate counterexample to this is Bohmian mechanics which is a deterministic interpretation of QM. What Bell's inequality and Hardy's theorem tell us is that there is no \textit{local} formulation of QM that can contain hidden variables, which precludes formulations of QM that are both local and deterministic. If we drop the requirement that the underlying physics be local then we can have hidden variables and thus a deterministic reformulation of QM.
+
+\subsection*{Question 7}
+\noindent\textbf{Problem:} What is the measurement problem of quantum mechanics? What is the paradox of Wigner's friend? What is the Schrodinger cat paradox? Describe at least one wild solution to these problems and one ``obvious'' one.
+\bigskip
+
+\noindent\textbf{Solution:} The measurement problem of quantum mechanics is the problem of identifying how, or even whether, wavefunction collapse occurs when a quantum system in superposition is measured. A famous thought experiment that sheds light on the strangeness of this problem in relation to certain interpretations of QM is the Shrodingers cat paradox.
+
+We start with a cat in a box and then put in some radioactive isotope that, once decayed, will trigger some sensor which will smash a vial of poison also in the box. Since the isotope will in general be in some superposition of both decayed and not decayed, according to QM, so too will the sensor as its reading is entangled with the isotope's decay status. Even further, since whether the vial is smashed or not smashed is dependent on the status of the sensor, we have that it too is entangled and now in a superposition of smashed and not smashed. And lastly, whether the car in the box is dead or alive is dependent on whether the poison has filled the box or not, and thus the life status of the cat is also entangled and now in a superposition of alive and dead. To summarize the original state has evolved to one that seems unreal, one with a cat that is both dead and alive simultaneously:
+$$|\text{undecayed+not smashed+alive}\rangle\rightarrow c_0|\text{undecayed+not smashed+alive}\rangle+c_1|\text{decayed+smashed+dead}\rangle$$
+\textit{Where $c_0,c_1\in\mathbb C$ are some non-zero amplitudes.}
+\medskip
+
+The Wigner's friend paradox is quite similar. Consider a scientist, call him Wigner, measuring the state of some quantum particle, say the spin of a particle. Currently the particle is in superposition of spin up and spin down. Now consider another scientist, call him Wigner's friend, who knows Wigner is measuring a particle today. Due to the linearity of QM, he can model the state of the lab (i.e. the wigner+particle system) as some superposition of "particle spin-up + Wigner measured spin-up" and "particle in spin-down + Wigner measured spin-down". Wigner's friend now goes and asks Wigner what he saw (spin-up or spin-down) allowing him to assign the lab a result. It is only when Wigner's friend learns about Wigner's measurement that the lab superposition collapses. However, note that in Wigner's point of view the particle collapsed much before Wigner's friend asked about it and the lab supposedly collapsed. Since we'd expect that no observer has any privilaged status, whose account do we believe?
+\bigskip
+
+Both of these problems have solutions in the form of different interpretations of QM. Let us consider the Many-Worlds picture, which I assume is the `wild' interpretation. In this interpretation, when the isotope evolves into a superposition of decayed and not decayed, it entangles with the sensor, and then the vial, and then the cat as well. The entanglement is real, and not only that but since thi box is certainly not isolated form its environment (it'd be quite difficult to isolate a cat from decoherence) this entanglement reaches the whole world. What this means essentially is that the entire universe is now in a superposition of the cat being alive and the cat being dead, part of some greater universal wavefunction. When the scientist opens the box the cat was already, say dead, in their own branch or eigenstate of the universal wavefunction. But just as they found a dead cat, another `them' in the other branch of the wavefunction found an alive one. These two branches have decohered and so will never interfere with each other and so they are unobservable.
+
+In Wigner's case when the, presumably isolated, quantum system that Wigner measures returns a result, that's when collapse occurs and the universe `splits' into one where Wigner found spin-up and one where he found spin-down. Wigner's friend asking Wigner what the result is doesn't collapse or split anything, the world already split when Wigner made the measurement.
+\bigskip
+
+In the case of Bohmian mechanics, the `obvious' solution no doubt, is much simpler to state. The cat was only ever dead or alive and there is no wavefunction collapse. In Bohmian mechanics the universe is deterministic, the results of both experiments didn't change due to observation. We just happen not to be able to make use of this determinism since we can't know the solution to the guiding equation, thus QM is still practically probabilistic.
+
+\subsection*{Question 8}
+\noindent\textbf{Problem:} Describe the many-worlds interpretation of quantum mechanics. What are its main strengths and weaknesses?
+\bigskip
+
+\noindent\textbf{Solution:} The many-worlds interpretation of QM is a natural result of accepting Shrodingers's equation as the only fundamental law of physics. It takes the wavefunction seriously and makes no distinction between the microscopic entanglement that particles undergo and the macroscopic entanglement it holds that the universe undergoes when an isolated quantum system is `revealred' to the rest of the universe to decohere.
+
+One of its strengths is that it does not posit an extra law of physics like other interpretations do. There are wavefunctions and they obey the Schrodinger equation. Thats the ontology. There are weaknesses as well. A big one being that it seems very unintituive that there would be a universal wavefunction that has different states of the universe in superposition. The `branches' or `worlds' of this superposition being eponymous the many-worlds.
+
+Another more subtle problem is with respect to the histories of many-worlds. In a simplistic view of the splitting of the universal wavefunction, we would have a sort of tree of branches, each branch being a world, and each world having a distinct past that it shares with other worlds. However the universal wavefunction at any point $t$ is given by the integral of all branches at that time $t$:
+
+$$\Psi=\int \Psi(q)|q\rangle\dd{q}$$
+
+And since we need all differnet worlds, despite all but our own being accessible, we cannot obtain the wavefunction $\Psi$ and thus cannot surmise our past via the Shrodinger equation. All we seem to have of the past in any physical sense is our records and memories of it. This seems to be unappealing.
+
+\subsection*{Question 9}
+\noindent\textbf{Problem:} What is the essential innovation, the crucial point, of Bohmian mechanics with respect to orthodox quantum theory? And what is the essential innovation of Bohmian mechanics with respect to classical mechanics?
+\bigskip
+
+\noindent\textbf{Solution:} The essential difference between orthodox Qm and Bohmian mechanics is that Bohmian mechanics simply asserts that the universe is deterministic, just as we've always known it from classical mechanics. In particular, it asserts that the position of particles are always determined at any point in time, and sees where the math leads form that assertion. Of course to do this it must toss out locality in favor of hidden variables, as Bell's inequality and Hardy's theorem tells us, but the resulting theory is indeed deterministic in principle.
+
+From the point of view of classical mechanics, Bohmian mechanics' great innovation is in its melding of our classical dynamics of particles with the Shrodinger equation. In a sense, this is to say we abandon $F=ma$ in favor of the guiding equation.
+
+\subsection*{Question 10}
+\noindent\textbf{Problem:} One of the most common criticisms of Bohmian mechanics is that it endows the position observable with a special status, and thus does not retain the beautiful ``unitary'' symmetry of orthodox quantum theory under which all quantum observables are on the same footing. Discuss the merits of this objection, and in particular indicate whether you think the ``objection'' points to a vice or a virtue of Bohmian mechanics.
+\bigskip
+
+\noindent\textbf{Solution:} There are more compelling and reasonable objections to Bohmian mechanics (BM), but that the position observable has been given special status over the other is not so important in my view. It's easy to see why it is done, that is, to keep with our standard notion of physics from classical mechanics and relativity in which particles have definite positions and other properties (like momentum) stem from it (and mass). Indeed proponents of BM may point to this keeping in line with classical mechanics as a virtue rather than a vice of BM. I do think the objection is interesting though as the alternative to bestowing this privileged state to the position operator is having all of them be on equal footing, an idea that seems to jive with notions of Galallian relativity and no preferred observer (although in this case it's more like no preferred basis).
+
+\subsection*{Question 11}
+\noindent\textbf{Problem:} True or false: The price paid by Bohmian mechanics to satisfy our classical prejudice in favor of determinism is to sacrifice the beautiful simplicity of orthodox quantum theory for a much more complicated theory that is nonlocal to boot. Explain.
+\bigskip
+
+\noindent\textbf{Solution:} True. This effectively summarizes the trade off Bohmian mechanics makes for having the nice property of determinism. A trade off demanded by Bell's inequality and Hardy's theorem, which state that an interpretation of QM cannot be both local and have hidden variables (which are required for the sort of determinism BM has). On top of this the addition of the guiding equation removes the `beautiful unitarity' of orthodox QM.
+
+On the flip side many-worlds is local and totally unitary but \text{its} tradeoff is the lack of realism (particles don't have definitive positions in general) and that the theory is inherently non-deterministic (at least for the question of ``which branch do \textit{I} end up in?").
+
+\end{document}

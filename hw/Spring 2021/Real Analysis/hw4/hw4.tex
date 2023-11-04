@@ -1,0 +1,288 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#4}
+\author{Ozaner Hansha}
+\date{February 20, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+Consider $(a_n)_{n=1}^\infty$ where $a_n\ge 0$ and:
+$$\lim_{n\to\infty} a_n=A$$
+
+\noindent\textbf{Part a:} Show that $(b_n)_{n=1}^\infty$ where $b_n=\sqrt{a_n}$ is also a convergent sequence and that:
+$$\lim_{n\to\infty} b_n=\sqrt{A}$$
+
+\noindent\textbf{Solution:} Before we prove this, let use first show why $A\not<0$:
+
+Let us suppose that indeed $A<0$. We have $(\forall \epsilon>0)(\exists N\in\N)(\exists n>N)$:
+\begin{align*}
+  |a_n-A|&<\epsilon\tag{def. of convergence}\\
+  |a_n-A|&<-A\tag{$-A>0$}\\
+  A&<a_n-A<-A\\
+  2A&<a_n<0
+\end{align*}
+Which is a contradiction since we know $a_n$ is nonnegative. Thus, by the trichotomy of the reals, we have two cases to consider:
+\begin{itemize}
+  \item If $A=0$ then we have $(\forall \epsilon>0)(\exists N\in\N)(\exists n>N)$:
+  \begin{align*}
+    |a_n-0|&<\epsilon^2\tag{def. of convergence, $\epsilon^2>0$}\\
+    |a_n|&<\epsilon^2\\
+    \sqrt{|a_n|}&<\epsilon\tag{both sides of inequality are positive}\\
+    {|\sqrt{a_n}|}&<\epsilon\tag{$a_n>0$}\\
+    {|\sqrt{a_n}-0|}&<\epsilon\\
+    {|b_n-0|}&<\epsilon\tag{def. of $b_n$}\\
+    {|b_n-\sqrt{0}|}&<\epsilon\\
+    {|b_n-\sqrt{A}|}&<\epsilon\tag{$A=0$ by assumption}
+  \end{align*} 
+
+  So in other words we have $\lim_{n\to\infty}b_n=\sqrt{A}$.
+
+  \item  If $A>0$ then we have the following $(\forall \epsilon>0)(\exists N\in\N)(\exists n>N)$:
+  \begin{align*}
+    |b_n-\sqrt{A}|&=|\sqrt{a_n}-\sqrt{A}|\tag{def. of $b_n$}\\
+    &=\frac{|a_n-A|}{\sqrt{a_n}+\sqrt{A}}\tag{multiply by conjugate}\\
+    &<\frac{|a_n-A|}{\sqrt{A}}\tag{$\sqrt{a_n}>0$}\\
+    &<\frac{\epsilon\sqrt{A}}{\sqrt{A}}\tag{def. of convergence, $\epsilon\sqrt{A}>0$}\\
+    &=\epsilon
+  \end{align*}
+
+  So in other words we have $\lim_{n\to\infty}b_n=\sqrt{A}$.
+\end{itemize}
+\bigskip
+
+\noindent\textbf{Part b:} Prove the following:
+$$(\forall c>0)\,\,\lim_{n\to\infty}\sqrt[n]{c}=1$$
+
+\noindent\textbf{Solution:} We have two cases:
+\begin{itemize}
+  \item $c\ge 1$. Let $c=1+b$. We then have:
+  \begin{align*}
+    \left(1+\frac{b}{n}\right)^n&=\sum_{k=0}^n\binom{n}{k}\left(\frac{b}{n}\right)^k\tag{binomial theorem}\\
+    &>\binom{n}{0}+\binom{n}{1}\frac{b}{n}\tag{first 2 terms}\\
+    &=1+b
+  \end{align*}
+
+  And so we have:
+  \begin{align*}
+    1&\le c=1+b<\left(1+\frac{b}{n}\right)^n\tag{see above}\\
+    1&\le \sqrt[n]{c}<1+\frac{b}{n}\tag{$n$th root, all sides positive}\\
+    \lim_{n\to\infty}1&\le\lim_{n\to\infty}\sqrt[n]{c}<\lim_{n\to\infty}1+\frac{b}{n}\tag{squeeze theorem}\\
+    1&\le\lim_{n\to\infty}\sqrt[n]{c}<1\\
+    &\implies\lim_{n\to\infty}\sqrt[n]{c}=1
+  \end{align*}
+
+  \item $c<1$. Consider an arbitrary real $\epsilon>0$. Choose a positive integer $N>\frac{1}{c\epsilon}$. We then have for $n\ge N$:
+  \begin{align*}
+    \left(\sqrt[n]{c}+\epsilon\right)^n&=\sum_{k=0}^n\binom{n}{k}\sqrt[n]{c}^{n-k}\epsilon^k\tag{binomial theorem}\\
+    &>c+\sqrt[n]{c}^{n-1}n\epsilon\tag{first two terms}\\
+    &>c+cn\epsilon\\
+    &>c+\frac{c}{c\epsilon}\epsilon\\
+    &=c+1\\
+    &>c
+  \end{align*}
+
+  Transforming this result further, we have:
+  \begin{align*}
+    1&<\left(\sqrt[n]{c}+\epsilon\right)^n\tag{see above}\\
+    1&<\sqrt[n]{c}+\epsilon\\
+    1-\sqrt[n]{c}&<\epsilon\\
+    -(\sqrt[n]{c}-1)&<\epsilon\\
+    |\sqrt[n]{c}-1|&<\epsilon\tag{$c<1\implies\sqrt[n]{c}<1\implies\sqrt[n]{c}-1<0$}
+  \end{align*}
+
+  And so we have shown that for any $\epsilon>0$ there is a choice of $N$ such that for all $n>N$ we have $|\sqrt[n]{c}-1|<\epsilon$. In other words:
+  \begin{equation*}
+    \lim_{n\to\infty}\sqrt[n]{c}=1
+  \end{equation*}
+\end{itemize}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Let $a,b>0$, show that:
+$$\lim_{n\to\infty}\sqrt[n]{a^n+b^n}=\max\{a,b\}$$
+
+\noindent\textbf{Solution:} W.l.o.g we can assume $a\le b$. Now consider the following:
+\begin{align*}
+  b&=\lim_{n\to\infty}b\\
+  &=\lim_{n\to\infty}\sqrt[n]{b^n}\\
+  &\le\lim_{n\to\infty}\sqrt[n]{a^n+b^n}\tag{$a^n+b^n\ge b^n$}\\ 
+  &\le\lim_{n\to\infty}\sqrt[n]{2b^n}\tag{$a<b$}\\
+  &=\lim_{n\to\infty}\sqrt[n]{2}\lim_{n\to\infty}\sqrt[n]{b^n}\\
+  &=\lim_{n\to\infty}\sqrt[n]{b^n}\tag{Problem 1, Part b}\\
+  &=b
+\end{align*}
+
+In other words we have:
+\begin{align*}
+  &b\le \lim_{n\to\infty}\sqrt[n]{a^n+b^n}\le b\tag{see above}\\
+  \implies&\lim_{n\to\infty}\sqrt[n]{a^n+b^n}=b\tag{squeeze theorem}\\
+  \implies&\lim_{n\to\infty}\sqrt[n]{a^n+b^n}=\max\{a, b\}\tag{$a\le b$}
+\end{align*}
+
+Of course, the same argument holds when $a\ge b$ with $a$ and $b$ switching roles.
+
+\subsection*{Problem 3}
+Consider a sequence $(a_n)_{n=1}^\infty$ whose limit is $A$.
+\bigskip
+
+% \noindent\textbf{Part a:} Prove the following:
+\noindent\textbf{Problem:} Prove the following:
+\begin{equation*}
+  \lim_{n\to\infty}\frac{a_1+\cdots+a_n}{n}=A
+\end{equation*}
+\medskip
+
+\noindent\textbf{Solution:} Since $a_n\to L$ we must have that $(\forall \epsilon>0)(\exists N\in\N)(\forall n\ge N)$:
+\begin{align*}
+  |a_n-A|<\frac{\epsilon}{2}\tag{lemma 1}
+\end{align*}
+
+And so $\exists M>N$ such that $\forall n>M$:
+\begin{align*}
+  \frac{|a_1-A|+\cdots+|a_N-A|}{n}<\frac{\epsilon}{2}\tag{lemma 2}
+\end{align*}
+
+Then $(\forall n>M)$ we have:
+\begin{align*}
+  \left|\frac{a_1+\cdots+a_n}{n}-A\right|&=\left|\frac{a_1+\cdots a_n-nA}{n}\right|\\
+  &=\left|\frac{(a_1-A)+\cdots+(a_n-A)}{n}\right|\\
+  &=\left|\frac{(a_1-A)+\cdots+(a_N-A)+(a_{N+1}-A)+\cdots+(a_n-A)}{n}\right|\tag{$n>M>N$}\\
+  &\le\frac{|a_1-A|+\cdots+|a_N-A|}{n}+\frac{|a_{N+1}-A|+\cdots+|a_n-A|}{n}\tag{triangle inequality}\\
+  &<\frac{\epsilon}{2}+\frac{(n-N)\epsilon}{2n}\tag{lemma 1 \& 2}\\
+  &<\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon\tag{$n>N\implies 0<\frac{n-N}{n}<1$}
+\end{align*}
+
+And so, by the definition of convergence, we have:
+\begin{equation*}
+  \lim_{n\to\infty}\frac{a_1+\cdots+a_n}{n}=A
+\end{equation*}
+\bigskip
+
+% \noindent\textbf{Part b:} Prove the following:
+% \begin{equation*}
+%   \lim_{n\to\infty}\frac{a_1+2a_2\cdots+na_n}{n^2}=\frac{A}{2}
+% \end{equation*}
+% \bigskip
+
+% \noindent\textbf{Solution:} 
+
+\subsection*{Problem 4}
+\noindent\textbf{Part a:} Consider a sequence $(a_n)_{n=1}^\infty$ where $n=(1+a_n)^2$. Show that for $n>1$:
+$$0<a-n<\sqrt{\frac{2}{n-1}}$$
+
+\noindent\textbf{Solution:} First let us solve for $a_n$:
+\begin{align*}
+  (1+a_n)^n&=n\\
+  1+a_n&=\sqrt[n]{n}\\
+  a_n&=\sqrt[n]{n}-1
+\end{align*}
+
+Recall from problem 1, part b that $c>1\implies \sqrt[n]{c}>1$ for any $n\in\N$. And so we have:
+\begin{align*}
+  a_n&=\sqrt[n]{n}-1\tag{def. of $a_n$}\\
+  &>1-1=0
+\end{align*}
+
+Now we have to prove the other side of the inequality. Consider the following:
+\begin{align*}
+  n&=\left(\sqrt[n]{n}\right)^n\\
+  &=(1+(\sqrt[n]{n}-1))^n\\
+  &=\sum_{k=0}^n\binom{n}{k}(\sqrt[n]{k})^k\tag{binomial theorem}\\
+  &\ge\binom{n}{2}(\sqrt[n]{n}-1)^2\tag{second term only, $n>1$}\\
+  &=\frac{n(n-1)}{2}(\sqrt[n]{n}-1)^2
+\end{align*}
+
+In other words we have:
+\begin{align*}
+  \frac{n(n-1)}{2}(\sqrt[n]{n}-1)^2&\le n\tag{see above}\\
+  (\sqrt[n]{n}-1)^2&\le\frac{2}{n-1}\\
+  \sqrt[n]{n}-1&\le\sqrt{\frac{2}{n-1}}\\
+  a_n&\le\sqrt{\frac{2}{n-1}}\tag{def. of $a_n$}
+\end{align*}
+
+And so, putting our two inequalities together, we have proved the desired statement:
+\begin{equation*}
+  (\forall n>1)\,\,0<a_n\le\sqrt{\frac{2}{n-1}}
+\end{equation*}
+
+\noindent\textbf{Part b:} Show that:
+$$\lim_{n\to\infty}\sqrt[n]{n}=1$$
+
+\noindent\textbf{Solution:} Consider an arbitrary real $\epsilon>0$. Choose a positive integer $N>1+\frac{2}{\epsilon^2}$. We then have:
+\begin{align*}
+  N&>1+\frac{2}{\epsilon^2}\tag{$N$ exists by archemdiean property}\\
+  N-1&>\frac{2}{\epsilon^2}\\
+  \frac{1}{N-1}&<\frac{\epsilon^2}{2}\\
+  \frac{2}{N-1}&<\epsilon^2\\
+  \sqrt{\frac{2}{N-1}}&<\epsilon
+\end{align*}
+
+And so we have for any $n\ge N$:
+\begin{align*}
+  \sqrt[n]{n}-1&\le\frac{2}{n-1}\tag{part a}\\
+  |\sqrt[n]{n}-1|&\le\frac{2}{n-1}\tag{$n>N>1\implies\sqrt[n]{n}-1>0$}\\
+  &\le\frac{2}{N-1}\\
+  &<\epsilon\tag{see above}
+\end{align*}
+
+And so we have shown that $(\forall\epsilon>0)(\exists N>\N)(\forall n>N)$ we have $|\sqrt[n]{n}-1|<\epsilon$. This is the definition of:
+\begin{equation*}
+  \lim_{n\to\infty}\sqrt[n]{n}=1
+\end{equation*}
+
+% \subsection*{Problem 5}
+% \noindent\textbf{Problem:} 
+% \bigskip
+
+% \noindent\textbf{Solution:} 
+
+\end{document}

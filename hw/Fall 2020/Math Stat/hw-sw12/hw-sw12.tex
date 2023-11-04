@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 12}
+\author{Ozaner Hansha}
+\date{October 27, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Suppose we have a population of bags of potato chips, each bag containing $m$ chips with each chip having probability $p$ of being tasty. The number of tasty chips in a given bag, then, is given by a binomial distribution $B(m,p)$.
+
+However, note that our sample consists of observations of the number of \textit{not} tasty chips, rather than tasty ones. Thus, our sample is drawn from the binomial distribution $B(m,1-p)$. Given samples of this form, derive an estimator for both $m$ and $p$ using the method of moments.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the method of moments estimator for $k$ parameters is to set the first $k$ moments of the distribution equal to the first $k$ sample moments and solve for each parameter. We do that below, with $\bar M_k$ denoting the $k$th sample moment, and $X\sim B(m,1-p)$:
+\begin{align*}
+    \begin{cases}
+        \bar M_1=E(X)\\
+        \bar M_2=E(X^2)
+    \end{cases}
+    &\implies
+    \begin{cases}
+        \bar M_1=\left.\frac{d}{dt}M_X(t)\right|_{t=0}\\
+        \bar M_2=\left.\frac{d^2}{dt^2}M_X(t)\right|_{t=0}
+    \end{cases}\tag{$k$th moment given by mgf}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\left.\frac{d}{dt}(p+(1-p)e^t)^m\right|_{t=0}\\
+        \bar M_2=\left.\frac{d^2}{dt^2}(p+(1-p)e^t)^m\right|_{t=0}
+    \end{cases}\tag{mgf of binomial RV}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=m(1-p)\\
+        \bar M_2=m(m-1)(1-p)^2+m(1-p)
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=m(1-p)\\
+        \frac{\bar M_2}{\bar M_1}=(m-1)(1-p)+1
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=m-mp\\
+        \frac{\bar M_2}{\bar M_1}=m-mp+p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=m(1-p)\\
+        \frac{\bar M_2}{\bar M_1}-\bar M_1=p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=m\left(1-\left(\frac{\bar M_2}{\bar M_1}-\bar M_1\right)\right)\\
+        \frac{\bar M_2}{\bar M_1}-\bar M_1=p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \frac{\bar M_1}{1-\left(\frac{\bar M_2}{\bar M_1}-\bar M_1\right)}=m\\
+        \frac{\bar M_2}{\bar M_1}-\bar M_1=p
+    \end{cases}
+\end{align*}
+
+And so we are left with the following estimators, for $p$ we have:
+\begin{align*}
+    \hat p_{MM}&=\frac{\bar M_2}{\bar M_1}-\bar M_1\tag{method of moments}\\
+    &=\frac{\bar M_2}{\bar M_1}-\bar M_1^2\\
+    &=\frac{\frac{1}{n}\sum_{i=1}^nX_i^2}{\frac{1}{n}\sum_{i=1}^nX_i}-\frac{1}{n}\sum_{i=1}^nX_i\\
+    &=\frac{\sum_{i=1}^nX_i^2}{\sum_{i=1}^nX_i}-\bar X
+\end{align*}
+
+And for $m$ we have:
+\begin{align*}
+    \hat m_{MM}&=\frac{\bar M_1}{1-\left(\frac{\bar M_2}{\bar M_1}-\bar M_1\right)}\tag{method of moments}\\
+    &=\frac{\bar M_1}{1-\left(\frac{\sum_{i=1}^nX_i^2}{\sum_{i=1}^nX_i}-\frac{1}{n}\sum_{i=1}^nX_i\right)}\tag{from above derivation}\\
+    &=\frac{\frac{1}{n}\sum_{i=1}^nX_i}{1-\frac{\sum_{i=1}^nX_i^2}{\sum_{i=1}^nX_i}+\frac{1}{n}\sum_{i=1}^nX_i}\\
+    &=\frac{\bar X}{1-\frac{\sum_{i=1}^nX_i^2}{\sum_{i=1}^nX_i}+\bar X}\tag{def. of sample mean}
+\end{align*}
+\end{document}

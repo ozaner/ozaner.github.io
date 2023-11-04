@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 1}
+\author{Ozaner Hansha}
+\date{September 5, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Show that $E[aX]=aE[X]$, for RV $X$ and constant $a$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall the definition of the expectation of a function $g(x)$ of a RV $X$:
+$$E[g(X)]=\int^\infty_{-\infty}g(x)f_X(x)\,dx$$
+
+Letting $g(x)=ax$ for an arbitrary constant $a$, we find:
+\begin{align*}
+  E[aX]&=\int^\infty_{-\infty}axf_X(x)\,dx\tag{def. of expectation}\\
+  &=a\int^\infty_{-\infty}xf_X(x)\,dx\tag{linearity of integration}\\
+  &=aE[X]\tag{def. of Expectation}
+\end{align*}
+\smallskip
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Show that $\Var(aX)=a^2\Var(X)$, for RV $X$ and constant $a$.
+\bigskip
+
+\noindent\textbf{Solution:}  Recall the definition of the variance of a RV $X$:
+$$\Var(X)=E[(X-E[X])^2]$$
+
+And so the variance of $aX$ for an arbitrary constant $a$ is given by:
+\begin{align*}
+  \Var(aX)&=E[(aX-E[aX])^2]\tag{def. of variance}\\
+  &=E[(aX-aE[X])^2]\tag{linearity of expectation}\\
+  &=E[a^2(X-E[X])^2]\tag{algebra}\\
+  &=a^2E[(X-E[X])^2]\tag{linearity of expectation}\\
+  &=a^2\Var(X)\tag{def. of variance}
+\end{align*}
+\smallskip
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Given two RVs $X$ and $Y$, is the following true:
+$$f_{X+Y}(z)=f_X(z)+f_Y(z)$$
+\smallskip
+
+\noindent\textbf{Solution:} The pdf of the sum of two RVs is the convolution of their respective pdfs:
+$$f_{X+Y}(z)=\int^{\infty}_{-\infty}f(z-y)g(y)\,dy$$
+
+This is clearly not equivalent to the sum of their pdfs in general, and so the statement is false.
+\bigskip
+
+\end{document}

@@ -1,0 +1,212 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#3}
+\author{Ozaner Hansha}
+\date{February 13, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+Consider the sequence $(a_n)_{n=1}^\infty$ where:
+$$a_n=\left(1+\frac{1}{n}\right)^n$$
+
+\noindent\textbf{Part a:} Show that $0<a_n<5$ for any $n\ge 1$, hence $(a_n)_{n=1}^\infty$ is a bounded sequence.
+\bigskip
+
+\noindent\textbf{Solution:} First let us establish some lemmas: for $0<n$ and $k\le n$ we have
+\begin{align*}
+  \fallfact{n}{k}&=n\cdot(n-1)\cdot(n-2)\cdot(n-3)\cdots (n-k+1)\tag{def. of falling factorial}\\
+  &\le \underbrace{n\cdot n\cdot n\cdot n\cdots n}_{k\text{ times}}=n^k\tag{lemma 1}
+\end{align*}
+
+Next we have for $n>0$:
+\begin{align*}
+  \frac{1}{n!}&=\frac{1}{n(n-1)(n-2)\cdots2\cdot1}\tag{def. of factorial}\\
+  &\le\frac{1}{n(n-1)}\tag{lemma 2}
+\end{align*}
+
+And finally we have:
+\begin{align*}
+  \sum_{k=2}^n\frac{1}{k-1}-\frac{1}{k}&=\frac{1}{1}-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+\cdots+\frac{1}{n-1}-\frac{1}{n}\\
+  &=\frac{1}{1}+\left(-\frac{1}{2}+\frac{1}{2}\right)+\left(-\frac{1}{3}+\cdots+\frac{1}{n-1}\right)-\frac{1}{n}\tag{telescoping sum}\\
+  &=1-\frac{1}{n}\tag{lemma 3}
+\end{align*}
+
+Now let us prove the upper bound:
+\begin{align*}
+  a_n&=\left(1+\frac{1}{n}\right)^n\tag{def. of $a_n$}\\
+  &=\sum_{k=0}^n\binom{n}{k}\left(\frac{1}{n}\right)^k\tag{binomial formula}\\
+  &=1+1+\sum_{k=2}^n\binom{n}{k}\left(\frac{1}{n}\right)^k\\
+  &=2+\sum_{k=2}^n\frac{\fallfact{n}{k}}{k!}\cdot\frac{1}{n^k}\tag{def. of binomial coefficient}\\
+  &\le2+\sum_{k=2}^n\frac{n^k}{k!}\cdot\frac{1}{n^k}\tag{lemma 1}\\
+  &=2+\sum_{k=2}^n\frac{1}{k!}\\
+  &\le2+\sum_{k=2}^n\frac{1}{k(k-1)}\tag{lemma 2}\\
+  &=2+1-\frac{1}{n}\\
+  &=3-\frac{1}{n} < 3\tag{$\forall n\in\Z^+,\,\,\frac{1}{n}\le1$}
+\end{align*}
+
+Noting that $n\in\Z^+$, for the lower bound we have:
+\begin{align*}
+  0&<\frac{1}{n}\tag{multiplicative inverse of a positive number is positive}\\
+  0&<1+\frac{1}{n}\tag{1 plus positive number is positive}\\
+  0&<\left(1+\frac{1}{n}\right)^n=a_n\tag{positive powers of positive numbers are positive}
+\end{align*}
+
+Putting these two results together we find:
+\begin{equation*}
+  (\forall n\in\Z^+)\,\,0<a_n<3<5
+\end{equation*}
+\newpage
+
+\noindent\textbf{Part b:} Show that $a_n\le a_{n+1}$ for any $n\ge 1$, hence $(a_n)_{n=1}^\infty$ is an increasing sequence.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following for all $n\in\Z^+$:
+\begin{align*}
+  n^2+2n&\le n^2+2n+1\tag{$n>0$}\\
+  n(n+2)&\le n^2+2n+1\\
+  n+1&\le \frac{n^2+2n+1}{n}\tag{divide both sides by positive number}\\
+  \frac{1}{n+1}&\ge \frac{n}{n^2+2n+1}\tag{inverse both (positive) sides of inequality}\\
+  1-\frac{1}{n+1}&\le1-\frac{n}{n^2+2n+1}\tag{negate both sides of inequality}\\
+  1-\frac{1}{n+1}&\le\left(1-\frac{1}{n^2+2n+1}\right)^n\tag{Bernoulli's inequality}\\
+  \frac{n+1}{n+2}&\le\left(\frac{n^2+2n}{n^2+2n+1}\right)^n\\
+  \frac{n+2}{n+1}&\ge\left(\frac{n^2+2n+1}{n^2+2n}\right)^n\tag{inverse both (positive) sides of inequality}\\
+  \frac{n+2}{n+1}&\ge\left(\frac{(n+1)^2}{n(n+2)}\right)^n\\
+  \frac{n+2}{n+1}&\ge\left(\frac{n+1}{n+2}\right)^n\left(\frac{n+1}{n}\right)^n\\
+  \frac{n+2}{n+1}\left(\frac{n+2}{n+1}\right)^n&\ge\left(\frac{n+1}{n}\right)^n\tag{divide both sides by positive number}\\
+  \left(\frac{n+2}{n+1}\right)^{n+1}&\ge\left(\frac{n+1}{n}\right)^n\\
+  \left(1+\frac{1}{n+1}\right)^{n+1}&\ge\left(1+\frac{1}{n}\right)^n\\
+  a_{n+1}&\ge a_n\tag{def. of $a_n$}\\
+\end{align*}
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Consider the sequence $(a_n)_{n=1}^\infty$ where $a_n=\frac{n}{3n^2+1}$. Use $\epsilon$-$N$ language to show that $(a_n)_{n=1}^\infty$ is Cauchy, then find its limit.
+\bigskip
+
+\noindent\textbf{Solution:} For this sequence to be Cauchy, it must be the case that for any $\epsilon>0$ there is a positive integer $N$ such that for positive integers $n,m\ge N$, we have $|a_n-a_m|<\epsilon$. Below we will characterize that $N$ in terms of $\epsilon$:
+\begin{align*}
+  |a_n-a_m|&=\left|\frac{n}{3n^2+1}-\frac{m}{3m^2+1}\right|\\
+  &\le\frac{n}{3n^2+1}+\frac{m}{3m^2+1}\tag{triangle inequality}\\
+  &\le\frac{n}{n^2}+\frac{m}{m^2}\tag{smaller denominator, larger value}\\
+  &=\frac{1}{n}+\frac{1}{m}\\
+  &\le\frac{1}{N}+\frac{1}{N}=\frac{2}{N}\tag{$n,m\ge N$}
+\end{align*}
+
+Now let us have $\frac{2}{N}<\epsilon$, which would satisfy the Cauchy condition. This would mean that $N<\frac{2}{\epsilon}$.
+
+And so, given any $\epsilon>0$, we have that $\forall N>\frac{2}{\epsilon}$ where $N\in\Z^+$:
+$$(\forall n,m\in\Z^+)\,\,n,m\ge N\implies |a_n-a_m|<\epsilon$$
+
+Thus $(a_n)_{n=1}^\infty$ is Cauchy. Now we find its limit:
+\begin{align*}
+  \lim_{n\to\infty}a_n&=\lim_{n\to\infty}\frac{n}{3n^2+1}\tag{def. of $a_n$}\\
+  &=\lim_{n\to\infty}\frac{\frac{1}{n}}{3+\frac{1}{n^2}}\\
+  &=\frac{\lim_{n\to\infty}\frac{1}{n}}{3+\lim_{n\to\infty}\frac{1}{n^2}}\tag{limit of ratio is ratio of limits}\\
+  &=\frac{0}{3+0}=0\\
+\end{align*}
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Find the limit of the sequence $(a_n)_{n=1}^\infty$ where:
+$$a_n=\frac{\sin(n)}{2n+1}$$
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+  \lim_{n\to\infty}a_n&=\lim_{n\to\infty}\frac{\sin(n)}{2n+1}\tag{def. of $a_n$}\\
+  &=\lim_{n\to\infty}\frac{\frac{\sin(n)}{n}}{2+\frac{1}{n}}\\
+  &=\frac{\lim_{n\to\infty}\frac{\sin(n)}{n}}{2+\lim_{n\to\infty}\frac{1}{n}}\tag{limit of ratio is ratio of limits}\\
+  &=\frac{0}{2+0}=0\tag{$\lim_{x\to\infty}\frac{\sin(x)}{x}=0$}\\
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Find the limit of the sequence $(a_n)_{n=1}^\infty$ where:
+$$a_n=1+\sqrt{n+1}-\sqrt{n}$$
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+  \lim_{n\to\infty}a_n&=\lim_{n\to\infty}(1+\sqrt{n+1}-\sqrt{n})\tag{def. of $a_n$}\\
+  &=1+\lim_{n\to\infty}(\sqrt{n+1}-\sqrt{n})\\
+  &=1+\lim_{n\to\infty}\frac{1}{\sqrt{n+1}+\sqrt{n}}\tag{multiply by conjugate}\\
+  &=1+0=1\tag{$\lim_{n\to\infty}\sqrt{n+1}+\sqrt{n}=\infty$}
+\end{align*}
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Find the limit of the sequence $(a_n)_{n=1}^\infty$ where:
+$$a_n=\frac{n}{2^n}$$
+
+\noindent\textbf{Solution:} First note that:
+\begin{equation*}
+  n>4\implies n^2<2^n\tag{lemma 1}
+\end{equation*}
+
+So we have, for $n>4$:
+\begin{align*}
+  0&\le\frac{n}{2^n}\tag{$n>0$}\\
+  0&\le\frac{n}{2^n}\le\frac{n}{n^2}\tag{lemma 1, $n>4$}\\
+  0&\le\frac{n}{2^n}\le\frac{1}{n}\\
+  \lim_{n\to\infty}0&\le\lim_{n\to\infty}\frac{n}{2^n}\le\lim_{n\to\infty}\frac{1}{n}\tag{squeeze theorem}\\
+  0&\le\lim_{n\to\infty}\frac{n}{2^n}\le0\\
+  &\implies\lim_{n\to\infty}\frac{n}{2^n}=0
+\end{align*}
+
+\subsection*{Problem 6}
+\noindent\textbf{Problem:} Find the limit of the sequence $(a_n)_{n=1}^\infty$ where:
+$$a_n=\frac{2^n}{n!}$$
+
+\noindent\textbf{Solution:} 
+\begin{align*}
+  0&\le\frac{2^n}{n!}=\frac{\overbrace{2\cdot2\cdot2\cdots2}^{\text{$n$ copies}}}{1\cdot2\cdot3\cdots n}\tag{$n>0$}\\
+  0&\le\frac{2^n}{n!}\le\frac{2\cdot2}{1\cdot2}\left(\frac23\right)^{n-2}\\
+  \lim_{n\to\infty}0&\le\lim_{n\to\infty}\frac{2^n}{n!}\le\lim_{n\to\infty}\frac{2\cdot2}{1\cdot2}\left(\frac23\right)^{n-2}\tag{squeeze theorem}\\
+  0&\le\lim_{n\to\infty}\frac{2^n}{n!}\le0\\
+  &\implies\lim_{n\to\infty}\frac{2^n}{n!}=0
+\end{align*}
+\end{document}

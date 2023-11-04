@@ -1,0 +1,176 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\Midterm 2}
+\author{Ozaner Hansha}
+\date{March 31, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Part a:} Consider an arbitrary $\epsilon>0$. And a $\delta=\frac{1}{\epsilon}>0$. We then have $\forall x\in\R^+$:
+\begin{align*}
+  x>\delta&\implies\frac{1}{x}<\frac{1}{\delta}\tag{$1/x$ is strictly decreasing over $\R^+$}\\
+  &\implies\left|\frac{1}{x}\right|<\frac{1}{\delta}\tag{$x>0\implies 1/x>0$}\\
+  &\implies|\sin(x)|\left|\frac{1}{x}\right|<\frac{1}{\delta}\tag{$|\sin(x)|\le 1$}\\
+  &\implies\left|\frac{\sin(x)}{x}\right|<\frac{1}{\delta}\\
+  &\implies\left|\frac{\sin(x)}{x}\right|<\epsilon\tag{def. of $\delta$}
+\end{align*}
+
+And this is precisely the definition of:
+$$\forall x\in\R^+,\quad\lim_{x\to\infty}\frac{\sin(x)}{x}=0$$
+\bigskip
+
+\noindent\textbf{Part b:} Consider the sequence $A=\{1/n\}_{n=1}^\infty$. You'll note that:
+$$\forall n\in\Z^+,\quad 0<\frac{1}{n}$$
+
+And so $A$ is a subsequence of our interval $(0,\infty)$, since all $a_n$ are contained within it. Now all that is left is to show that $A$ converges to 0. Consider an arbitrary $\epsilon>0$, and let be an integer $N$ such that $\frac{1}{N}<\epsilon$ (this is guaranteed to us by the archemdian property). We then have:
+\begin{align*}
+  n\ge N&\implies\frac{1}{n}\le\frac{1}{N}\tag{$1/x$ is strictly decreasing over $\R^+$}\\
+  &\implies\frac{1}{n}<\epsilon\tag{def. of $N$}\\
+  &\implies\left|\frac{1}{n}\right|<\epsilon\tag{$n>0\implies 1/n>0$}\\
+  &\implies\left|\frac{1}{n}-0\right|<\epsilon
+\end{align*}
+
+And so we are done. We have shown that a subsequence of $(0,\infty)$ converges to 0, and thus it is an accumulation point of said interval.
+\bigskip
+
+\noindent\textbf{Part c:} Note the following:
+\begin{align*}
+  \lim_{x\to0}\frac{\sin(2x)}{3x(x-3)}&=\lim_{x\to0}\frac{2\sin x\cos x}{3x(x-3)}\tag{double angle formula}\\
+  &=\lim_{x\to0}\frac{2}{3}\cdot\frac{\sin x}{x}\cdot\frac{\cos x}{x-3}\\
+  &=\frac{2}{3}\lim_{x\to0}\frac{\sin x}{x}\lim_{x\to0}\frac{\cos x}{x-3}\tag{product of limits is limit of products}\\
+  &=\frac{2}{3}\lim_{x\to0}\frac{\cos x}{x-3}\tag{limit given}\\
+  &=\frac{2}{3}\cdot\frac{\cos 0}{0-3}\tag{$\cos$ is contious at 0}\\
+  &=\frac{2}{3}\cdot-\frac{1}{3}=-\frac{2}{9}
+\end{align*}
+\bigskip
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} First note that both pieces of this function are continuous on their own. And so, the only points in which $f(x)$ can be continuous are where they coincide:
+\begin{align*}
+  x^2+1&=3-x^2\\
+  2x^2&=2\\
+  x^2&=1\\
+  x&=\pm1
+\end{align*}
+
+And so we have that:
+$$\lim{x\to\pm1}=f(\pm1)$$
+
+Every other point, i.e. the $x$ in which the two functions \textit{don't} coincide, are discontinuous. This is because there is no interval of non-zero size that does not contain a rational number. And since we are considering the points $x$ in which the functions do not coincide, $f(x)$ cannot be continuous on such an $x$ as the two functions approach different values. An example of this is at $x=5$.
+\bigskip
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Consider $x,y\in[a,b]$ such that $x<y$. Note that:
+\begin{align*}
+  x<y&\implies[a,x]\subseteq[a,y]\\
+  &\implies\sup\{f(t)\mid t\in[a,x]\}\le\sup\{f(t)\mid t\in[a,y]\}\\
+  &\implies g(x)\le g(y)\tag{def. of $g$}
+\end{align*}
+
+With the second implication holding because the supremum of a subset can be no larger than the supremum of its superset.
+
+Now consider and arbitrary $x_0\in[a,b]$. Since $f(x)$ is continuous, we have that for any $\epsilon>0$, there exists a $\delta>0$ such that $\forall x,x_0\in[a,b]$:
+\begin{align*}
+  0<|x-x_0|<\delta&\implies |f(x)-f(x_0)|<\epsilon\\
+  &\implies|g(x)-g(x_0)|<|f(x)-f(x_0)|<\epsilon\\
+  &\implies|g(x)-g(x_0)|<\epsilon
+\end{align*}
+
+Which is precisely the definition of $g(x)$ being continuous over $[a,b]$.
+
+% Now note that for any $x$ we have:
+% \begin{align*}
+%   \{x\}\subseteq[a,x]&\implies\sup\{f(x)\}\le\sup\{f(t)\mid t\in[a,x]\}\tag{same reasoning as above}\\
+%   &\implies f(x)\le g(x)\tag{def. of $g(x)$, \& $\sup\{a\}=a$}
+% \end{align*}
+
+
+\bigskip
+
+\subsection*{Problem 4}
+\noindent\textbf{Part a:} Let us expand both terms in the numerator via the binomial theorem:
+\begin{align*}
+  \frac{(1+mx)^n-(1+nx)^m}{x^2}&=\frac{\left(1+nmx+\binom{n}{2}m^2x^2+\cdots\right)-\left(1+mnx+\binom{m}{2}n^2x^2+\cdots\right)}{x^2}\\
+  &=\frac{\frac{nm(n-m)}{2}x^2+c_1x^3+c_2x^4+\cdots}{x^2}\\
+  &=\frac{nm(n-m)}{2}+c_1x+c_2x^2+\cdots\\
+\end{align*}
+
+Where $c_k$ are some constants found by calculating out the binomial theorem. Now note that this is a polynomial, meaning it is continuous everywhere. As such we have:
+\begin{align*}
+  \lim_{x\to0}\frac{(1+mx)^n-(1+nx)^m}{x^2}&=\lim_{x\to0}\frac{nm(n-m)}{2}+c_1x+c_2x^2+\cdots\tag{see above}\\
+  &=\frac{nm(n-m)}{2}+c_1\cdot0+c_2\cdot0^2+\cdots\tag{continous}\\
+  &=\frac{nm(n-m)}{2}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Note the following:
+\begin{align*}
+  \lim_{x\to1}\frac{x^m-1}{x^n-1}&=\lim_{x\to1}\frac{(x-1)(x^{m-1}+x^{m-2}+\cdots+x+1)}{(x-1)(x^{n-1}+x^{n-2}+\cdots+x+1)}\\
+  &=\lim_{x\to1}\frac{x^{m-1}+x^{m-2}+\cdots+x+1}{x^{n-1}+x^{n-2}+\cdots+x+1}\\
+  &=\frac{1^{m-1}+1^{m-2}+\cdots+1+1}{1^{n-1}+1^{n-2}+\cdots+1+1}\tag{$\substack{\text{rational functions are continous}\\\text{where they are defined}}$}\\
+  &=\frac{m}{n}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part c:} Note, as used in the last problem, the following identity:
+$$t^N-1=(t-1)\sum^{N-1}_k=0t^k$$
+
+By setting $x=t^{nm}$, and noticing that $x\to1\implies t^nm\to1\implies t\to1$, we have:
+\begin{align*}
+  \lim_{x\to1}\frac{\sqrt[m]{x}-1}{\sqrt[n]{x}-1}&=\lim_{t\to1}\frac{\sqrt[m]{t^{nm}}-1}{\sqrt[n]{t^{nm}}-1}\tag{def. of $t^nm$}\\
+  &=\lim_{t\to1}\frac{t^n-1}{t^m-1}\\
+  &=\frac{n}{m}\tag{problem b}
+\end{align*}
+\bigskip
+
+\end{document}

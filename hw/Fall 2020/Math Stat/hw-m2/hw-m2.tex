@@ -1,0 +1,207 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Monthly HW 2}
+\author{Ozaner Hansha}
+\date{November 10, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Consider an exponential distribution with pdf $f_X(x)=\frac{1}{\theta}e^{-x/\theta}$.
+\bigskip
+
+\noindent\textbf{Part a:} Find the method of moments estimator of $\theta$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the method of moments has us set the first $k$ moments of our distribution equal to the first $k$ sample moments, then solve for our parameters:
+\begin{align*}
+    E[X]&=\bar M_1\tag{method of moments}\\
+    \theta&=\bar M_1\tag{mean of exponential RV}\\
+    &=\frac{1}{n}\sum_{i=1}^nX_i\tag{def. of 1st sample moment}\\
+    &=\bar X\tag{def. of sample mean}
+\end{align*}
+
+And so our method of moments estimator is given by:
+$$\hat\theta_{\text{MM}}=\bar X$$
+\bigskip
+
+\noindent\textbf{Part b:} Check whether the estimator from part a is biased.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the mean of our distribution (exponential) is $\theta$ and that the sample mean is always an unbiased estimator of the mean. As such, our estimator is unbiased.
+\bigskip
+
+\noindent\textbf{Part c:} Find a statistic $\hat\theta'$ such that $P(\theta<\hat\theta')=.9$.
+\bigskip
+
+\noindent\textbf{Solution:} First note the following:
+\begin{align*}
+    X_i&\sim\text{Exp}(\theta)\\
+    \sum_{i=1}^nX_i&\sim\text{Gamma}(n,\theta)\tag{sum of i.i.d. exponential RVs is gamma}\\
+    \frac{2}{\theta}\sum_{i=1}^nX_i&\sim\text{Gamma}(n,2)\tag{scaling property of gamma RV}\\
+    &\sim\chi^2_{2n}\tag{$\chi^2_k\sim\text{Gamma}\left(\frac{k}{2},2\right)$}
+\end{align*}
+
+And so we have the following:
+\begin{align*}
+    .9&=P\left(\frac{2}{\theta}\sum_{i=1}^nX_i>\underbrace{\text{Inv-}\chi^2_{2n}(1-.9)}_{\text{cdf}}\right)\tag{$\frac{2}{\theta}\sum_{i=1}^nX_i\sim\chi^2_{2n}$}\\
+    &=P\left(\frac{1}{\theta}>\frac{\text{Inv-}\chi^2_{2n}(.1)}{2\sum_{i=1}^nX_i}\right)\\
+    &=P\left(\theta<\frac{\text{Inv-}\chi^2_{2n}(.1)}{2\sum_{i=1}^nX_i}\right)\tag{both sides of inequality are positive}\\
+\end{align*}
+
+And so our statistic $\hat\theta'$ is given by:
+$$\hat\theta'=\frac{\text{Inv-}\chi^2_{2n}(.1)}{2\sum_{i=1}^nX_i}=\frac{\text{Inv-}\chi^2_{2n}(.1)}{2n\bar X}$$
+\bigskip
+
+\noindent\textbf{Part d:} If we measure a sample mean of $\bar x=4$ with $n=10$, produce a 90\% one-sided confidence interval for the statistic in part d of the form $\theta<\hat\theta'(X)$.
+\bigskip
+
+\noindent\textbf{Solution:} Our measured 90\% one-sided confidence interval is given by:
+\begin{align*}
+    (-\infty,\hat\theta'(x))&=\left(-\infty,\frac{\chi^2_{2n}(.1)}{2n\bar x}\right)\tag{part c}\\
+    &=\left(-\infty,\frac{\chi^2_{20}(.1)}{2\cdot10\cdot 4}\right)\\
+    &\approx\left(-\infty,\frac{12.44261}{80}\right)\\
+    &\approx(-\infty,0.155533)
+\end{align*}
+
+\subsection*{Question 2}
+Consider two distributions with the same mean $\mu$ but with different variances $\sigma^2_1$, $\sigma^2_2$. Suppose we take independent samples from each distribution of sizes $n_1$, $n_2$, and that these samples have sample means $\bar X_1$, $\bar X_2$.
+\bigskip
+
+\noindent\textbf{Part a:} Show that for any $\omega\in\mathbb R$, the statistic $\hat\theta_\omega=\omega\bar X_1+(1-\omega)\bar X_2$ is an unbiased estimator of $\mu$.
+\bigskip
+
+\noindent\textbf{Solution:} Let us compute the expected value of $\hat\theta-\omega$:
+\begin{align*}
+    E[\hat\theta_\omega]&=E[\omega\bar X_1+(1-\omega)\bar X_2]\tag{def. of $\hat\theta_\omega$}\\
+    &=\omega E[\bar X_1]+(1-\omega)E[\bar X_2]\tag{linearity of expectation}\\
+    &=\omega\mu+(1-\omega)\mu\tag{mean of sample mean}\\
+    &=\omega\mu+\mu-\omega\mu\\
+    &=\mu
+\end{align*}
+
+And so we have that, for any real $\omega$, the mean of our estimator $\hat\theta_\omega$ is the mean of the population. Thus our estimator is unbiased.
+\bigskip
+
+\noindent\textbf{Part b:} Give the variance of the estimator $\hat\theta_\omega$.
+\bigskip
+
+\noindent\textbf{Solution:} The variance of $\hat\theta_\omega$ is given by:
+\begin{align*}
+    \Var(\hat\theta_\omega)&=\Var(\omega\bar X_1+(1-\omega)\bar X_2)\tag{def. of $\hat\theta_\omega$}\\
+    &=\Var(\omega\bar X_1)+\Var((1-\omega)\bar X_2)\tag{variance of independent RVs}\\
+    &=\omega^2\Var(\bar X_1)+(1-\omega)^2\Var(\bar X_2)\tag{variance of multiple of RV}\\
+    &=\omega^2\frac{\sigma^2_1}{n_1}+(1-\omega)^2\frac{\sigma^2_2}{n_2}\tag{variance of sample mean}
+\end{align*}
+\smallskip
+\newpage
+
+\noindent\textbf{Part c:} Show that $\Var(\hat\theta_\omega)$ is minimized when:
+$$\omega=\frac{n_1\sigma^2_2}{n_2\sigma^2_1+n_1\sigma^2_2}$$
+\bigskip
+
+\noindent\textbf{Solution:} Our goal is to compute the following:
+\begin{align*}
+    \argmin_{\omega\in\mathbb R}\Var(\hat\theta_\omega)&=\argmin_{\omega\in\mathbb R}\,\omega^2\frac{\sigma^2_1}{n_1}+(1-\omega)^2\frac{\sigma^2_2}{n_2}\tag{part b}\\
+    &=\argmin_{\omega\in\mathbb R}\underbrace{\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}_{a}\omega^2+\underbrace{\left(-\frac{2\sigma^2_2}{n_2}\right)}_{b}\omega+\underbrace{\frac{\sigma^2}{n_2}}_{c}
+\end{align*}
+
+Note that the expression we are trying to minimize is a quadratic polynomial in $\omega$. Recall that all quadratics in one variable have a single extremum, and that extremum is a minimum if $a>0$ and a maximum if $a<0$.
+
+In our case, $a=\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)$ is always positive, unless both $\sigma^2_1$ and $\sigma^2_2$ were zero (i.e. both RVs the distributions correspond to are just constants). And so the $\omega$ that minimizes estimator's variance is given by the zero of the above quadratic:
+\begin{align*}
+    \argmin_{\omega\in\mathbb R}\Var(\hat\theta_\omega)&=\argmin_{\omega\in\mathbb R}\underbrace{\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}_{a}\omega^2+\underbrace{\left(-\frac{2\sigma^2_2}{n_2}\right)}_{b}\omega+\underbrace{\frac{\sigma^2}{n_2}}_{c}\\
+    &=-\frac{b}{2a}\tag{zero of a quadratic}\\
+    &=-\frac{-\frac{2\sigma^2_2}{n_2}}{2\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}\\
+    &=\frac{\sigma^2_2}{n_2\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}\\
+    &=\frac{\sigma^2_2}{\frac{n_2\sigma^2_1}{n_1}+\sigma^2_2}\\
+    &=\frac{n_1\sigma^2_2}{n_2\sigma^2_1+n_1\sigma^2_2}
+\end{align*}
+
+And so we are done.
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Consider an estimator $\hat\theta$, with mean $\mu$ and variance $\sigma$, for the parameter $\theta$. Is the following true:
+$$P(\mu-2\sigma<\theta<\mu+2\sigma)\approx.95$$
+
+\noindent\textbf{Solution:} This is not true. The only reasonable way to interpret the given statement is by considering the parameter $\theta$ to be a constant random variable. As such, the probability given above is either 1 or 0 depending on whether $\mu-2\sigma<\theta<\mu+2\sigma$ is true or not. In either case, it is \textit{not} approximately $.95$.
+\bigskip
+
+However, if $\hat\theta\sim\mathcal N(\mu,\sigma^2)$, then the following modified statement \textit{is} true:
+\begin{align*}
+    P(\mu-2\sigma<\hat\theta<\mu+2\sigma)&=P\left(-2<\frac{\hat\theta-\mu}{\sigma}<2\right)\\
+    &=\Phi(2)-\Phi(-2)\approx.95\tag{$\frac{\hat\theta-\mu}{\sigma}$ is a standard normal RV}
+\end{align*}
+
+\subsection*{Question 4}
+Consider a statistic $Y$ dependent on some paramater $\theta$.
+\bigskip
+
+\noindent\textbf{Part a:} Suppose $Y$ has a cdf given by:
+$$F(y)=\begin{cases}
+    1-\frac{1}{(\theta+y)^2},&y>-\theta\\
+    0,&\text{otherwise}
+\end{cases}$$
+
+Show that $\theta\le10-Y$ is a 99\% confidence interval for $\theta$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+    P(\theta\le10-Y)&=P(Y\le10-\theta)\\
+    &=F_Y(10-\theta)\tag{def. of cdf}\\
+    &=1-\frac{1}{(\theta+10-\theta)^2}\tag{$10-\theta>-\theta$}\\
+    &=1-\frac{1}{100}=.99
+\end{align*}
+
+And so $(-\infty,10-Y]$ is a 99\% confidence interval for $\theta$.
+\bigskip
+
+\noindent\textbf{Part b:} Suppose $Y$ has a pdf given by:
+$$f(y)=\begin{cases}
+    \frac{3\theta}{(\theta y+1)^4},&y>0\\
+    0,&\text{otherwise}
+\end{cases}$$
+
+Give $E[Y]$ and show that $2Y$ is an unbiased estimator of $\frac{1}{\theta}$. 
+\bigskip
+
+\noindent\textbf{Solution:} The expected value of $Y$ is given by:
+\begin{align*}
+    E[Y]&=\int_0^\infty\frac{3\theta}{(\theta y+1)^4}y\dd{y}\tag{def. of expected value}\\
+    &=3\theta\int_0^\infty\frac{y}{(\theta y+1)^4}\dd{y}\\
+    &=3\theta\int_{u(0)}^{u(\infty)}\frac{u-1}{\theta u^4}\frac{\dd{u}}{\theta}\tag{$\substack{u=\theta y+1\rightarrow y=\frac{u-1}{\theta}\\\dv{u}{y}=\theta\rightarrow\dd y=\frac{\dd u}{\theta}}$}\\
+    &=\frac{3}{\theta}\int_1^\infty\frac{u-1}{u^4}\dd{u}\\
+    &=\frac{3}{\theta}\left(\int_1^\infty\frac{1}{u^3}\dd{u}-\int_1^\infty\frac{1}{u^4}\dd{u}\right)\\
+    &=\frac{3}{\theta}\left(\eval{-\frac{1}{2u^2}}{1}{\infty}-\eval{-\frac{1}{3u^3}}{1}{\infty}\right)\\
+    &=\frac{3}{\theta}\left(\frac{1}{2}-\frac{1}{3}\right)\\
+    &=\frac{1}{2\theta}
+\end{align*}
+
+Now we will show that $2Y$ is an unbiased estimator of $\frac{1}{\theta}$:
+\begin{align*}
+    E[2Y]&=2E[Y]\tag{linearity of expectation}\\
+    &=2\cdot\frac{1}{2\theta}\tag{see above}\\
+    &=\frac{1}{\theta}
+\end{align*}
+
+And so it is unbiased.
+
+\end{document}

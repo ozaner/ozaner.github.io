@@ -1,0 +1,403 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#3}
+\author{Ozaner Hansha}
+\date{February 15, 2021}
+\maketitle
+
+\subsection*{Problem a}
+\noindent\textbf{Problem:} Give the definitions of a \textbf{ball}, \textbf{open set}, \textbf{closed set}, \textbf{bounded set}, \textbf{compact set}, and \textbf{continuous function}. Then for each give an example that satifies the definition and one that doesn't.
+\bigskip
+
+\noindent\textbf{Solution:}
+\begin{itemize}
+    \item An \textbf{open ball}, or just ball, about some $\vec a\in\R^n$ of radius $r>0$, is given by the following set:
+    $$B(\vec a, r)=\{\vec x\in\R^n\mid \|\vec x-\vec a\|<r\}$$
+    A \textbf{closed ball} is the same but with a non-strict inequality:
+    $$\{\vec x\in\R^n\mid \|\vec x-\vec a\|\le r\}$$
+    Examples:
+    \begin{itemize}[label = -]
+        \item A ball: $\{\vec x\in\R^3\mid \|\vec x\|<2\}$
+        \item Not a ball: $\{\vec x\in\R^3\mid \|\vec x\|=2\}$
+    \end{itemize}
+
+    \item A set $S\subseteq\R^n$ is \textbf{open} iff it satisfies the following:
+    $$(\forall\vec x\in S)\,(\exists r>0)\, B(\vec x, r)\subseteq S$$
+    Examples:
+    \begin{itemize}[label = -]
+        \item An open set: $B(\vec 0, 2)\cup B(\vec 1, 2)$
+        \item Not an open set: $\{\vec x\in\R^n\mid \|\vec x\|=4\}$
+    \end{itemize}
+
+    \item A set $S\subseteq\R^n$ is \textbf{closed} iff $S^\complement$ is open.
+    
+    Examples:
+    \begin{itemize}[label = -]
+        \item A closed set: $\{\vec x\in\R^n\mid \|\vec x\|=4\}\cup\{\vec x\in\R^n\mid \|\vec x-\vec 1\|=1\}$
+        \item Not a closed set: $B(\vec 0, 2)$
+    \end{itemize}
+
+    \item A set $S\subseteq\R^n$ is \textbf{bounded} iff:
+    $$(\exists R\in\R)\,(\forall\vec x\in S)\, \|\vec x\|\le R$$
+    Examples:
+    \begin{itemize}[label = -]
+        \item A bounded set: $\{\vec x\in\R^n\mid \|\vec x\|<70 \wedge x_1\text{ is prime}\}$
+        \item Not a bounded set: $\{\vec x\in\R^2\mid \|\vec x\| > 2\}$
+    \end{itemize}
+
+    \item A set $S\subseteq\R^n$ is \textbf{compact} iff $S$ is closed and bounded.
+    
+    Examples:
+    \begin{itemize}[label = -]
+        \item A compact set: $\{\vec x\in\R^n\mid \|\vec x\|<70\}$
+        \item Not a compact set: $\{\vec 0\}$
+    \end{itemize}
+
+    \item A function $f:\R^n\to\R$ is \textbf{continuous} at $\vec x\in S$ iff:
+    $$(\forall\epsilon>0)\,(\exists r>0)\,(\forall\vec y\in S\cap B(\vec x,r))\, |f(\vec x)-f(\vec y)|<\epsilon$$
+    Examples:
+    \begin{itemize}[label = -]
+        \item A continuous function on $\R$: $f(\vec x)=x^2$
+        \item Not a continuous function at 0: $f(\vec x)=\frac{1}{x}$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Problem b}
+\noindent\textbf{Problem:} Define two half-planes $H,H'$ (i.e. half-spaces in $\R^2$) such that their union is not convex. Explain with a picture why their union is not convex. Then, explain it without a picture, exhibiting a convex combination of two points of $H\cap H'$ that does not belong to $H\cup H'$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following closed half-planes:
+\begin{align*}
+    H&=\{\vec x\in\R^2\mid x_2\ge 2\}\\
+    H'&=\{\vec x\in\R^2\mid x_2\le 0\}\\
+\end{align*}
+
+Their union $H\cup H'$ is not convex. First we show this with a picture of a convex combination of points in $H\cup H'$ not contained within $H\cup H'$:
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel=$x_1$,
+        ylabel=$x_2$,
+        xmin=-3,xmax=3,
+        ymin=-4,ymax=6,
+        axis lines=center,
+        legend pos=outer north east,
+        legend style={legend cell align=right,legend plot pos=right}] 
+
+    %green stuff
+    \addplot[name path=P1, ForestGreen,thick] coordinates{(-3,2) (3,2)};
+    \addlegendentry{$H$}
+    \plot[name path=P2, thick,samples=100,domain=-3:3,
+    forget plot,draw=none] {6};
+    \addplot[fill=ForestGreen,
+        opacity=.3,
+        forget plot,
+        % pattern=horizontal lines,
+        pattern color=ForestGreen]
+        fill between [of=P1 and P2, soft clip={domain=-3:3}];
+
+    \addplot[name path=Q1, blue,thick] coordinates{(-3,0) (3,0)};
+    \addlegendentry{$H'$}
+    \plot[name path=Q2, thick,samples=100,domain=-3:3,
+    forget plot,draw=none] {-4};
+    \addplot[fill=blue,
+        opacity=.3,
+        forget plot,
+        % pattern=horizontal lines,
+        pattern color=blue]
+        fill between [of=Q1 and Q2, soft clip={domain=-3:3}];
+
+    %points
+    \node[label={0:{\small$\in H\cup H'$}},circle,fill,inner sep=1.5pt] (A1) at (axis cs:1,3) {};
+    \node[label={0:{\small$\in H\cup H'$}},circle,fill,inner sep=1.5pt] (A2) at (axis cs:.5,-1.5) {};
+    \node[label={0:{\small$\not\in H\cup H'$}}, circle,fill,inner sep=1.5pt] (A3) at (axis cs:.78,1) {};
+    \draw (A1) -- (A2);
+
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+Now we show this more concretely, by demonstrating such a convex combination:
+\begin{equation*}
+    \text{Let }\vec x=\begin{bmatrix}
+        0\\4
+    \end{bmatrix},\,\,\,
+    \vec y=\begin{bmatrix}
+        0\\-2
+    \end{bmatrix}
+\end{equation*}
+
+Now note the following convex combination of $\vec x$ and $\vec y$:
+\begin{align*}
+    \frac{1}{2}\vec x+\frac{1}{2}\vec y&=\frac{1}{2}\begin{bmatrix}
+        0\\4
+    \end{bmatrix}+\frac{1}{2}\begin{bmatrix}
+        0\\-2
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        0\\2
+    \end{bmatrix}+\begin{bmatrix}
+        0\\-1
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        0\\1
+    \end{bmatrix}\not\in H\cup H'\tag{$1\not\ge 2\wedge 1\not\le 0$}
+\end{align*}
+
+Clearly $\vec x,\vec y\in H\cup H'$ yet we have demonstrated a convex combination of the two, namely $\frac{1}{2}\vec x+\frac{1}{2}\vec y$, that is not an element of $H\cup H'$. Thus $H\cup H'$ is not convex.
+
+\subsection*{Problem c}
+\noindent\textbf{Problem:} Suppose $H$ and $H'$ are two half-spaces in $\R^2$ defined by $\vec a$ and $k$ and by $\vec a'$ and $k'$ respectively. Suppose moreover that their union $H\cup H'$ is convex. What can you conclude about the two half-spaces? (You may phrase your answer in terms of the data $\vec a, k, \vec a', k'$ and motivate it using words and/or a picture)
+\bigskip
+
+\noindent\textbf{Solution:} The union of two half-planes can only be convex if they cover the entire plane. To see this let us consider all the possible cases. First let us consider the case when the half-planes are parallel. Two parallel half-planes can either have a non-0 gap between them, have an exactly 0 gap, or overlap each other:
+\begin{figure}[H]
+\begin{center}
+    \scalebox{.8}
+    {
+        \begin{subfigure}[b]{0.4\linewidth}
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$x_1$,
+            ylabel=$x_2$,
+            xmin=-3,xmax=3,
+            ymin=-4,ymax=6,
+            axis lines=center,
+            legend pos=outer north east,
+            legend style={legend cell align=right,legend plot pos=right}] 
+
+        %green stuff
+        \addplot[name path=P1, ForestGreen,thick] {-2*x+2};
+        \plot[name path=P2, thick,samples=100,domain=-3:3,
+        forget plot,draw=none] {6};
+        \addplot[fill=ForestGreen,
+            opacity=.3,
+            forget plot,
+            % pattern=horizontal lines,
+            pattern color=ForestGreen]
+            fill between [of=P1 and P2, soft clip={domain=-3:3}];
+
+        \addplot[name path=Q1, blue,thick] {-2*x};
+        \plot[name path=Q2, thick,samples=100,domain=-3:3,
+        forget plot,draw=none] {-4};
+        \addplot[fill=blue,
+            opacity=.3,
+            forget plot,
+            % pattern=horizontal lines,
+            pattern color=blue]
+            fill between [of=Q1 and Q2, soft clip={domain=-3:3}];
+
+        %points
+        \node[circle,fill,inner sep=1.5pt] (A1) at (axis cs:1,3) {};
+        \node[circle,fill,inner sep=1.5pt] (A2) at (axis cs:.5,-1.5) {};
+        \node[circle,fill,inner sep=1.5pt] (A3) at (axis cs:.67,0) {};
+        \draw (A1) -- (A2);
+
+        \end{axis}
+        \end{tikzpicture}
+        \caption{Parallel, non-0 gap}
+        \end{subfigure}
+    }
+    \scalebox{.8}
+    {
+        \begin{subfigure}[b]{0.4\linewidth}
+            \begin{tikzpicture}
+            \begin{axis}[
+                xlabel=$x_1$,
+                ylabel=$x_2$,
+                xmin=-3,xmax=3,
+                ymin=-4,ymax=6,
+                axis lines=center,
+                legend pos=outer north east,
+                legend style={legend cell align=right,legend plot pos=right}] 
+        
+            %green stuff
+            \addplot[name path=P1, ForestGreen,thick] {-2*x+2};
+            \plot[name path=P2, thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {6};
+            \addplot[fill=ForestGreen,
+                opacity=.3,
+                forget plot,
+                % pattern=horizontal lines,
+                pattern color=ForestGreen]
+                fill between [of=P1 and P2, soft clip={domain=-3:3}];
+        
+            \addplot[name path=Q1, blue,thick] {-2*x+2};
+            \plot[name path=Q2, thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {-4};
+            \addplot[fill=blue,
+                opacity=.3,
+                forget plot,
+                % pattern=horizontal lines,
+                pattern color=blue]
+                fill between [of=Q1 and Q2, soft clip={domain=-3:3}];
+        
+            \end{axis}
+            \end{tikzpicture}
+            \caption{Parallel, 0 gap}
+        \end{subfigure}
+    }
+    \scalebox{.8}
+    {
+        \begin{subfigure}[b]{0.4\linewidth}
+            \begin{tikzpicture}
+            \begin{axis}[
+                xlabel=$x_1$,
+                ylabel=$x_2$,
+                xmin=-3,xmax=3,
+                ymin=-4,ymax=6,
+                axis lines=center,
+                legend pos=outer north east,
+                legend style={legend cell align=right,legend plot pos=right}] 
+        
+            %green stuff
+            \addplot[name path=P1, ForestGreen,thick] {-2*x+2};
+            \plot[name path=P2, thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {6};
+            \addplot[fill=ForestGreen,
+                opacity=.3,
+                forget plot,
+                % pattern=horizontal lines,
+                pattern color=ForestGreen]
+                fill between [of=P1 and P2, soft clip={domain=-3:3}];
+        
+            \addplot[name path=Q1, blue,thick] {-2*x+4};
+            \plot[name path=Q2, thick,samples=100,domain=-3:3,
+            forget plot,draw=none] {-4};
+            \addplot[fill=blue,
+                opacity=.3,
+                forget plot,
+                % pattern=horizontal lines,
+                pattern color=blue]
+                fill between [of=Q1 and Q2, soft clip={domain=-3:3}];
+        
+            \end{axis}
+            \end{tikzpicture}
+            \caption{Parallel, overlap}
+        \end{subfigure}
+    }
+\end{center}
+\end{figure}
+
+(Of course, we can choose different half-planes w.l.o.g. as long as they are parallel.) In case (a) their union is clearly not convex. In cases (b) and (c) we see that their union is equivalent to the entire plane $\R^2$ which is a trivially convex set.
+
+Now let us consider the other case, where the half planes are not parallel. You'll note that in this case, there must be a point in which the planes intersect, as all non-parallel lines intersect:
+\begin{figure}[H]
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$x_1$,
+            ylabel=$x_2$,
+            xmin=-3,xmax=3,
+            ymin=-4,ymax=6,
+            axis lines=center,
+            legend pos=outer north east,
+            legend style={legend cell align=right,legend plot pos=right}] 
+
+        %green stuff
+        \addplot[name path=P1, ForestGreen,thick] {-2*x+2};
+        \plot[name path=P2, thick,samples=100,domain=-3:3,
+        forget plot,draw=none] {6};
+        \addplot[fill=ForestGreen,
+            opacity=.3,
+            forget plot,
+            % pattern=horizontal lines,
+            pattern color=ForestGreen]
+            fill between [of=P1 and P2, soft clip={domain=-3:3}];
+
+        \addplot[name path=Q1, blue,thick] {2*x+1};
+        \plot[name path=Q2, thick,samples=100,domain=-3:3,
+        forget plot,draw=none] {6};
+        \addplot[fill=blue,
+            opacity=.3,
+            forget plot,
+            % pattern=horizontal lines,
+            pattern color=blue]
+            fill between [of=Q1 and Q2, soft clip={domain=-3:3}];
+
+        %points
+        \node[label={0:{$H$}}] (A1) at (axis cs:-2,2) {};
+        \node[label={0:{$H\cap H'$}}] (A1) at (axis cs:.5,5) {};
+        \node[label={0:{$H'$}}] (A1) at (axis cs:2,2) {};
+        \node[label={0:{$(H\cup H')^\complement$}}] (A1) at (axis cs:.2,-3) {};
+
+        \node[circle,fill,inner sep=1.5pt] (A1) at (axis cs:-2,-1.7) {};
+        \node[circle,fill,inner sep=1.5pt] (A2) at (axis cs:2,-1.2) {};
+        \node[circle,fill,inner sep=1.5pt] (A3) at (axis cs:0,-1.5) {};
+        \draw (A1) -- (A2);
+
+        \end{axis}
+        \end{tikzpicture}
+        \caption{Non-parallel}
+    \end{center}
+\end{figure}
+
+Note that there will always be a gap (i.e. $(H\cup H')^\complement$) between $H$ and $H'$. If there wasn't, i.e. $H$ and $H'$ were next to each other, then they would have to be parallel. As a result, we can always demonstrate a convex combination that falls outside of the union. (Again, w.l.o.g. we can choose any two non-parallel half-planes as they will result in the same regions just in different orientations)
+
+And so we can conclude that for the union of any two half-planes to be convex, they must be parallel and there must be no gap between them (as in case (a)). In terms of $\vec a, k, \vec a', k'$ we have:
+\begin{gather*}
+    H\cup H'\text{ is convex}\iff
+    (\exists c\in\R)\text{ s.t.}\begin{cases}
+        \vec a=-c\vec a'\\
+        k\ge-ck'\\
+        c>0
+    \end{cases}\\
+\text{where:}\\
+H=\{\vec x\in\R^2\mid \vec a\cdot\vec x\ge k\}\\
+H'=\{\vec x\in\R^2\mid \vec a'\cdot\vec x\ge k'\}
+\end{gather*}
+
+\end{document}

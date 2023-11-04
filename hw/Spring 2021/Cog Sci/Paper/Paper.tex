@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage{setspace}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{titling}
+
+\let\oldabstract\abstract
+\let\oldendabstract\endabstract
+\makeatletter
+\renewenvironment{abstract}
+{\renewenvironment{quotation}%
+  {\list{}{\addtolength{\leftmargin}{3em} % change this value to add or remove length to the the default
+      \listparindent 1.5em%
+      \itemindent    \listparindent%
+      \rightmargin   \leftmargin%
+      \parsep        \z@ \@plus\p@}%
+    \item\relax}%
+  {\endlist}%
+\oldabstract}
+{\oldendabstract}
+\makeatother
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{A Review of the Meta-Problem\\of Consciousness}
+\author{Ozaner Hansha}
+\date{April 30, 2021}
+\maketitle
+
+\doublespacing
+
+\begin{abstract}
+    This paper is an examination of the meta-problem of consciousness, a question strongly related to the hard problem of consciousness and its goal of resolving the seeming explanatory gap between phenomenal experience and the physical world. We start by giving background on hard problem. We then examine David Chalmers' seminal 2018 paper on the matter, and follow it with a review of two responses to it. We end with some thoughts on where the meta-problem stands afterwards.
+\end{abstract}
+
+\section*{Background}
+\subsection*{The Hard Problem}
+In 1995, David Chalmers coined the term `the hard problem of consciousness' in his seminal paper ``Facing Up to the Problem of Consciousness'' \cite{Chalmers95facingup}. While the so called `explanatory gap' between the physical world around us and our phenomenal experience of it has been a focal point of philosophy since the field's inception, Chalmers' paper is largely responsible for the modern discussions and viewpoints surronding consciousness.
+
+But first, what exactly do we mean by `hard problem' and `explanatory gap'? Consider some everyday qualitative experiences: the color of a red apple on a desk, the feeling of pain when stubbing your toe, etc. Such phenomena seem to be well understood to scientists. Color is just certain wavelengths of light hitting your retina, and pain is just the stimulation of neurons down your nervous system that eventually reach your brain. But is that all these feelings, or \textit{qualia}, are to us? Indeed, an explanation of these facts and their physical underpinnings in, say, a textbook, or even this paper you are reading, do not seem to capture what it means to `see red' or `feel pain.' It would seem the only way to explain those feelings are to experience them first hand.
+
+This seeming inability to explain qualia from purely physical facts is the explanatory gap, and the hard problem of consciousness is simply the question of how to bridge said gap. There are a diverse range of thoughts and stances on the matter, with Chalmers' own views falling in the broad category of mind-body dualism (that the mind is distinct from the physical world). Other contemporaries have opposing views, one of the most prominent being Daniel Dennett whose stance falls under the category of illusionism \cite{Dennett2016} (that qualia is an illusion of purely physical origin).
+
+\subsection*{The Meta-Problem}
+In 2018, Chalmers once again published a seminal paper on consciousness, this time titled `The Meta-Problem of Consciousness,' where he coined the eponymous `meta-problem of consciousness.' And, just as with the first paper, it sparked great discussion amongst the philosophical community, warrenting a 39 response series to the paper in the \textit{Journal Of Consciousness} \cite{Chalmers2020-HCW}. That said, the meta-problem has been a topic of discussion much before the paper, although maybe not by the same name.
+
+The meta-problem of consciousness, usually referred to as just `the meta-problem', aptly asks the following meta question about the hard problem:
+\begin{quote}
+   ``Why do we think there is a hard problem at all?''
+\end{quote}
+
+Note that, unlike the hard problem, the meta-problem seems answerable using purely physical means (e.g. psychology, biology, neuroscience, etc.). Asking why we humans hold a certain belief, and not about any phenomenal experience regarding those beliefs, falls under the purview of physical explanation. As an analogy, the meta-problem is like asking why we \textit{say} we see apples as red, while the hard problem is like asking what it means to actually \textit{see} red.
+
+It is for this reason that Chalmers' calls the meta-problem `easy' \cite{Chalmers2018-MPC}, as opposed to the `hard' problem which has the explanatory gap to bridge.
+
+The fact that the meta-problem is easy to answer, at least relative to the hard problem, is relevant because it may be the case that answering the meta-problem could shed light, or even solve, the much harder `hard problem.' To what extent the meta-problem and its potential solutions are related to the hard problem is the topic of Chalmers' paper and its many responses.
+
+The paper is a survery, of sorts, on the meta-problem of consciousness. In particular: what it is, what solving it looks like, the relationship between it and the hard problem, and potential solutions/stances on it. Below we present a brief summary of these points, as they are crucial for understanding the responses which themselves comprise much of the contemporary literature on the meta-problem.
+
+\section*{Chalmers}
+\subsection*{What is a Solution to the Meta-Problem?}
+In his paper, Chalmers addresses two main points \cite{Kammerer2019-KAMEID-2}:
+\begin{enumerate}
+    \item[a)] What is it that needs to be explained to solve the meta-problem?
+    \item[b)] What counts as an explanation of the meta-problem?
+\end{enumerate}
+
+The answer to a) is what he calls `problem intuitions.' These are our dispositions to make judgments and reports of consciousness as being `puzzling.' He then further categorizes these intuitions as verbal, behavioral, cognitive, and so on (think behaviorist methods of studying beliefs). After discussing some empirical evidence, he comes to the conclusion that these problem intuitions are exitant and prevalant in all groups of humans across cultures and time. Regarding b), Chalmers notes that a good explanation of the meta-problem is one that is \textit{topic neutral}, or in other words, makes no mention of consciousness. In summary then, to answer the meta-problem sufficiently, one must explain why we have these problem intuitions of consciousness in a way that makes no mention of consciousness itself.
+
+\subsection*{Relationship between the Meta \& Hard Problems}
+After this, Chalmers goes into more detail about how the meta-problem helps solve the hard one. He explains that a solution to the meta-problem would constraint \textit{realist} theories of consciousness. A correct realist theory of consciousness, he contends, should be able to show how the mechanisms that bring about consciousness, physical or otherwise, also bring about our problem intuitions about it.
+
+On the flip side, solving the meta-problem could completely dissolve the hard problem for an illusionist \cite{Dennett2019-WTS}. Since there is no consciousness, all that is needed to be explained is why we believe it to be so. At least for a strong illusionist, Chalmers contends. He notes that a weak illusionist still faces the hard problem even if the meta one is answered since they still hold consciousness to be existant, requiring it to be explained.
+
+\subsection*{Possible Stances}
+Chalmers then outlines a number of stances he believes falls out of all of this:
+\begin{enumerate}
+    \item Meta-problem nihilism: There is no solution to the meta-problem.
+    \item Correlationism: consciousness is real and somehow correlated with our problem intuitions.
+    \item Realizationism: consciousness is real and somehow realizes, or brings about, our problem intuitions.
+    \item Strong illusionism: consciousness is not real and just an illusion of the brain.
+    \item Weak illusionism: consciousness is real, but not as we imagine it (which is non-physical, indivisible, etc.) and is instead explainable via physical proceses.
+\end{enumerate}
+
+The first stance simply rejects the solvability of the meta-problem, the second two are associated with realist views of consciousness, and the last two are associated with illusionist views of consciousness. It seems clear to most, including Chalmers as he spends the rest of the paper talking about it, that at the heart of the discussion surrounding the meta and hard problems is the tension between realism and illusionism.
+
+\section*{Responses}
+Now that we have reviewed the meta-problem as posed by Chalmers, we can now take a look at some of the responses to his points.
+
+\subsection*{Frankish}
+Of the 39 responses to Chalmers' paper in the \textit{Journal Of Consciousness}, about a quarter were about illusionism, particularly how solving the meta-problem brings it about \cite{Chalmers2020-HCW}. To explore this class of responses, we will touch upon Keith Frankish's \cite{Frankish2019-TMI} response. Frankish has led the discussion on the illusionist side of the problem of consciousness since Chalmers' first paper on the hard problem was published, and as such his views are prototypical of the illusionist camp.
+
+Franikish's paper ``The meta-problem is the problem of consciousness'' argues, well, just that. To see this, imagine one does come across a verified solution to the meta-problem, which explains it in a satisfactory and purely physical manner. Chalmers, and other realists, seem to imply that even in the face of such a solution there is yet leeway to cling onto realism, that the solving of the meta-problem doesn't \textit{necessarily} dissolve the hard problem, just that it is possible. Chalmers often invokes what he calls the `Moorean argument' where he simply contends that the existence of the phenomenal experience of pain so clearly exists that he simply cannot regard it as illusory. To this, Frankish poses another meta-problem:
+\begin{quote}
+    ``How do consciousness realists, like Chalmers, have such direct access to consciousness that they can ground their Moorean confidence in the existence of consciousness?'' \cite{Kammerer2019-KAMEID-2}
+\end{quote}
+
+This, Frankish dubs the `hard meta-problem,' and is a commentary on the seeming preposterousness of realists simply refusing to let go of their intuitions of ephemeral experiences as real, despite no evidence for such a view. He goes on to point out that strong illusionists avoid this problem entirely. Indeed for them, a physical view tells them consciousness isn't real, and so the problem of explaining why one intuitively believes in it (i.e. the meta-problem) is the only open question.
+
+\subsection*{Miracchi}
+While Frankish's response highlights cracks in the meta-problem's ability to shed light on the hard problem, at least for realists, Miracchi's response contends that the meta-problem might not even be an `easy' problem \cite{Miracchi2019-NOT}. She distinguishes two types of questions about a phenomenon studied on cognitive science:
+\begin{enumerate}
+    \item The generative question: what gives rise to this phenomenon?
+    \item The nature question: what is this phenomenon?
+\end{enumerate}
+
+She notes that answering the first (e.g. the meta-problem), often does not `shed significant light' on the second (e.g. the hard problem). As an example, consider the question of the nature of space and time, and the question of why we have intuitions of space and time being separate and absolute. The former is analogous to the hard-problem and the latter analogous to the meta-problem. It is easy to see why humans' inuitions of space and time are classical, and that is because we have evolved and socialized in environments where relativistic effects are simply unnoticeable and thus not useful in producing more fit individuals. Note, though, that while there is some correlation between our intuitions of how space and time work and their true nature, this answer to the generative question of our `problem intuitions' of space and time doesn't shed light on the actual nature of spacetime. Indeed general relativity (GR) is a much better bet in this case, and certainly such a complex theory could not have been discovered, even partly, by simply answering the generative question.
+
+The implication here is that, just as knowing why we intuitively believe in classical spacetime doesn't shed light on spacetime's true nature (i.e. GR), knowing why we intuitively believe in consciousness won't shed light on consciousness' true nature, whatever it is.
+
+\section*{Conclusion}
+From our limited review of the meta-problem, a seemingly unfortunate truth seems to rear its head, and that is: Despite the role of the meta-problem as an easier to solve stand in for the hard problem, there is still much pushback on the validity of that role amongst realists. This is because it would seem that, if this role were true, solving the meta-problem leads to dissolving the hard problem which lends itself to illusionism, a fact illusionists like Frankish are quick to point out.
+
+That this is unfortunate is because this would seem to reduce the core discussion of realism vs. illusionism surrounding the meta-problem no different from that surrounding the original hard problem. Taking this together with Miracchi's argument, that the meta-problem is not necessarily an `easy' problem nor that the meta-problem should shed much light on the hard problem, it seems that the goal of the meta-problem to be an easy stand in for the hard problem falls flat.
+
+Of course, to say that the discussion surronding the meta-problem spawned by Chalmers was pointless would be hyperbole. Indeed, while or not the realism vs illusionism debate has not been seriously upended, it has certainly been furthered due to the new meta-flavor brought about by considerations like Frankish's hard meta-problem. Not to mention all the other discussions that spawned from the consideration of the meta-problem.
+
+Ultimately it seems that the discussion of the meta-problem was fruitful in that it allowed a more nuanced examination of the hard problem from another perspective, however it largely leaves the discussion of the hard problem, its goal, in place. This should come as no surprise considering how fundamental the hard problem is to philsophy itself, and how recent this renewed wave of inquiry into the problem is.
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

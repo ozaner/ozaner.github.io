@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ HW 1}
+\author{Ozaner Hansha}
+\date{September 16, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Find all possible histories (solutions to the equations of motion) for classical mechanics for the case of general $N$ and $d=3$, with force $\vec{F}=\vec{0}$ (free motion).
+\bigskip
+
+\noindent\textbf{Solution:} The dynamics for any particular particle $i$ is given by:
+\begin{align*}
+    m_i\frac{d^2\vec{Q}_i}{dt^2}&=\vec{F}(\vec{Q}_i)\tag{Newton's Law}\\
+    &=0\tag{free motion}
+\end{align*}
+
+Solving this results in the following family of histories, paramaterized by $\vec{C}_{i1},\vec{C}_{i2}\in\mathbb{R}^3$, for any particular particle $i$:
+$$\vec{Q}_i(t)=t\vec{C}_{i1}+\vec{C}_{i2}$$
+
+And so the set of \textit{all} possible histories is characterized by $\mathbb{R}^{3\times2\times N}$ (3 dimensions, 2 vector parameters, $N$ particles). That is to say, given an element $C\in \mathbb{R}^{3\times2\times N}$ where:
+$$C=(\vec{C}_{11},\vec{C}_{12},\cdots,\vec{C}_{N1},\vec{C}_{N2})$$
+
+This would corespond to the following history, or solution to the equations of motion:
+\begin{align*}
+    \vec{Q}_1(t)&=t\vec{C}_{11}+\vec{C}_{12}\\
+    \vec{Q}_2(t)&=t\vec{C}_{21}+\vec{C}_{22}\\
+    &\,\,\,\vdots\\
+    \vec{Q}_N(t)&=t\vec{C}_{N1}+\vec{C}_{N2}
+\end{align*} 
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Make up your own fundamental physical theory, describing matter in motion, in space and time. Make it as simple as possible, much simpler than classical mechanics (with even the simplest choice of forces). The theory needn’t be physically correct—and presumably won’t be. It should be conveyed by just a few lines of mathematics, at most. It might be clearly wrong and obviously not describe our world, but it should clearly describe a logically possible world. It should not be at all vague: it should be specified by sharp and clear mathematics.
+\bigskip
+
+\noindent\textbf{Solution:} The following physical theory is comprised of a single particle whose position $Q$ in 1 dimensional space at time $t$ is given by the following:
+$$Q(t)=2t$$
+
+The particle's only property is its position and so there is nothing else to be said about the theory.
+
+\end{document}

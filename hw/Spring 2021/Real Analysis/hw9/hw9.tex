@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#9}
+\author{Ozaner Hansha}
+\date{April 23, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Part a \& b:} Consider the following functions:
+\begin{align*}
+  A(x)&=\frac{f(x)-f(x_0)}{x_0-x}\\
+  B(x)&=\frac{f(x_0+x)-f(x_0)}{x}
+\end{align*}
+
+Note that:
+$$B(x-x_0)=\frac{f(x)-f(x_0)}{x-x_0}=A(x)$$
+
+As such, we have:
+\begin{align*}
+  f'(x_0)&=\lim_{x\to x_0}A(x)\tag{def. of derivative}\\
+  &=\lim_{x\to x_0}B(x-x_0)\tag{$A(x)=B(x-x_0)$}\\
+  &=\lim_{x\to0}B(x)\tag{composition of continuous limits}
+\end{align*}
+
+And so we have shown that the two different definitions of derivative are equivalent. Note that the composition line 3 is referring to is of the function $B$ and the map $x\mapsto x-x_0$. This was justified because $f$ is differentiable at $x_0$, and thus continuous at $x_0$, and so too is the map $x\mapsto x-x_0$. Note that this reasoning is two way (chain of equalities) and so we have shown both a) and b).
+
+\subsection*{Problem 2}
+\noindent\textbf{Part a:} Note that the function is not continuous over any point $x_0\not=0$. This is because for any neighborhood $[x_0-\delta,x_0+\delta]$, there exists a rational number $r$ contained within in it. The rationals are dense in $\R$. Since the function is not continuous for any $x_0\not=0$, the function cannot be differentiable for any $x_0\not=0$ as continuity is a prerequisite for differentiability.
+\bigskip
+
+\noindent\textbf{Part b:} Note the following:
+\begin{align*}
+  \lim_{h\to0}\frac{f(0+h)-f(0)}{h}=\lim_{h\to0}\frac{f(h)}{h}\tag{$0\in\Q\implies f(0)=0^2=0$}
+\end{align*}
+
+And now we have two options, either $h\in\Q$ or $h\in\R\setminus\Q$. In the first case we have:
+$$\lim_{h\to0}\frac{f(h)}{h}=\lim_{h\to0}\frac{h^2}{h}=\lim_{h\to0}h$$
+
+And in the second case we have:
+$$\lim_{h\to0}\frac{f(h)}{h}=\lim_{h\to0}\frac{0}{h}=\lim_{h\to0}0=0$$
+
+By choosing $\lambda=\epsilon$ we have:
+\begin{align*}
+  |h|<\lambda&\implies|h|<\epsilon\tag{$\lambda=\epsilon$}\\
+  &\implies\left|\frac{f(h)}{h}\right|\le|h|\tag{limit is either $h$ or 0}\\
+  &\implies\left|\frac{f(h)}{h}\right|<\epsilon\\
+  &\implies\left|\frac{f(h)}{h}-0\right|<\epsilon
+\end{align*}
+
+And so the derivative of $f$ exists at $x=0$ and $f'(0)=0$.
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} The first limit is equivalent to:
+\begin{align*}
+  \lim_{h\to0}\frac{f(5h)-f(-3h)}{h}&=\lim_{h\to0}\frac{f(0+5h)-f(0-3h)}{h}\\
+  &=\lim_{h\to0}\frac{f(0+5h)-f(0)+f(0)-f(0-3h)}{h}\\
+  &=\lim_{h\to0}\left(5\frac{f(0+5h)-f(0)}{5h}+3\frac{f(0-3h)-f(0)}{-3h}\right)\\
+  &=5\lim_{h\to0}\frac{f(0+5h)-f(0)}{5h}+3\lim_{h\to0}\frac{f(0-3h)-f(0)}{-3h}\tag{limit of sum is sum of limits}\\
+  &=5f'(0)+3f'(0)\tag{def. of derivative, change of variables}\\
+  &=8f'(0)\\
+  &=8c\tag{$f'(0)=c$}
+\end{align*}
+
+The second limit can be solved in much the same way:
+\begin{align*}
+  \lim_{h\to0}\frac{f(2h)-f(4h)}{h}&=\lim_{h\to0}\frac{f(0+2h)-f(0+4h)}{h}\\
+  &=\lim_{h\to0}\frac{f(0+2h)-f(0)+f(0)-f(0+4h)}{h}\\
+  &=\lim_{h\to0}\left(2\frac{f(0+2h)-f(0)}{2h}-4\frac{f(0+4h)-f(0)}{4h}\right)\\
+  &=2\lim_{h\to0}\frac{f(0+2h)-f(0)}{2h}-4\lim_{h\to0}\frac{f(0+4h)-f(0)}{4h}\tag{limit of sum is sum of limits}\\
+  &=2f'(0)-4f'(0)\tag{def. of derivative, change of variables}\\
+  &=-2f'(0)\\
+  &=-2c\tag{$f'(0)=c$}
+\end{align*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} We will prove this by contradiction. Suppose there are points $x_1,x_2$ such that $f(x_1)=f(x_2)=0$. W.l.o.g let's us say that $x_1<x_2$. Since $f$ is continuous, we have that it is bounded on $[x_1,x_2]$ and thus achieves its maximum $M$ over this interval at some point $m$. Assume $M>0$ for now.
+
+By the IMV, there must be some $m_1$ and $m_2$ such that $f(m_1)=f(m_2)=M/2$ and satisfies:
+$$x_1,m_1<m<m_2<x_2$$
+
+Now consider an $n$ such that $f(n)=2N$. We know that $n\in[x_1,x_2]$ since $M$ is the maximum over that interval, so w.l.o.g say that $x_2<n$. Applying the IVT again, there must be a solution to $f(x)=M/2$ in the new interval $[x_2,n]$. But that means we would have at least three solutions to $f(x)=M/2$. Thus, we have shown that no continuous function can achieve all values exactly twice.
+
+\subsection*{Problem 5}
+\noindent\textbf{Solution:} First note that:
+\begin{align*}
+  &(\forall x\in (a,b)),\quad f(x)\le g(x)\le h(x)\\
+  \wedge&\,\,\,f(x_0)=h(x_0)\\
+  \implies&\,\,\,g(x_0)=f(x_0)=h(x_0)
+\end{align*}
+
+Next note the following:
+\begin{align*}
+  f(x)&\le g(x)\le h(x)\\
+  \frac{f(x)-f(x_0)}{x-x_0}&\le\frac{g(x)-f(x_0)}{x-x_0}\le\frac{h(x)-f(x_0)}{x-x_0}\\
+  \frac{f(x)-f(x_0)}{x-x_0}&\le\frac{g(x)-g(x_0)}{x-x_0}\le\frac{h(x)-h(x_0)}{x-x_0}\tag{$g(x_0)=f(x_0)=h(x_0)$}\\
+  \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}&\le\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}\le\lim_{x\to x_0}\frac{h(x)-h(x_0)}{x-x_0}\tag{squeeze theorem}\\
+  f'(x_0)&\le\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}\le h'(x_0)\tag{def. of derivative}\\
+  f'(x_0)&\le\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}\le f'(x_0)\tag{$f'(x_0)=h'(x_0)$}\\
+  \implies&\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}=f'(x_0)\tag{squeeze theorem}
+\end{align*}
+
+And so we have shown that the limit:
+$$\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}$$
+
+exists, and thus $g'(x_0)$ exists, and is equal to $f'(x_0)=h'(x_0)$.
+
+
+\end{document}

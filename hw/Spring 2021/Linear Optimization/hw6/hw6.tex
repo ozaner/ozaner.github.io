@@ -1,0 +1,311 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#6}
+\author{Ozaner Hansha}
+\date{March 8, 2021}
+\maketitle
+
+\subsection*{Problem a}
+\noindent\textbf{Problem 4:} Prove or disprove: given a square $n\times n$ matrix $A$ (with $n\ge4$) whose columns are linearly independent, and a vector $\vec b\in\R^4$ whose components are non-negative, there is always a solution $\vec x$ to $A\vec x=\vec  b$.
+\bigskip
+
+\noindent\textbf{Solution:} If the dimensions line up, the equation $A\vec x=\vec b$ always has a (unique) solution given by:
+\begin{equation*}
+    \vec x=A^{-1}\vec b
+\end{equation*}
+
+With the existence of $A^{-1}$ given by the following:
+$$\text{linearly independent columns $\rightarrow$ full column rank $\rightarrow$ full rank $\rightarrow$ invertible}$$
+
+% Recall the following:
+% \begin{equation*}
+%     \rank A=\rank [A|\vec b]=n\implies \exists!\vec x,\,\,A\vec x=\vec b
+% \end{equation*}
+\bigskip
+
+\noindent\textbf{Problem 5:} Prove or disprove: given a square $n\times n$ matrix $A$ (with $n\ge4$) whose columns are linearly independent, and a vector $\vec b\in\R^4$, if the entries of $A$ and $\vec b$ are non-negative, then there is always a solution $\vec x\ge\vec 0$ to $A\vec x=\vec  b$.
+\bigskip
+
+\noindent\textbf{Solution:} This is not true in general. We provide a counterexample:
+$$\text{let } A=\begin{bmatrix}
+    0&1&1&1\\
+    1&0&1&1\\
+    1&1&0&1\\
+    1&1&1&0
+\end{bmatrix}\qquad
+\vec b=\begin{bmatrix}
+    8\\8\\1\\1
+\end{bmatrix}
+$$
+
+The entries of both $A$ and $\vec b$ are non-negative, and the columns of $A$ are clearly linearly independent. Note that the latter implies that $A$ is of full rank. Yet we have:
+\begin{align*}
+    A\vec x&=\vec b\\
+    \vec x&=A^{-1}\vec b\tag{full rank $\rightarrow$ invertible}\\
+    &=\begin{bmatrix}
+        0&1&1&1\\
+        1&0&1&1\\
+        1&1&0&1\\
+        1&1&1&0
+    \end{bmatrix}^{-1}\begin{bmatrix}
+        8\\8\\1\\1
+    \end{bmatrix}\\
+    &=\frac{1}{3}\begin{bmatrix}
+        -2&1&1&1\\
+        1&-2&1&1\\
+        1&1&-2&1\\
+        1&1&1&-2
+    \end{bmatrix}\begin{bmatrix}
+        8\\8\\1\\1
+    \end{bmatrix}\\
+    &=\begin{bmatrix}
+        -2\\-2\\5\\5
+    \end{bmatrix}\\
+\end{align*}
+
+And so, while the equation $A\vec x=\vec b$ indeed has a (single) solution, said solution does \textit{not} have strictly non-negative entries. As such, the problem statement must be false.
+
+\subsection*{Problem b}
+\noindent\textbf{Problem:} Use the simplex method to solve the following:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&-x_1+2x_2+3x_3+x_4\\
+    &{\text{subject to}}
+    &&x_1+2x_2+2x_3+x_4+x_5\le12\\
+    &
+    &&x_1+2x_2+x_3+x_4+2x_5+x_6\le18\\
+    &
+    &&3x_1+6x_2+2x_3+x_4+3x_5\le24\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} First let us transform the problem to standard form:
+\begin{align*}
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&-x_1+2x_2+3x_3+x_4\\
+        &{\text{subject to}}
+        &&x_1+2x_2+2x_3+x_4\le12\\
+        &
+        &&x_1+2x_2+x_3+x_4+2x_5+x_6\le18\\
+        &
+        &&3x_1+6x_2+2x_3+x_4+3x_5\le24\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&-x_1+2x_2+3x_3+x_4\\
+        &{\text{subject to}}
+        &&x_1+2x_2+2x_3+x_4+s_1=12\\
+        &
+        &&x_1+2x_2+x_3+x_4+2x_5+x_6+s_2=18\\
+        &
+        &&3x_1+6x_2+2x_3+x_4+3x_5+s_3=24\\
+        &{\text{and}}
+        &&\vec x,\vec s\ge 0
+    \end{aligned}\right.}_{\text{introduce slack variables } \vec s}\\
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&\begin{bmatrix}
+            -1&2&3&1&1&-2&0&0&0
+        \end{bmatrix}^\top\vec z\\
+        &{\text{subject to}}
+        &&\begin{bmatrix}
+            1&2&2&1&1&0&1&0&0\\
+            1&2&1&1&2&1&0&1&0\\
+            3&6&2&1&3&0&0&0&1
+        \end{bmatrix}\vec z=\begin{bmatrix}
+            12\\18\\24
+        \end{bmatrix}\\
+        &{\text{and}}
+        &&\vec z\ge 0
+    \end{aligned}\right.}_{\text{let }\vec z=\icol{\vec x\\\vec s}}
+\end{align*}
+
+Now let us set up our tableau and perform the simplex method (note that the pivot is circled):
+\begin{align*}
+\begin{array}{ccccccccc|c}
+    x_1&x_2&x_3&x_4&x_5&x_6&s_1&s_2&s_3\\\hline
+    1&2&\circled2&1&1&0&1&0&0&12\\
+    1&2&1&1&2&1&0&1&0&18\\
+    3&6&2&1&3&0&0&0&1&24\\\hline
+    1&-2&-3&-1&-1&2&0&0&0&0\\
+\end{array}
+&\ro{\substack{r_3-r_1\\r_2/2\\r_2-r_1\\r_4+3r_1}}
+\begin{array}{ccccccccc|c}
+    x_1&x_2&x_3&x_4&x_5&x_6&s_1&s_2&s_3\\\hline
+    \sfrac{1}{2}&1&1&\sfrac{1}{2}&\sfrac{1}{2}&0&\sfrac{1}{2}&0&0&6\\
+    \sfrac{1}{2}&1&0&\sfrac{1}{2}&\sfrac{3}{2}&\circled1&-\sfrac{1}{2}&1&0&12\\
+    2&4&0&0&2&0&-1&0&1&12\\\hline
+    \sfrac{5}{2}&1&0&\sfrac{1}{2}&\sfrac{1}{2}&2&\sfrac{3}{2}&0&0&18\\
+\end{array}
+% &\ro{\substack{r_4+2r_2}}
+% \begin{array}{cccccccccc|c}
+%     x_1&x_2&x_3&x_4&x_5&x_6&s_1&s_2&s_3&p\\\hline
+%     \sfrac{1}{2}&1&1&\sfrac{1}{2}&\sfrac{1}{2}&0&\sfrac{1}{2}&0&0&0&6\\
+%     \sfrac{1}{2}&1&0&\sfrac{1}{2}&\sfrac{3}{2}&1&-\sfrac{1}{2}&1&0&0&12\\
+%     2&4&0&0&2&0&-1&0&1&0&12\\\hline
+%     \sfrac{7}{2}&3&0&\sfrac{3}{2}&\sfrac{7}{2}&0&0&3&0&1&54\\
+% \end{array}
+\end{align*}
+
+With the bottom row nonnegative, we have completed the simplex algorithm. The maximum is 18, and the $\vec z$ that achieves it is given by:
+$$\vec z=\begin{bmatrix}
+    x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\s_1\\s_2\\s_3
+\end{bmatrix}=\begin{bmatrix}
+    0\\0\\6\\0\\0\\0\\0\\12\\12
+\end{bmatrix}$$
+
+\subsection*{Problem c}
+\noindent\textbf{Problem:} Use the simplex method to solve the following:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&2x_1+3x_2+x_3+x_4\\
+    &{\text{subject to}}
+    &&x_1-x_2-x_3\le2\\
+    &
+    &&-2x_1+5x_2-3x_3-3x_4\le10\\
+    &
+    &&2x_1-5x_2+3x_3\le5\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} First let us transform the problem to standard form:
+\begin{align*}
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&2x_1+3x_2+x_3+x_4\\
+        &{\text{subject to}}
+        &&x_1-x_2-x_3\le2\\
+        &
+        &&-2x_1+5x_2-3x_3-3x_4\le10\\
+        &
+        &&2x_1-5x_2+3x_4\le5\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&2x_1+3x_2+x_3+x_4\\
+        &{\text{subject to}}
+        &&x_1-x_2-x_3+s_1=2\\
+        &
+        &&-2x_1+5x_2-3x_3-3x_4+s_2=10\\
+        &
+        &&2x_1-5x_2+3x_4+s_3=5\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.}_{\text{introduce slack variables } \vec s}\\
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&\begin{bmatrix}
+            2&3&1&1&0&0&0
+        \end{bmatrix}^\top\vec z\\
+        &{\text{subject to}}
+        &&\begin{bmatrix}
+            1&-1&-1&0&1&0&0\\
+            -2&5&-3&-3&0&1&0\\
+            2&-5&0&3&0&0&1
+        \end{bmatrix}\vec z=\begin{bmatrix}
+            2\\10\\5
+        \end{bmatrix}\\
+        &{\text{and}}
+        &&\vec z\ge 0
+    \end{aligned}\right.}_{\text{let }\vec z=\icol{\vec x\\\vec s}}
+\end{align*}
+
+Now let us set up our tableau and perform the simplex method (note that the pivot is circled):
+\begin{align*}
+    \begin{array}{ccccccc|c}
+        x_1&x_2&x_3&x_4&s_1&s_2&s_3\\\hline
+        1&-1&-1&0&1&0&0&2\\
+        -2&\circled5&-3&-3&0&1&0&10\\
+        2&-5&0&3&0&0&1&5\\\hline
+        -2&-3&-1&-1&0&0&0&0
+    \end{array}
+    &\ro{\substack{r_3+r_2\\r_2/5\\r_1+r_2\\r_4+3r_1}}
+    \begin{array}{ccccccc|c}
+        x_1&x_2&x_3&x_4&s_1&s_2&s_3\\\hline
+        \circled{\sfrac{3}{5}}&0&-\sfrac{8}{5}&-\sfrac{3}{5}&1&\sfrac{1}{5}&0&4\\
+        -\sfrac{2}{5}&1&-\sfrac{3}{5}&-\sfrac{3}{5}&0&\sfrac{1}{5}&0&2\\
+        0&0&-3&0&0&1&1&15\\\hline
+        -\sfrac{16}{5}&0&-\sfrac{14}{5}&-\sfrac{14}{5}&0&\sfrac{3}{5}&0&6
+    \end{array}\\
+    &\ro{\substack{5r_1/3\\r_2-2r_1/5\\r_4+16r_1/5}}
+    \begin{array}{ccccccc|c}
+        x_1&x_2&x_3&x_4&s_1&s_2&s_3\\\hline
+        1&0&-\sfrac{8}{5}&-1&\sfrac{5}{3}&\sfrac{1}{3}&0&\sfrac{20}{3}\\
+        0&1&-\sfrac{5}{3}&-1&\sfrac{2}{3}&\sfrac{1}{3}&0&\sfrac{14}{3}\\
+        0&0&-3&0&0&1&1&15\\\hline
+        0&0&-\sfrac{34}{3}&-6&\sfrac{16}{3}&\sfrac{5}{3}&0&\sfrac{82}{3}
+    \end{array}
+\end{align*}
+
+Note that after the second iteration, the 3rd column is our pivot column. Our pivot row, however, cannot be chosen as all entries in the 3rd column are negative. In this case, the simplex algorithm provides no finite optimal solution and we are done.
+\end{document}

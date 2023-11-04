@@ -1,0 +1,270 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#2}
+\author{Ozaner Hansha}
+\date{February 6, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Use Euclid's lemma to show that there are no rational numbers $x$ such that $x^3=2021$.
+\bigskip
+
+\noindent\textbf{Solution:} Before we prove this, we must first prove 3 lemmas.
+\begin{itemize}
+  \item \textbf{Lemma 1}: For $a_1,a_2,b_1,b_2\in\Z$ we have:
+  \begin{align*}
+    a_1\divides b_1\wedge a_2\divides b_2&\implies(\exists k_1,k_2\in Z),\,\,\frac{b_1}{a_1}=k_1\wedge\frac{b_2}{a_2}=k_2\tag{def. of divisibility}\\
+    &\implies(\exists k_1,k_2\in Z),\,\,\frac{b_1b_2}{a_1a_2}=k_1k_2\\
+    &\implies a_1a_2\divides b_1b_2\tag{$\Z$ closed under multiplication}
+  \end{align*}
+  % \item \textbf{Lemma 1}: For all prime numbers $p$ and integers $m$:
+  % \begin{align*}
+  %   p\divides m^2&\implies p\divides m\vee p\divides m\tag{Euclid's lemma}\\
+  %   &\implies p\divides m\\
+  %   &\implies p\divides m^2\tag{lemma 1, $1\divides m$}
+  % \end{align*}
+  % And so by a chain of implications we have: $p\divides m\iff p\divides m^2$.
+  \item \textbf{Lemma 2}: For all prime numbers $p$ and integers $m$: 
+  \begin{align*}
+    p\divides m^3&\implies p\divides m^2\vee p\divides m\tag{Euclid's lemma}\\
+    &\implies (p\divides m\vee p\divides m)\vee p\divides m\tag{Euclid's lemma}\\
+    &\implies p\divides m\\
+    &\implies p\divides m^2\tag{lemma 1, $1\divides m$}\\
+    &\implies p\divides m^3\tag{lemma 1, $1\divides m$}
+  \end{align*}
+  And so by a chain of implications we have: $p\divides m\iff p\divides m^2\iff p\divides m^3$.
+  % \item \textbf{Lemma 3}:
+  % For all $n\in\Z^+$:
+  % \begin{align*}
+  %   a\divides b&\iff \exists c\in\Z,\,\frac{b}{a}=c\tag{def. of divisible}\\
+  %   &\iff \exists c\in\Z,\,\frac{b^n}{a^n}=c^n\tag{$c^n\in\Z^+$, $\Z$ closed under repeated multiplication.}\\
+  %   &\implies a^n\divides b^n
+  % \end{align*}
+  \item \textbf{Lemma 3}:
+  For all $k\in\Z$:
+  \begin{align*}
+    a\divides b&\iff \exists c\in\Z,\,\frac{b}{a}=c\tag{def. of divisible}\\
+    &\iff \exists c\in\Z,\,\frac{kb}{ka}=c\tag{common factor}\\
+    &\implies ka\divides kb
+  \end{align*}
+\end{itemize}
+
+We can now finally prove the desired statement:
+\begin{align*}
+  2021&=x^3\\
+  &=\left(\frac{m}{n}\right)^3\text{ where $m,n$ are relatively prime}\tag{assume $x\in\Q$}\\
+  &=\frac{m^3}{n^3}\\
+  2021n^3&=m^3\\
+  47\cdot43n^2&=m^3\tag{prime factorization of 2021}\\
+  &\implies47\divides2021n^3\tag{47 is a factor of 2021}\\
+  &\implies47\divides m^3\tag{$2021n^3=m^3$}\\
+  &\implies\tcbhighmath[right=2mm,left=2mm,boxsep=-1mm,boxrule=0.4pt,colframe=blue,colback=blue!10!white]{47\divides m}\tag{lemma 2}\\
+  &\implies47^2\divides m^2\tag{lemma 1, with $47\divides m$}\\
+  &\implies47^2\divides m^3\tag{lemma 1, with $1\divides m$}\\
+  &\implies47^2\divides 47\cdot43n^3\tag{$47\cdot43n^3=m^3$}\\
+  &\implies47\divides 43n^3\tag{lemma 3, $k=47$}\\
+  &\implies47\divides n^3\tag{Euclid's lemma, $47\ndivides43$}\\
+  &\implies\tcbhighmath[right=2mm,left=2mm,boxsep=-1mm,boxrule=0.4pt,colframe=blue,colback=blue!10!white]{47\divides n}\tag{lemma 2}
+\end{align*}
+
+Taking notice of the lines highlighted in blue, we can see that in assuming that $x\in Q$ and thus equals $\sfrac{m}{n}$ with $n$ and $m$ relatively prime, we have found a contradiction. Namely that 47 divides both $n$ and $m$ despite them being relatively prime as previously mentioned. This means our assumption that $x$ was rational is wrong and thus we have proven by contradiction that there is no rational $x$ such that $x^3=2021$.
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Prove the following:
+\begin{equation*}
+  (\forall y\in\R,\,\exists x\in\R)\,\,x^3=y
+\end{equation*}
+
+
+\noindent\textbf{Solution:}
+\medskip
+
+\textbf{CASE 1:} Consider the case where $y>0$. Now, consider the following set:
+\begin{equation*}
+  S=\{s\in\R\mid s^3<y\}
+\end{equation*}
+
+This set is clearly bounded by $y$, and is nonempty (e.g. $-1<0<y$ thus $-1\in S$). These two facts, by the L.U.B property, imply that $S$ has a supremum, call it $x$:
+\begin{equation*}
+  \sup S = x
+\end{equation*}
+
+We will now prove, by contradiction, that $x^3=y$.
+\begin{itemize}
+  \item if $x^3<y$ then, by the density of the rationals, there must exist some $\epsilon\in(0,1)$ such that:
+  $$x^3<(x+\epsilon)^3<y$$
+
+  However, this implies that $\sup S=x$ is less than another element in $S$, namely $x+\epsilon$. This is a contradiction of the LUB property and thus our assumption was wrong and $x^3\not<y$.
+  \item if $x^3>y$ then, by the density of the rationals, there must exist some $\epsilon\in(0,1)$ such that:
+  $$x^3>(x+\epsilon)^3>y$$
+
+  However, this implies that $\sup S=x$ is less than another element in $S$, namely $x+\epsilon$. This is a contradiction of the LUB property and thus our assumption was wrong and $x^3\not>y$.
+\end{itemize}
+
+Putting these two together we have, by the law of trichotomy, that $x^3=y$. And so every positive real $y$ has a cube root $x$ given by the supremum of the set $S$.
+\medskip
+
+\textbf{CASE 2:} Now consider the case where $y<0$. We know from case 1 that there exists a real number $x$ such that $x^3=-y$. Now consider the following:
+\begin{equation*}
+  (-x)^3=-x^3=-(-y)=y
+\end{equation*}
+
+And so, by case 1, every negative real $y$ has a cube root given by the $-x$ above.
+\medskip
+
+\textbf{CASE 3:} The only other case to consider is $y=0$. This is simple as $0^3=0=y$. And so 0 is its own cube root.
+\medskip
+
+\textbf{Proof:} Since all real numbers $y$ must either be 0, greater than 0, or less than 0, and since we proved that $y$ has a cube root in all those cases, we can now be sure that all real numbers have a cube root.
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Find a bijection from $(0,1)$ to $[-2021,2021]$.
+\bigskip
+
+\noindent\textbf{Solution:} First let us define a sequence $(y_n)_{n\in\N}$:
+\begin{equation*}
+  y_n=.1^{n+1}
+\end{equation*}
+
+Now let us define a bijective function $f_1:(0,1)\to[0,1]$:
+\begin{equation*}
+  f_1(x)=\begin{cases}
+    0, &x=y_0\\
+    1, &x=y_1\\
+    y_{n+2},&x=y_n,\,n>1\\
+    x,&\text{otherwise}
+  \end{cases}
+\end{equation*}
+
+Finally we can define our bijection $f_2:(0,1)\to[-2021,2021]$:
+\begin{equation*}
+  f_2(x)=2021(2f_1(x)-1)
+\end{equation*}
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Find two bounded sets $A$ and $B$ such that $A\cap B=\emptyset$ and $\sup A=\sup B$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following sets:
+\begin{align*}
+  A&=\{0,1\}\\
+  B&=\{1-.1^n\mid n\in\Z^+\}
+\end{align*}
+
+First note that $A\cap B=\emptyset$ as there is no $n\in\Z^+$ such that $1-.1^n$ equals 0 or 1. For 0 this is obvious. For 1, while $1-.1^0=1$, we still have that $0\not\in\Z+$ and so $1\not\in B$.
+
+Now note that the supremum of $A$ is 1 as it has only two elements and $0<1$. For $B$ note that since it is bounded and has no single largest element, we can find its supremum with the following limit:
+\begin{align*}
+  \sup B&=\lim_{n\to\infty}1-.1^n\\
+  &=1-\lim_{n\to\infty}.1^n\\
+  &=1-0=1
+\end{align*}
+
+And so we have that $\sup A = \sup B = 1$, despite $A\cap B=\emptyset$.
+
+\subsection*{Problem 5}
+Consider a bounded set $A\subseteq R$.
+\bigskip
+
+\noindent\textbf{Problem a:} For $B=\{x+1\mid x\in A\}$, show that $\sup B=(\sup A)+1$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+  \sup A &= \sup A\\
+  (\forall r_1\in\R,\,\forall a\in A)&\,\,\sup A\ge a\wedge\neg(\sup A>r_1\ge a)\tag{def. of supremum}\\
+  (\forall r_1\in\R,\,\forall a\in A)&\,\,\sup A+1\ge a+1\wedge\neg(\sup A+1>r_1+1\ge a+1)\tag{$x+1$ is an increasing function}\\
+  (\forall r_2\in\R,\,\forall a\in A)&\,\,\sup A+1\ge a+1\wedge\neg(\sup A+1>r_2\ge a+1)\tag{$(\forall r_1\in\R,\,\exists r_2\in\R)\,\,r_2=r_1+1$}\\
+  (\forall r_2\in\R,\,\forall b\in B)&\,\,\sup A+1\ge b\wedge\neg(\sup A+1>r_2\ge b)\tag{$a\in A\iff a+1\in B$ (i.e. def. of $B$)}\\
+  \sup B &= \sup A + 1\tag{def. of supremum}
+\end{align*}
+
+And so we are done.
+\bigskip
+
+\noindent\textbf{Problem b:} For $C=\{x^3+1\mid x\in A\}$, show that $\sup C=(\sup A)^3+1$.
+\bigskip
+
+\noindent\textbf{Solution:}
+\begin{align*}
+  \sup A &= \sup A\\
+  (\forall r_1\in\R,\,\forall a\in A)&\,\,\sup A\ge a\wedge\neg(\sup A>r_1\ge a)\tag{def. of supremum}\\
+  (\forall r_1\in\R,\,\forall a\in A)&\,\,(\sup A)^3+1\ge a^3+1\wedge\neg((\sup A)^3+1>r_1^3+1\ge a^3+1)\tag{$x^3+1$ is an increasing function}\\
+  (\forall r_2\in\R,\,\forall a\in A)&\,\,(\sup A)^3+1\ge a^3+1\wedge\neg((\sup A)^3+1>r_2\ge a^3+1)\tag{$(\forall r_1\in\R,\,\exists r_2\in\R)\,\,r_2=r_1^3+1$ (see problem 2)}\\
+  (\forall r_2\in\R,\,\forall a\in A)&\,\,(\sup A)^3+1\ge b\wedge\neg((\sup A)^3+1>r_2\ge b)\tag{$a\in A\iff a^3+1\in B$ (i.e. def. of $B$)}\\
+  \sup C &=(\sup A)^3 + 1\tag{def. of supremum}
+\end{align*}
+
+And so we are done.
+\bigskip
+
+\noindent\textbf{Problem c:} For $D=\{x^2+1\mid x\in A\}$, is it the case that $\sup D=(\sup A)^2+1$?
+\bigskip
+
+\noindent\textbf{Solution:} No, consider the following counterexample:
+\begin{align*}
+  A&=\{-2,1\}\\
+  D&=\{x^2+1\mid x\in A\}\\
+  &=\{5,2\}
+\end{align*}
+
+We have:
+\begin{align*}
+  \sup A&=1\\
+  (\sup A)^2+1&=2\\
+  &\not=5\\
+  &=\sup D
+\end{align*}
+
+And so we have that $\sup D\not=(\sup A)^2+1$.
+
+\end{document}

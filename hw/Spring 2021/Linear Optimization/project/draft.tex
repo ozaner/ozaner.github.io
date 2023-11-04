@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[top=.75in, bottom=.75in, left=1in, right=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\let\oldabstract\abstract
+\let\oldendabstract\endabstract
+\makeatletter
+\renewenvironment{abstract}
+{\renewenvironment{quotation}%
+  {\list{}{\addtolength{\leftmargin}{6em} % change this value to add or remove length to the the default
+      \listparindent 1.5em%
+      \itemindent    \listparindent%
+      \rightmargin   \leftmargin%
+      \parsep        \z@ \@plus\p@}%
+    \item\relax}%
+  {\endlist}%
+\oldabstract}
+{\oldendabstract}
+\makeatother
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{On Gradient Descent\\and its Variants}
+\author{Ozaner Hansha}
+\date{March 27, 2021}
+\maketitle
+
+\begin{abstract}
+    We examine the gradient descent (GD) algorithm, with respect to arbitrary real functions $f:\R^n\to\R$. In particular, we elaborate on its formulation, complexity, and convergence conditions. We then introduce and do the same with two variants of GD, namely stochastic gradient descent (SGD) and Adam.
+\end{abstract}
+
+\section*{Background}
+In the wake of the huge popularity afforded to machine learning... blah blah the combination of GD and backpropagation has become the `workhorse of machine learning.' (find that quote). Or, more accurately, SGD and backpropagation. Or even \textit{more} accurately, Adam and backpropagation. Then blah blah get into how these are modifications of GD to be more efficient in some dimension or other for ML applications.
+
+\section*{Gradient Descent}
+\subsection*{Overview}
+  Here I'll give an intuitive overview of the algorithm as basically descending a (high-dimensional) `hill'. Use pictures (cant put gifs in a pdf) of an arrow traveling down some 3d objective function. Make a passing note that to find this steepest decline (ie. gradient), our objective function must be (sub)differentiable.
+
+\subsection*{Formulation}
+  Here I'll actually outline the preconditions of the algorithm, give the steps in a sort of math-ish, psuedocode, then provide an implementation in, say, python.\cite{2019arXiv190303614Z} \cite{2016arXiv160904747R}
+
+\subsection*{Complexity}
+  Here we'll analyze its computational complexity, both spatial and temporal. If I can, I'll highlight how slow computing the gradient over all sample points is in a model fitting example which I can use to lead into SGD which only uses a random sample to calculate the gradient.
+  
+\subsection*{Convergence}
+  Deal with convergence conditions here. From what I can tell, the only sure-fire convergence condition there is is that the objective function is convex. Talk about subgradients and box the final convergence results for both fixed and variable step sizes. \cite{tibshirani_2013}
+
+\section*{Stochastic Gradient Descent}
+\subsection*{Overview}
+Intro what's changed and why it was changed. Maybe a nice graphic.
+
+Same sections are before, but shorted since less needs to be introduced and mostly focuses on what's changed.\cite{2019arXiv190303614Z} \cite{2016arXiv160904747R}
+
+\section*{Adam}
+\subsection*{Overview}
+Intro what's changed and why it was changed. Maybe a nice graphic.
+
+Same sections are before, but shorted since even less needs to be introduced and mostly focuses on what's changed.\cite{2019arXiv190303614Z} \cite{2016arXiv160904747R}
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

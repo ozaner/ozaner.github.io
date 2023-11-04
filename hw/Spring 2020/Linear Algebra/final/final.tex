@@ -1,0 +1,359 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{titling}
+\usepackage{stackengine}
+\usepackage[top=1in, bottom=1.1in, left=1.1in, right=1.1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Algebra Final Exam}
+\author{Ozaner Hansha}
+\date{May 12, 2020}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Solution:} We first find the eigenvalues of $A$ by solving its characteristic equation:
+\begin{align*}
+  0&=p(\lambda)\\
+  &=\operatorname{det}(A-\lambda I)\\
+  &=\operatorname{det}\begin{bmatrix}
+    -1-\lambda&-1&1\\5&3-\lambda&-3\\-2&-1&2-\lambda
+  \end{bmatrix}\\
+  &=\left(-1-\lambda\right)\left(\lambda^2-5\lambda+3\right)-\left(-1\right)\left(-5\lambda+4\right)+1\cdot \left(-2\lambda+1\right)\\
+  &=-\lambda^3+4\lambda^2-5\lambda+2\\
+  &=-(\lambda-1)^2(\lambda-2)
+\end{align*}
+
+
+
+Now we check the GM of the eigenvalue $\lambda_1=1$, i.e. the dimension of the eigenspace corresponding to $\lambda_1=1$:
+\begin{align*}
+  \operatorname{dim}E_1&=\operatorname{dim}\operatorname{ker}(A-I)\tag{def. of eigenspace}\\
+  &=\operatorname{nullity}\begin{bmatrix}
+    -2&-1&1\\5&2&-3\\-2&-1&1
+  \end{bmatrix}\tag{def. of nullity}\\
+  &=\operatorname{nullity}\begin{bmatrix}
+    1&0&-1\\ 0&1&1\\ 0&0&0
+  \end{bmatrix}\tag{$\text{rref}^{[1]}$}\\
+  &=1
+\end{align*}
+
+This leaves us with 2 eigenvalues: $\lambda_1=1$ with AM 2 and GM 1, and $\lambda_2=2$ with AM 1 and GM 1. This corresponds to the following Jordan blocks: 
+$$J_1=\begin{bmatrix}
+  1&1\\0&1
+\end{bmatrix}\qquad J_2=\begin{bmatrix}
+  2
+\end{bmatrix}$$
+
+Putting these together, we have the following Jordan normal form:
+$$J=\begin{bmatrix}
+  1&1&0\\0&1&0\\0&0&2
+\end{bmatrix}$$
+
+Recall that every matrix is similar to its JNF, and so there exists some $P$ such that:
+$$A=P^{-1}JP$$
+
+We can now express the trace of $A^n$ as:
+\begin{align*}
+  \operatorname{tr}(A^n)&=\operatorname{tr}((P^{-1}JP)^n)\tag{similar to JNF}\\
+  &=\operatorname{tr}(P^{-1}J^nP)\tag{power of similar matrices are similar}\\
+  &=\operatorname{tr}(J^n)\tag{trace is constant for similar matrices}\\
+  &=\operatorname{tr}\left(\begin{bmatrix}
+    1&1&0\\0&1&0\\0&0&2
+  \end{bmatrix}^n\right)\\
+  &=\operatorname{tr}\begin{bmatrix}
+    1^n&\binom{n}{1}1^{n-1}&0\\0&1^n&0\\0&0&2^n
+  \end{bmatrix}\tag{power of JNF}\\
+  &=2+2^n
+\end{align*}
+\newpage
+
+\subsection*{Problem 2}
+\noindent\textbf{Solution:} We first prove 2 lemmas before proving the main theorem:
+\medskip
+
+\textbf{Lemma 1}: Any eigenvectors of a matrix $M$ with distinct eigenvalues are linearly independent.
+\medskip
+
+\textbf{Proof:} Let $\lambda_1,\lambda_2$ be distinct eigenvalues of $M$, and let $\vec v_1,\vec v_2$ be corresponding eigenvectors, i.e.:
+\begin{equation}
+  M\vec v_i=\lambda_i\vec v_i\tag{Eq. 1}
+\end{equation}
+
+Now consider constants $c_1,c_2$ such that:
+\begin{equation}
+  c_1\vec v_1+c_2\vec v_2=\vec 0\tag{Eq. 2}
+\end{equation}
+
+Recall that $\vec v_1,\vec v_2$ are independent iff $c_1=c_2=0$. Now consider the following:
+\begin{align*}
+  \vec 0&=M\vec0\\
+  &=M(c_1\vec v_1+c_2\vec v_2)\tag{from Eq. 2}\\
+  &=c_1M\vec v_1+c_2M\vec v_2\\
+  &=c_1\lambda_1\vec v_1+c_2\lambda_2\vec v_2\tag{from Eq. 1}
+\end{align*}
+
+We take that last equality and call it (Eq. 3):
+\begin{equation}
+  c_1\lambda_1\vec v_1+c_2\lambda_2\vec v_2=\vec 0\tag{Eq. 3}
+\end{equation}
+
+Now, multiplying (Eq. 2) by $\lambda_2$ and subtracting from it (Eq. 3) we find:
+\begin{align*}
+  \vec 0-\vec 0&=\lambda_2\cdot\text{(Eq. 2)}-\text{(Eq. 3)}\\
+  \vec 0&=\lambda_2(c_1\vec v_1+c_2\vec v_2)-(c_1\lambda_1\vec v_1+c_2\lambda_2\vec v_2)\\
+  &=c_1(\lambda_1-\lambda_2)\vec v_1\\
+  0&=c_1(\lambda_1-\lambda_2)\tag{eigenvectors are nonzero}\\
+  &=c_1\tag{$\lambda_1\not=\lambda_2\implies \lambda_1-\lambda_2\not=0$}
+\end{align*}
+
+And so we have proved that $c_1=0$. Even further, substituting $c_1=0$ into (Eq. 2), we find:
+\begin{align*}
+  \vec 0&=c_1\vec v_1+c_2\vec v_2\tag{Eq. 2}\\
+  &=c_2\vec v_2\tag{$c_1=0$}\\
+  &=c_2\tag{eigenvectors are nonzero}
+\end{align*}
+
+And so $c_1=c_2=0$, and thus $\vec v_1,\vec v_2$ are linearly independent. And so, since the corresponding eigenvectors of any two distinct eigenvalues of a matrix are linearly independent, we have that an $n\times n$ matrix with $n$ distinct eigenvalues has $n$ linearly independent eigenvalues. $\blacksquare$
+\bigskip
+
+\textbf{Lemma 2}: If an $n\times n$ matrix $M$ has $n$ linearly independent eigenvectors, then it is diagonalizable.
+\medskip
+
+\textbf{Proof:} Assume the $n\times n$ matrix $M$ has $n$ linearly independent eigenvectors $\{\vec v_1,\cdots,\vec v_n\}$. Now consider a matrix $P$ whose columns are those same eigenvectors, and a diagonal matrix $D$ whose entries are the corresponding eigenvalues:
+$$P=\begin{bmatrix}
+  \vec v_1&\cdots&\vec v_n
+\end{bmatrix}\qquad D=\operatorname{diag}(\lambda_1,\cdots,\lambda_n)=
+\begin{bmatrix}
+  \lambda_1&0&\cdots&0\\
+  0&\lambda_2&\cdots&0\\
+  \vdots&\vdots&\ddots&\vdots\\
+  0&0&0&\lambda_n\\
+\end{bmatrix}$$
+
+Clearly we have:
+\begin{align*}
+  MP&=M\begin{bmatrix}
+    \vec v_1&\cdots&\vec v_n
+  \end{bmatrix}
+  =\begin{bmatrix}
+    \vec Mv_1&\cdots&M\vec v_n
+  \end{bmatrix}
+  =\begin{bmatrix}
+    \vec \lambda_1v_1&\cdots&\lambda_2\vec v_n
+  \end{bmatrix}\tag{$\vec v_i$ are eigenvectors}\\
+  PD&=\begin{bmatrix}
+    \vec v_1&\cdots&\vec v_n
+  \end{bmatrix}\begin{bmatrix}
+    \lambda_1&0&\cdots&0\\
+    0&\lambda_2&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&0&\lambda_n\\
+  \end{bmatrix}
+  =\begin{bmatrix}
+    \vec \lambda_1v_1&\cdots&\lambda_2\vec v_n
+  \end{bmatrix}
+\end{align*}
+
+Since $MP$ and $PD$ are equal, we can say:
+\begin{align*}
+MP&=PD\\
+M&=PDP^{-1}\tag{$P$ has linearly independent columns, thus is invertible}
+\end{align*}
+
+And so $M$ is diagonalizable. $\blacksquare$
+\bigskip
+
+\textbf{Theorem}: If a finite dimensional linear transformation $T:V\to V$ with $\operatorname{dim} V=n$ has $n$ distinct eigenvalues, then it is diagonalizable.
+\medskip
+
+\textbf{Proof:} Note that a finite linear transformation is diagonalizable iff (for some arbitrary basis) its matrix representative $M$ is diagonalizable. And so we only need to prove that any $n\times n$ matrix $M$ with $n$ distinct eigenvalues is diagonalizable:
+\begin{align*}
+  \text{A matrix $M$ has $n$ distinct eigenvalues}&\implies\text{$M$ has $n$ linearly independent eigenvectors}\tag{Lemma 1}\\
+  &\implies\text{$M$ is diagonalizable}\tag{Lemma 2}
+\end{align*}
+
+And so we are done. $\blacksquare$
+\newpage
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} First note that showing this result for finite dimensional linear transformations $S$ and $T$ is equivalent to showing it for their matrix representatives $A$ and $B$, and so we do that instead.
+
+Below we show that for any eigenvalue $\lambda$ that a $AB$ posesses, $BA$ also posess this eigenvalue. We do this in two cases, one in which $\lambda\not=0$ and one in which $\lambda=0$:
+\bigskip
+
+\textbf{Case 1}: Suppose $\lambda$ is a nonzero eigenvalue of $AB$, i.e. there exists some nonzero vector $\vec v\in V$ such that:
+\begin{equation}
+  AB\vec v=\lambda\vec v\tag{Eq. 1}
+\end{equation}
+
+Note from this equation that $B\vec v\not=\vec 0$ because if it did, then $\lambda\vec v=\vec 0$ implying that $\lambda=0$ since $\vec v$ is an eigenvector, and thus nonzero. This contradicts our initial assumption that $\lambda\not=0$.
+
+Applying $B$ to both sides of (Eq. 1) we find:
+\begin{align*}
+  AB\vec v&=\lambda\vec v\tag{Eq. 1}\\
+  B(AB\vec v)&=B(\lambda\vec v)\\
+  BA(B\vec v)&=\lambda (B\vec v)\tag{associativity}
+\end{align*}
+
+And so, $\lambda$ is an eigenvalue for $BA$ with a corresponding eigenvector of $B\vec v$, since it is nonzero. $\blacksquare$
+\medskip
+
+\textbf{Case 2}: Suppose $\lambda=0$ is an eigenvalue of $AB$. This implies that $AB$ has a nontrivial kernal, because some nonzero vectors go to $\vec 0$.. We want to show that $BA$ also has a nontrivial kernal, i.e. that it has a 0 eigenvalue. To do this we give a proof by contradiction:
+
+Suppose $BA$ \textit{does} have a trivial kernal. This makes $BA$ a linear isomorphism which implies that both $A$ and $B$ are linear isomorphisms. This in turn implies that $AB$ is a linear isomorphism, since it is the product of two linear isomorphisms. This however causes a contradiction as a linear isomorphism must have a trivial kernal, contradicting our assumption that $AB$ has a 0 eigenvalue. And so, we have that $TS$ must have a nontrivial kernal and thus a 0 eigenvalue. $\blacksquare$
+\bigskip
+
+While we have only proved one direction, i.e. that an eigenvalue of $AB$ is an eigenvalue of $BA$, note that the other direction is given by an identical proof but with $A$ and $B$ switched. As such, we are done. $\blacksquare$
+\newpage
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} Let $E_{\lambda}$ be the $\lambda$-eigenspace of $U$. We have that for any eigenvector $\vec v$ corresponding to eigenvalue $\lambda$:
+\begin{align*}
+  U(T(\vec v))&=T(U(\vec v))\tag{commutative}\\
+  &=T(\lambda\vec v)\tag{eigenvector}\\
+  &=\lambda T(\vec v)\tag{linearity}
+\end{align*}
+
+This shows that every $E_{\lambda}$ is $T$-stable, i.e. $T$ preserves the eigenspace $E_{\lambda}$. This stability implies that the restriction $T|_{E_\lambda}$ is a self-adjoint operator on $E_\lambda$.
+
+Now, by the spectral theorem, each $E_\lambda$ has an orthonormal basis of eigenvectors of $T|_{E_\lambda}$. Call them $\{\vec v_1,\cdots,\vec v_r\}$ and call their corresponding eigenvalues $\{\mu_1,\cdots,\mu_r\}$. We now have:
+$$U(\vec v_i)=\lambda\vec v_i\qquad T(\vec v_i)=\mu_i\vec v_i$$
+
+Which is one part of our simultaneous diagonalization. we simply need to repeat this process for all eigenvalues $\lambda$ of $U$. The set of all those eigenvectors $\vec v_i$ composes an eigenbasis which consists solely of eigenvectors of both $U$ and $T$.
+
+Now note that $UT$ is a self-adjoint operator:
+\begin{align*}
+  (UT)^*&=T^*U^*\tag{anti-distributive}\\
+  &=TU\tag{$T$ and $U$ are self-adjoint}\\
+  &=UT\tag{$T$ and $U$ commute}
+\end{align*}
+
+And so, by the spectral theorem, $UT$ diagonalizes over $V$. This means that the set of simultaneous eigenvectors we found earlier spans the entirety of $V$. This is precisely what it means for two matrices to be simultaneously diagonalizable and so with that, we are done. $\blacksquare$
+\newpage
+
+\subsection*{Problem 5}
+\noindent\textbf{Part 1:} First we compute $T(X)$ for an arbitrary matrix $X$:
+\begin{align*}
+  T(X)&=\begin{bmatrix}
+    0&1\\1&0
+  \end{bmatrix}\begin{bmatrix}
+    x_{11}&x_{12}\\x_{21}&x_{22}
+  \end{bmatrix}\begin{bmatrix}
+    0&0\\1&0
+  \end{bmatrix}+\begin{bmatrix}
+    x_{11}&x_{12}\\x_{21}&x_{22}
+  \end{bmatrix}\begin{bmatrix}
+    0&1\\0&0
+  \end{bmatrix}\\
+  &=\begin{bmatrix}
+    x_{22}&0\\x_{12}&0
+  \end{bmatrix}+\begin{bmatrix}
+    0&x_{11}\\0&x_{21}
+  \end{bmatrix}\\
+  &=\begin{bmatrix}
+    x_{22}&x_{11}\\x_{12}&x_{21}
+  \end{bmatrix}\\
+\end{align*}
+
+Now we compute the inner product $\langle T(A),T(B)\rangle$:
+\begin{align*}
+  \langle T(A),T(B)\rangle&=\operatorname{tr}(T(B)^\top T(A))\\
+  &=\operatorname{tr}\left(\begin{bmatrix}
+    b_{22}&b_{11}\\b_{12}&b_{21}
+  \end{bmatrix}^\top\begin{bmatrix}
+    a_{22}&a_{11}\\a_{12}&a_{21}
+  \end{bmatrix}\right)\\
+  &=\operatorname{tr}\left(\begin{bmatrix}
+    b_{22}&b_{12}\\b_{11}&b_{21}
+  \end{bmatrix}\begin{bmatrix}
+    a_{22}&a_{11}\\a_{12}&a_{21}
+  \end{bmatrix}\right)\\
+  &=\operatorname{tr}\begin{bmatrix}b_{22}a_{22}+b_{12}a_{12}&b_{22}a_{11}+b_{12}a_{21}\\ b_{11}a_{22}+b_{21}a_{12}&b_{11}a_{11}+b_{21}a_{21}\end{bmatrix}\\
+  &=b_{11}a_{11}+b_{12}a_{12}+b_{21}a_{21}+b_{22}a_{22}
+\end{align*}
+
+Now we compute the inner product $\langle A,B\rangle$:
+\begin{align*}
+  \langle A,B\rangle&=\operatorname{tr}(B^\top A)\\
+  &=\operatorname{tr}\left(\begin{bmatrix}
+    b_{11}&b_{12}\\b_{21}&b_{22}
+  \end{bmatrix}^\top\begin{bmatrix}
+    a_{11}&a_{12}\\a_{21}&a_{22}
+  \end{bmatrix}\right)\\
+  &=\operatorname{tr}\left(\begin{bmatrix}
+    b_{11}&b_{21}\\b_{12}&b_{22}
+  \end{bmatrix}\begin{bmatrix}
+    a_{11}&a_{12}\\a_{21}&a_{22}
+  \end{bmatrix}\right)\\
+  &=\operatorname{tr}\begin{bmatrix}b_{11}a_{11}+b_{21}a_{21}&b_{11}a_{12}+b_{21}a_{22}\\ b_{12}a_{11}+b_{22}a_{21}&b_{12}a_{12}+b_{22}a_{22}\end{bmatrix}\\
+  &=b_{11}a_{11}+b_{12}a_{12}+b_{21}a_{21}+b_{22}a_{22}
+\end{align*}
+
+And so we have that $\langle T(A),T(B)\rangle = \langle A,B\rangle$ for any two matrices $A$ and $B$. This is precisely what it means for $T$ to be an orthogonal operator and so, we are done. $\blacksquare$
+\bigskip
+
+% \begin{pmatrix}b_{22}a_{22}+b_{12}a_{12}&b_{22}a_{11}+b_{12}a_{21}\\ b_{11}a_{22}+b_{21}a_{12}&b_{11}a_{11}+b_{21}a_{21}\end{pmatrix}
+
+\noindent\textbf{Part 2:} We want an operator $T^*$ that, for any matrices $A$ and $B$, satisfies:
+$$\langle T(A),B\rangle=\langle A,T^*(B)\rangle$$
+
+To solve for that operator, let us consider the following equality:
+\begin{align*}
+  \langle T(A),B\rangle&=\langle A,T^*(B)\rangle\\
+  &=\langle A,M\rangle\tag{let $M:=T^*(B)$}\\
+  \operatorname{tr}(B^\top T(A))&=\operatorname{tr}(M^\top A)\\
+  \operatorname{tr}\left(\begin{bmatrix}
+    b_{11}&b_{21}\\b_{12}&b_{22}
+  \end{bmatrix}\begin{bmatrix}
+    a_{22}&a_{11}\\a_{12}&a_{21}
+  \end{bmatrix}\right)&=\operatorname{tr}\left(\begin{bmatrix}
+    m_{11}&m_{21}\\m_{12}&m_{22}
+  \end{bmatrix}\begin{bmatrix}
+    a_{11}&a_{12}\\a_{21}&a_{22}
+  \end{bmatrix}\right)\\
+  b_{11}a_{22}+b_{21}a_{12}+b_{12}a_{11}+b_{22}a_{21}&=m_{11}a_{11}+m_{21}a_{21}+m_{12}a_{12}+m_{22}a_{22}
+\end{align*}
+
+Now to calculate the entries of $M$, i.e. what $T^*$ mapped $B$ to, we simply have to pick the $m_{ij}$ such that the above equality is satisfied:
+$$M=\begin{bmatrix}
+  b_{12}&b_{21}\\b_{22}&b_{11}
+\end{bmatrix}$$
+
+And so the adjoint $T^*(X)$ for an arbitrary matrix $X$ is given by:
+$$T^*(X)=\begin{bmatrix}
+  x_{12}&x_{21}\\x_{22}&x_{11}
+\end{bmatrix}$$
+
+% \subsection*{Bonus}
+% \noindent\textbf{Solution:}
+
+\end{document}

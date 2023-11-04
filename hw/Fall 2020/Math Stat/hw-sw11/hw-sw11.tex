@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 11}
+\author{Ozaner Hansha}
+\date{October 23, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Prove that if $\hat\theta$ is a sufficient estimator for parmeter $\theta$ then, $\lambda\hat\theta$ is also a sufficient estimator of $\theta$. Where $\lambda\in\mathbb R^+$.
+\bigskip
+
+\noindent\textbf{Solution:} Suppose our sample $X$ is taken from the distribution characterized by the joint pdf $f_X(\vec x;\theta)$, where $\theta$ is the parmeter. Also consider a statistic $\hat\theta:\mathcal X\to\mathcal T$. We know from the factorization theorem that $\hat\theta$ is a sufficient statistic iff there exists functions $h(\vec x)$ and $g(\hat\theta(\vec x);\theta)$ such that:
+$$f_X(\vec x;\theta)=h(\vec x)g(\hat\theta(\vec x);\theta)$$
+
+Now consider a bijection $r:\mathcal T\to\mathcal S$. Note that $r$ has an inverse $r^{-1}$ since it is a bijection. As a result, we can define the following function:
+$$g'(t;\theta)=g(r^{-1}(t);\theta)$$
+
+We can now prove our result:
+\begin{align*}
+    f_X(\vec x;\theta)&=h(\vec x)g(\hat\theta(\vec x);\theta)\tag{$\hat\theta$ is sufficient}\\
+    &=h(\vec x)g(r^{-1}(r(\hat\theta(\vec x)));\theta)\\
+    &=h(\vec x)g'(r(\hat\theta(\vec x));\theta)
+\end{align*}
+
+And so by the factorization theorem, we have shown that for any sufficient statistic $\hat\theta$ with codomain $\mathcal T$ and bijective function $r$ with domain $\mathcal T$, the statistic $r(\hat\theta)$ is also sufficient.
+
+A simple corollary to this is that multiplication by a positive constant $\lambda$ preserves sufficiency, since $r(t)=\lambda t$ is a bijection with its inverse being $r^{-1}(t)=\frac{t}{\lambda}$.
+\end{document}

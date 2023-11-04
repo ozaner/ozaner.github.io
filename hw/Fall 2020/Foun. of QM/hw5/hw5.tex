@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ HW 5}
+\author{Ozaner Hansha}
+\date{November 19, 2020}
+\maketitle
+
+Recall that the $z$ and $x$ components of the spin of a spin-1/2 quantum particle are given by the following observables:
+$$
+    \sigma_z=\begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\qquad\quad
+    \sigma_x=\begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix}
+$$
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} What are the possible values of $\sigma_z$?
+\bigskip
+
+\noindent\textbf{Solution:} After measurement, the possible values the $z$-component of the spin of a spin-1/2 particle could take are given by the eigenvalues of $\sigma_z$. Since this is a diagonal matrix, it is plain to see that these eigenvalues are its diagonal entries $1, -1$.
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} What are the possible values of $\sigma_x$?
+\bigskip
+
+\noindent\textbf{Solution:} As with problem 1, the possible values are given by the eigenvalues of $\sigma_x$. We now solve for them:
+\begin{align*}
+    0&=\det(\sigma_x-\lambda I_2)\tag{characteristic equation}\\
+    &=\det\begin{pmatrix}
+        -\lambda&1\\1&-\lambda
+    \end{pmatrix}\\
+    &=\lambda^2-1\tag{det. of $2\times2$ matrix}\\
+    1&=\lambda^2\\
+    \pm1&=\lambda
+\end{align*}
+
+And so we have that the possible observed values of the $x$-component of the spin (i.e. the eigenvalues of the observable $\sigma_x$) are $1,-1$.
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Find a state $|\sigma_x=1\rangle$ such that $\sigma_x=1$.
+\bigskip
+
+\noindent\textbf{Solution:} The state $\icol{1\\0}$ has $\sigma_x=1$. To see this note the following:
+\begin{align*}
+    \begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix}\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}=1\cdot\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+\end{align*} 
+
+And so we have that $|\sigma_x=1\rangle=\frac{1}{\sqrt{2}}\icol{1\\1}$ since it is a an eigenvector of $\sigma_x$ with eigenvalue 1. As such, the probability of measuring $\sigma_x=1$ for a given state $\phi$ is given by:
+\begin{align*}
+    p_{x=1}(\phi)=\left|\langle\phi|\sigma_x=1\rangle\right|^2
+\end{align*}
+
+In the case of $\sigma_x=1$ itself, its probability is given by:
+\begin{align*}
+    p_{x=1}(\phi)=\left|\langle\sigma_x=1|\sigma_x=1\rangle\right|^2=1
+\end{align*}
+
+Thus, when the $x$-component of a 1/2-spin particle's spin is measured in the state $|\sigma_x=1\rangle=\frac{1}{\sqrt{2}}\icol{1\\1}$, it will give the value $\sigma_x=1$ with 100\% certainty.
+
+\subsection*{Question 4}
+\noindent\textbf{Problem:} Suppose $\sigma_x$ is measured when the particle is in the state $|\sigma_x=1\rangle$. What is the probability that $\sigma_x=-1$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $|\sigma_x=-1\rangle$ is given by $\frac{1}{\sqrt{2}}\icol{-1\\1}$:
+\begin{align*}
+    \begin{bmatrix}
+        0&1\\1&0
+    \end{bmatrix}\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}=-1\cdot\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+\end{align*} 
+
+As such the probability of a particle $\phi$ to be measured with $\sigma_x=-1$ is given by:
+\begin{align*}
+    p_{x=-1}(\phi)=\left|\langle\phi|\sigma_x=-1\rangle\right|^2
+\end{align*}
+
+In the case of $|\sigma_x=1\rangle$ we have:
+\begin{align*}
+    p_{x=-1}(|\sigma_x=1\rangle)&=\left|\langle\sigma_x=1|\sigma_x=-1\rangle\right|^2\\
+    &=\left||\sigma_x=-1\rangle^\dagger|\sigma_x=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}\right|^2\\
+    &=|0|^2=0
+\end{align*}
+
+And so the probability that a particle in state $|\sigma_x=1\rangle$ has its spin's $x$-component measured to be $\sigma_x=-1$ is 0, as these states are orthogonal.
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} Suppose $\sigma_z$ is measured when the particle is in the state $|\sigma_x=1\rangle$. What is the probability that $\sigma_z=-1$?
+\bigskip
+
+\noindent\textbf{Solution:} First note that $|\sigma_z=-1\rangle$ is given by $\icol{0\\1}$:
+\begin{align*}
+    \begin{bmatrix}
+        1&0\\0&-1
+    \end{bmatrix}\begin{bmatrix}
+        0\\1
+    \end{bmatrix}=-1\cdot\begin{bmatrix}
+        0\\1
+    \end{bmatrix}
+\end{align*} 
+
+As such the probability of a particle $\phi$ to be measured with $\sigma_z=-1$ is given by:
+\begin{align*}
+    p_{x=-1}(\phi)=\left|\langle\phi|\sigma_z=-1\rangle\right|^2
+\end{align*}
+
+In the case of $|\sigma_x=1\rangle$ we have:
+\begin{align*}
+    p_{z=-1}(|\sigma_x=1\rangle)&=\left|\langle\sigma_x=1|\sigma_z=-1\rangle\right|^2\\
+    &=\left||\sigma_z=-1\rangle^\dagger|\sigma_x=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        0&1
+    \end{bmatrix}\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}\right|^2\\
+    &=\left|\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+And so the probability that a particle in state $|\sigma_x=1\rangle$ has its spin's $z$-component measured to be $\sigma_z=-1$ is $\frac{1}{2}$.
+
+\subsection*{Question 6}
+\noindent\textbf{Problem:} Consider a particle in state $|\sigma_x=1\rangle$. Give the probability distribution of the state of the particle immediately after $\sigma_z$ has been measured.
+\bigskip
+
+\noindent\textbf{Solution:} First note that, from problem 5, we have that the probability of measuring the particle with $\sigma_z=-1$ is $\frac{1}{2}$. We will now show the same is true for $\sigma_z=1$ (i.e. it's only other possible value):
+\begin{align*}
+    \begin{bmatrix}
+        1&0\\0&1
+    \end{bmatrix}\begin{bmatrix}
+        1\\0
+    \end{bmatrix}&=-1\cdot\begin{bmatrix}
+        1\\0
+    \end{bmatrix}\tag{$|\sigma_z=1\rangle=\icol{1\\0}$}\\
+    p_{z=1}(|\sigma_x=1\rangle)&=\left|\langle\sigma_x=1|\sigma_z=1\rangle\right|^2\\
+    &=\left||\sigma_z=1\rangle^\dagger|\sigma_x=1\rangle\right|^2\\
+    &=\left|\begin{bmatrix}
+        1&0
+    \end{bmatrix}\begin{bmatrix}
+        \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}
+    \end{bmatrix}\right|^2\\
+    &=\left|\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+Now recall that, immediately after a measurement, a quantum particle's state collapses to the eigenvector associated with its measured value. And so after having $\sigma_z$ measured, our particle $\psi$ can only be one of $\sigma_z$'s eigenvectors, each with 50\% probability:
+\begin{align*}
+    P(\psi=|\sigma_z=1\rangle)=P\left(\psi=\begin{bmatrix}
+        1\\0
+    \end{bmatrix}\right)=\frac{1}{2}\\
+    P(\psi=|\sigma_z=-1\rangle)=P\left(\psi=\begin{bmatrix}
+        0\\1
+    \end{bmatrix}\right)=\frac{1}{2}
+\end{align*}
+
+\subsection*{Question 7}
+\noindent\textbf{Problem:} Suppose we immediately measure $\sigma_x$ after the situation in problem 6. What is the probability that $\sigma_x=-1$?
+\bigskip
+
+\noindent\textbf{Solution:} Let $\psi_b$ and $\psi_a$ denote the particle's state before and after the measurement of $\sigma_x$ respectively. We then have the following:
+\begin{align*}
+    P(\psi_a=|\sigma_x=-1\rangle)&=P(\psi_a=|\sigma_x=-1\rangle\wedge\psi_b=|\sigma_z=1\rangle)\\&\quad+P(\psi_a=|\sigma_x=-1\rangle\wedge\psi_b=|\sigma_z=-1\rangle)\tag{law of total prob.}\\
+    &=P(\psi_a=|\sigma_x=-1\rangle|\psi_b=|\sigma_z=1\rangle)P(\psi_b=|\sigma_z=1\rangle)\\
+    &\quad+P(\psi_a=|\sigma_x=-1\rangle|\psi_b=|\sigma_z=-1\rangle)P(\psi_b=|\sigma_z=1\rangle)\tag{chain rule}\\
+    &=\frac{1}{2}P(\psi_a=|\sigma_x=-1\rangle|\psi_b=|\sigma_z=1\rangle)\\
+    &\quad+\frac{1}{2}P(\psi_a=|\sigma_x=-1\rangle|\psi_b=|\sigma_z=-1\rangle)\tag{problem 6}\\
+    &=\frac{1}{2}p_{x=-1}(|\sigma_z=1\rangle)+\frac{1}{2}p_{x=-1}(|\sigma_z=-1\rangle)\\
+    &=\frac{1}{2}\left|\langle\sigma_z=1|\sigma_x=-1\rangle\right|^2+\frac{1}{2}\left|\langle\sigma_z=-1|\sigma_x=-1\rangle\right|^2\\
+    &=\frac{1}{2}\left||\sigma_x=-1\rangle^\dagger|\sigma_z=1\rangle\right|^2+\frac{1}{2}\left||\sigma_x=-1\rangle^\dagger|\sigma_z=-1\rangle\right|^2\\
+    &=\frac{1}{2}\left|\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        1\\0
+    \end{bmatrix}\right|^2+\frac{1}{2}\left|\begin{bmatrix}
+        -\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}
+    \end{bmatrix}\begin{bmatrix}
+        0\\1
+    \end{bmatrix}\right|^2\\
+    &=\frac{1}{2}\left|-\frac{1}{\sqrt{2}}\right|^2+\frac{1}{2}\left|\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
+\end{align*}
+
+\end{document}

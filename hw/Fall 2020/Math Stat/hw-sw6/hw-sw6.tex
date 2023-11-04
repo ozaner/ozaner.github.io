@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 6}
+\author{Ozaner Hansha}
+\date{September 22, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Suppose that a population is a normally distributed with unknown mean and variance. If we take a sample of size 6, what is the probability that the population variance is at least 6.25 times as large as the sample variance?
+\bigskip
+
+\noindent\textbf{Solution:} First note our desired probability is:
+$$P(6.25S^2\le\sigma^2)$$
+
+Now note that, since our population is normally distributed, we have that the following function of its sample variance $S^2$ has a chi-distribution:
+$$\frac{(n-1)S^2}{\sigma^2}=\frac{5S^2}{\sigma^2}\sim\chi_5^2$$
+
+Now note that:
+$$P\left(\frac{5S^2}{\sigma^2}\le c\right)=P\left(\frac{5S^2}{c}\le \sigma^2\right)$$
+
+And so setting $\frac{5S^2}{c}=6.25S^2$ and solving for $c$ nets us:
+$$c=0.8$$
+
+And so we can finally calculate our desired probability:
+\begin{align*}
+    P(6.25S^2\le\sigma^2)&=P\left(\frac{5S^2}{.8}\le \sigma^2\right)\\
+    &=P\left(\frac{5S^2}{\sigma^2}\le .8\right)\\
+    &=1-P\left(\frac{5S^2}{\sigma^2}\ge .8\right)\tag{complement}\\
+    &=1-\chi^2_{.8,5}\approx0.02297\tag{chi distribution}
+\end{align*}
+\end{document}

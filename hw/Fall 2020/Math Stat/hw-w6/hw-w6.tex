@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 6}
+\author{Ozaner Hansha}
+\date{October 23, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Consider the distribution $\text{Ber}(\theta)$. For a sample of $n$ i.i.d. variables $X_i\sim\text{Ber}(\theta)$, show that the following is a sufficient statistic of $\theta$:
+$$\hat\theta=\sum_{i=1}^nX_i$$
+\smallskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+    p_X(\vec x;\theta)&=\prod_{i=1}^np_{X_i}(x_i;\theta)\tag{independent sample}\\
+    &=\prod_{i=1}^np^{x_i}(1-p)^{1-x_i}\tag{$X_i\sim\text{Ber}(\theta)$}\\
+    &=p^{\sum_{i=1}^nx_i}(1-p)^{\sum_{i=1}^n(1-x_i)}\tag{sum of exponents}\\
+    &=p^{\sum_{i=1}^nx_i}(1-p)^{n-\sum_{i=1}^nx_i}\tag{linearity of summation}\\
+    &=p^{\hat\theta(\vec x)}(1-p)^{n-\hat\theta(\vec x)}\tag{def. of $\hat\theta$}\\
+    &=\underbrace{1}_{h(\vec x)}\cdot\underbrace{p^{\hat\theta(\vec x)}(1-p)^{n-\hat\theta(\vec x)}}_{g(\hat\theta(\vec x);\theta)}
+\end{align*}
+
+And so by the factorization theorem, we have that $\hat\theta$ is a sufficient statistic of $\theta$.
+\bigskip
+
+\subsection*{Question 2}
+Consider two distributions with the same mean $\mu$ but with different variances $\sigma^2_1$, $\sigma^2_2$. Suppose we take independent samples from each distribution of sizes $n_1$, $n_2$, and that these samples have sample means $\bar X_1$, $\bar X_2$.
+\bigskip
+
+\noindent\textbf{Part a:} Show that for any $\omega\in\mathbb R$, the statistic $\hat\theta_\omega=\omega\bar X_1+(1-\omega)\bar X_2$ is an unbiased estimator of $\mu$.
+\bigskip
+
+\noindent\textbf{Solution:} Let us compute the expected value of $\hat\theta-\omega$:
+\begin{align*}
+    E[\hat\theta_\omega]&=E[\omega\bar X_1+(1-\omega)\bar X_2]\tag{def. of $\hat\theta_\omega$}\\
+    &=\omega E[\bar X_1]+(1-\omega)E[\bar X_2]\tag{linearity of expectation}\\
+    &=\omega\mu+(1-\omega)\mu\tag{mean of sample mean}\\
+    &=\omega\mu+\mu-\omega\mu\\
+    &=\mu
+\end{align*}
+
+And so we have that, for any real $\omega$, the mean of our estimator $\hat\theta_\omega$ is the mean of the population. Thus our estimator is unbiased.
+\bigskip
+
+\noindent\textbf{Part b:} Give the variance of the estimator $\hat\theta_\omega$.
+\bigskip
+
+\noindent\textbf{Solution:} The variance of $\hat\theta_\omega$ is given by:
+\begin{align*}
+    \Var(\hat\theta_\omega)&=\Var(\omega\bar X_1+(1-\omega)\bar X_2)\tag{def. of $\hat\theta_\omega$}\\
+    &=\Var(\omega\bar X_1)+\Var((1-\omega)\bar X_2)\tag{variance of independent RVs}\\
+    &=\omega^2\Var(\bar X_1)+(1-\omega)^2\Var(\bar X_2)\tag{variance of multiple of RV}\\
+    &=\omega^2\frac{\sigma^2_1}{n_1}+(1-\omega)^2\frac{\sigma^2_2}{n_2}\tag{variance of sample mean}
+\end{align*}
+\smallskip
+
+\noindent\textbf{Part c:} Show that $\Var(\hat\theta_\omega)$ is minimized when:
+$$\omega=\frac{n_1\sigma^2_2}{n_2\sigma^2_1+n_1\sigma^2_2}$$
+\bigskip
+
+\noindent\textbf{Solution:} Our goal is to compute the following:
+\begin{align*}
+    \argmin_{\omega\in\mathbb R}\Var(\hat\theta_\omega)&=\argmin_{\omega\in\mathbb R}\,\omega^2\frac{\sigma^2_1}{n_1}+(1-\omega)^2\frac{\sigma^2_2}{n_2}\tag{part b}\\
+    &=\argmin_{\omega\in\mathbb R}\underbrace{\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}_{a}\omega^2+\underbrace{\left(-\frac{2\sigma^2_2}{n_2}\right)}_{b}\omega+\underbrace{\frac{\sigma^2}{n_2}}_{c}
+\end{align*}
+
+Note that the expression we are trying to minimize is a quadratic polynomial in $\omega$. Recall that all quadratics in one variable have a single extremum, and that extremum is a minimum if $a>0$ and a maximum if $a<0$.
+
+In our case, $a=\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)$ is always positive, unless both $\sigma^2_1$ and $\sigma^2_2$ were zero (i.e. both RVs the distributions correspond to are just constants). And so the $\omega$ that minimizes estimator's variance is given by the zero of the above quadratic:
+\begin{align*}
+    \argmin_{\omega\in\mathbb R}\Var(\hat\theta_\omega)&=\argmin_{\omega\in\mathbb R}\underbrace{\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}_{a}\omega^2+\underbrace{\left(-\frac{2\sigma^2_2}{n_2}\right)}_{b}\omega+\underbrace{\frac{\sigma^2}{n_2}}_{c}\\
+    &=-\frac{b}{2a}\tag{zero of a quadratic}\\
+    &=-\frac{-\frac{2\sigma^2_2}{n_2}}{2\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}\\
+    &=\frac{\sigma^2_2}{n_2\left(\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)}\\
+    &=\frac{\sigma^2_2}{\frac{n_2\sigma^2_1}{n_1}+\sigma^2_2}\\
+    &=\frac{n_1\sigma^2_2}{n_2\sigma^2_1+n_1\sigma^2_2}\\
+\end{align*}
+
+And so we are done.
+
+\end{document}

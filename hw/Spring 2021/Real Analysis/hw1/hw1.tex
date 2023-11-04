@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommandx{\der}[2][1= , 2=t]{\frac{d#1}{d#2}}
+\renewcommand\vec{\mathbf}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\posint}{\mathbb J}
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+% \newcommand{\posint}{\mathbb Z^+}
+
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#1}
+\author{Ozaner Hansha}
+\date{January 30, 2021}
+\maketitle
+
+Let $\posint$ be the set of positive integers.
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Prove the following:
+$$\forall n\in\posint,\,4\cdot3^n>(n+2)^2$$
+
+\noindent\textbf{Solution:} Consider the predicate $P(n)\equiv4\cdot3^n>(n+2)^2$. We can prove $P(1)$ quite simply:
+\begin{align*}
+    P(1)&\equiv4\cdot3>(1+2)^2\\
+    &\equiv12>9\\
+    &\equiv\top
+\end{align*}
+
+Now let us consider the following lemma $\forall n\in\posint$:
+\begin{align*}
+    0&<2n^2+6n+3\tag{$n>0\implies 2n^2+6n+3>0$}\\
+    n^2+6n+9&<3n^2+12n+12\\
+    (n+3)^2&<3(n+2)^2\tag{Lemma 1}\\
+\end{align*}
+
+Now we will prove that $P(n)\implies P(n+1)$:
+\begin{align*}
+    4\cdot3^{n+1}&=3(4\cdot3^n)\tag{additive prop. of exponent}\\
+    &>3(n+2)^2\tag{assume the antecedent, $P(n)$}\\
+    &>(n+3)^2\tag{Lemma 1}\\
+    4\cdot3^{n+1}&>(n+1+2)^2\tag{$P(n+1)$}
+\end{align*}
+
+And so we have shown $P(1)$ and $P(n)\implies P(n+1)$. By the principle of mathematical induction, this implies that $P(n)$ holds for all integers greater than or equal to 1, in other words:
+$$\forall n\in\posint,\,4\cdot3^n>(n+2)^2$$
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} For an integer $k$, let $k\posint$ be the set of positive integers which are multiples of $k$. Prove that $\card{2\posint}=\card{3\posint}$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that for two sets to have the same cardinality there must exist a bijection between them. Consider the function $f:2\posint\to3\posint$ defined by $n\to\frac{3n}{2}$. We will first prove that $f$ is injective. Consider arbitrary $x,y\in2\posint$:
+\begin{align*}
+    f(x)=f(y)&\implies\frac{3x}{2}=\frac{3y}{2}\tag{def. of $f$}\\
+    &\implies x=y\tag{algebra}
+\end{align*}
+
+And so we have shown that $f(x)=f(y)\implies x=y$, which is the definition of an injective function.
+
+Next we will show $f$ is surjective. Consider an arbitrary $y\in3\posint$. There exists an $x$ such that $f(x)=y$, namely $x=\frac{2y}{3}$. We prove this below:
+\begin{align*}
+    f(x)&=f\left(\frac{2y}{3}\right)\tag{def. of $x$}\\
+    &=\frac{3}{2}\cdot\frac{2y}{3}\tag{def. of $f$}\\
+    &=y
+\end{align*}
+
+And so we have shown that $(\forall y\in3\posint)\,(\exists x\in2\posint)\,f(x)=y$, which is the definition of a surjective function.
+
+Since a function that is both injective and surjective is a bijection, we have shown that $f$ is bijective and thus, by the definition of cardinality, that:
+$$\card{2\posint}=\card{3\posint}$$
+
+\subsection*{Problem 3}
+Consider the set of polynomials with integer coefficients $\mathbb Z[x]$. Given two polynomials $f,g\in\mathbb Z[x]$, we define the relation $\sim$ as:
+\begin{equation*}
+    f\sim g\equiv \exists h\in\mathbb Z[x],\,f-g=h'
+\end{equation*}
+
+\noindent\textbf{Part a:} Prove that $f\sim f$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary polynomial $f\in\mathbb Z[x]$. We have $f-f=0$ and since there exists an $h\in\mathbb Z[x]$ such that $h'=0$, in particular any integer constant $C$, we have that $f\sim f$.
+\bigskip
+
+\noindent\textbf{Part b:} Prove that $f\sim g\implies g\sim f$.
+\bigskip
+
+\noindent\textbf{Solution:} If for two functions $f,g\in\mathbb Z$ we have $f\sim g$ this means that:
+$$\exists h\in\mathbb Z[x],\,\,f-g=h'$$
+
+Now recall that for any function $a$, the derivative of the negative is equal to the negative of the derivative:
+$$(-a)'=-a'$$
+
+Also recall that for any function $a\in\mathbb Z[x]$ we also have $-a\in\mathbb Z[x]$ since the integers (i.e. its coefficients) are closed under negation. Putting these together we have that:
+$$g-f=-h'$$
+
+And since $-h'=(-h)'$ and $-h\in\mathbb Z[x]$, since $h\in\mathbb Z[x]$, we have that $g\sim f$.
+\bigskip
+
+\noindent\textbf{Part c:} Prove that $f\sim g\wedge g\sim h\implies f\sim h$.
+\bigskip
+
+\noindent\textbf{Solution:} If for functions $f,g,h\in\mathbb Z$ we have $f\sim g\wedge g\sim h$ this means that:
+\begin{align*}
+    \exists a\in\mathbb Z[x],\,\,f-g=a'\\
+    \exists b\in\mathbb Z[x],\,\,g-h=b'
+\end{align*}
+
+Now recall that for any functions $a,b$, the derivative of their sum is the sum of their derivatives:
+$$(a+b)'=a'+b'$$
+
+Also recall that for any functions $a,b\in\mathbb Z[x]$ we also have $a+b\in\mathbb Z[x]$ since the integers (i.e. their coefficients) are closed under addition. Putting these together we have that:
+$$f-h=(f-g)+(g-h)=a'+b'$$
+
+And since $a'+b'=(a+b)'$ and $a+b\in\mathbb Z[x]$, since $a,b\in\mathbb Z[x]$, we have that $f\sim h$.
+\bigskip
+
+\noindent\textbf{Part d:} For any $f,g\in\mathbb Z[x]$, is $f\sim g$?
+\bigskip
+
+\noindent\textbf{Solution:} No. To see this consider $f=2x$ and $g=x$:
+$$2x-x=x$$
+
+For $2x\sim x$ it must be the case that their difference $x$ be the derivative of some function $h\in\mathbb Z[x]$. Let us solve for all such possible $h$:
+\begin{align*}
+    \dv{h}{x}&=x\\
+    h_C&=\frac{x^2}{2}+C
+\end{align*}
+
+Notice that no solution $h_C$ is contained in $\mathbb Z[x]$ since the squared term of the solutions have a coefficient of $\frac{1}{2}\not\in\mathbb Z$. Thus we have shown by counterexample that:
+$$\neg\forall f,g\in\mathbb Z[x],\,\,f\sim g$$
+
+\subsection*{Problem 4}
+\noindent\textbf{Problem:} Prove Bernoulli's inequality. That is, prove the following:
+\begin{equation*}
+    \forall m,n\in\posint,\,\,(1+m)^n\ge1+mn
+\end{equation*}
+
+\noindent\textbf{Solution:} Consider an arbitrary $m\in\posint$, we have the following predicate:
+$$P(n)\equiv(1+m)^n\ge1+mn$$
+
+We can prove $P(1)$ immediately:
+\begin{align*}
+    P(1)&\equiv1+m\ge1+m\\
+    &\equiv\top
+\end{align*}
+
+Now we will prove that $P(n)\implies P(n+1)$:
+\begin{align*}
+    (1+m)^{n+1}&=(1+m)(1+m)^n\tag{additive prop. of exponent}\\
+    &>(1+m)(1+mn)\tag{assume the antecedent, $P(n)$}\\
+    &=1+mn+m^2n+m\tag{algebra}\\
+    &\ge1+mn+m\tag{$m,n\in\posint\implies m^2n>0$}\\
+    (1+m)^{n+1}&\ge1+m(n+1)\tag{$P(n+1)$}
+\end{align*}
+
+And so we have shown $P(1)$ and $P(n)\implies P(n+1)$. By the principle of mathematical induction, this implies that $P(n)$ holds for all integers greater than or equal to 1, in other words:
+$$\forall m,n\in\posint,\,\,(1+m)^n\ge1+mn$$
+
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Prove that $P(\posint)$ is not countable.
+\bigskip
+
+\noindent\textbf{Solution:} Before we prove the desired statement, let us establish Cantor's theorem. First, consider a set $A$ and its power set $\pset A$. The function $g:A\to\pset A$ defined by $x\mapsto\{x\}$ is clearly an injunction from $A\to\pset A$. Since an injunction exits between these two sets we have, by the definition of cardinality:
+\begin{equation}
+    \card A\le\card{\pset A}\tag{Lemma 1}
+\end{equation}
+\medskip
+
+Next, consider an arbitrary function $f:A\to\pset A$, and the set $B=\{x\in A\mid x\not\in f(x)\}$. Suppose $f$ is surjective. This means that $\forall y\in \pset A$ there exists an $x\in A$ such that $f(x)=y$, in particular it implies that:
+
+\begin{equation}
+    \exists c\in A,\,\,f(c)=B\tag{$f$ is surjective \& $B\in\pset A$}
+\end{equation}
+\medskip
+
+But now we have a contradiction:
+\begin{align*}
+    c\in f(c)\iff c\in B\tag{$f(c)=B$ \& def. of set equality}\\
+    c\in f(c)\iff c\not\in B\tag{def. of B}
+\end{align*}
+
+And so our assumption that $f$ was surjective is false, and thus no map from a set $A$ to its powerset $\pset A$ can be surjective. By the definition of cardinality this means:
+\begin{equation}
+    \card A\not\ge\card{\pset A}\tag{Lemma 2}
+\end{equation}
+\medskip
+
+Putting these two lemmas together we have that for an arbitrary set $A$:
+\begin{align*}
+    \card A\le\card{\pset A}\tag{Lemma 1}\\
+    \card A\not\ge\card{\pset A}\tag{Lemma 2}\\
+    \hline
+    \card A<\card{\pset A}\tag{Cantor's Theorem}
+\end{align*}
+
+Or in other words, the cardinality of a set is strictly smaller than that of its powerset. In the case of $\posint$ this implies:
+$$\card\posint<\card{\pset\posint}$$
+
+And since, by definition, any cardinality larger than countably infinite (i.e. $\card\posint=\aleph_0$) is uncountably infinite, we are done.
+
+\end{document}

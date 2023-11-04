@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\HW \#7}
+\author{Ozaner Hansha}
+\date{April 2, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Solution:} Consider an arbitrary $x_0\in[a,b]$. Now consider an arbitrary $\epsilon>0$. Since $h(x)\in\{f(x),g(x)\}$, we have 2 cases:
+\begin{enumerate}
+  \item $h(x_0)=f(x_0)$:
+  \begin{align*}
+    \exists\delta_f,\quad 0<|x-x_0|<\delta_f&\implies|f(x)-f(x_0)|<\epsilon\tag{$f(x)$ is continuous}\\
+    &\implies|h(x)-h(x_0)|<\epsilon\tag{$h(x_0)=f(x_0)$}
+  \end{align*}
+  \item $h(x_0)=g(x_0)$:
+  \begin{align*}
+    \exists\delta_f,\quad 0<|x-x_0|<\delta_f&\implies|g(x)-g(x_0)|<\epsilon\tag{$g(x)$ is continuous}\\
+    &\implies|h(x)-h(x_0)|<\epsilon\tag{$h(x_0)=g(x_0)$}
+  \end{align*}
+\end{enumerate}
+
+In both cases, $h(x)$ has been shown to be continuous at $x=x_0$. You'll notice that in the case that $h(x_0)=f(x_0)=g(x_0)$, both cases apply and we can simply pick one.
+
+Since we have shown that $h(x)$ is continuous on any $x_0\in[a,b]$, we have shown that it is continuous over that whole interval.
+
+\subsection*{Problem 2}
+\noindent\textbf{Solution:} First let us prove that $\sqrt[3]{4}$ is irrational by contradiction. Let us assume that it is indeed rational, and thus there are coprime integers $a,b\in\Z^+$ such that $\frac{a}{b}=\sqrt[3]{4}$. This implies:
+\begin{align*}
+  \frac{a}{b}=4^{\sfrac{1}{3}}&\implies a=4^{\sfrac{1}{3}}b\\
+  &\implies a^3=4b^3\\
+  &\implies 4|a^3\tag{$a$ is an integer}\\
+  &\implies 2|a^3\tag{$2|4$}\\
+  &\implies 2|a\tag{2 is prime}\\
+  &\implies a=2k\tag{$a$ is even}
+\end{align*}
+
+Plugging this in to our original expression, this implies that:
+\begin{align*}
+  4b^3=8k^3&\implies b^3=4k^3\tag{$a=2k$}\\
+  &\implies 4|b^3\\
+  &\implies 2|b^3\tag{$2|4$}\\
+  &\implies 2|b\tag{2 is prime}\\
+  &\implies b=2k\tag{$b$ is even}
+\end{align*}
+
+Yet this is a contradiction as now $a$ and $b$ are clearly not coprime, since they are both even.
+
+\subsection*{Problem 3}
+\noindent\textbf{Solution:} Yes. Let us first establish the following lemma:
+\begin{align*}
+  e^x&\ge x+1\\
+  e^{x-1}&\ge x\\
+  x-1&\ge\ln x\tag{lemma 1}
+\end{align*}
+
+Now on to the proof. Define $f(0)=0$ Now consider an arbitrary $\epsilon>0$, and $\delta=\epsilon+1$. We then have for $x_0=0$:
+\begin{align*}
+  |f(x)|&=|x\ln x|\\
+  &=x\ln x\tag{$x>0$}\\
+  &\le x(x-1)\tag{lemma 1}\\
+  &<x-1\\
+  &<\delta-1\tag{assume $0<|x|<\delta$}\\
+  &<\epsilon\tag{$\delta=\epsilon+1$}
+\end{align*}
+
+And since we have only considered $x>0$ as $x\ln x$ isn't defined elsewhere, we have:
+$$\lim_{x\to0^+}f(0)=\lim_{x\to0^+}x\ln x=0$$
+
+And we are done.
+
+\subsection*{Problem 4}
+\noindent\textbf{Solution:} First let us show that a continuous function $f:[a,b]\to\R$ must also be uniformly continuous. We do this by contradiction. Note that if $G$ was not uniformly continuous, then there exists an $\epsilon>0$ such that for each $\delta>0$, there exists $x,c$ such that $|x-c|<\delta$ and $|f(x)-f(c)|\ge \epsilon$. By the archimedean property this implies that there is some $n\in\N$ such that this holds for some $\delta=\frac{1}{n}$.
+
+This gives us two sequences:
+\begin{gather*}
+  (x_n)\subseteq[a,b]\\
+  (c_n)\subseteq[a,b]
+\end{gather*}
+
+such that $|x_n-c_n|<\frac{1}{n}$ and $|f(x_n)-f(c_n)|\ge \epsilon$. But the Bolzano-Weierstrass theorem tells us that $(c_n)$ must itself have a convergent subsequence $(c_{n_k})$. Say this subsequence converges to $c$. Since $|x_{n_k}-c_{n_k}|<\frac{1}{n_k}$, we must have that the subsequence $(x_{n_k})$ converges to $c$ as well. But since $f$ is continuous we have:
+\begin{gather*}
+  \lim(f(x_{n_k})-f(c))=0\\
+  \lim(f(c_{n_k})-f(c))=0
+\end{gather*}
+
+This tell us:
+\begin{align*}
+  |f(c_{n_k})-f(x_{n_k})|&=|f(c_{n_k})-f(c)+f(c)-f(x_{n_k})|\\
+  &\le |f(c_{n_k})-f(c)|+|f(c)-f(x_{n_k})|\tag{triangle inequality}
+\end{align*}
+
+And so we have $f(c_{n_k})-f(x_{n_k})=0$. But this contradicts our assumption that $|f(c_n)-f(x_n)|\ge \epsilon$.
+\bigskip
+
+With this established, consider a restriction of our function $f_0:[0,h]\to\R$. Since $f$ is continuous everywhere, it must be that $f_0$ is continuous over $[0,h]$ and thus is bounded over said interval. This means that for any $\epsilon>0$ there is some $\delta>0$ that satisfies the continuity definition of any $x,x_0\in[0,h]$.
+
+Note that the same holds for $f_1:[h,2h]\to\R$ and in general $f_k:[kh,(k+1)h]\to\R$. Not only that but since these restrictions are identical but just shifted (since $f$ is periodic), for any $\epsilon>0$ the same $\delta>0$ can be used for each of these restrictions. And since we have:
+$$f(x)=\begin{cases}
+  f_0(x),&x\in[0,h]\\
+  &\vdots\\
+  f_k(x),&x\in[kh,(k+1)h]\\
+  &\vdots
+\end{cases}$$
+
+Then we have that our choice of $\delta$ given $\epsilon$ is independent of $x,x_0$ over the whole domain of $\R$ for the complete function $f$. In other words, $f$ is uniformly continuous.
+
+\subsection*{Problem 5}
+\noindent\textbf{Solution:} Because $f,g$ are uniformly continuous we have:
+\begin{gather}
+  \forall\epsilon>0,\exists\delta_1,\forall x,x_0\in (a,b),\quad |x-x_0|<\delta_1\implies |f(x)-f(x_0)|<\epsilon<\frac{\epsilon}{2}\\
+  \forall\epsilon>0,\exists\delta_2,\forall x,x_0\in (a,b),\quad |x-x_0|<\delta_1\implies |g(x)-g(x_0)|<\epsilon<\frac{\epsilon}{2}\\
+\end{gather}
+
+And also note that by the triangle inequality:
+$$|(f+g)(x)-(f+g)(x_0)|\le |f(x)-f(x_0)|+|g(x)-g(x_0)|$$
+
+And so letting $\delta_0=\min\{\delta_1,\delta_2\}$ we have:
+$$\forall\epsilon>0,\exists\delta_0,\forall x,x_0\in (a,b),\quad |x-x_0|,\delta_0\implies |(f+g)(x)-(f+g)(x_0)|\le |f(x)-f(x_0)|+|g(x)-g(x_0)|<\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon$$
+
+And so uniform continuity is preserved by addition.
+\bigskip
+
+For multiplication, this is not true for an open interval $(a,b)$.
+\end{document}

@@ -1,0 +1,293 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#7}
+\author{Ozaner Hansha}
+\date{March 22, 2021}
+\maketitle
+
+\subsection*{Chapter 7}
+\noindent\textbf{Problem a:} Use the two-phase simplex method to solve the following:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&x_1+x_2-x_3-x_4\\
+    &{\text{subject to}}
+    &&x_1+2x_2+x_3\le7\\
+    &
+    &&2x_1-x_2-x_3-3x_4\le-1\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} First let us transform the problem to standard form:
+\begin{align*}
+    \left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&x_1+x_2-x_3-x_4\\
+        &{\text{subject to}}
+        &&x_1+2x_2+x_3\le7\\
+        &
+        &&2x_1-x_2-x_3-3x_4\le-1\\
+        &{\text{and}}
+        &&\vec x\ge 0
+    \end{aligned}\right.
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&x_1+x_2-x_3-x_4\\
+        &{\text{subject to}}
+        &&x_1+2x_2+x_3+s_1=7\\
+        &
+        &&2x_1-x_2-x_3-3x_4+s_2=-1\\
+        &{\text{and}}
+        &&\vec x,\vec s\ge 0
+    \end{aligned}\right.}_{\text{introduce slack variables } \vec s}\\
+    &\implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&\begin{bmatrix}
+            1&1&-1&-1&0&0
+        \end{bmatrix}^\top\vec z\\
+        &{\text{subject to}}
+        &&\begin{bmatrix}
+            1&2&1&0&1&0\\
+            2&-1&-1&-3&0&1
+        \end{bmatrix}\vec z=\begin{bmatrix}
+            7\\-1
+        \end{bmatrix}\\
+        &{\text{and}}
+        &&\vec z\ge 0
+    \end{aligned}\right.}_{\text{let }\vec z=\icol{\vec x\\\vec s}}
+\end{align*}
+
+Note though that the solution given by $\icol{\vec 0\\\vec b}$ is not feasible. As such, we must proceed with the two-phase method and find another BFS. To do this, we add an artificial variable $t$ to the constraints corresponding to the negative entries of $\vec b$, giving us an auxillary problem:
+\begin{align*}
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&x_1+x_2-x_3-x_4\\
+        &{\text{subject to}}
+        &&x_1+2x_2+x_3+s_1=7\\
+        &
+        &&2x_1-x_2-x_3-3x_4+s_2-t=-1\\
+        &{\text{and}}
+        &&\vec x,\vec s, t\ge 0
+    \end{aligned}\right.}_{\text{introduce artificial variable }t}
+    \implies
+    \underbrace{\left\{\begin{aligned}
+        &{\text{Maximize}}
+        &&\begin{bmatrix}
+            1&1&-1&-1&0&0&0
+        \end{bmatrix}^\top\vec z\\
+        &{\text{subject to}}
+        &&\begin{bmatrix}
+            1&2&1&0&1&0&0\\
+            2&-1&-1&-3&0&1&-1
+        \end{bmatrix}\vec z=\begin{bmatrix}
+            7\\-1
+        \end{bmatrix}\\
+        &{\text{and}}
+        &&\vec z\ge 0
+    \end{aligned}\right.}_{\text{let }\vec z=\icol{\vec x\\\vec s\\t}}
+\end{align*}
+
+A BFS to the auxillary problem is given by $\begin{bmatrix}
+    0&0&0&0&7&0&1
+\end{bmatrix}^\top$. We can now use the tableau method to find another BFS to this problem that sets $t=0$. To do that we want to maximize $-t$:
+\begin{align*}
+    &2x_1-x_2-x_3-3x_4+s_2-t=-1\\
+    \implies&-t=-2x_1+x_2+x_3+3x_4-s_2-1
+\end{align*}
+
+Leaving us with this problem:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&\begin{bmatrix}
+        -2&1&1&3&0&-1&0
+    \end{bmatrix}^\top\vec z\\
+    &{\text{subject to}}
+    &&\begin{bmatrix}
+        1&2&1&0&1&0&0\\
+        2&-1&-1&-3&0&1&-1
+    \end{bmatrix}\vec z=\begin{bmatrix}
+        7\\-1
+    \end{bmatrix}\\
+    &{\text{and}}
+    &&\vec z\ge 0
+\end{aligned}$$
+
+We can use the tableau method to solve this:
+\begin{align*}
+\begin{array}{ccccccc|c}
+    x_1&x_2&x_3&x_4&s_1&s_2&t\\\hline
+    1&2&1&0&1&0&0&7\\
+    -2&1&1&\circled3&0&-1&1&1\\\hline
+    2&-1&-1&-3&0&1&0&-1\\
+    1&1&-1&-1&0&0&0&0
+\end{array}
+&\ro{\substack{r_3+r_2\\r_3/3}}
+\begin{array}{ccccccc|c}
+    x_1&x_2&x_3&x_4&s_1&s_2&t\\\hline
+    1&2&1&0&1&0&0&7\\
+    -\sfrac{2}{3}&\sfrac{1}{3}&\sfrac{1}{3}&1&0&-\sfrac{1}{3}&\sfrac{1}{3}&\sfrac{1}{3}\\\hline
+    0&0&0&0&0&0&1&0\\
+    -\sfrac{1}{3}&-\sfrac{4}{3}&\sfrac{2}{3}&0&0&\sfrac{1}{3}&0&-\sfrac{1}{3}
+\end{array}
+\end{align*}
+
+At this point we have a positive BFS to the auxillary problem given by $\begin{bmatrix}
+    0&0&0&\sfrac{1}{3}&7&0
+\end{bmatrix}^\top$ And since its last entry (corresponding to the artificial variable $t$) is 0, we also have a BFS for the original canonical problem: $\begin{bmatrix}
+    0&0&0&\sfrac{1}{3}&7
+\end{bmatrix}^\top$
+
+We can now finally perform phase 2 of the simplex method by adjusting our last tableau and solving:
+\begin{align*}
+\begin{array}{cccccc|c}
+    x_1&x_2&x_3&x_4&s_1&s_2\\\hline
+    1&2&1&0&1&0&7\\
+    -\sfrac{2}{3}&\circled{\sfrac{1}{3}}&\sfrac{1}{3}&1&0&-\sfrac{1}{3}&\sfrac{1}{3}\\\hline
+    -\sfrac{1}{3}&-\sfrac{4}{3}&\sfrac{2}{3}&0&0&\sfrac{1}{3}&-\sfrac{1}{3}
+\end{array}
+&\ro{\substack{r_3+4r_2\\3r_2\\r_1-2r_2}}
+\begin{array}{cccccc|c}
+    x_1&x_2&x_3&x_4&s_1&s_2\\\hline
+    \circled5&0&-1&-6&1&2&5\\
+    -2&1&1&3&0&-1&1\\\hline
+    -3&0&2&4&0&-1&1
+\end{array}
+&\ro{\substack{r_3+4r_2\\3r_2\\r_1-2r_2}}
+\begin{array}{cccccc|c}
+    x_1&x_2&x_3&x_4&s_1&s_2\\\hline
+    1&0&-\sfrac{1}{5}&-\sfrac{6}{5}&\sfrac{1}{5}&\sfrac{2}{5}&1\\
+    0&1&\sfrac{3}{5}&\sfrac{3}{5}&\sfrac{2}{5}&-\sfrac{1}{5}&3\\\hline
+    0&0&\sfrac{7}{5}&\sfrac{2}{5}&\sfrac{3}{5}&\sfrac{1}{5}&4
+\end{array}
+\end{align*}
+
+With the bottom row nonnegative, we have completed the simplex algorithm. The maximum is 4, and the $\vec z$ that achieves it is given by:
+$$\vec z=\begin{bmatrix}
+    x_1\\x_2\\x_3\\x_4\\s_1\\s_2
+\end{bmatrix}=\begin{bmatrix}
+    1\\3\\0\\0\\0\\0
+\end{bmatrix}$$
+
+\subsection*{Chapter 8}
+\noindent\textbf{Problem 1:} Write a constraint that prevents two movies from being on the same screen at the same time.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+    x_{t,m,s}=1\implies\sum_{\tau=t}^{t+r_m-1}\sum_{\mu=1}^M x_{\tau,\mu,s}=1&\iff x_{t,m,s}-2<0\implies \sum_{\tau=t}^{t+r_m-1}\sum_{\mu=1}^M x_{\tau,\mu,s}\le 1\\
+    &\iff x_{t,m,s}-2<0\implies 1-\sum_{\tau=t}^{t+r_m-1}\sum_{\mu=1}^M x_{\tau,\mu,s}\ge 0\\
+    &\iff\begin{cases}
+        z\in\{0,1\}\\
+        Nz\ge x_{t,m,s}-2\\
+        x_{t,m,s}-2+(1-z)N\ge 0\\
+        1-\sum_{\tau=t}^{t+r_m-1}\sum_{\mu=1}^M x_{\tau,\mu,s}\ge -zN
+    \end{cases}
+\end{align*}
+
+We let our bound $N=MT$ as neither variable can exceed it.
+\bigskip
+
+\noindent\textbf{Problem 2:} Write a constraint that prevents any movie from running after the theater closes.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+    x_{t,m,s}=1\implies t+r_m\le T&\iff x_{t,m,s}-2<0\implies t+r_m\le T\\
+    &\iff x_{t,m,s}-2<0\implies T-t-r_m\ge 0\\
+    &\iff\begin{cases}
+        z\in\{0,1\}\\
+        Nz\ge x_{t,m,s}-2\\
+        x_{t,m,s}-2+(1-z)N\ge 0\\
+        T-t-r_m\ge -zN
+    \end{cases}
+\end{align*}
+
+We let our bound $N=1$ as neither variable can exceed it.
+\bigskip
+
+\noindent\textbf{Problem 3:} Write a constraint that in any 8 consecutive time blocks a movie must start somewhere in the theater.
+\bigskip
+
+\noindent\textbf{Solution:} The constraint is given by:
+\begin{align*}
+    t\le T-8\implies\sum_{\tau=t}^{t+8}x_{t,m,s}\ge 1&\iff t-T-8\le0\implies\sum_{\tau=t}^{t+8}x_{t,m,s}\ge 1\\
+    &\iff t-T-9<0\implies\sum_{\tau=t}^{t+8}x_{t,m,s}-1\ge 0\\
+    &\iff\begin{cases}
+        z\in\{0,1\}\\
+        Nz\ge t-T-9\\
+        t-T-9+(1-z)N\ge 0\\
+        \sum_{\tau=t}^{t+8}x_{t,m,s}-1\ge -zN
+    \end{cases}
+\end{align*}
+
+We let our bound $N=7$ as both variables cannot exceed it.
+\bigskip
+
+\noindent\textbf{Problem 4:} The constraint from problem 3 turns out to cause enormous trouble; prove if you do not have constraints such as this that a feasible movie schedule exists. Must a feasible schedule exist with this constraint?
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following counterexample to the constraint from problem 3. If the movie theater has only one screen and if all the running times of the movies $r_m$ exceed 8 blocks, then clearly the screen will not be able to play another movie in time after the first. In other words, a feasible schedule does \textit{not} necessarily exist with the constraint from problem 3.
+
+If we remove this constraint, then a feasible solution \textit{does} exist, namely playing no movies. Indeed, playing no movies vacuously satisfies the ``no movies playing simultaneously'' condition as well as the ``no movies playing after closing'' condition from problems 1 \& 2.
+
+\end{document}

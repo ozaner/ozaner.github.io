@@ -1,0 +1,221 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 7}
+\author{Ozaner Hansha}
+\date{October 30, 2020}
+\maketitle
+
+Note that we use $\bar M_k$ to denote the $k$th sample moment of some understood RV $X$. Also note that we use the following estimator to clean up our calculations:
+
+\begin{align*}
+    \widehat{\sigma^2}=\bar M_2-\bar M_1^2=\frac{1}{n}\sum_{i=1}^nx_i^2-\left(\frac{1}{n}\sum_{i=1}^nx_i\right)^2\tag{i.e. the MLE sample variance}
+\end{align*}
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Consider a negative binomial distribution $NB(p,r)$. Use the method of moments to find estimators for $p$ and $r$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the method of moments estimator for $k$ parameters is to set the first $k$ moments of the distribution equal to the first $k$ sample moments and solve for each parameter:
+\begin{align*}
+    \begin{cases}
+        \bar M_1=E[X]\\
+        \bar M_2=E[X^2]
+    \end{cases}
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \bar M_2=E[X^2]
+    \end{cases}\tag{mean of NB distribution}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \bar M_2=\Var(X)+E[X]^2
+    \end{cases}\tag{$\Var(X)=E[X^2]-E[X]^2$}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \bar M_2=\frac{pr}{(1-p)^2}+\left(\frac{pr}{1-p}\right)^2
+    \end{cases}\tag{mean \& variance of NB distribution}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \bar M_2=\frac{pr(pr+1)}{(1-p)^2}
+    \end{cases}
+    \implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \frac{\bar M_2}{\bar M_1}=\frac{pr+1}{1-p}
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \frac{\bar M_2}{\bar M_1}-\bar M_1=\frac{1}{1-p}
+    \end{cases}
+    \implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \frac{1}{\frac{\bar M_2}{\bar M_1}-\bar M_1}=1-p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{pr}{1-p}\\
+        \frac{\bar M_1}{\bar M_2-\bar M_1^2}=1-p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar X=\frac{pr}{1-p}\\
+        \frac{\bar X}{\widehat{\sigma^2}}=1-p
+    \end{cases}\tag{def. of $\bar X$ \& $\widehat{\sigma^2}$}\\
+    &\implies
+    \begin{cases}
+        \bar X=\frac{pr}{1-p}\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}
+    \implies
+    \begin{cases}
+        \bar X=\frac{\left(1-\frac{\bar X}{\widehat{\sigma^2}}\right)r}{1-\left(1-\frac{\bar X}{\widehat{\sigma^2}}\right)}\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \bar X=\frac{\left(1-\frac{\bar X}{\widehat{\sigma^2}}\right)r}{\frac{\bar X}{\widehat{\sigma^2}}}\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}
+    \implies
+    \begin{cases}
+        \frac{\bar X^2}{\widehat{\sigma^2}}=\left(1-\frac{\bar X}{\widehat{\sigma^2}}\right)r\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        \frac{\bar X^2}{\widehat{\sigma^2}\left(1-\frac{\bar X}{\widehat{\sigma^2}}\right)}=r\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}
+    \implies
+    \begin{cases}
+        \frac{\bar X^2}{\widehat{\sigma^2}-\bar X}=r\\
+        1-\frac{\bar X}{\widehat{\sigma^2}}=p
+    \end{cases}
+\end{align*}
+
+And so we are left with the following estimators:
+\begin{align*}
+    \hat{p}_{\text{MM}}&=1-\frac{\bar X}{\widehat{\sigma^2}}=1-\frac{\bar X}{\bar M_2-\bar X^2}\\
+    \hat{r}_{\text{MM}}&=\frac{\bar X^2}{\widehat{\sigma^2}-\bar X}=\frac{\bar X^2}{\bar M_2-\bar X^2-\bar X}
+\end{align*}
+\smallskip
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Consider a uniform distribution $\mathcal U(a,b)$. Use the method of moments to find estimators for $\theta_1=b-a$ and $\theta_2=a+b$.
+\bigskip
+
+\noindent\textbf{Solution:} Just as above we set the moments equal to the sample moments:
+\begin{align*}
+    \begin{cases}
+        \bar M_1=E[X]\\
+        \bar M_2=E[X^2]
+    \end{cases}
+    &\implies
+    \begin{cases}
+        \bar M_1=E[X]\\
+        \bar M_2=\Var(X)+E[X]^2
+    \end{cases}\tag{$\Var(X)=E[X^2]-E[X]^2$}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{a+b}{2}\\
+        \bar M_2=\frac{(b-a)^2}{12}+\frac{(a+b)^2}{4}
+    \end{cases}\tag{mean \& variance of uniform distribution}\\
+    &\implies
+    \begin{cases}
+        \bar M_1=\frac{\theta_2}{2}\\
+        \bar M_2=\frac{\theta_1^2}{12}+\frac{\theta_2^2}{4}
+    \end{cases}\tag{def. of $\theta_1$ \& $\theta_2$}\\
+    &\implies
+    \begin{cases}
+        2\bar M_1=\theta_2\\
+        \bar M_2=\frac{\theta_1^2}{12}+\frac{\theta_2^2}{4}
+    \end{cases}
+    \implies
+    \begin{cases}
+        2\bar M_1=\theta_2\\
+        \bar M_2=\frac{\theta_1^2}{12}+\frac{4\bar M_1^2}{4}
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        2\bar M_1=\theta_2\\
+        \bar M_2-\bar M_1^2=\frac{\theta_1^2}{12}
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        2\bar M_1=\theta_2\\
+        \widehat{\sigma^2}=\frac{\theta_1^2}{12}
+    \end{cases}\tag{def. of $\bar X$ \& $\widehat{\sigma^2}$}\\
+    &\implies
+    \begin{cases}
+        2\bar X=\theta_2\\
+        \sqrt{12\widehat{\sigma^2}}=\theta_1
+    \end{cases}\\
+\end{align*}
+
+And so we are left with the following estimators:
+\begin{align*}
+    \hat{\theta_1}_{\text{MM}}&=\sqrt{12\widehat{\sigma^2}}=\sqrt{12(M_2-\bar X^2)}\\
+    \hat{\theta_2}_{\text{MM}}&=2\bar X
+\end{align*}
+\smallskip
+\newpage
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Consider a uniform distribution $\mathcal U(a,b)$. Give the MLEs of both $a$ and $b$, given an i.i.d. sample of size $n$.
+\bigskip
+
+\noindent\textbf{Solution:} The MLE of a parameter is the one that maximizes the likelihood of observing the sample. In our case we have:
+\begin{align*}
+    (\hat a_{\text{MLE}},\hat b_{\text{MLE}})&=\argmax_{\substack{a,b\\a<b}}p_X(\vec x;a,b)\tag{def. of MLE}\\
+    &=\argmax_{\substack{a,b\\a<b}}\prod_{i=1}^np_{X_i}(x_i;a,b)\tag{independent observations}\\
+    &=\argmax_{\substack{a,b\\a<b}}\prod_{i=1}^n\frac{1}{b-a}[x_i\in[a,b]]\tag{pdf of uniform distribution}\\
+    &=\argmax_{\substack{a,b\\a<b}}\frac{1}{(b-a)^n}\prod_{i=1}^n[x_i\in[a,b]]\\
+    &=\argmax_{\substack{a,b\\a<b}}\frac{1}{(b-a)^n}[(\forall i\in(1..n))\,\,x_i\in[a,b]]\tag{product of indicators is $\wedge$}\\
+    &=\argmax_{\substack{a,b\\a<b}}\underbrace{\frac{1}{b-a}[(\forall i\in(1..n))\,\,x_i\in[a,b]]}_{f(a,b)}\tag{$\frac{1}{b-a}>0$, same as maximizing $n$th root}\\
+    % &=\argmin_{\substack{a,b\\a<b}}-\log\left(\frac{1}{(b-a)^n}[(\forall i\in(1..n))\,\,x_i\in[a,b]]\right)\tag{$\log$ is monotonically increasing}\\
+    % &=\argmin_{\substack{a,b\\a<b}}\,\, n\log(b-a) [(\forall i\in(1..n))\,\,x_i\in[a,b]]\\
+    % &=\argmin_{\substack{a,b\\a<b}}\,\,\log(b-a) [(\forall i\in(1..n))\,\,x_i\in[a,b]]\tag{$n>0$ and independent of $a$ and $b$}
+\end{align*}
+
+Now let us start with $\hat a_{\text{MLE}}$. Taking $b$ to be constant, the function $\frac{1}{b-a}$ over the interval $(-\infty,b)$ (which are all the possible values of $a$) is both monotonically increasing and always greater than 0.
+\smallskip
+
+As such, maximizing $a$ is a matter of picking a value as close to $b$ as possible, while still satisfying the indicator function. Because if $a$ did not satisfy it then $f(a,b)=0$ which is lower than $f(a',b)$ for any other $a'$ which \textit{does} satisfy the indicator function.
+\smallskip
+
+In other words, $a$ is given by the minimum of the sample. If it was any higher, it would not satisfy the indicator and thus not maximize $f$. If it was any lower, then it would not be as large since $\frac{1}{b-a}$ is monotonically increasing:
+$$\hat a_{\text{MLE}}=\min\{x_i\mid \forall i\in(1..n)\}$$
+\smallskip
+
+Similar reasoning holds for $\hat b_{\text{MLE}}$. Taking $a$ to be constant, the function $\frac{1}{b-a}$ over the interval $(a,\infty)$ (which are all the possible values of $b$) is both monotonically decrasing and always greater than 0.
+\smallskip
+
+As such, maximizing $b$ is a means picking a value as close to $a$ as possible, while still satisfying the indicator function. Because if $b$ did not satisfy it then $f(a,b)=0$ which is lower than $f(a,b')$ for any other $b'$ which \textit{does} satisfy the indicator function.
+\smallskip
+
+In other words, $b$ is given by the maximum of the sample. If it was any lower, it would not satisfy the indicator and thus not maximize $f$. If it was any higher, then it would not be as large since $\frac{1}{b-a}$ is monotonically decreasing:
+$$\hat b_{\text{MLE}}=\max\{x_i\mid \forall i\in(1..n)\}$$
+
+\end{document}

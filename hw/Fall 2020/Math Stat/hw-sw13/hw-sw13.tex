@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 13}
+\author{Ozaner Hansha}
+\date{October 30, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Consider a Gamma distribution with shape $k>0$ and scale $\theta>0$. Find a maximum likelihood estimator for $\frac{1}{\mu}$, where $\mu=k\theta$ is the mean. Is this a biased estimator?
+\bigskip
+
+\noindent\textbf{Solution:} Before we continue, note that:
+\begin{itemize}
+	\item Each observation $X_i$ in our sample has distribution $\text{Gamma}(k,\theta)$.
+	\item The pdf of $X_i$ given parameters $k,\theta$ is denoted by $f_{X_i}(x_i;k,\theta)$.
+	\item The sample $X$ is comprised of $n>0$ i.i.d. observations of $X_i$.
+\end{itemize}
+
+Now, let us compute the MLE of the parameter $\mu$. Recall that the MLE of a parameter is the statistic that minimizes its likelihood:
+\begin{align*}
+    \hat\mu_{\text{MLE}}&=\argmax_{\mu}f_X(\vec x;k,\theta)\tag{def. of MLE}\\
+    &=\argmax_{\mu}\prod_{i=1}^nf_{X_i}(x_i;k,\theta)\tag{independent observations}\\
+    &=\argmax_{\mu}\prod_{i=1}^nf_{X_i}(x_i;k,\mu/k)\tag{mean of gamma distribution}\\
+    &=\argmax_{\mu}\prod_{i=1}^n\frac{x_i^{k-1}}{\Gamma(k)(\mu/k)^k}e^{-\frac{x_i}{\mu/k}}\tag{pdf of gamma distribution}\\
+    &=\argmax_{\mu}\prod_{i=1}^n\frac{k^kx_i^{k-1}}{\Gamma(k)\mu^k}e^{-\frac{kx_i}{\mu}}\\
+    &=\argmax_{\mu}\left(\frac{k^k}{\Gamma(k)\mu^k}\right)^n\prod_{i=1}^nx_i^{k-1}e^{-\frac{kx_i}{\mu}}\\
+    &=\argmax_{\mu}\left(\frac{k^k}{\Gamma(k)\mu^k}\right)^n\left(\prod_{i=1}^nx_i\right)^{k-1}\exp\left(-\frac{k}{\mu}\sum_{i=1}^nx_i\right)\\
+    &=\argmax_{\mu}\frac{1}{\mu^{kn}}\left(\prod_{i=1}^nx_i\right)^{k-1}\exp\left(-\frac{k}{\mu}\sum_{i=1}^nx_i\right)\tag{$\left(\frac{k^k}{\Gamma(k)}\right)^n>0$ and independent of $\mu$}\\
+    &=\argmax_{\mu}\log\left(\frac{1}{\mu^{kn}}\left(\prod_{i=1}^nx_i\right)^{k-1}\exp\left(-\frac{k}{\mu}\sum_{i=1}^nx_i\right)\right)\tag{$\log$ is monotone increasing}\\
+    &=\argmax_{\mu}-kn\log\mu+(k-1)\sum_{i=1}^n\log(x_i)-\frac{k}{\mu}\sum_{i=1}^nx_i\\
+\end{align*}
+
+Now we take the derivative of this function w.r.t. $\mu$ and set it equal to 0. solving for $\mu$ results in a value that produces a local extremum:
+\begin{align*}
+    0&=\frac{\partial}{\partial\mu}\left(-kn\log\mu+(k-1)\sum_{i=1}^n\log(x_i)-\frac{k}{\mu}\sum_{i=1}^nx_i\right)\tag{first order condition}\\
+    &=-kn\frac{\partial}{\partial\mu}\log\mu+\frac{\partial}{\partial\mu}(k-1)\sum_{i=1}^n\log(x_i)-\frac{\partial}{\partial\mu}\frac{k}{\mu}\sum_{i=1}^nx_i\\
+    &=\frac{-kn}{\mu}+\frac{k}{\mu^2}\sum_{i=1}^nx_i\\
+    &=\frac{-n}{\mu}+\frac{1}{\mu^2}\sum_{i=1}^nx_i\\
+    \frac{n}{\mu}&=+\frac{1}{\mu^2}\sum_{i=1}^nx_i\\
+    n\mu&=\sum_{i=1}^nx_i\\
+    \mu&=\frac{1}{n}\sum_{i=1}^nx_i\\
+    \mu&=\bar X
+\end{align*}
+
+Now we will show that this extremum is indeed a local maximum via the second derivative test:
+\begin{align*}
+    \frac{\partial^2}{\partial\mu^2}\left.\left(-kn\log\mu+(k-1)\sum_{i=1}^n\log(x_i)-\frac{k}{\mu}\sum_{i=1}^nx_i\right)\right|_{\mu=\bar X}&=\left.\frac{\partial}{\partial\mu}\left(\frac{-kn}{\mu}+\frac{k}{\mu^2}\sum_{i=1}^nx_i\right)\right|_{\mu=\bar X}\\
+    &=\left.\left(\frac{kn}{\mu^2}-\frac{2k}{\mu^3}\sum_{i=1}^nx_i\right)\right|_{\mu=\bar X}\\
+    &=\frac{kn^3}{(\sum_{i=1}^nx_i)^2}-\frac{2kn^3}{(\sum_{i=1}^nx_i)^2}\\
+    &=-\frac{kn^3}{(\sum_{i=1}^nx_i)^2}\\
+    &<0\tag{$x_i>0$, $k>0$, $n>0$}
+\end{align*}
+
+Recall that the second derivative test states that if $f''(\mu)<0$ at some critical point $\mu$, then $f(\mu)$ is a local maximum. And so $\mu=\bar X$ is a local maximum. %but what about global?
+
+% Further, since $\mu=\bar X$ was the only zero of the derivative, it was the only maximum. Thus it is the global maximum. 
+\bigskip
+
+And so we finally have that $\hat\mu_{\text{MLE}}=\bar X$. Now recall that, due to the invariance of MLEs. We have that for any function $g$ and parameter $\theta$:
+$$g(\hat\theta_{\text{MLE}})=\widehat{g(\theta)}_{\text{MLE}}$$
+
+And so for $g(\mu)=\frac{1}{\mu}$, we have that:
+\begin{align*}
+    \widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}&=\frac{1}{{\hat{\mu}}_{\text{MLE}}}\tag{invariance of MLEs}\\
+    &=\frac{1}{\bar X}\tag{MLE of $\mu$}
+\end{align*}
+\newpage
+
+Now that we have our MLE, we just need to check if it is biased. Note that:
+$$(\forall i)\,X_i>0\implies\frac{1}{n}\sum_{i=1}^nx_i=\bar X>0\implies\frac{1}{\bar X}>0$$
+
+Since $\frac{1}{x}$ is a convex function over $\mathbb R^+$ (i.e. any value $\frac{1}{\bar X}$ can take), we can apply Jenson's inequality:
+\begin{align*}
+    E\left[\widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}\right]&=E\left[\frac{1}{\bar X}\right]\\
+    &>\frac{1}{E[\bar X]}\tag{Jenson's inequality}\\
+    &=\frac{1}{\mu}\tag{mean of sample mean}
+\end{align*}
+
+You'll notice that we used a strict inequality. That is because equality between the LHS and RHS is only achieved when the RV in question has 0 variance (i.e. is constant). But since $n>0$ this cannot happen.
+
+This means:
+$$\widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}\not=\frac{1}{\mu}$$
+
+Thus, our MLE is indeed biased.
+\end{document}
+
+% before I emailed teacher that the whole problem was fucked
+
+% \documentclass{article}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{mathtools}
+% \usepackage{graphicx}
+% \usepackage{enumitem}
+% \usepackage[margin=1in]{geometry}
+% \usepackage{titling}
+
+% \DeclareMathOperator{\Var}{Var}
+% \renewcommand{\vec}[1]{\mathbf{#1}}
+% \DeclareMathOperator*{\argmax}{arg\,max}
+% \DeclareMathOperator*{\argmin}{arg\,min}
+
+% \setlength{\droptitle}{-7em}   % This is your set screw
+
+% \begin{document}
+
+% \title{Math Statistics\\ Semiweekly HW 13}
+% \author{Ozaner Hansha}
+% \date{October 30, 2020}
+% \maketitle
+
+% \subsection*{Question 1}
+% \noindent\textbf{Problem:} Suppose we have a normal population with mean $\mu$ and variance $\sigma^2$. Find a maximum likelihood estimator for $\frac{1}{\mu}$. Is this a biased estimator?
+% \bigskip
+
+% \noindent\textbf{Solution:} Before we continue, note that:
+% \begin{itemize}
+% 	\item Each observation $X_i$ in our sample has distribution $\mathcal N(\mu,\sigma^2)$.
+% 	\item The pdf of $X_i$ given parameter $\mu$ is denoted by $f_{X_i}(x_i;\mu)$.
+% 	\item The sample $X$ is comprised of $n>0$ i.i.d. observations. As such it is distributed by $\mathcal N(\mu\vec 1_n,\sigma^2I_n)$.
+% \end{itemize}
+%   Also note that we denote .
+
+% Now, let us compute the MLE of the parmeter $\mu$. Recall that the MLE of a parameter is the statistic that minimizes it's likelihood:
+% \begin{align*}
+%     \hat\mu_{\text{MLE}}&=\argmax_{\mu}f_X(\vec x;\mu\vec 1_n)\tag{def. of MLE}\\
+%     &=\argmax_{\mu}\prod_{i=1}^nf_{X_i}(x_i;\mu)\tag{independent observations}\\
+%     &=\argmax_{\mu}\prod_{i=1}^n\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)\exp\left(-\frac{1}{2\sigma^2}\left(x_i-\mu\right)^2\right)\tag{pdf of normal distribution}\\
+%     &=\argmax_{\mu}\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n\exp\left(\sum_{i=1}^n-\frac{1}{2\sigma^2}\left(x_i-\mu\right)^2\right)\tag{product rules}\\
+%     &=\argmax_{\mu}\,\,\exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n\left(x_i-\mu\right)^2\right)\tag{$\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n>0$ and independent of $\mu$}\\
+%     &=\argmin_{\mu}\,-\log\exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n\left(x_i-\mu\right)^2\right)\tag{$-\log$ is monotone decreasing}\\
+%     &=\argmin_{\mu}\frac{1}{2\sigma^2}\sum_{i=1}^n\left(x_i-\mu\right)^2\\
+%     &=\argmin_{\mu}\sum_{i=1}^n\left(x_i-\mu\right)^2\tag{$\frac{1}{2\sigma^2}>0$ and independent of $\mu$}\\
+%     &=\argmin_{\mu}\sum_{i=1}^n(\mu^2-2\mu x_i+x_i^2)\\
+%     &=\argmin_{\mu}\sum_{i=1}^n\mu^2-\sum_{i=1}^n2\mu x_i+\sum_{i=1}^nx_i^2\\
+%     &=\argmin_{\mu}n\mu^2-2\mu\sum_{i=1}^nx_i+\sum_{i=1}^nx_i^2
+% \end{align*}
+
+% And so are to find the $\mu$ that minimizes some quadratic polynomial in $\mu$. Recall that all quadratics in 1 variable $ax^2+bx+c$ have a single extremum at their vertex. That extremum is a minimum precisely when $a>0$. In our case $a=n>0$ as we have at least 1 observation in our sample. As such, our MLE is given by:
+% \begin{align*}
+%     \hat\mu_{\text{MLE}}&=\argmin_{\mu}n\mu^2-2\mu\sum_{i=1}^nx_i+\sum_{i=1}^nx_i^2\tag{see above}\\
+%     &=-\frac{b}{2a}\tag{zero of a quadratic}\\
+%     &=-\frac{-2}{2n}\sum_{i=1}^nx_i\\
+%     &=\frac{1}{n}\sum_{i=1}^nx_i\\
+%     &=\bar X
+% \end{align*}
+
+% And so the MLE of the parameter $\mu$ of a normal distribution is given by the sample mean. Note that, due to the invariance of MLEs. We have that for any function $g$ and parmeter $\theta$:
+% $$g(\hat\theta_{\text{MLE}})=\widehat{g(\theta)}_{\text{MLE}}$$
+
+% And so for $g(\mu)=\frac{1}{\mu}$, we have that:
+% \begin{align*}
+%     \widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}&=\frac{1}{{\hat{\mu}}_{\text{MLE}}}\tag{invariance of MLEs}\\
+%     &=\frac{1}{\bar X}\tag{MLE of $\mu$}
+% \end{align*}
+
+% Now that we have our MLE, we just need to check if it is biased. Unfortunately, this MLE doesn't even have a mean. More generally, the reciprocal normal distribution has no $k$th moment for $k>0$. As such the bias is undefined.
+
+
+
+
+
+
+
+
+%We cannot use Jenson's inequality as the function $1/x$ is not concave/convex %over the support of $\bar X$, only intervals of it.
+% \bigskip
+
+% And so we will prove that our MLE is biased via two cases. Case 1 is when $\bar X$ takes a value over $(0,\infty)$:
+% \begin{align*}
+%     E\left[\widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}\right]&=E\left[\frac{1}{\bar X}\right]\tag{see above}\\
+%     &>\frac{1}{E\left[\bar X\right]}\tag{Jenson's inequality, $\sigma^2\not=0$}\\
+%     &=\frac{1}{\mu}\tag{mean of sample mean}
+% \end{align*}
+
+% Case 2 is when $\bar X$ takes a value over $(-\infty,0)$:
+% \begin{align*}
+%     E\left[\widehat{\left(\frac{1}{\mu}\right)}_{\text{MLE}}\right]&=E\left[\frac{1}{\bar X}\right]\tag{see above}\\
+%     &<\frac{1}{E\left[\bar X\right]}\tag{Jenson's inequality, $\sigma^2\not=0$}\\
+%     &=\frac{1}{\mu}\tag{mean of sample mean}
+% \end{align*}
+% \end{document}

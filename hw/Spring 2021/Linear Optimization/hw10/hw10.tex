@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#10}
+\author{Ozaner Hansha}
+\date{April 15, 2021}
+\maketitle
+
+\subsection*{Problem 12}
+\noindent\textbf{Problem:} Consider the integer knapsack problem from the chapter. List all allowable choices of the products and the value of the knapsack so filled.
+\bigskip
+
+\noindent\textbf{Solution:} The only choices of $(x_1,x_2,x_3)$ that satisfy:
+$$51x_1+50x_2+50x_3\le 100$$
+
+are the following:
+\begin{itemize}
+    \item $(0,0,0)\to 0$
+    \item $(1,0,0)\to 150$
+    \item $(0,1,0)\to 100$
+    \item $(0,0,1)\to 99$
+    \item $(0,2,0)\to 200$
+    \item $(0,1,1)\to 199$
+    \item $(0,0,2)\to 198$
+\end{itemize}
+We know this is exhaustive since each $x_j\ge 0$ and that increasing any component of any of the above feasible solutions would result in either an unfeasible solution or one already listed.
+
+\subsection*{Problem 13}
+\noindent\textbf{Problem:} Generalize the knapsack problem so that in addition to needing the total weight to be below a critical threshold, there is also a volume constraint. Set this up as a Linear Programming problem.
+\bigskip
+
+\noindent\textbf{Solution:} If our items have volumes of 10, 30, \& 20 respectively, and if our knapsack can only hold a volume of 60, our new problem is:
+$$\begin{aligned}
+    &{\text{Maximize}}
+    &&150x_2+100x_2+99x_3\\
+    &{\text{subject to}}
+    &&51x_1+50x_2+50x_3\le 100\quad\text{(weight)}\\
+    &
+    &&10x_1+30x_2+20x_3\le 60\quad\text{ (volume)}\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+\end{document}

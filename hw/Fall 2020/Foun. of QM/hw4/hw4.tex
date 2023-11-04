@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Foundations of QM\\ HW 4}
+\author{Ozaner Hansha}
+\date{November 5, 2020}
+\maketitle
+
+Consider a 1D quantum system $\psi(x,t)$ consisting of a single particle with mass $m$ moving on the interval $[0,L]$, with boundary conditions $\psi(0)=0=\psi(L)$. In the case of it having no potential, its Hamiltonian is given below:
+$$H=-\frac{\hbar}{2m}\dv[2]{x}$$
+\smallskip
+
+Let $\psi_n(x,t)$ denote the solution to the (time dependent) Schrödinger equation with initial condition $\psi_n(x,0)=\phi_n(x)$. Where $\phi_n(x)$ are the solutions of the time-independent Schrödinger equation $H\phi_n=E_n\phi_n$:
+$$\phi_n(x)=\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)$$
+
+Where $E_n=\frac{(\hbar\pi n)^2}{2mL^2}$ are the eigenvalues of $H$.
+\smallskip
+
+
+
+\subsection*{Question 1 \& 2}
+\noindent\textbf{Problem:} Solve for $\psi_1(x,t)$ and $\psi_2(x,t)$
+\bigskip
+
+\noindent\textbf{Solution:} We will solve this for for general $n$:
+\begin{align*}
+    i\hbar\pdv{\psi_n(x,t)}{t}&=H\psi_n(x,t)\tag{Schrödinger equation}\\
+    &=E_n\psi_n(x,t)\tag{$H\psi_n(x,0)=E_n\psi_n(x,0)$ \& conservation of energy}\\
+    \pdv{\psi_n(x,t)}{t}&=\frac{-iE_n}{\hbar}\psi_n(x,t)\\
+    \psi_n(x,t)&=\psi_n(x,0)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{sol. to $y'=ay$}\\
+    &=\phi_n(x)\exp\left(\frac{-iE_n}{\hbar}t\right)\tag{initial condition}\\
+    &=\exp\left(\frac{-iE_n}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right)\tag{def. of $\phi_n$}
+\end{align*}
+
+We have just solved for $\psi_n$, and so plugging in 1 and 2 we have:
+\begin{align*}
+    \psi_1(x,t)&=\exp\left(\frac{-iE_1}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\\
+    &=\exp\left(\frac{-i\hbar\pi^2}{2mL^2}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\tag{$E_n=\frac{(\hbar\pi n)^2}{2mL^2}$}\\
+    \psi_2(x,t)&=\exp\left(\frac{-iE_2}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{2\pi x}{L}\right)\\
+    &=\exp\left(\frac{-2i\hbar\pi^2}{mL^2}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\tag{$E_n=\frac{(\hbar\pi n)^2}{2mL^2}$}\\
+\end{align*}
+\bigskip
+
+\subsection*{Question 3 \& 4}
+\noindent\textbf{Problem:} For $\psi_1(x,t)$, what is the probability that the position $X_{\psi_1(t)}$ of the particle will be between $0$ and $\frac{L}{2}$ if measured at time $t=0$? At time $t=t$?
+\bigskip
+
+\noindent\textbf{Solution:} For a measurement at taken at time $t$ we have:
+\begin{align*}
+    P\left(0<X_{\psi_1(t)}<\frac{L}{2}\right)&=\int_0^{\frac{L}{2}}|\psi_1(x,t)|^2\dd{x}\tag{Born rule}\\
+    &=\int_0^{\frac{L}{2}}\left|\exp\left(\frac{-iE_1}{\hbar}t\right)\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\right|^2\dd{x}\\
+    &=\left|\exp\left(\frac{-2iE_1}{\hbar}t\right)\right|^2\frac{2}{L}\int_0^{\frac{L}{2}}\left|\sin\left(\frac{\pi x}{L}\right)\right|^2\dd{x}\\
+    &=\frac{2}{L}\int_0^{\frac{L}{2}}\left|\sin\left(\frac{\pi x}{L}\right)\right|^2\dd{x}\tag{$|e^{ix}|=1$ for real $x$}\\
+    &=\frac{2}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{\pi x}{L}\right)^2\dd{x}\tag{$\sin(x)$ is real valued for real $x$}\\
+    &=\frac{2}{L}\eval{\frac{x}{2}-\frac{L\sin\left(\frac{2\pi x}{L}\right)}{4\pi}}{0}{\frac{L}{2}}\tag{trig identity}\\
+    &=\frac{2}{L}\left(\frac{L}{4}-0\right)\\
+    &=\frac{1}{2}
+\end{align*}
+
+And since our above probability is independent of $t$, it is the same when $t=0$. That is to say:
+$$P\left(0<X_{\psi_1(0)}<\frac{L}{2}\right)=\frac{1}{2}$$
+
+This should come as no surprise considering $\psi_n$ is an eigensolution, or stationary state, of the Schrödinger equation from problems 1 \& 2.
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} Consider problem 1 \& 2 but, instead of solving for $\psi_n$, solve for $\psi_{1+2}$ which has initial condition:
+
+$$\psi_{1+2}(x,0)=\frac{\phi_1(x)+\phi_2(x)}{\sqrt{2}}$$
+
+Compute the probability that the position of the particle $X_{\psi_{1+2}(t)}$ at $t=\frac{2mL^2}{3\hbar\pi}$ is between $0$ and $\frac{L}{2}$. (or just is it greater than 50\% if its too hard)
+
+\noindent\textbf{Solution:} Recall that any solution to Shrodinger's equations, including $\psi_{1+2}$, must be a superposition of stationary states.
+\begin{align*}
+    \psi_{1+2}(x,t)&=\sum_{i=1}^\infty C_n\psi_n(x,t)\tag{superposition of stationary states}\\
+    &=\sum_{i=1}^\infty C_n\exp\left(\frac{-iE_n}{\hbar}t\right)\phi_n(x)\tag{problem 1 \& 2}\\
+    \psi_{1+2}(x,0)&=\sum_{i=1}^\infty C_n\phi_n(x)\\
+    &=\frac{\phi_1(x)}{\sqrt{2}}+\frac{\phi_2(x)}{\sqrt{2}}\tag{initial condition}
+\end{align*}
+
+And so we have that $C_1=C_2=\frac{1}{\sqrt{2}}$, and we also have that $C_i=0$ for $i>2$. This gives us our final solution:
+$$\psi_{1+2}(x,t)=\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-iE_1}{\hbar}t\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-iE_2}{\hbar}t\right)$$
+\smallskip
+
+We can now proceed to calculate the probability that the particle given by $\psi_{1+2}$ will be found in the interval $[0,L/2]$ at time $t=\frac{2mL^2}{3\hbar\pi}$:
+\begin{align*}
+    P\left(0<X_{\psi_{1+2}(t)}<\frac{L}{2}\right)&=\int_0^{\frac{L}{2}}\left|\psi_{1+2}\left(x,\frac{2mL^2}{3\hbar\pi}\right)\right|^2\dd{x}\tag{Born rule}\\
+    &=\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-iE_1}{\hbar}\frac{2mL^2}{3\hbar\pi}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-iE_2}{\hbar}\frac{2mL^2}{3\hbar\pi}\right)\right|^2\dd{x}\\
+    &=\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-iE_1}{\hbar}\cdot\frac{2mL^2}{3\hbar\pi}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-iE_2}{\hbar}\cdot\frac{2mL^2}{3\hbar\pi}\right)\right|^2\dd{x}\\
+    &=\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\hbar^2\pi^2}{2mL^2\hbar}\cdot\frac{2mL^2}{3\hbar\pi}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-i\hbar^2\pi^2 4}{2mL^2\hbar}\cdot\frac{2mL^2}{3\hbar\pi}\right)\right|^2\dd{x}\\
+    &=\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\pi}{3}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-4i\pi}{3}\right)\right|^2\dd{x}\\
+    % &\le\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\pi}{3}\right)\right|^2+\left|\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-4i\pi}{3}\right)\right|^2\dd{x}\tag{triangle inequality}\\
+    % &=\int_0^{\frac{L}{2}}\left|\exp\left(\frac{-i\pi}{3}\right)\right|^2\left|\frac{\phi_1(x)}{\sqrt{2}}\right|^2+\left|\exp\left(\frac{-4i\pi}{3}\right)\right|^2\left|\frac{\phi_2(x)}{\sqrt{2}}\right|^2\dd{x}\\
+    % &=\int_0^{\frac{L}{2}}\left|\frac{\phi_1(x)}{\sqrt{2}}\right|^2+\left|\frac{\phi_2(x)}{\sqrt{2}}\right|^2\dd{x}\tag{$|e^{ix}|=1$ for real $x$}\\
+    % &=\int_0^{\frac{L}{2}}\left|\frac{1}{\sqrt{2}}\sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)\right|^2+\left|\frac{1}{\sqrt{2}}\sqrt{\frac{2}{L}}\sin\left(\frac{2\pi x}{L}\right)\right|^2\dd{x}\tag{def. of $\phi_n$}\\
+    % &=\frac{1}{L}\int_0^{\frac{L}{2}}\left|\sin\left(\frac{\pi x}{L}\right)\right|^2+\left|\sin\left(\frac{2\pi x}{L}\right)\right|^2\dd{x}\\
+    % &=\frac{1}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{\pi x}{L}\right)^2+\sin\left(\frac{2\pi x}{L}\right)^2\dd{x}\tag{$\sin(x)$ is real valued for real $x$}\\
+    % &=\frac{1}{L}\eval{\frac{x}{2}-\frac{L\sin\left(\frac{2\pi x}{L}\right)}{4\pi}+\frac{x}{2}-\frac{L\sin\left(\frac{4\pi x}{L}\right)}{8\pi}}{0}{\frac{L}{2}}\tag{trig identity}\\
+    % &=\frac{1}{L}\left(\frac{L}{2}-\frac{L\sin\left(\pi\right)}{4\pi}-\frac{L\sin\left(2\pi\right)}{8\pi}\right)\\
+    % &=\frac{1}{L}\left(\frac{L}{2}-0-0\right)\\
+    % &=\frac{1}{2}
+    &=\int_0^{\frac{L}{2}}\left(\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\pi}{3}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-4i\pi}{3}\right)\right)\\
+    &\qquad\qquad\quad\left(\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\pi}{3}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-4i\pi}{3}\right)\right)^*\dd{x}\tag{$\|z\|^2=z^*z$}\\
+    &=\int_0^{\frac{L}{2}}\left(\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{-i\pi}{3}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{-4i\pi}{3}\right)\right)\\
+    &\qquad\qquad\quad\left(\frac{\phi_1(x)}{\sqrt{2}}\exp\left(\frac{i\pi}{3}\right)+\frac{\phi_2(x)}{\sqrt{2}}\exp\left(\frac{4i\pi}{3}\right)\right)\dd{x}\tag{conjugate is distributive}\\
+    &=\frac{1}{2}\int_0^{\frac{L}{2}}\phi_1(x)^2+\phi_2(x)^2+\phi_1(x)\phi_2(x)\exp(-i\pi)+\phi_1(x)\phi_2(x)\exp(i\pi)\,\dd x\\
+    &=\frac{1}{2}\int_0^{\frac{L}{2}}\phi_1(x)^2+\phi_2(x)^2-2\phi_1(x)\phi_2(x)\,\dd x\tag{Euler's identity}\\
+    &=\frac{1}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{\pi x}{L}\right)^2+\sin\left(\frac{2\pi x}{L}\right)-2\sin\left(\frac{\pi x}{L}\right)\sin\left(\frac{2\pi x}{L}\right)\,\dd x\\
+    &=\frac{1}{L}\eval{\frac{x}{2}-\frac{L\sin\left(\frac{2\pi x}{L}\right)}{4\pi}+\frac{x}{2}-\frac{L\sin\left(\frac{4\pi x}{L}\right)}{8\pi}}{0}{\frac{L}{2}}-\frac{2}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{\pi x}{L}\right)\sin\left(\frac{2\pi x}{L}\right)\dd x\\
+    &=\frac{1}{2}-\frac{2}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{\pi x}{L}\right)\sin\left(\frac{2\pi x}{L}\right)\dd x\\
+    &=\frac{1}{2}-\frac{1}{L}\int_0^{\frac{L}{2}}\sin\left(\frac{3\pi x}{L}\right)+\sin\left(\frac{\pi x}{L}\right)\dd x\tag{product-to-sum formula}\\
+    &=\frac{1}{2}-\frac{1}{L}\eval{-\frac{L}{3\pi}\cos\left(\frac{3\pi x}{L}\right)-\frac{L}{\pi}\cos\left(\frac{\pi x}{L}\right)}{0}{\frac{L}{2}}\\
+    &=\frac{1}{2}-\frac{1}{L}\left(0+\frac{2L}{3\pi}\right)\\
+    &=\frac{1}{2}-\frac{2}{3\pi}
+\end{align*}
+
+And so, more succinctly, we have the following:
+$$P\left(0<X_{\psi_{1+2}(t)}<\frac{L}{2}\right)=\frac{1}{2}-\frac{2}{3\pi}<\frac{1}{2}$$
+
+And so the probability that the particle is found within $[0,L/2]$ is less than $50\%$.
+\end{document}

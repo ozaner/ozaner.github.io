@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 1}
+\author{Ozaner Hansha}
+\date{September 10, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Show that if events $A$ and $B$ are independent, then so are $A^\complement$ and $B^\complement$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+  P(A^\complement B^\complement)&=P((A\cup B)^\complement)\tag{DeMorgan's Law}\\
+  &=1-P(A\cup B)\tag{prob. of complement}\\
+  &=1-P(A)-P(B)+P(AB)\tag{inclusion-exclusion principle}\\
+  &=1-P(A)-P(B)+P(A)P(B)\tag{independence of $A$ and $B$}\\
+  &=(1-P(A))(1-P(B))\tag{factorization}\\
+  &=P(A^\complement)P(B^\complement)\tag{prob. of complement}
+\end{align*}
+
+And so, assuming $A$ and $B$ are independent, we have that $P(A^\complement B^\complement)=P(A^\complement)P(B^\complement)$ and thus, by definition, $A^\complement$ is independent of $B^\complement$.
+\smallskip
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Show that if events $A$ and $B$ are independent, then so are $A^\complement$ and $B$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following:
+\begin{align*}
+  P(A^\complement B)&=P(A^\complement\mid B)P(B)\tag{chain rule}\\
+  &=(1-P(A\mid B))P(B)\tag{prob. of complement}\\
+  &=P(B)-P(A\mid B)P(B)\tag{multiplicative distributivity}\\
+  &=P(B)-P(AB)\tag{chain rule}\\
+  &=P(B)-P(A)P(B)\tag{independence of $A$ and $B$}\\
+  &=(1-P(A))P(B)\tag{multiplicative distributivity}\\
+  &=P(A^\complement)P(B)\tag{prob. of complement}
+\end{align*}
+
+And so, assuming $A$ and $B$ are independent, we have that $P(A^\complement B)=P(A^\complement)P(B)$ and thus, by definition, we have that $A^\complement$ is independent of $B$.
+\smallskip
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Consider a RV $X$ with the following cdf:
+$$F_X(x)=\begin{cases}
+  0&\text{if }x<1\\
+  \frac{1}{4}&\text{if }1\le x<3\\
+  1&\text{if }x\ge3
+\end{cases}$$
+
+Find $P(X=2), P(2\le X\le5)$, and $P(X=3)$.
+\smallskip
+
+\noindent\textbf{Solution:} The desired probabilites are given by:
+\begin{align*}
+  P(X=2)&=F_X(2)-\lim_{x\to 2^+}F_X(x)\\
+  &=\frac{1}{4}-\frac{1}{4}=\boxed{0}\\
+  P(2\le X\le5)&=F_X(5)-F_X(2)\\
+  &=1-\frac{1}{4}=\boxed{\frac{3}{4}}\\
+  P(X=3)&=F_X(3)-\lim_{x\to 3^+}F_X(x)\\
+  &=1-\frac{1}{4}=\boxed{\frac{3}{4}}
+\end{align*}
+\smallskip
+
+\subsection*{Question 4}
+\noindent\textbf{Problem:} Consider a RV $X$ with support $[0,5]$ and the following pdf:
+$$f_X(x)=ke^{-3x}$$
+
+Solve for $k$, and give $P(X\ge 3)$.
+\bigskip
+
+\noindent\textbf{Solution:} Recalling that the measure of a pdf over its support should be 1, we can solve for $k$ like so:
+\begin{align*}
+  1&=\int_0^5f_X(x)\,dx\\
+  &=\int_0^5 ke^{-3x}\,dx\\
+  &=-k\eval{\frac{e^{-3x}}{3}}{0}{5}\\
+  &=-k\frac{e^{-15}-1}{3}\\
+  k&=\boxed{\frac{3}{1-e^{-15}}}
+\end{align*}
+
+Now that we have $k$, we can solve for $P(X\ge 3)$:
+\begin{align*}
+  P(X\ge 3)&=\int_3^5 f_X(x)\,dx\\
+  &=\frac{3}{1-e^{-15}}\int_3^5e^{-3x}\,dx\\
+  &=\frac{3}{1-e^{-15}}\eval{\frac{e^{-3x}}{3}}{3}{5}\\
+  &=\frac{3}{1-e^{-15}}\left(\frac{e^{-9}-e^{-15}}{3}\right)\\
+  &=\boxed{\frac{e^{-9}-e^{-15}}{1-e^{-15}}}\\
+\end{align*}
+\smallskip
+
+\subsection*{Question 5}
+\noindent\textbf{Problem:} Let $X$ denote the number of heads obtained by flipping a fair coin once. Find $E[X]$.
+\bigskip
+
+\noindent\textbf{Solution:} Clearly, $X\sim\text{Bernoulli}(0.5)$. And so it's expected value is:
+\smallskip
+$$E[X]=0(0.5)+1(0.5)=\boxed{0.5}$$
+
+\smallskip
+
+\subsection*{Question 6}
+\noindent\textbf{Problem:} Suppose a fair coin is tossed $n$ times. Let $X_i$ denote the number of heads on the $i$th toss. Find $E\left[\sum_{i=1}^n X_i\right]$.
+\bigskip
+
+\noindent\textbf{Solution:} Just as in question 5, we have that each $X_i\sim\text{Bernoulli}(0.5)$, giving us:
+\begin{align*}
+  E\left[\sum_{i=1}^n X_i\right]&=\sum_{i=1}^n E[X_i]\tag{linarity of expectation}\\
+  &=\sum_{i=1}^n 0.5\tag{mean of Bernoulli distribution}\\
+  &=\boxed{0.5n}
+\end{align*}
+\smallskip
+
+\subsection*{Question 7}
+\noindent\textbf{Problem:} Consider a RV $X$ with support $[1,5]$ and the following pdf:
+$$f_X(x)=\frac{1}{x\ln 5}$$
+
+Find $E[X], E[X^2]$, and $E[X^3]$.
+\bigskip
+
+\noindent\textbf{Solution:} The desired expectations are given below:
+\begin{align*}
+  E[X]&=\int_1^5\frac{x}{x\ln 5}\,dx\\
+  &=\frac{1}{\ln 5}\int_1^5 1\,dx\\
+  &=\boxed{\frac{4}{\ln 5}}\\
+\end{align*}
+\begin{align*}
+  E[X^2]&=\int_1^5\frac{x^2}{x\ln 5}\,dx\\
+  &=\frac{1}{\ln 5}\int_1^5x\,dx\\
+  &=\frac{1}{\ln 5}\eval{\frac{x^2}{2}}{1}{5}\\
+  &=\frac{25-1}{2\ln 5}=\boxed{\frac{12}{\ln 5}}\\
+\end{align*}
+\begin{align*}
+  E[X^3]&=\int_1^5\frac{x^3}{x\ln 5}\,dx\\
+  &=\frac{1}{\ln 5}\int_1^5x^2\,dx\\
+  &=\frac{1}{\ln 5}\eval{\frac{x^3}{3}}{1}{5}\\
+  &=\frac{125-1}{3\ln 5}=\boxed{\frac{124}{3\ln 5}}\\
+\end{align*}
+\smallskip
+
+\subsection*{Question 8}
+\noindent\textbf{Problem:} Consider a RV $X$ with support $[1,5]$ and the following pdf:
+$$f_X(x)=\frac{1}{4}$$
+
+Find $E[X]$ and $\Var(X)$.
+\bigskip
+
+\noindent\textbf{Solution:} Clearly $X\sim\mathcal{U}(1,5)$. It's expectation is given by:
+\begin{align*}
+  E[X]&=\int_1^5\frac{x}{4}\,dx\\
+  &=\frac{1}{4}\eval{\frac{x^2}{2}}{1}{5}\\
+  &=\frac{1}{4}\left(\frac{25-1}{2}\right)=\boxed{3}\\
+\end{align*}
+
+And the variance is given by:
+\begin{align*}  
+  \Var(X)&=E[(X-E[X])^2]\\
+  &=E[(X-1)^2]\\
+  &=\int_1^5 \frac{(x-1)^2}{4}\\
+  &=\frac{1}{4}\int_1^5 x^2-2x+1\,dx\\
+  &=\frac{1}{4}\eval{\frac{x^3}{3}-x^2+x}{1}{5}\\
+  &=\frac{\left(\frac{125}{3}-25+5\right)-\left(\frac{1}{3}-1+1\right)}{4}=\boxed{\frac{4}{3}}
+\end{align*}
+
+\end{document}

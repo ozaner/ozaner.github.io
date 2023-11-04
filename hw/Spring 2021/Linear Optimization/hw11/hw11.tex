@@ -1,0 +1,365 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage{forest}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#11}
+\author{Ozaner Hansha}
+\date{April 20, 2021}
+\maketitle
+
+\subsection*{Problem b}
+\noindent\textbf{Problem:} Solve the following problem using branch and bound:
+$$\begin{aligned}
+  &{\text{Maximize}}
+  &&z=3x_1+5x_2\\
+  &{\text{subject to}}
+  &&2x_1+4x_2\le25\\
+  &
+  &&x_1\le8\\
+  &
+  &&x_2\le 5\\
+  &{\text{and}}
+  &&\vec x\in\N^2
+\end{aligned}$$
+\bigskip
+
+\noindent\textbf{Solution:} To find the root node, we must first solve the LP relaxation of this problem. First we will put it into canonical form:
+\begin{align*}
+  \begin{aligned}
+    &{\text{Maximize}}
+    &&z=3x_1+5x_2\\
+    &{\text{subject to}}
+    &&2x_1+4x_2\le25\\
+    &
+    &&x_1\le8\\
+    &
+    &&x_2\le5\\
+    &{\text{and}}
+    &&\vec x\ge 0
+  \end{aligned}\implies
+  \begin{aligned}
+  &{\text{Maximize}}
+  &&-3x_1-5x_2+z=0\\
+  &{\text{subject to}}
+  &&2x_1+4x_2+s_1=25\\
+  &
+  &&x_1+s_2=8\\
+  &
+  &&x_2+s_3=5\\
+  &{\text{and}}
+  &&\vec x,\vec s\ge 0
+\end{aligned}
+\end{align*}
+
+Now we can apply the tabluex method:
+\begin{align*}
+  \begin{array}{c|cccccc|c}
+    &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+    s_1&2&4&1&0&0&0&25\\
+    s_2&1&0&0&1&0&0&8\\
+    s_3&0&\circled1&0&0&1&0&5\\\hline
+    z&-3&-5&0&0&0&1&0
+\end{array}&\ro{\substack{r_4+5r_3\\r_1-4r_3}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  s_1&\circled2&0&1&0&-4&0&5\\
+  s_2&1&0&0&1&0&0&8\\
+  x_2&0&1&0&0&1&0&5\\\hline
+  z&-3&0&0&0&5&1&25
+\end{array}\\&\ro{\substack{r_1/2\\r_2-r_1\\r_4+3r_1}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  x_1&1&0&\sfrac{1}{2}&0&-2&0&\sfrac{5}{2}\\
+  s_2&0&0&-\sfrac{1}{2}&1&\circled2&0&\sfrac{11}{2}\\
+  x_2&0&1&0&0&1&0&5\\\hline
+  z&0&0&\sfrac{3}{2}&0&-1&1&\sfrac{65}{2}
+\end{array}\\&\ro{\substack{r_1+r_2\\r_2/2\\r_3-r_2\\r_4+r_2}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  x_1&1&0&0&1&0&0&8\\
+  s_3&0&0&-\sfrac{1}{4}&\sfrac{1}{2}&1&0&\sfrac{11}{4}\\
+  x_2&0&1&\sfrac{1}{4}&-\sfrac{1}{2}&0&0&\sfrac{9}{4}\\\hline
+  z&0&0&\sfrac{5}{4}&\sfrac{1}{2}&0&1&\sfrac{141}{4}
+\end{array}
+\end{align*}
+
+With this, we are done. Our tabluex method has resulted in a maximum of $\sfrac{141}{4}=35.25$ at:
+$$\vec x=\begin{bmatrix}
+  8\\\sfrac{9}{4}
+\end{bmatrix}=\begin{bmatrix}
+  8\\2.25
+\end{bmatrix}$$
+
+With this solution in hand, we can begin our tree:
+\begin{center}
+  \begin{forest}
+    my label/.style={label={[label distance=-3pt, font=\sffamily]0:#1}},
+    for tree={l sep+=.8cm,s sep+=1cm,shape=circle, rounded corners,
+        draw, align=center,
+        top color=white, bottom color=white}
+    [{LP(1)\\35.25}, my label=$\icol{8\\2.5}$
+      [LP(2), edge label={node[midway,left]{$x_2\le2$}}][LP(3), edge label={node[midway,right]{$x_2\ge3$}}]
+    ]
+  \end{forest}
+\end{center}
+
+We will first solve solve LP(2):
+\begin{align*}
+  \begin{aligned}
+    &{\text{Maximize}}
+    &&z=3x_1+5x_2\\
+    &{\text{subject to}}
+    &&2x_1+4x_2\le25\\
+    &
+    &&x_1\le8\\
+    &
+    &&x_2\le2\\
+    &{\text{and}}
+    &&\vec x\ge 0
+  \end{aligned}\implies
+  \begin{aligned}
+  &{\text{Maximize}}
+  &&-3x_1-5x_2+z=0\\
+  &{\text{subject to}}
+  &&2x_1+4x_2+s_1=25\\
+  &
+  &&x_1+s_2=8\\
+  &
+  &&x_2+s_3=2\\
+  &{\text{and}}
+  &&\vec x,\vec s\ge 0
+\end{aligned}
+\end{align*}
+
+\begin{align*}
+  \begin{array}{c|cccccc|c}
+    &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+    s_1&2&4&1&0&0&0&25\\
+    s_2&1&0&0&1&0&0&8\\
+    s_3&0&\circled1&0&0&1&0&2\\\hline
+    z&-3&-5&0&0&0&1&0
+\end{array}&\ro{\substack{r_4+5r_3\\r_1-4r_3}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  s_1&2&0&1&0&-4&0&17\\
+  s_2&\circled1&0&0&1&0&0&8\\
+  x_2&0&1&0&0&1&0&2\\\hline
+  z&-3&0&0&0&5&1&10
+\end{array}\\&\ro{\substack{r_1-2r_2\\r_4+3r_2}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  s_1&0&0&1&-2&-4&0&1\\
+  x_1&1&0&0&1&0&0&8\\
+  x_2&0&1&0&0&1&0&2\\\hline
+  z&0&0&0&3&5&1&34
+\end{array}
+\end{align*}
+
+LP(2) has a maximum of 34 at $\vec x=\icol{8\\2}$. Note that this is a feasible solution to IP(1) (i.e. it is an integer solution). As such, we can set this to be a \textcolor{red}{lower bound} on our solutions:
+\begin{center}
+  \begin{forest}
+    my label/.style={label={[label distance=-3pt, font=\sffamily]0:#1}},
+    for tree={l sep+=.8cm,s sep+=1cm,shape=circle, rounded corners,
+        draw, align=center,
+        top color=white, bottom color=white}
+    [{LP(1)\\35.25}, my label=$\icol{8\\2.5}$
+      [{LP(2)\\\color{red}{34}}, edge label={node[midway,left]{$x_2\le2$}}, my label=$\icol{8\\2}$][LP(3), edge label={node[midway,right]{$x_2\ge3$}}]
+    ]
+  \end{forest}
+\end{center}
+
+Now let us solve LP(3):
+\begin{align*}
+  \begin{aligned}
+    &{\text{Maximize}}
+    &&z=3x_1+5x_2\\
+    &{\text{subject to}}
+    &&2x_1+4x_2\le25\\
+    &
+    &&x_1\le8\\
+    &
+    &&x_2\ge3\\
+    &{\text{and}}
+    &&\vec x\ge 0
+  \end{aligned}\implies
+  \begin{aligned}
+  &{\text{Maximize}}
+  &&-3x_1-5x_2+z=0\\
+  &{\text{subject to}}
+  &&2x_1+4x_2+s_1=25\\
+  &
+  &&x_1+s_2=8\\
+  &
+  &&x_2-s_3+s_4=3\\
+  &{\text{and}}
+  &&\vec x,\vec s\ge 0
+\end{aligned}
+\end{align*}
+
+\begin{align*}
+  \begin{array}{c|ccccccc|c}
+    &x_1&x_2&s_1&s_2&s_3&s_4&z&c\\\hline
+    s_1&2&4&1&0&0&0&0&25\\
+    s_2&1&0&0&1&0&0&0&8\\
+    s_4&0&\circled1&0&0&-1&1&0&2\\\hline
+    z&-3&-5&0&0&0&0&1&0
+\end{array}&\ro{\substack{r_4+5r_3\\r_1-4r_3}}
+\begin{array}{c|ccccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&s_4&z&c\\\hline
+  s_1&2&0&1&0&\circled4&0&0&25\\
+  s_2&1&0&0&1&0&0&0&8\\
+  x_2&0&1&0&0&-1&1&0&2\\\hline
+  z&-3&0&0&0&-5&5&1&15
+\end{array}\\&\ro{\substack{r_1/4\\r_3+r-1\\r_4+5r_1}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  s_3&\circled{\sfrac{1}{2}}&0&\sfrac{1}{4}&0&1&0&\sfrac{13}{4}\\
+  s_2&1&0&0&1&0&0&8\\
+  x_2&\sfrac{1}{2}&1&\sfrac{1}{4}&0&0&0&\sfrac{25}{4}\\\hline
+  z&-\sfrac{1}{2}&0&\sfrac{5}{4}&0&0&1&\sfrac{125}{4}
+\end{array}\\&\ro{\substack{r_3-r_2\\r_4+r_1\\2r_1\\r_2-r_1}}
+\begin{array}{c|cccccc|c}
+  &x_1&x_2&s_1&s_2&s_3&z&c\\\hline
+  x_1&1&0&\sfrac{1}{2}&0&2&0&\sfrac{13}{2}\\
+  s_2&0&0&-\sfrac{1}{2}&1&-2&0&\sfrac{3}{2}\\
+  x_2&0&1&0&0&-1&0&3\\\hline
+  z&0&0&\sfrac{3}{2}&0&1&1&\sfrac{69}{2}
+\end{array}
+\end{align*}
+
+LP(3) has a maximum of 34.5 at $\vec x=\icol{\sfrac{13}{2}\\3}$. updating our tree we now have:
+\begin{center}
+  \begin{forest}
+    my label/.style={label={[label distance=-3pt, font=\sffamily]0:#1}},
+    for tree={l sep+=.8cm,s sep+=1cm,shape=circle, rounded corners,
+        draw, align=center,
+        top color=white, bottom color=white}
+    [{LP(1)\\35.25}, my label=$\icol{8\\2.5}$
+      [{LP(2)\\\color{red}{34}}, edge label={node[midway,left]{$x_2\le2$}}, my label=$\icol{8\\2}$]
+      [{LP(3)\\34.5}, edge label={node[midway,right]{$x_2\ge3$}}, my label=$\icol{6.5\\3}$
+        % [LP(4), edge label={node[midway,left]{$x_1\le6$}}]
+        % [LP(5), edge label={node[midway,right]{$x_1\ge7$}}]
+      ]
+    ]
+  \end{forest}
+\end{center}
+
+Note that, at this point, the maximum $M$ of IP(1) must satisfy:
+$$34\le M\le 34.5$$
+
+But also note that $M\in\Z$ as $M$ is a linear combination of integers. As a result, $M$ must equal 34 as there is no other integer that satisfies the above inequality. Thus, the solution to IP(1) is given by $\vec x=\icol{8\\2}$, reaching a maximum of 34.
+
+\subsection*{Problem c}
+% Note that problem 18 asks a question regarding asymptotic notation as $x\\to0$. For this, we'll need the general definition of Big-O. That is $\forall a\in\R$:
+% $$f(x)=O(g(x))\quad\text{as }x\to a$$
+
+% is equivalent to:
+% $$\limsup_{x\to a}\frac{|f(x)|}{g(x)}<\infty$$
+% \bigskip
+\noindent\textbf{Problem 17:} Prove $x^n = O(e^x)$ for any $n>0$.
+\bigskip
+
+\noindent\textbf{Solution:} Consider an arbitrary $n>0$. Let:
+$$x_0=1,\qquad C=\frac{1}{(e^{1/n}-1)^n}$$
+
+Now note the following:
+\begin{align*}
+  |x^n|&=x^n\tag{$x,n>0$}\\
+  &=\frac{(e^{1/n}-1)^n}{(e^{1/n}-1)^n}x^n\\
+  &=\frac{1}{(e^{1/n}-1)^n}((e^{1/n}-1)x)^n\\
+  &=C((e^{1/n}-1)x)^n\tag{def. of $C$}\\
+  &<C(1+(e^{1/n}-1)x)^n\\
+  &\le C((1+e^{1/n}-1)^x)^n\tag{Bernoulli's inequality}\\
+  &=C(e^{1/n})^{xn}\\
+  &=Ce^x
+\end{align*}
+
+And with this, we are done.
+\bigskip
+
+\noindent\textbf{Problem 18:} Prove $\log^a x = O(x^r)$ as $x\to\infty$ for any $a,r > 0$. What is the relation between these two functions as $x\to0$?
+\bigskip
+
+\noindent\textbf{Solution:} Note that this problem asks a question regarding asymptotic notation as $x\to0$. For this, we'll need a more general definition of Big-O. That is, $\forall a\in\R$:
+$$f(x)=O(g(x))\quad\text{as }x\to a$$
+
+is equivalent to:
+$$\limsup_{x\to a}\frac{|f(x)|}{g(x)}<\infty$$
+
+Now we can solve the first question. Note that we assume $\log=\ln$, ultimately our choice of base $b>0$ doesn't matter:
+\begin{align*}
+  \limsup_{x\to\infty}\frac{|\log^a x|}{x^r}&=\limsup_{x\to\infty}\frac{\log^a x}{x^r}\tag{$x,a>0$}\\
+  &=\limsup_{x\to\infty}\frac{1}{\prod_{i=0}^{r-1}\log^i x}\cdot\frac{1}{rx^{r-1}}\tag{L'Hopital's rule}\\
+  &=0<\infty
+\end{align*}
+\textit{Note that for any function $f$, we have $f^0(x)=x$.}
+\bigskip
+
+And so we have proven that $\log^a x=O(x^r)$. For the second question, note the following:
+\begin{align*}
+  \limsup_{x\to0}\left|\frac{\log^a x}{x^r}\right|=\infty
+\end{align*}
+
+And so, depending on our definitions, it would seem that:
+$$\log^a x=\Omega(x^r)\quad\text{as } x\to 0$$
+
+Note that a caveat here is that, for the real numbers, $\log$ only approaches $-\infty$, and thus $|\log|$ approaches $\infty$, on the right hand side.
+\end{document}

@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{physics}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 8}
+\author{Ozaner Hansha}
+\date{November 23, 2020}
+\maketitle
+
+Some notation before we continue. Let $Y_{\mu,\sigma^2}\sim\mathcal N(\mu,\sigma^2)$, $t_{\nu}\sim\text{student-}t(\nu)$, and $B_{n,p}\sim B(n,p)$.
+
+\subsection*{Question 1}
+Suppose we have a normal population $X_i\sim\mathcal N(\mu,\sigma^2)$. Our null hypothesis $H_0$ is that $\mu=10$ and our alternative hypothesis $H_1$ is that $\mu>10$. Suppose we have an i.i.d. sample $X$ of $n=16$.
+\bigskip
+
+\noindent\textbf{Part a:} Suppose $\sigma^2=9$ and that our condition for accepting the null hypothesis is:
+$$\hat H_0:\bar X\le 10+\frac{2\sigma}{\sqrt{n}}=11.5$$
+
+Give the probability of a type I error and a bound on type II errors.
+\bigskip
+
+\noindent\textbf{Solution:} For a type I error, i.e. rejecting the null hypothesis given that it's true, we have:
+\begin{align*}
+    P(\text{Type I error})&=P(\neg\hat H_0\mid H_0)\tag{def. of type I error}\\
+    &=P(\bar X>11.5\mid\mu=10)\tag{from def. of hypotheses}\\
+    &=P(Y_{10,9/16}>11.5)\tag{$\bar X\sim\mathcal N(\mu,\sigma^2/n)$ mean of i.i.d. normals}\\
+    &=P\left(Z>\frac{11.5-10}{9/16}\right)\tag{standardize normal RV}\\
+    &=1-\Phi\left(\frac{8}{3}\right)\tag{cdf of normal RV}\\
+    &\approx0.0038
+\end{align*}
+
+And for a type II error, i.e. accepting a the null hypothesis given that it's false, we have:
+\begin{align*}
+    P(\text{Type II error})&=P(\hat H_0\mid H_1)\tag{def. of type II error}\\
+    &=P(\bar X\le11.5\mid\mu>10)\tag{from def. of hypotheses}\\
+    &=P(Y_{\mu,9/16}\le11.5\mid\mu>10)\tag{$\bar X\sim\mathcal N(\mu,\sigma^2/n)$ mean of i.i.d. normals}\\
+    &=P\left(Z\le\frac{11.5-\mu}{9/16}\mid\mu>10\right)\tag{standardize normal RV}\\
+    &< P\left(Z\le\frac{11.5-10}{9/16}\right)\tag{$\Phi$ is strictly increasing}\\
+    &=\Phi\left(\frac{8}{3}\right)\\
+    &\approx0.9962
+\end{align*}
+
+That is to say, depending on the true value of $\mu$, the probability of a type 2 error could be anything in the interval $(0,0.9962)$.
+\bigskip
+\newpage
+
+\noindent\textbf{Part b:} Suppose we don't know what $\sigma^2$ is and that our conditions for accepting the null hypothesis is:
+$$\hat H_0:\bar X\le 10+\frac{2S}{\sqrt{n}}=10+\frac{S}{2}$$
+
+Given $\bar X$ and $S^2$, give the probability of a type I error and a bound on type II errors.
+\bigskip
+
+\noindent\textbf{Solution:} For a type I error we have:
+\begin{align*}
+    P(\text{Type I error})&=P(\neg\hat H_0\mid H_0)\tag{def. of type I error}\\
+    &=P\left(\bar X>10+\frac{S}{2}\mid\mu=10\right)\tag{from def. of hypotheses}\\
+    &=P\left(Y_{10,\sigma^2/9}>10+\frac{S}{2}\right)\tag{$\bar X\sim\mathcal N(\mu,\sigma^2/n)$ mean of i.i.d. normals}\\
+    &=P\left(t_{15}>\frac{10+\frac{S}{2}-10}{S/\sqrt{16}}\right)\tag{sample mean to $t$-distribution}\\
+    &=P\left(t_{15}>2\right)\\
+    &=1-F_{t_{15}}\left(2\right)\tag{cdf of $t$-distribution}\\
+    &\approx0.03197
+\end{align*}
+
+And for a type II error we have:
+\begin{align*}
+    P(\text{Type II error})&=P(\hat H_0\mid H_1)\tag{def. of type II error}\\
+    &=P\left(\bar X\le10+\frac{S}{2}\mid\mu>10\right)\tag{from def. of hypotheses}\\
+    &=P\left(Y_{\mu,\sigma^2/9}\le10+\frac{S}{2}\mid\mu>10\right)\tag{$\bar X\sim\mathcal N(\mu,\sigma^2/n)$ mean of i.i.d. normals}\\
+    &=P\left(t_{15}\le\frac{10+\frac{S}{2}-\mu}{S/\sqrt{16}}\mid\mu>10\right)\tag{sample mean to $t$-distribution}\\
+    &<P\left(t_{15}\le2\right)\tag{cdf of $t$-distribution is strictly increasing}\\
+    &=F_{t_{15}}\left(2\right)\\
+    &\approx0.96803
+\end{align*}
+
+That is to say, depending on the true value of $\mu$, the probability of a type 2 error could be anything in the interval $(0,0.96803)$.
+
+\subsection*{Question 2}
+Suppose we have a Bernoulli population $X_i\sim\text{Bernoulli}(\theta)$. Our null hypothesis $H_0$ is that $\theta=\frac{1}{2}$ and our condition for accepting it $\hat H_0$ is that there is that not all observations $X_i$ are the same. Suppose we have an i.i.d. sample $X$ of $n=10$
+\bigskip
+
+\noindent\textbf{Part a:} Suppose our alternative hypothesis $H_1$ is $\theta\not=\frac{1}{2}$. Give the probability of a type I error and a bound on type II errors.
+\bigskip
+
+\noindent\textbf{Solution:} For a type I error we have:
+\begin{align*}
+    P(\text{Type I error})&=P(\neg\hat H_0\mid H_0)\tag{def. of type I error}\\
+    &=P\left((\forall i)\,X_i=1\vee(\forall j)\,X_j=0\mid\theta=\frac{1}{2}\right)\tag{from def. of hypotheses}\\
+    &=P\left(B_{10,1/2}\in\{0,10\}\right)\tag{$\sum X_i\sim B(n,\theta)$}\\
+    &=\binom{10}{0}\left(\frac{1}{2}\right)^0\left(1-\frac{1}{2}\right)^{10-0}+\binom{10}{10}\left(\frac{1}{2}\right)^{10}\left(1-\frac{1}{2}\right)^{10-10}\tag{pmf of binomial RV}\\
+    &=\frac{1}{2^{10}}+\frac{1}{2^{10}}=\frac{1}{2^9}
+\end{align*}
+
+And for a type II error we have:
+\begin{align*}
+    P(\text{Type II error})&=P(\hat H_0\mid H_1)\tag{def. of type II error}\\
+    &=P\left((\exists i)\,X_i\not=1\wedge(\exists j)\,X_j\not=0\mid\theta\not=\frac{1}{2}\right)\tag{from def. of hypotheses}\\
+    &=P\left((\exists i)\,X_i=0\wedge(\exists j)\,X_j=1\mid\theta\not=\frac{1}{2}\right)\tag{$X_i\in\{0,1\}$}\\
+    &=P\left(B_{10,\theta}\not\in\{0,10\}\mid\theta\not=\frac{1}{2}\right)\tag{$\sum X_i\sim B(n,\theta)$}\\
+    &=1-P\left(B_{10,\theta}\in\{0,10\}\mid\theta\not=\frac{1}{2}\right)\tag{complement}\\
+    &=1-\binom{10}{0}\theta^0\left(1-\theta\right)^{10-0}-\binom{10}{10}\theta^{10}\left(1-\theta\right)^{10-10}\text{ s.t. }\theta\not=\frac{1}{2}\tag{pmf of binomial RV}\\
+    &=1-(1-\theta)^{10}-\theta^{10}\text{ s.t. }\theta\not=\frac{1}{2}
+\end{align*}
+
+Note that $f(x)=1-(1-x)^{10}-x^{10}$ is maximized when $x=\frac{1}{2}$ and 0 when $x\in\{0,1\}$. As such, depending on the value of $\theta$, the probability of type II errors is given by the bound:
+\begin{align*}
+    P(\text{Type II error})&\in\left[0,f\left(\frac{1}{2}\right)\right)\tag{exclusive right bound since $\theta\not=\frac{1}{2}$}\\
+    &\in\left[0,1-\left(1-\frac{1}{2}\right)^{10}-\left(\frac{1}{2}\right)^{10}\right)\\
+    &\in\left[0,1-\frac{1}{2^9}\right)\\
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Suppose our alternative hypothesis $H_1$ is that $|\theta-0.5|>.3$. Give the probability of a type I error and a bound on type II errors.
+\bigskip
+
+\noindent\textbf{Solution:} Our type I error probability is the same as in part a as we haven't changed our null hypothesis $H_0$ nor its acceptance condition $\hat H_0$:
+\begin{align*}
+    P(\text{Type I error})&=P(\neg\hat H_0\mid H_0)\tag{def. of type I error}\\
+    &=P\left((\forall i)\,X_i=1\vee(\forall j)\,X_j=0\mid\theta=\frac{1}{2}\right)\tag{from def. of hypotheses}\\
+    &=\frac{1}{2^9}\approx0.001953125\tag{part a}
+\end{align*}
+
+For a type II error we have:
+\begin{align*}
+    P(\text{Type II error})&=P(\hat H_0\mid H_1)\tag{def. of type II error}\\
+    &=P\left((\exists i)\,X_i\not=1\wedge(\exists j)\,X_j\not=0\mid\theta>.8\vee\theta<.2\right)\tag{from def. of hypotheses}\\
+    &=P\left((\exists i)\,X_i=0\wedge(\exists j)\,X_j=1\mid\theta>.8\vee\theta<.2\right)\tag{$X_i\in\{0,1\}$}\\
+    &=P\left(B_{10,\theta}\not\in\{0,10\}\mid\theta>.8\vee\theta<.2\right)\tag{$\sum X_i\sim B(n,\theta)$}\\
+    &=1-P\left(B_{10,\theta}\in\{0,10\}\mid\theta>.8\vee\theta<.2\right)\tag{complement}\\
+    &=1-(1-\theta)^{10}-\theta^{10}\text{ s.t. }\theta>.8\vee\theta<.2
+\end{align*}
+
+Recall from part a that we know $f(x)=1-(1-x)^{10}-x^{10}$ reaches a maximum at $f\left(\frac{1}{2}\right)$ and that it is 0 at $x\in\{0,1\}$. And so, depending on the value of $\theta$, the probability of type II errors is given by the bound:
+\begin{align*}
+    P(\text{Type II error})&\in\left[0,f\left(.2\right)\right)\cup\left(f(.8),1\right]\tag{exclusive bounds since $\theta>.2\vee \theta<.8$}\\
+    &\in\left[0,f\left(.2\right)\right)\tag{$f(x)$ is symmetric about $x=.5$ and $.5-.2=.8-.5$}\\
+    &\in\left[0,1-\frac{1}{5^9}\right)\\
+\end{align*}
+\end{document}

@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 5}
+\author{Ozaner Hansha}
+\date{October 16, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Suppose we have a population described by a Poisson distribution with paramter $\lambda$. That is, with pdf $f(x;\lambda)=\frac{\lambda^xe^{-\lambda}}{x!}$ for a nonnegative integer $x$.
+\bigskip
+
+\noindent\textbf{Part a:} Compute the Fisher information about $\lambda$ for a single observation $X$.
+\bigskip
+
+\noindent\textbf{Solution:} The Fisher information $\mathcal I(\lambda)$ is given by:
+\begin{align*}
+  \mathcal I(\lambda)&=E\left[\left(\frac{\partial}{\partial\lambda}\ln f(X;\lambda)\right)^2\right]\tag{def. of Fisher information}\\
+  &=E\left[\left(\frac{\partial}{\partial\lambda}\ln \frac{\lambda^Xe^{-\lambda}}{X!}\right)^2\right]\\
+  &=E\left[\left(\frac{\partial}{\partial\lambda}\left(X\ln\lambda-\lambda-\ln X!\right)\right)^2\right]\\
+  &=E\left[\left(\frac{X}{\lambda}-1\right)^2\right]\\
+  &=\Var\left(\frac{X}{\lambda}\right)\tag{def. of variance ($E[X/\mu_X]=1$)}\\
+  &=\frac{1}{\lambda^2}\Var(X)\\
+  &=\frac{\lambda}{\lambda^2}=\boxed{\frac{1}{\lambda}}
+\end{align*}
+\smallskip
+
+\noindent\textbf{Part b:} Show that the sample mean $\bar{X}$ (for sample size $n\in\mathbb Z^+$) is a minimum variance unbiased estimator for $\lambda$
+\bigskip
+
+\noindent\textbf{Solution:} First we will prove that our estimator is unbiased by showing that its mean equals $\lambda$:
+\begin{align*}
+  E[\bar{X}]&=E\left[\frac{\sum_{i=1}^nX_i}{n}\right]\tag{def. of $\bar{X}$}\\
+  &=\frac{\sum_{i=1}^nE[X_i]}{n}\tag{linearity of expectation}\\
+  &=\frac{\sum_{i=1}^n\lambda}{n}\tag{$X_i\sim\operatorname{Pois}(\lambda)$}\\
+  &=\frac{n\lambda}{n}=\boxed{\lambda}
+\end{align*}
+\newpage
+
+Now recall that if the following is satisfied then $\bar{X}$ is an MVU estimator:
+$$\Var(\bar{X})=\frac{1}{n\mathcal I(\lambda)}$$
+
+Where each $X_i\sim\operatorname{Pois}(\lambda)$ is i.i.d. And indeed the above does hold:
+\begin{align*}
+  \Var(\bar{X})&=\Var\left(\frac{\sum_{i=1}^nX_i}{n}\right)\tag{def. of $\bar{X}$}\\
+  &=\Var\left(\frac{\sum_{i=1}^nX_i}{n}\right)\\
+  &=\frac{1}{n^2}\Var\left(\sum_{i=1}^nX_i\right)\\
+  &=\frac{1}{n^2}\sum_{i=1}^n\Var\left(X_i\right)\tag{$X_i$ are independent}\\
+  &=\frac{1}{n^2}\sum_{i=1}^n\lambda\tag{$X_i\sim\operatorname{Pois}(\lambda)$}\\
+  &=\frac{n\lambda}{n^2}=\frac{1}{n(1/\lambda)}=\frac{1}{n\mathcal I(\lambda)}\tag{part a}
+\end{align*}
+
+And so, $\bar{X}$ is a MVU estimator for $\lambda$.
+\bigskip
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} If $\hat{\Theta}$ is an unbiased estimator for $\theta$, is $\hat{\Theta}^2$ is an unbiased estimator for $\theta^2$?
+\bigskip
+
+\noindent\textbf{Solution:} No. Consider a population $X$ with mean $\mu$ and variance $\sigma^2$. Recall that the sample mean (for sample size $n$) is an unbiased estimator of a population's mean $\mu$:
+$$E[\bar{X}]=\mu$$
+
+However, we find that $E[\bar{X}^2]\not=\mu^2$:
+\begin{align*}
+  \Var(\bar{X})&=E[\bar{X}^2]-E[\bar{X}]^2\tag{true of any RV}\\
+  E[\bar{X}^2]&=\Var(\bar{X})+E[\bar{X}]^2\\
+  &=\frac{\sigma^2}{n}+\mu^2\tag{mean/variance of sample mean}\\
+  &\not=\mu^2
+\end{align*}
+
+And so, as we have shown, it is not necessarily the case that the square of an unbiased estimator is itself an unbiased estimator of the parameter squared.
+\newpage
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:}  Suppose that we have a population with known mean $\mu$ and unknown variance $\sigma^2$. Show that $\sum_{i=1}^n\frac{(X_i-\mu)^2}{n}$ is an unbiased estimator for $\sigma^2$.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following chain of equalities:
+\begin{align*}
+  E\left[\sum_{i=1}^n\frac{(X_i-\mu)^2}{n}\right]&=\frac{1}{n}\sum_{i=1}^nE\left[(X_i-\mu)^2\right]\tag{linearity of expectation}\\
+  &=\frac{1}{n}\sum_{i=1}^n\Var(X_i)\tag{def. of variance}\\
+  &=\frac{1}{n}\sum_{i=1}^n\sigma^2\tag{def. $\sigma^2$}\\
+  &=\frac{n\sigma^2}{n}=\sigma^2
+\end{align*}
+
+And so, since the mean of this estimator is indeed the parameter $\sigma^2$, it is unbiased.
+\bigskip
+
+\subsection*{Question 4}
+\noindent\textbf{Problem:} Show that $\bar{X}^2-\frac{S^2}{n}$ is an unbiased estimator for $\mu^2$.
+\bigskip
+
+\noindent\textbf{Solution:} Now consider the following chain of equalities:
+\begin{align*}
+  E\left[\bar{X}^2-\frac{S^2}{n}\right]&=E[\bar{X}^2]-\frac{E[S^2]}{n}\tag{linearity of expectation}\\
+  &=\Var(\bar{X})+E[\bar{X}]^2-\frac{E[S^2]}{n}\tag{$E[\bar{X}^2]=\Var(\bar{X})+E[\bar{X}]^2$}\\
+  &=\frac{\sigma^2}{n}+\mu^2-\frac{\sigma^2}{n}\tag{$E[S^2]=\sigma^2$}\\
+  &=\mu^2
+\end{align*}
+
+And so, since the mean of this estimator is indeed the parameter $\mu^2$, it is unbiased.
+\bigskip
+
+\textit{Where $S^2$ is the corrected sample variance $\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$}.
+\end{document}

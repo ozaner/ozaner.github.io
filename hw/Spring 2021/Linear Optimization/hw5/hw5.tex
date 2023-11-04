@@ -1,0 +1,306 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#5}
+\author{Ozaner Hansha}
+\date{March 1, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} The definition of linear independence assumes the vectors are non-zero. Why is this a good condition to include?
+\bigskip
+
+\noindent\textbf{Solution:} Recall that vectors $\vec v_1,\vec v_2,\cdots,\vec v_n$ are linearly independent iff:
+\begin{equation*}
+    a_1\vec v_1+a_2\vec v_2+\cdots+a_n\vec v_n=\vec 0\implies a_1=a_2=\cdots=a_n=0
+\end{equation*}
+
+If we had $\vec v_i=\vec 0$ for some $i$, then we could always multiply $\vec v_i$ by some non-zero constant $a_i$ and add it to a linear combination of vectors without changing its result. As a result, $a_i$ is never necessarily 0 in the LHS above and so the implication cannot hold.
+
+And since the inclusion of a zero vector automatically makes the set linearly dependent, it is reasonable to just exclude them outright from the definition.
+
+\subsection*{Problem 5}
+\noindent\textbf{Problem:} Let $\vec v_1 = (1, 2, 3)$ and $\vec v_2 = (2, 1, 0)$. Describe the set of all vectors $\vec v_3$ such that $\{\vec v_1, \vec v_2, \vec v_3\}$ is a linearly independent set.
+\bigskip
+
+\noindent\textbf{Solution:} The set of vectors that are linearly \textit{dependent} to $\{\vec v_1,\vec v_2\}$ are all the linear combinations of this set, i.e. $\operatorname{span}\{\vec v_1,\vec v_2\}$.
+
+The set of vectors that are linearly \textit{in}dependent of $\vec v_1$ and $\vec v_2$ is simply the set of vectors that are \textit{not} dependent on them, which is to say the complement of their span. In other words, the set $S$ of vectors $\vec v_3$ such that $\{\vec v_1,\vec v_2,\vec v_3\}$ is linearly independent is:
+$$S=\R^3\setminus\operatorname{span}\{\vec v_1,\vec v_2\}$$
+
+\subsection*{Problem 6}
+\noindent\textbf{Problem:} Given any positive integer $n\ge2$, construct a $2\times n$ matrix such that any two columns are linearly independent.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that two vectors are linearly independent iff they are not multiples of each other. Now note the following image of 2D vectors:
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel=$x_1$,
+        ylabel=$x_2$,
+        xmin=-.2,xmax=1.2,
+        ymin=-.2,ymax=1.2,
+        axis lines=center,
+        legend pos=outer north east,
+        legend style={legend cell align=right,legend plot pos=right}] 
+
+    %points
+    \node[circle,fill,inner sep=2pt] (A0) at (axis cs:0,0) {};
+    % \node[circle,inner sep=2pt] (A1) at (axis cs:{cos(0)},{sin(0)}) {};
+    \node[circle,inner sep=2pt] (A2) at (axis cs:{cos(6)},{sin(6)}) {};
+    \node[circle,inner sep=2pt] (A3) at (axis cs:{cos(12)},{sin(12)}) {};
+    \node[circle,inner sep=2pt] (A4) at (axis cs:{cos(18)},{sin(18)}) {};
+    \node[circle,inner sep=2pt] (A5) at (axis cs:{cos(24)},{sin(24)}) {};
+    \node[circle,inner sep=2pt] (A6) at (axis cs:{cos(30)},{sin(30)}) {};
+    \node[circle,inner sep=2pt] (A7) at (axis cs:{cos(36)},{sin(36)}) {};
+    \node[circle,inner sep=2pt] (A8) at (axis cs:{cos(42)},{sin(42)}) {};
+    \node[circle,inner sep=2pt] (A9) at (axis cs:{cos(48)},{sin(48)}) {};
+    \node[circle,inner sep=2pt] (A10) at (axis cs:{cos(54)},{sin(54)}) {};
+    \node[circle,inner sep=2pt] (A11) at (axis cs:{cos(60)},{sin(60)}) {};
+    \node[circle,inner sep=2pt] (A12) at (axis cs:{cos(66)},{sin(66)}) {};
+    \node[circle,inner sep=2pt] (A13) at (axis cs:{cos(72)},{sin(72)}) {};
+    \node[circle,inner sep=2pt] (A14) at (axis cs:{cos(78)},{sin(78)}) {};
+    \node[circle,inner sep=2pt] (A15) at (axis cs:{cos(84)},{sin(84)}) {};
+    \node[circle,inner sep=2pt] (A16) at (axis cs:{cos(90)},{sin(90)}) {};
+
+    % \draw[->] (A0) -- (A1);
+    \draw[->] (A0) -- (A2);
+    \draw[->] (A0) -- (A3);
+    \draw[->] (A0) -- (A4);
+    \draw[->] (A0) -- (A5);
+    \draw[->] (A0) -- (A6);
+    \draw[->] (A0) -- (A7);
+    \draw[->] (A0) -- (A8);
+    \draw[->] (A0) -- (A9);
+    \draw[->] (A0) -- (A10);
+    \draw[->] (A0) -- (A11);
+    \draw[->] (A0) -- (A12);
+    \draw[->] (A0) -- (A13);
+    \draw[->] (A0) -- (A14);
+    \draw[->] (A0) -- (A15);
+    \draw[->] (A0) -- (A16);
+
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+As we can see, each vector above is linearly independent of any other since none is a multiple of any other. In this example we picked 15 equally spaced angles within the interval $\left(0,\sfrac{\pi}{2}\right]$. Generalizing, for $n$ vectors that are independent of any other, we simply have to pick $n$ equally spaced angles from this interval:
+\begin{equation*}
+    \begin{bmatrix}
+        \cos\frac{\pi}{2n}&\cos\frac{2\pi}{2n}&\cdots&\cos\frac{i\pi}{2n}&\cdots&\cos\frac{n\pi}{2n}\\
+        \sin\frac{\pi}{2n}&\sin\frac{2\pi}{2n}&\cdots&\sin\frac{i\pi}{2n}&\cdots&\sin\frac{n\pi}{2n}
+    \end{bmatrix}
+\end{equation*}
+
+From the above reasoning it follows that this matrix is one whose columns are pairwise linearly independent.
+
+\subsection*{Problem 29}
+\noindent\textbf{Problem:} Find all basic feasible solutions to:
+\begin{equation*}
+    \begin{bmatrix}
+        1&2&3\\4&5&6\\7&8&9
+    \end{bmatrix}\begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix}=\begin{bmatrix}
+        1\\1\\1
+    \end{bmatrix}
+\end{equation*}
+
+\noindent\textbf{Solution:} First let us convert this problem into an equivalent one with fewer rows:
+\begin{align*}
+    \begin{sysmatrix}{rrr|r}
+        1&2&3&1\\
+        4&5&6&1\\
+        7&8&9&1
+    \end{sysmatrix}
+    &\ro{r_2-2r_1}
+    \begin{sysmatrix}{rrr|r}
+        1&2&3&1\\
+        2&1&0&-1\\
+        7&8&9&1
+    \end{sysmatrix}\\
+    &\ro{r_3-3r_1}
+    \begin{sysmatrix}{rrr|r}
+        1&2&3&1\\
+        2&1&0&-1\\
+        4&2&0&-2
+    \end{sysmatrix}\\
+    &\ro{r_3-2r_2}
+    \begin{sysmatrix}{rrr|r}
+        1&2&3&1\\
+        2&1&0&-1\\
+        0&0&0&0
+    \end{sysmatrix}\\
+    &\ro{}
+    \begin{sysmatrix}{rrr|r}
+        1&2&3&1\\
+        2&1&0&-1\\
+    \end{sysmatrix}
+\end{align*}
+
+And so we have the equivalent problem of finding the basic feasible solutions to:
+\begin{equation*}
+    \begin{bmatrix}
+        1&2&3\\
+        2&1&0\\
+    \end{bmatrix}\begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix}=\begin{bmatrix}
+        1\\-1
+    \end{bmatrix}
+\end{equation*}
+
+Any solution must lie on the intersection of the two hyperplanes defined by the equation (i.e. satisfy the equation). Since these planes are not parallel, that intersection is a line. We have one free variable $t$ so we'll let $x_3=t$:
+\begin{align*}
+    \begin{cases}
+        x_1+2x_2+3t=1\\
+        2x_1+x_2=-1\\
+    \end{cases}
+    &\implies
+    \begin{cases}
+        x_1=1-2x_2-3t\\
+        x_2=-1-2x_1\\
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        x_1=1-2(-1-2x_1)-3t\\
+        x_2=-1-2(1-2x_2-3t)\\
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        x_1=3+4x_1-3t\\
+        x_2=-3+4x_2+6t\\
+    \end{cases}\\
+    &\implies
+    \begin{cases}
+        x_1=-1+t\\
+        x_2=1-2t\\
+    \end{cases}
+\end{align*}
+
+And so our parmaterized line is given by:
+\begin{equation*}
+    (x_1,x_2,x_3)=(-1+t,1-2t,t)
+\end{equation*}
+
+And so all solutions, basic feasible or otherwise, must lie on this line. However note that no point $\vec x$ on that line satisfies $\vec x\ge 0$:
+\begin{align*}
+    x_3\ge 0&\implies t\ge 0\tag{def. of $x_3$}\\
+    &\implies -1+t\le -1\\
+    &\implies -1+t<0\tag{$-1<0$}\\
+    &\implies x_1<0\tag{def. of $x_1$}
+\end{align*}
+
+And so, since this problem has no feasible solutions, it certainly has no \textit{basic} feasible solutions.
+
+\subsection*{Problem 33}
+\noindent\textbf{Part a:} Prove there are only finitely many basic optimal solutions.
+\bigskip
+
+\noindent\textbf{Solution:} Consider the canonical LP problem:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\vec c^\top\vec x\\
+    &{\text{subject to}}
+    &&A\vec x=\vec b\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+First, assume $A$ has size $M\times N$ with $M\le N$. We do this w.l.o.g. because if $M>N$ then the LP would be either overdetermined (i.e. 0 solutions, which is finite), and if $M\le N$ we can just reduce its rows to its true rank and arrive at an identical problem.
+
+Now note that since each basic feasible solution $\vec x$ needs to be linearly independent of $k$ columns of $A$ where $k$ is the number of non-zero entries in $\vec x$. Now note that the choices of these columns is finite:
+\begin{equation*}
+    \sum_{m=0}^M\binom{N}{m}\le\sum_{m=0}^N\binom{N}{m}=2^N
+\end{equation*}
+
+Now consider a BFS $\vec x$ with a fixed choice of independent columns. Consider the truncated matrix $A'=A_{j1},A_{j3}\cdots,A_{jk}$ where $j1,\cdots,jk$ are the indices of the non-zero entries $\vec x$. Since $A'$ is full rank (only has linearly independent columns) the following must hold:
+\begin{align*}
+    A'\vec x=\vec b\implies \vec x=(A'^\top A')^{-1}A'^\top\vec b
+\end{align*}
+
+And so for any of the finite choices of independent columns, we have a single $\vec x$ solution that satisfies the equation. For any particular choice of columns, it may be the case that $\vec x\not\ge 0$. This is not a problem however as the number of solutions is in this case is 0 rather than 1, which is still finite. And so the set of basic feasible solutions is finite.
+
+Finally, since the set of basic optimal solutions is a subset of the set of basic feasible solutions, it too must be finite.
+\bigskip
+
+\noindent\textbf{Part b:} Prove that if there are at least two optimal solutions, then there are infinitely many optimal solutions (thus the number of optimal solutions is either 0, 1, or infinity).
+\bigskip
+
+\noindent\textbf{Solution:} Consider two distinct optimal solutions $\vec v_1$ and $\vec v_2$ to the canonical linear optimization problem:
+$$\begin{aligned}
+    &{\text{Minimize}}
+    &&\vec c^\top\vec x\\
+    &{\text{subject to}}
+    &&A\vec x=\vec b\\
+    &{\text{and}}
+    &&\vec x\ge 0
+\end{aligned}$$
+
+Since they are both optimal, in this case minimal, we have:
+\begin{gather*}
+    \vec c^\top\vec v_1=M\\
+    \vec c^\top\vec v_2=M
+\end{gather*}
+
+Where $M$ is the minimal value they attain. Now note the following for any $a,b$ such that $a+b=1$:
+\begin{align*}
+    \vec c^\top(a\vec v_1+b\vec v_2)&=a\vec c^\top\vec v_1+b\vec c^\top\vec v_2\tag{objective}\\
+    &=aM+bM\tag{def. of $M$}\\
+    &=M\tag{$a+b=1$, i.e. convex combination}
+\end{align*}
+
+And so we have shown that, for any $a,b$ such that $a+b=1$, the linear combination of our optimal solutions given by $a\vec v_1+b\vec v_2$ also attains the minimal value. Since there are infinitely many such pairs $(a,b)$ we correspondingly have infinitely many minimal solutions. Of course, this applies to maximization problems just as well.
+\end{document}

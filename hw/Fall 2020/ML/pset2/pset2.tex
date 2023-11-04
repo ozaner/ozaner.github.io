@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{bm}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Machine Learning\\ Problem Set 2}
+\author{Ozaner Hansha}
+\date{October 15, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Part a:} Show that the softmax model corresponds to modeling the log-odds between any two classes $c_i,c_j\in\{1,\cdots, C\}$ by a linear function.
+\bigskip
+
+\noindent\textbf{Solution:} Note the following chain of equalities:
+\begin{align*}
+    \log\frac{\hat{p}(y=c_i\mid \vec x;\mat{W})}{\hat{p}(y=c_j\mid \vec x;\mat{W})}&=\log\frac{\operatorname{softmax}(\vec w_i\cdot\vec x)}{\operatorname{softmax}(\vec w_j\cdot\vec x)}\\
+    &=\log\frac{\exp(\vec w_i\cdot\vec x)}{\exp(\vec w_j\cdot\vec x)}\\
+    &=\log\exp(\vec w_i\cdot\vec x-\vec w_j\cdot\vec x)\\
+    &=\vec w_i\cdot\vec x-\vec w_j\cdot\vec x\\
+    &=(\vec w_i-\vec w_j)\cdot\vec x
+\end{align*}
+
+Letting $\vec v_{ij}=\vec w_i - \vec w_j$, we have that the log-odds of any two classes is modeled by the following linear function:
+$$\log\frac{\hat{p}(y=c_i\mid \vec x;\mat{W})}{\hat{p}(y=c_j\mid \vec x;\mat{W})}=\vec v_{ij}\cdot\vec x$$
+\bigskip
+
+\noindent\textbf{Part b:} Show that in the binary case $(C = 2)$, for any two $D$-dimensional parameter vectors $w_1$ and $w_2$ in the softmax model, there exists a single $D$-dimensional parameter vector $\vec v$ such that:
+$$\operatorname{softmax}(\vec w_1\cdot \vec x)=\frac{\exp(\vec w_1\cdot \vec x)}{\exp(\vec w_1\cdot \vec x)+\exp(\vec w_2\cdot \vec v)}=\sigma(\vec v\cdot\vec x)$$
+
+\noindent\textbf{Solution:} Consider the following chain of equalities:
+\begin{align*}
+    \operatorname{softmax}(\vec w_1\cdot\vec x)
+    &=\frac{\exp(\vec w_1\cdot \vec x)}{\exp(\vec w_1\cdot \vec x)+\exp(\vec w_2\cdot \vec v)}\\
+    &=\left(\frac{\exp(\vec w_1\cdot \vec x)+\exp(\vec w_2\cdot \vec v)}{\exp(\vec w_1\cdot \vec x)}\right)^{-1}\\
+    &=\left(1+\frac{\exp(\vec w_2\cdot \vec v)}{\exp(\vec w_1\cdot \vec x)}\right)^{-1}\\
+    &=\left(1+\exp(\vec w_2\cdot \vec v-\vec w_1\cdot \vec x)\right)^{-1}\\
+    &=\left(1+\exp((\vec w_2-\vec w_1)\cdot \vec x)\right)^{-1}\\
+    &=\left(1+\exp(-(\vec w_1-\vec w_2)\cdot \vec x)\right)^{-1}\\
+    &=\sigma((\vec w_1-\vec w_2)\cdot \vec x)
+\end{align*}
+
+Again, letting $\vec v_{ij}=\vec w_i - \vec w_j$, we have that the binary case of softmax is equivalent to the logistic model:
+$$\operatorname{softmax}(\vec w_1\cdot\vec x)=\sigma(\vec v_{12}\cdot \vec x)$$
+
+\subsection*{Question 2}
+\noindent\textbf{Part a:} Show that the softmax model is over-parameterized by showing that for any weight matrix $\mat W$ there is another $\mat W'$ that produces the same probabilities, i.e. $p(y\mid\vec x; \mat W)=p(y\mid\vec x; \mat W')$.
+\bigskip
+
+\noindent\textbf{Solution:} First note that for an arbitrary class $c_i$, its predicted probability given some input $\vec x$ and weight $\mat W$ is:
+$$\hat p(y=c_i\mid\vec x;\mat W)=\operatorname{softmax}(\vec w_i\cdot\vec x)=\frac{\exp(\vec w_i\cdot\vec x)}{\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)}$$
+
+Now consider another weight matrix $\mat W'$ whose rows are given by $\vec w_j'=\vec w_j+\vec u$, for any arbitrary vector $\vec u\in\mathbb R^D$. The predicted probability of class $c_i$ with this is given by:
+\begin{align*}
+    \hat p(y=c_i\mid\vec x;\mat W')&=\operatorname{softmax}(\vec w_i'\cdot\vec x)\\
+    &=\frac{\exp(\vec w_i'\cdot\vec x)}{\sum_{j=1}^C\exp(\vec w_j'\cdot\vec x)}\\
+    &=\frac{\exp((\vec w_i+\vec u)\cdot\vec x)}{\sum_{j=1}^C\exp((\vec w_j+\vec u)\cdot\vec x)}\\
+    &=\frac{\exp(\vec w_i\cdot\vec x+\vec u\cdot\vec x)}{\sum_{j=1}^C\exp(\vec w_j\cdot\vec x+\vec u\cdot\vec x)}\\
+    &=\frac{\exp(\vec u\cdot\vec x)\exp(\vec w_i\cdot\vec x)}{\exp(\vec u\cdot\vec x)\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)}\\
+    &=\frac{\exp(\vec w_i\cdot\vec x)}{\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)}\\
+    &=\hat p(y=c_i\mid\vec x;\mat W)
+\end{align*}
+
+And so for any matrix $\mat W$ and any choice of vector $\vec u\in\mathbb R^D$, there exists another matrix $\mat W'$ that provides the same probabilites in the context of the softmax model.
+\bigskip
+
+\noindent\textbf{Part b:} Explain how this over-paramaterization implies that we only need $C-1$ vector paramaters $\vec w_i$ for the softmax model rather than $C$
+\bigskip
+
+\noindent\textbf{Solution:} Recall that any matrix $\mat W\in\mathbb R^{C\times D}$ is part of a larger equivalence class of matrices that produce the same predictions with softmax:
+$$[\mat W]=\{\mat W+\vec 1_D\otimes\vec u\mid\vec u\in\mathbb{R}^C\}$$
+
+\textit{where $\vec 1_D$ is a $D$ dimensional vector of 1s and $\otimes$ is the outer product. The above characterization of $[\mat W]$ is equivalent to the one we used in part a.}
+\smallskip
+
+As such, the space of these equivalence classes is isomorphic to the quotient product $\mathbb R^{CD}/\mathbb R^C$. But note that this quotient product itself is isomorphic to:
+$$\mathbb R^{CD}/\mathbb R^C\cong\mathbb R^{(C-1)D}\cong\mathbb R^{(C-1)\times D}$$
+
+Or to be more direct, the space of weight matrices that are unique under softmax has a dimension of $(C-1)\times D$ meaning we only need $C-1$, $D$-dimensional vectors to parameterize our model.
+\bigskip
+
+\subsection*{Question 3}
+\noindent\textbf{Part a:} Give the $L_2$-regularized log-loss of the softmax model, for a single training example $(\vec x,y)$.
+\bigskip
+
+\noindent\textbf{Solution:} If $y=c_i$, then the log-loss of this regularized softmax model is given by:
+\begin{align*}
+    L((\vec x,y),\mat W)&=-\log\hat p(y=c_i\mid\vec x;\mat W)+\lambda\|\mat W\|^2\\
+    &=-\log\operatorname{softmax}(\vec w_i\cdot\vec x)+\lambda\|\mat W\|^2\\
+    &=-\log\frac{\exp(\vec w_i\cdot\vec x)}{\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)}+\lambda\|\mat W\|^2\\
+    &=-\vec w_i\cdot\vec x+\log\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)+\lambda\|\mat W\|^2
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part b:} Give the gradients of the loss from part a, with respect to each weight vector $\vec w_j$.
+\bigskip
+
+\noindent\textbf{Solution:} For the case of $\vec w_i$, i.e. $y=c_i$, we have:
+\begin{align*}
+    \nabla_{\vec w_i}L((\vec x,y),\mat W)&=\nabla_{\vec w_i}\left(-\vec w_i\cdot\vec x+\log\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)+\lambda\|\mat W\|^2\right)\\
+    &=-\nabla_{\vec w_i}\vec w_i\cdot\vec x+\nabla_{\vec w_i}\log\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)+\lambda\nabla_{\vec w_i}\|\mat W\|^2\\
+    &=-\vec x+\frac{\nabla_{\vec w_i}\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+\lambda\nabla_{\vec w_i}\|\mat W\|^2\tag{chain rule}\\
+    &=-\vec x+\frac{\nabla_{\vec w_i}\exp(\vec w_i\cdot\vec x)}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+\lambda\nabla_{\vec w_i}\|\mat W\|^2\\
+    &=-\vec x+\frac{\exp(\vec w_i\cdot\vec x)\vec x}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+\lambda\nabla_{\vec w_i}\|\mat W\|^2\\
+    &=-\vec x+\frac{\exp(\vec w_i\cdot\vec x)\vec x}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+\lambda\nabla_{\vec w_i}\sum_{j=1}^C\sum_{k=1}^DW_{jk}^2\\
+    &=-\vec x+\frac{\exp(\vec w_i\cdot\vec x)\vec x}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+\lambda\nabla_{\vec w_i}\sum_{k=1}^DW_{ik}^2\\
+    &=-\vec x+\frac{\exp(\vec w_i\cdot\vec x)\vec x}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+2\lambda\vec w_i
+\end{align*}
+
+And in the case of $\vec w_j$ where $j\not=i$, the gradient is given by:
+\begin{align*}
+    \nabla_{\vec w_j}L((\vec x,y),\mat W)&=\nabla_{\vec w_j}\left(-\vec w_i\cdot\vec x+\log\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)+\lambda\|\mat W\|^2\right)\\
+    &=-\nabla_{\vec w_j}\vec w_i\cdot\vec x+\nabla_{\vec w_j}\log\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)+\lambda\nabla_{\vec w_j}\|\mat W\|^2\\
+    &=\nabla_{\vec w_j}\log\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)+\lambda\nabla_{\vec w_j}\|\mat W\|^2\\
+    &=\frac{\nabla_{\vec w_i}\left(\sum_{k=1}^C\exp(\vec w_j\cdot\vec x)\right)}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+\lambda\nabla_{\vec w_j}\|\mat W\|^2\tag{chain rule}\\
+    &=\frac{\nabla_{\vec w_j}\exp(\vec w_j\cdot\vec x)}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+\lambda\nabla_{\vec w_j}\|\mat W\|^2\\
+    &=\frac{\exp(\vec w_j\cdot\vec x)\vec x}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+\lambda\nabla_{\vec w_j}\sum_{k=1}^C\sum_{l=1}^DW_{kl}^2\\
+    &=\frac{\exp(\vec w_j\cdot\vec x)\vec x}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+\lambda\nabla_{\vec w_j}\sum_{l=1}^DW_{jl}^2\\
+    &=\frac{\exp(\vec w_j\cdot\vec x)\vec x}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+2\lambda\vec w_j
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part c:} Give the update equations for stochastic gradient descent for the softmax model, with learning rate $\eta$.
+\bigskip
+
+\noindent\textbf{Solution:} The update equation for the weight vector $\vec w_i$, where $y=c_i$ is given by:
+\begin{align*}
+    \vec w_i^{(t+1)}&=\vec w_i^{(t)}-\eta\nabla_{\vec w_i}L((\vec x,y),\mat W^{(t)})\\
+    &=\vec w_i^{(t)}-\eta\left(-\vec x+\frac{\exp(\vec w_i\cdot\vec x)\vec x}{\left(\sum_{j=1}^C\exp(\vec w_j\cdot\vec x)\right)}+2\lambda\vec w_i\right)
+\end{align*}
+\smallskip
+
+While the update equation for the weight vector $\vec w_j$, where $j\not=i$ is given by:
+\begin{align*}
+    \vec w_j^{(t+1)}&=\vec w_j^{(t)}-\eta\nabla_{\vec w_j}L((\vec x,y),\mat W^{(t)})\\
+    &=\vec w_j^{(t)}-\eta\left(\frac{\exp(\vec w_j\cdot\vec x)\vec x}{\left(\sum_{k=1}^C\exp(\vec w_k\cdot\vec x)\right)}+2\lambda\vec w_j\right)
+\end{align*}
+\bigskip
+
+\end{document}

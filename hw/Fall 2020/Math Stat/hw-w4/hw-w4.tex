@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\newcommand*\eval[3]{\left[#1\right]_{#2}^{#3}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Weekly HW 4}
+\author{Ozaner Hansha}
+\date{October 9, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Suppose we have a normally distributed population with unknown mean $\mu$ and variance $\sigma^2$, and we take two samples from it, the first of size 8 and the second of size 10. If the second sample has a sample variance of 1, give a 90\% confidence interval for the sample variance of the first sample.
+\bigskip
+
+\noindent\textbf{Solution:} First note that the following functions of the first and second sample variances, $S_1^2$ and $S_2^2$ respectively, have the following distributions:
+$$\frac{7S^2_1}{\sigma^2}\sim\chi^2_7\qquad\frac{9S^2_2}{\sigma^2}\sim\chi^2_9$$
+
+Now, recalling that the ratio of two chi-squared RVs divided by their degrees of freedom is an F-distributed RV, we have that:
+$$F_{7,9}\sim\frac{\frac{7S^2_1}{\sigma^2}/7}{\frac{9S^2_2}{\sigma^2}/9}=\frac{S^2_1}{S^2_2}$$
+
+We can now finally derive the desired confidence interval (note that $F_{7,9}(x)$ is a cdf):
+\begin{align*}
+  .90&=P\left(F_{7,9}(.1/2)\le\frac{S^2_1}{S^2_2}\le F_{7,9}(1-.1/2)\mid S_2^2=1\right)\\
+  &=P\left(F_{7,9}(.05)\le\frac{S^2_1}{S^2_2}\le F_{7,9}(.95)\mid S_2^2=1\right)\\
+  &=P\left(F_{7,9}(.05)\le S^2_1\le F_{7,9}(.95)\right)\\
+  &\approx P\left(.27198\le S^2_1\le 3.29275\right)\\
+\end{align*}
+
+And so the 90\% confidence interval of $S^2_1$ is given by:
+$$[.27198,3.29275]$$
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Suppose we take two samples from a normally distributed population with unknown mean $\mu$ and variance $\sigma^2$. If the sample sizes are 12 and 9 respectively, what is the probability that the first sample has a sample variance which is at least 3 times as large as the second sample.
+\bigskip
+
+\noindent\textbf{Solution:} First note the following:
+$$F_{11,8}\sim\frac{\frac{11S^2_1}{\sigma^2}/11}{\frac{8S^2_2}{\sigma^2}/8}=\frac{S^2_1}{S^2_2}$$
+
+At this point, calculating the desired probability is simple:
+\begin{align*}
+  P\left(\frac{S^2_1}{S^2_2}\ge 3\right)&=1-P\left(\frac{S^2_1}{S^2_2}< 3\right)\tag{complement}\\
+  &=1-F_{11,8}(3)\tag{$\frac{S^2_1}{S^2_2}\sim F_{11,8}$}\\
+  &\approx.06488
+\end{align*}
+
+\end{document}

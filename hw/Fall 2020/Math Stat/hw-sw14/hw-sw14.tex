@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Math Statistics\\ Semiweekly HW 14}
+\author{Ozaner Hansha}
+\date{November 7, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Suppose that, without a vaccine, a person in a given population has a $p_{\text{w/o}}=.1$ chance of contracting the flu in a given year. We want to test that, given a particular vaccine, a person has only a $p_{\text{w}}=.06$ chance of contracting the flu.
+
+Suppose we have a sample size of $n=10$. In this case we have the following null hypothesis $H_0$, alternative hypothesis $H_1$, and condition for accepting the null hypothesis $\hat H_0$:
+\begin{align*}
+    H_0&\equiv p_w=.1\tag{prob. of infection w/ vaccine is unchanged}\\
+    H_1&\equiv p_w=.06\tag{prob. of infection w/ vaccine is $.06$}\\
+    \hat H_0&\equiv X\ge1\tag{At least 1 subject infected within a year}
+    % \neg \hat H_0= \hat H_1&\equiv X=0\tag{No subject is infected within a year}
+\end{align*}
+
+Where $X$ is the number of people infected in our sample. Also let $X_{n,p}\sim B(n,p)$. Note that with a sample size of $n$ and prob $p_w$ of infection we have $X\sim X_{n,p_w}$.
+\bigskip
+
+Given these hypotheses and conditions for accepting them, what is the probability of a type I error? What about a type II error?
+\bigskip
+
+\noindent\textbf{Solution:} For a type I error, i.e. accepting a false alternative hypothesis, we have:
+\begin{align*}
+    P(\text{Type I error})&=P(\neg\hat H_0\mid H_0)\tag{def. of type I error}\\
+    &=P(X=0\mid p_w=.1)\tag{from def. of hypotheses}\\
+    &=P(X_{10,.1}=0)\tag{$X\sim X_{n,p_w}$}\\
+    &=\binom{10}{0}(.1)^0(1-.1)^{10-0}\tag{pmf of binomial RV}\\
+    &=.9^{10}\approx.348678
+\end{align*}
+
+And for a type II error, i.e. accepting a false null hypothesis, we have:
+\begin{align*}
+    P(\text{Type II error})&=P(\hat H_0\mid H_1)\tag{def. of type II error}\\
+    &=P(X\ge0\mid p_w=.06)\tag{from def. of hypotheses}\\
+    &=\sum_{i=1}^{10}P(X_{10,.06}=i)\tag{$X\sim X_{n,p_w}$}\\
+    &=1-P(X_{10,.06}=0)\tag{complement}\\
+    &=1-\binom{10}{0}(.06)^0(1-.06)^{10-0}\tag{pmf of binomial RV}\\
+    &=1-(.94)^{10}\approx.461385
+\end{align*}
+\end{document}

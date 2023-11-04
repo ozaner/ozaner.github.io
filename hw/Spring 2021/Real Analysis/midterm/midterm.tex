@@ -1,0 +1,274 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+%number theory commands
+\newcommand{\divides}{\mid}
+\newcommand{\ndivides}{\nmid}
+\newcommand{\fallfact}[2]{#1^{\underline {#2}}}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to Real Analysis\\Midterm}
+\author{Ozaner Hansha}
+\date{February 22, 2021}
+\maketitle
+
+\subsection*{Problem 1}
+\noindent\textbf{Problem:} Consider the sequences $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$ given by:
+\begin{align*}
+  a_n&=\sum_{k=1}^n4k\\
+  b_n&=\sum_{k=1}^n2k+1
+\end{align*}
+
+Show that $\left(\frac{a_n}{b_n}\right)_{n=1}^\infty$ is convergent and give its limit.
+\bigskip
+
+\noindent\textbf{Solution:} Note that, if the desired limit existed, it would be an infinite series:
+\begin{align*}
+  \lim_{n\to\infty}\frac{a_n}{b_n}&=\lim_{n\to\infty}\frac{\sum_{k=1}^n4k}{\sum_{k=1}^n 2k+1}\\
+  &=\lim_{n\to\infty}\sum_{k=1}^n \frac{4k}{2k+1}\\
+  &=\sum_{k=1}^\infty \frac{4k}{2k+1}\tag{def. of infinite series}
+\end{align*}
+
+However, you'll note that this series is divergent. To see this, recall that a necessary, but not sufficient, condition for a series to be convergent is for the limit of its summand to be 0. Yet this is not the case:
+\begin{align*}
+  \lim_{k\to\infty}\frac{4k}{2k+1}&=\lim_{k\to\infty}\frac{4}{2+\sfrac{1}{k}}\\
+  &=\lim_{k\to\infty}\frac{4}{2+0}\\
+  &=2\not=0
+\end{align*}
+
+And so, we \text{cannot} give the limit of this series as it does not exist.
+
+\subsection*{Problem 2}
+\noindent\textbf{Problem:} Find a bijection from $I$ to the following set to $[0,1]$, where $I$ is given by:
+\begin{equation*}
+  I=(1,2)\cup(2,3)\cup\cdots\cup(2020,2021)
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} We will first construct a bijective function $g_{a,b,c,d}:[a,b)\to(c,d)$ for any $a<b\wedge c<d$.
+\medskip
+
+Consider the following sequence $(y_n)_{n=1}^\infty$ given by:
+\begin{equation*}
+  y_n=a+.1^{n}(b-a)
+\end{equation*}
+
+This is an injective infinite sequence of numbers in $[a,b)$. Now consider the following bijection $\qquad \qquad$ $h_{a,b}:(a,b)\to[a,b)$:
+\begin{equation*}
+  h_{a,b}(x)=\begin{cases}
+    a, &x=y_1\\
+    y_{n-1},&x=y_n,\,\,n>1\\
+    x,&\text{otherwise}
+  \end{cases}
+\end{equation*}
+
+We can now transform this bijection to have our desired codomain, resulting in $g_{a,b,c,d}:(a,b)\to[c,d)$:
+\begin{equation*}
+  g_{a,b,c,d}(x)=\frac{d}{b-a+c}(h_{a,b}(x)-a+c)\tag{call this lemma 1}
+\end{equation*}
+\medskip
+
+Now let us note one last fact:
+\begin{equation*}
+  [0,1]=\left[0,\frac{1}{2021}\right)\cup\left[\frac{1}{2021},\frac{2}{2020}\right)\cup\cdots\cup\left[\frac{2020}{2021},1\right)\tag{call this lemma 2}\cup\{1\}
+\end{equation*}
+
+And so by lemma 2, a bijection $f_1:I\to[0,1)$ can be given as the following piecewise function:
+$$f_1(x)=\begin{cases}
+  g_{1,2,0,\frac{1}{2021}}(x),&x\in(1,2)\\
+  g_{2,3,\frac{1}{2021},\frac{2}{2021}}(x),&x\in(2,3)\\
+  \vdots\\
+  g_{i,i+1\frac{i-1}{2021},\frac{i}{2021}}(x),&x\in(i,i+1)\\
+  \vdots\\
+  g_{2020,2021,\frac{2020}{2021},1}(x),&x\in(2020,2021)
+\end{cases}$$
+
+And of course, that each case of the partition of $I\setminus\{1\}$ is bijective is given by lemma 1. Now all that's left is to deal with the leftover 1 not yet in the codomain. Consider another sequence:
+$(z_n)_{n=1}^\infty$ given by:
+\begin{equation*}
+  z_n=1-.2^{n}
+\end{equation*}
+
+With this we can finally give our desired bijection $f_2:I\to[0,1]$:
+\begin{equation*}
+  f_2(x)=\begin{cases}
+    1, &f_1(x)=z_1\\
+    z_{n-1},&f_1(x)=z_n,\,n>1\\
+    f_1(x),&\text{otherwise}
+  \end{cases}
+\end{equation*}
+
+\subsection*{Problem 3}
+\noindent\textbf{Problem:} Compute the following limit:
+\begin{equation*}
+  \lim_{n\to\infty}\left(1+\frac{1}{3n+1}\right)^{2n}
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Solution:} Consider the following:
+\begin{align*}
+  \lim_{n\to\infty}\left(1+\frac{1}{3n+1}\right)^{2n}&=\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{\frac{2m-2}{3}}\tag{$\substack{m=3n+1\\n=\frac{2m-2}{3}}$}\\
+  &=\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{\frac{2m}{3}}\left(1+\frac{1}{m}\right)^{-\frac{2}{3}}\\
+  &=\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{\frac{2m}{3}}\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{-\frac{2}{3}}\tag{limit of products is product of limits}\\
+  &=\left(\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{m}\right)^{\frac{2}{3}}\left(\lim_{m\to\infty}\left(1+\frac{1}{m}\right)\right)^{-\frac{2}{3}}\tag{$\substack{a_m\ge0\implies\\\text{limit of root is root of limit}}$}\\
+  &=\left(\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{m}\right)^{\frac{2}{3}}\left(1+\lim_{m\to\infty}\frac{1}{m}\right)^{-\frac{2}{3}}\tag{limit of sum is sum of limit}\\
+  &=\left(\lim_{m\to\infty}\left(1+\frac{1}{m}\right)^{m}\right)^{\frac{2}{3}}\left(1+0\right)^{-\frac{2}{3}}\\
+  &=e^{\frac{2}{3}}\tag{def. of $e$}
+\end{align*}
+
+\subsection*{Problem 4}
+Consider the sequences $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$ given by:
+\begin{align*}
+  a_n&=\left(1+\frac{1}{n}\right)^n\\
+  b_n&=1+\sum_{k=1}^n\frac{1}{k!}=\sum_{k=0}^n\frac{1}{k!}\tag{$0!=1$}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Part a:} Show that $a_n\le b_n$ for all $n\ge 1$.
+\bigskip
+
+\noindent\textbf{Solution:} We wish to prove $(\forall n\in N)\,P(n)$ where:
+\begin{equation*}
+  P(n)\equiv a_n\le b_n
+\end{equation*}
+
+First we will show $P(1)$:
+\begin{align*}
+  P(1)&\iff\left(1+\frac{1}{1}\right)^1\le 1+\sum^1_{k=1}\frac{1}{k!}\tag{def. of $P(1)$}\\
+  &\iff(1+1)^1\le 1+\frac{1}{1!}\\
+  &\iff2\le 2\\
+  &\iff T
+\end{align*}
+
+% Nowe we take a quick detour and establish two lemmas:
+% \begin{itemize}
+%   \item Lemma 1:
+%   \begin{align*}
+%     n^n=\overbrace{n\cdot n\cdots n}^{n\text{ factors}}\ge\overbrace{n\cdot (n-1)\cdots 1}^{n\text{ factors}}=n!
+%   \end{align*}
+%   \item Lemma 2:
+%   \begin{align*}
+%     n^n=\overbrace{n\cdot n\cdots n}^{n\text{ factors}}\ge\overbrace{n\cdot (n-1)\cdots 1}^{n\text{ factors}}=n!
+%   \end{align*}
+% \end{itemize}
+
+Now we will show $P(n)\implies P(n+1)$
+\begin{align*}
+  (n+1)^{n+1}&\ge (n+1)!\\
+  \frac{1}{(n+1)^{n+1}}&\le\frac{1}{(n+1)!}\\
+  \frac{1}{(n+1)^{n+1}}+a_n&\le\frac{1}{(n+1)!}+b_n\tag{assume $P(n)$}\\
+  \frac{1}{(n+1)^{n+1}}+\left(1+\frac{1}{n}\right)^n&\le\frac{1}{(n+1)!}+\sum_{k=0}^n\frac{1}{k!}\tag{def. of $a_n$ \& $b_n$}\\
+  \frac{1}{(n+1)^{n+1}}+\left(1+\frac{1}{n+1}\right)^n&\le\frac{1}{(n+1)!}+\sum_{k=0}^n\frac{1}{k!}\tag{$\frac{1}{n+1}<\frac{1}{n}$}\\
+  \frac{1}{(n+1)^{n+1}}+\sum^n_{k=0}\binom{n}{k}\frac{1}{(n+1)^k}&\le\frac{1}{(n+1)!}+\sum_{k=0}^n\frac{1}{k!}\tag{binomial theorem}\\
+  \sum^{n+1}_{k=0}\binom{n}{k}\frac{1}{(n+1)^k}&\le\sum_{k=0}^{n+1}\frac{1}{k!}\\
+  \left(1+\frac{1}{n+1}\right)^{n+1}&\le\sum_{k=0}^n\frac{1}{k!}\tag{binomial theorem}\\
+  a_{n+1}&\le b_{n+1}\tag{def. of $a_{n+1}$ \& $b_{n+1}$}
+\end{align*}
+
+And so we have shown that both $P(1)$ and $P(n)\implies P(n+1)$. Thus, by the PMI, we have that:
+\begin{equation*}
+  (\forall n\ge1)\,\,\underbrace{a_n\le b_n}_{P(n)}
+\end{equation*}
+\bigskip
+
+\noindent\textbf{Part b:} Find the limit of $(b_n)_{n=1}^\infty$.
+\bigskip
+
+\noindent\textbf{Solution:}  First let us establish the following identity:
+\begin{align*}
+  \sum^\infty_{k=0}\binom{n}{k}\frac{1}{n^k}&=\binom{n}{0}\frac{1}{n^0}+\binom{n}{1}\frac{1}{n^1}+\binom{n}{2}\frac{1}{n^2}+\binom{n}{3}\frac{1}{n^3}\cdots\\
+  &=1+1+\frac{1}{2!}\left(\frac{n-1}{n}\right)+\frac{1}{3!}\left(\frac{n-1}{n}\right)\left(\frac{n-2}{n}\right)+\cdots\\
+  &=1+1+\frac{1}{2!}\left(1-\frac{1}{n}\right)+\frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right)+\cdots\\
+  &=\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-\frac{j}{n}\right)
+\end{align*}
+
+Now consider the following:
+\begin{align*}
+  e&=\lim_{n\to\infty}\left(1+\frac{1}{n}\right)^n\tag{def. of $e$}\\
+  &=\lim_{n\to\infty}\sum^n_{k=0}\binom{n}{k}\frac{1}{n^k}\tag{binomial theorem}\\
+  &=\lim_{n\to\infty}\sum^\infty_{k=0}\binom{n}{k}\frac{1}{n^k}\\
+  &=\lim_{n\to\infty}\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-\frac{j}{n}\right)\tag{identity from above}\\
+  &=\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\lim_{n\to\infty}\left(1-\frac{j}{n}\right)\tag{limit of sum/product is sum/product of limit}\\
+  &=\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-0\right)\\
+  &=\sum^\infty_{k=0}\frac{1}{k!}\\
+  &=\lim_{n\to\infty}\sum^n_{k=0}\frac{1}{k!}\tag{def. of infinite series}\\
+  &=\lim_{n\to\infty}b_n\tag{def. of $b_n$}
+\end{align*}
+
+And so we are done. We have shown that the desired limit is equivalent to $e$.
+
+% Consider the family of sequences $(c_n^{(m)})_{n=0}^\infty$ parmateried by $m\in\N$:
+% \begin{align*}
+%   c^{(m)}_n&=\sum^m_{k=0}\binom{n}{k}\frac{1}{n^k}\\
+%   &=\binom{n}{0}\frac{1}{n^0}+\binom{n}{1}\frac{1}{n^1}+\binom{n}{2}\frac{1}{n^2}+\binom{n}{3}\frac{1}{n^3}\cdots+\binom{n}{m}\frac{1}{n^m}\\
+%   &=1+1+\frac{1}{2!}\left(\frac{n-1}{n}\right)+\frac{1}{3!}\left(\frac{n-1}{n}\right)\left(\frac{n-2}{n}\right)+\cdots+\frac{1}{m!}\left(\frac{n-1}{n}\right)\left(\frac{n-2}{n}\right)\cdots\left(\frac{n-m+1}{n}\right)\\
+%   &=1+1+\frac{1}{2!}\left(1-\frac{1}{n}\right)+\frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right)+\cdots+\frac{1}{m!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right)\cdots\left(1-\frac{m-1}{n}\right)\\
+%   &=\sum^m_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-\frac{j}{n}\right)
+% \end{align*}
+
+% Note that $b_n=c^{(n)}_n$ and that when $m\ge n$:
+% \begin{equation*}
+%   b_n\le c^{(m)}_n
+% \end{equation*}  
+
+% Now consider the following:
+% \begin{align*}
+%   b_n&\le c^{(m)}_n\\
+%   \lim_{m\to\infty}b_n&\le\lim_{m\to\infty}c^{(m)}_n\\
+%   e&=\lim_{n\to\infty}\left(1+\frac{1}{n}\right)^n\tag{def. of $e$}\\
+%   &=\lim_{n\to\infty}\sum^n_{k=0}\binom{n}{k}\frac{1}{n^k}\tag{binomial theorem}\\
+%   &=\lim_{n\to\infty}\sum^\infty_{k=0}\binom{n}{k}\frac{1}{n^k}\\
+%   &=\lim_{n\to\infty}\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-\frac{j}{n}\right)\tag{identity from above}\\
+%   &=\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\lim_{n\to\infty}\left(1-\frac{j}{n}\right)\tag{limit of sum/product is sum/product of limit}\\
+%   &=\sum^\infty_{k=0}\frac{1}{k!}\prod^{k-1}_{j=1}\left(1-0\right)\\
+%   &=\sum^\infty_{k=0}\frac{1}{k!}\\
+%   &=\lim_{n\to\infty}\sum^n_{k=0}\frac{1}{k!}\tag{def. of infinite series}\\
+%   &=\lim_{n\to\infty}b_n\tag{def. of $b_n$}
+% \end{align*}
+
+% And so we are done. We have shown that the desired limit is equivalent to $e$.
+
+\end{document}

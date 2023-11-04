@@ -1,0 +1,173 @@
+\documentclass{article}
+\usepackage{amsmath,mathtools}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\usepackage{xargs}
+\usepackage{enumitem}
+\usepackage{systeme}
+\usepackage{centernot}
+\usepackage{physics}
+\usepackage{xfrac}
+\usepackage{titling}
+\usepackage[margin=1in]{geometry}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=blue,colback=white,arc=0pt,boxrule=1pt}}
+
+% calculus commands
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+
+% linear algebra commands
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+\renewcommand\vec{\mathbf}
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+%set theory commands
+\newcommand{\pset}[1]{\mathcal P(#1)}
+\newcommand{\card}[1]{\operatorname{card}(#1)}
+\newcommand{\R}{\mathbb R}
+
+%optimization commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%misc commands
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Linear Optimization\\HW \#8}
+\author{Ozaner Hansha}
+\date{March 30, 2021}
+\maketitle
+
+\subsection*{Problem 6}
+\noindent\textbf{Problem:} Let $X$ and $Y$ represent two binary indicator random variables. Is there a binary indicator random variable $Z$ that represents $XY$? How would you interpret $Z$?
+\bigskip
+
+\noindent\textbf{Solution:} Consider the quantity $XY$. We have the following:
+\begin{align*}
+    0&\le XY\le1\\
+    -1&\le XY-2\le0\\
+    -1&\le XY-1\le1
+\end{align*}
+
+Using the definition of a binary indicator variable, we can now define $Z$ as:
+\begin{align*}
+    Z\in\{0,1\}\\
+    \frac{XY-1}{1}+\frac{\delta}{2}\le Z\\
+    Z\le 1+\frac{XY-1}{1}
+\end{align*}
+
+And so $Z=1\iff XY-1\ge 0\iff XY\ge 1\iff XY=1$. This is essentially a conjunction between $X$ and $Y$.
+
+\subsection*{Problem 7}
+\noindent\textbf{Problem:} Let $X$ and $Y$ represent two binary indicator random variables. Is there a binary indicator random variable Z that represents $X+Y$? How would you interpret $Z$?
+\bigskip
+
+\noindent\textbf{Solution:} Consider the quantity $X+Y$. We have the following:
+\begin{align*}
+    0&\le X+Y\le2\\
+    -1&\le X+Y-1\le1
+\end{align*}
+
+Using the definition of a binary indicator variable, we can now define $Z$ as:
+\begin{align*}
+    Z\in\{0,1\}\\
+    \frac{X+Y-1}{1}+\frac{\delta}{2}\le Z\\
+    Z\le 1+\frac{X+Y-1}{1}
+\end{align*}
+
+And so $Z=1\iff X+Y-1\ge 0\iff X+Y\ge 1$. This I essentially a disjunction between $X$ and $Y$.
+
+\subsection*{Problem 11}
+\noindent\textbf{Problem:} We showed how to code the inclusive and exclusive OR; show how one can code AND. For example, we want $z_{A\wedge B}$ to be 1 if $A$ and $B$ are non-negative, and 0 otherwise.
+\bigskip
+
+% Let $X$ be a random variable taking on integer values in $\{0, 1,...,N\}$. Is it possible to replace this one random variable with many binary indicator random variables? If yes, how?
+% \bigskip
+
+% \noindent\textbf{Solution:} For a binary indicator variable $X_k$ that is 1 iff $X=k$, we have:
+% \begin{align*}
+%     k&\le X\le k\\
+%     0&\le X-k\le0\\
+%     -.5&\le X-k\le.5
+% \end{align*}
+
+% Using the definition of a binary indicator variable, we can now define $Z$ as:
+% \begin{align*}
+%     X_k\in\{0,1\}\\
+%     \frac{|X-k|}{.5}+\frac{\delta}{1}\le X_k\\
+%     X_k\le 1+\frac{|X-k|}{.5}
+% \end{align*}
+
+% And so $X_k=1\iff |X-k|\ge .5\iff -.5\le X-k\le .5\iff -.5+k\le X\le .5+k\iff X=k$. We are taking advantage of the fact that the random variable can only take on integer values.
+
+% As for the absolute value $Z=|X-k|$, we can define it like so:
+% \begin{align*}
+%     X-k\le Z\\
+%     -X+k\le Z\\
+%     Z\le X-k 
+% \end{align*}
+
+% \subsection*{Problem 13}
+% \noindent\textbf{Problem:} Let X be a random variable taking on integer values in $\{0, 1,...,N\}$ and let $Y = X^n$. Is it possible to replace this one random variable with many binary indicator random variables? If yes, how? What if $Y = e^X$?
+
+\noindent\textbf{Solution:} First we make a binary indicator variable for both $A$ and $B$:
+\begin{align*}
+    X_A\in\{0,1\}\\
+    \frac{A}{N_A}+\frac{\delta}{2N_A}\le X_A\\
+    X_A\le 1+\frac{A}{N_A}
+\end{align*}
+\begin{align*}
+    X_B\in\{0,1\}\\
+    \frac{B}{N_B}+\frac{\delta}{2N_B}\le X_B\\
+    X_B\le 1+\frac{B}{N_B}
+\end{align*}
+
+Now we let $Z=X_AX_B$ as defined in problem 6 and we are done. $Z$ is only true if both $X_A$ and $X_B$ are true, and they are only true if $A$ and $B$ are greater than 0 respectively.
+
+\subsection*{Problem 18}
+\noindent\textbf{Problem:} Frequently in problems we desire two distinct tuples, say points $(a_1,\cdots,a_k) \not= (\alpha_1,\cdots,\alpha_k)$. Find a way to incorporate such a condition within the confines of integer linear programming.
+\bigskip
+
+\noindent\textbf{Solution:} For each $k$ we make a variable $X_k$ such that $X_k=1$ iff $a_k\not=\alpha_k$.
+\begin{align*}
+    X_k\in\{0,1\}\\
+    \frac{a_k-\alpha_k}{N_a}+\frac{\delta}{2N_a}\ge X_k\\
+    X_k\ge 1+\frac{a_k-\alpha_k}{N_a}
+\end{align*}
+
+Now we just successively apply the AND operator to each of these variable:
+\begin{align*}
+    Z_1&=X_1X_2\\
+    Z_2&=X_3Z_1\\
+    Z_3&=X_4Z_2\\
+    &\vdots\\
+    Z_k&=X_kZ_{k-1}
+\end{align*}
+
+And so with the conditions that $Z_k=1$ we are done.
+
+\end{document}

@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=.8in]{geometry}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{hyperref}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setlength{\droptitle}{-7em} % This is your set screw
+
+\begin{document}
+
+\title{Deep Learning\\ Final Project Proposal\\ Pokémon Battling Agent}
+\author{Ozaner Hansha}
+\date{November 11, 2020}
+\maketitle
+
+\noindent\textbf{Team Members:} Ozaner Hansha (oh73)
+\bigskip
+
+\noindent\textbf{What to solve:} The problem this project will attempt to tackle is that of optimal Pokémon battling. Pokémon is a Japanese game franchise published by Nintendo starting in 1995. A major component of these games is \textbf{battling}, in which two players equipped with a team of 6 Pokémon each aim to lower the other opponent's team's health to 0. Battles are turn based, with one Pokémon facing off against another at a time. Each Pokémon has 4 moves which they can use to damage, disable, or otherwise adversely affect their opponent Pokémon. \cite{bulbapedia}
+
+In the years since Pokémon's initial release, new mechanics, moves, and Pokémon have been introduced with newer released titles in the franchise. This complexity has made Pokémon battling extremely popular. Indeed the competitive scene of Pokémon takes place in Pokémon Showdown \cite{showdown}, an open-source battle simulator that recreates the battling mechanics of the Pokémon game series.
+
+This complexity is an apt testbed for reinforcement learning algorithms, and training data and evaluation metrics are easier to come by due to its popularity. Note that are a variety of different formats (essentially rulesets), which we can battle under. For simplicity we will be attempting to battle using the random gen 8 ruleset. This allows us to forgo the equally difficult task of choosing a team, and focus only on battling.
+\bigskip
+
+\noindent\textbf{How to solve:} The project will make use of the \texttt{poke-env} library \cite{pokeenv}. An open source python repository that allows for the creation of battle agents for use/training on Showdown. Our model will be a Deep Q-Network \cite{dqn}, which will be trained in battle against a random agent. The observations our network will make will be consist of a feature vector of pertinent information like the power of the current Pokémon's moves, its HP, the opponent's current Pokémon's HP, status conditions, etc. Rewards will be given for damaging a Pokémon, defeating a Pokémon, and winning the battle. Things that may be changed if feasible include:
+\begin{itemize}
+	\item Battling real agents as part of training, much slower but much more informative. 
+	\item Including less direct information about the game state in the observation feature vector (e.g. health of switched out Pokémon).
+	\item Including more nuanced rewards (e.g. higher reward for deafeating opponent faster)
+\end{itemize}
+
+\noindent Our resulting agent should hopefully be capable of effectively conducting a Pokémon battle.
+\bigskip
+
+\noindent\textbf{How to evaluate:} We will evaluate our agent by having it compete against 2 other agents:
+\begin{itemize}
+	\item A random agent. That is, one whose actions are determined by a uniform probability distribution on possible actions. 
+	\item A damage maximization agent. This agent is a simple rule based one that will greedily pick it's action based on whether it deals the most damage.
+\end{itemize}
+
+We will pit all 3 agents against each other and display the win-rate of each match up (row vs column) in a matrix akin to this one:
+\begin{center}
+    \begin{tabular}{|c|c c c|} 
+    \hline
+    & RL & Random & Damage \\
+    \hline 
+    RL & $\approx.5$ & ? & ? \\
+    \hline
+    Random & ? & $\approx.5$ & ? \\ 
+    \hline 
+    Damage & ? & ? & $\approx.5$ \\ 
+    \hline
+   \end{tabular}
+\end{center}
+
+After a sufficient amount of battles, we'd expect that agents pitted against themselves result in a near 50-50 winrate. The reason we even include these matchups is as a sanity check, and as a marker that the other results are accurate and not just fluctuations.
+
+There has been work on this problem, primarily by undergraduates, using other methods and so a comparison of that work may be in order as well \cite{r1} \cite{r2}.
+\newpage
+
+\begin{thebibliography}{9}
+    \bibitem{bulbapedia} 
+    Bulbapedia\\
+    \texttt{https://bulbapedia.bulbagarden.net/wiki/Pokémon\_battle}
+
+    \bibitem{showdown} 
+    Smogon\\
+    \texttt{pokemon-showdown}. \\
+    \texttt{https://github.com/smogon/pokemon-showdown}
+
+    \bibitem{pokeenv} 
+    Haris Sahovic, et al.\\
+    \texttt{poke-env}. \\
+    \texttt{https://github.com/hsahovic/poke-env}
+    
+    \bibitem{dqn}
+    Mnih, Kavukcuoglu, et al.\\
+    Human-level control through deep reinforcement learning\\
+    \texttt{https://web.stanford.edu/class/psych209/Readings/MnihEtAlHassibis15NatureControlDeepRL.pdf}
+
+    \bibitem{r1}
+    Huang, Lee.\\
+    A Self-Play Policy Optimization Approach to Battling Pokemon \\
+    \texttt{https://ieee-cog.org/2019/papers/paper\_175.pdf}
+
+    \bibitem{r2}
+    Rill-García\\
+    Reinforcement Learning for a Turn-Based Small Scale Attrition Game\\
+    \texttt{http://ccc.inaoep.mx/~esucar/Clases-mgp/Proyectos/2018/reinforcement-learning-turn\%20\%281\%29.pdf}
+\end{thebibliography}
+
+\end{document}

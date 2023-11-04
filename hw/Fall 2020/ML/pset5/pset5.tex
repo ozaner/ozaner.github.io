@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\grad}[1]{\nabla_{#1}}
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\cond}{\,|\,}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em} % This is your set screw
+
+\begin{document}
+
+\title{Machine Learning\\ Problem Set 5}
+\author{Ozaner Hansha}
+\date{December 10, 2020}
+\maketitle
+
+\subsection*{Question 1}
+Consider a joint distribution $(\vec x,y)\sim P(\vec x, y)$, where $(\vec x,y)\in\mathcal X\times\mathcal Y$ and $|\mathcal Y|=C$. Recall that the Bayes optimal classifier, which minimizes the $L_{0/1}$ loss for classification of points drawn from this distribution given:
+$$h^*(\vec x)=\argmax_cp(c\,|\,\vec x)=c^*$$
+
+Where $p(y\,|\, \vec x)$ is the true conditional distribution of classes given input $\vec x$. Now consider a different, stochastic, classifier $h_r$ parameterized by another distribution $q(y\,|\,\vec x)$:
+$$h_r(\vec x;q)\sim q(c\,|\, \vec x)$$
+
+\noindent\textbf{Problem:} Show that for any distribution $q$, the risk of $h^*$ is still less than or equal to that of $h_r$.
+\bigskip
+
+\noindent\textbf{Solution:} Recall that the risk of a model $h$ is its expected loss which, in this case, is its misclassification rate:
+$$R(h)=E_{\vec x,y}[L_{0/1}(h(\vec x),y)]$$
+\bigskip
+
+Let us now calculate the conditional risk of $h^*$:
+\begin{align*}
+  R(h^*)&=E_{\vec x,y}[L_{0/1}(h^*(\vec x),y)]\tag{def. of risk}\\
+  &=E_{\vec x,y}[L_{0/1}(\argmax_{c'}p(c'\,|\,\vec x),c)]\tag{def. of $h^*$}\\
+  &=\int\displaylimits_{\vec x\in\mathcal X}\sum_{c=1}^CL_{0/1}(\argmax_{c'}p(c'\,|\,\vec x),c)p(\vec x,c)\,dx\tag{def. of expectation}\\
+  &=\int\displaylimits_{\vec x\in\mathcal X}\sum_{c=1}^CL_{0/1}(c^*,c)p(\vec x,c)\,dx\tag{def. of $c^*$}\\
+  R(h^*\,|\,\vec x)&=\sum_{c=1}^CL_{0/1}(c^*,c)p(c\,|\,\vec x)\tag{Bayes rules}\\
+  &=1\cdot p(1\,|\,\vec x)+\cdots+0\cdot p(c^*\,|\,\vec x)+\cdots+1\cdot p(C\,|\,\vec x)\tag{$L_{0/1}(c^*,c)=0$ only when $c=c^*$}\\
+  &=1-p(c^*\,|\,\vec x)\tag{law of total probability}
+\end{align*}
+
+Now let us compute the conditional risk of $h_r$ for general $q$:
+\begin{align*}
+  R(h_r;q)&=E_{\vec x,y,q}[L_{0/1}(h_r(\vec x;q),y)]\tag{def. of risk}\\
+  &=E_{\vec x,y,q}[L_{0/1}(c_r,c)]\tag{where $c_r\sim q(c\,|\,\vec x)$}\\
+  &=E_{\vec x,y}\left[\sum_{c'=1}^CL_{0/1}(c',c)q(c'\,|\,\vec x)\right]\tag{def. of expectation}\\
+  &=\int\displaylimits_{\vec x\in\mathcal X}\sum_{c=1}^C\sum_{c'=1}^CL_{0/1}(c',c)q(c'\,|\,\vec x)p(\vec x, c)\,dx\tag{def. of expectation}\\
+  R(h_r;q\,|\,\vec x)&=\sum_{c=1}^C\sum_{c'=1}^CL_{0/1}(c',c)q(c'\,|\,\vec x)p(c\,|\,\vec x)\tag{Bayes rules}\\
+  &=\sum_{c=1}^C(1\cdot q(1\,|\,\vec x)+\cdots+0\cdot q(c\,|\,\vec x)+\cdots+1\cdot q(C\,|\,\vec x))p(c\,|\,\vec x)\tag{$L_{0/1}(c,c)=0$}\\
+  &=\sum_{c=1}^C(1-q(c\,|\,\vec x))p(c\,|\,\vec x)\tag{law of total probability}\\
+  &=\sum_{c=1}^Cp(c\,|\,\vec x)-\sum_{c=1}^Cp(c\,|\,\vec x)q(c\,|\,\vec x)\\
+  &=1-\sum_{c=1}^Cp(c\,|\,\vec x)q(c\,|\,\vec x)\tag{law of total probability}\\
+\end{align*}
+
+Now let us find the distribution $q(y\,|\,\vec x)$ that would maximize the sum $\sum_{c=1}^Cp(c\,|\,\vec x)q(c\,|\,\vec x)$, thus minimizing the risk.
+
+Note that since $p$ is a distribution, each term $p(c\,|\,\vec x)$ can only be lowered or stay unchanged when multiplied by $q(c\,|\,\vec x)$ since $0\le q(c\,|\,\vec x)\le 1$.
+
+If we had control of both $p$ and $q$, the sum would be maximized by simply having them equal 1 at an arbitrary class $c$. However, since we only have control of $q$, the sum is maximized by simply having $q(c^*\,|\,\vec x)=1$, where $c^*$ is the class with the highest posterior probability. The other classes would have to have a 0 probability. We denote this optimal degenerate distribution $q^*$:
+\begin{align*}
+  R(h_r;q^*\,|\,\vec x)&=1-\sum_{c=1}^Cp(c\,|\,\vec x)q^*(c\,|\,\vec x)\tag{above}\\
+  &=1-p(c^*\,|\,\vec x)\tag{$q^*(c\,|\,\vec x)=0$ for all $c\not=c^*$}
+\end{align*}
+
+Now note two facts, first is that because our chosen $q$ minimizes the risk, all other choices of $q$ either give the same risk or higher. Second is that this risk is identical to that of the Bayes optimal classifier $h^*$. Putting these together we have:
+$$\left(\forall q\not=q^*\right)\,\,\,R(h_r;q\,|\,\vec x)\ge R(h_r;q^*\,|\,\vec x)=R(h^*\,|\,\vec x)$$
+
+We can put this more succinctly by combining both cases of $q$:
+$$R(h_r;q\,|\,\vec x)\ge R(h^*\,|\,\vec x)$$
+
+And, of course, multiplying both sides by the marginal probability $p(\vec x)$ nets us:
+$$R(h_r;q)\ge R(h^*)$$
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Show that the Gaussian naive Bayes classifier has the same form as logistic regression in the two class case.
+\bigskip
+
+\noindent\textbf{Solution:} Before we begin, let us define $z=P(y=1)$. This implies that $P(y=0)=1-z$. Now consider the following chain of equalities:
+\begin{align*}
+  P(y=1\cond\vec x)&=\frac{P(\vec x\cond y=1)P(y=1)}{P(\vec x)}\tag{Bayes rule}\\
+  &=\frac{P(\vec x\cond y=1)P(y=1)}{P(\vec x\cond y=1)P(y=1)+P(\vec x\cond y=0)P(y=0)}\tag{law of total probability}\\
+  &=\frac{1}{1+\frac{P(\vec x\cond y=0)P(y=0)}{P(\vec x\cond y=1)P(y=1)}}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{P(\vec x\cond y=0)P(y=0)}{P(\vec x\cond y=1)P(y=1)}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{P(y=0)}{P(y=1)}+\ln\frac{P(\vec x\cond y=0)}{P(\vec x\cond y=1)}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\ln\frac{P(\vec x\cond y=0)}{P(\vec x\cond y=1)}\right)}\tag{def. of $z$}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\ln\prod_{i=1}^d\frac{P(x_i\cond y=0)}{P(x_i\cond y=1)}\right)}\tag{conditional independence}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\ln\frac{P(x_i\cond y=0)}{P(x_i\cond y=1)}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\ln\frac{(2\pi\sigma^2_i)\exp\left(\frac{-(x_i-\mu_{i0})^2}{2\sigma^2_i}\right)}{(2\pi\sigma^2_i)\exp\left(\frac{-(x_i-\mu_{i1})^2}{2\sigma^2_i}\right)}\right)}\tag{$p(x_i\cond y=c)\sim\mathcal N(\mu_{ci},\sigma_i^2)$}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\frac{(x_i-\mu_{i1})^2-(x_i-\mu_{i0})^2}{2\sigma^2_i}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\frac{(x_i^2-2x_i\mu_{i1}-\mu_{i1}^2)-(x_i^2-2x_i\mu_{i0}-\mu_{i0}^2)}{2\sigma^2_i}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\frac{2x_i(\mu_{i0}-\mu_{i1})+(\mu_{i1}^2-\mu_{i0}^2)}{2\sigma^2_i}\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\left(\frac{\mu_{i0}-\mu_{i1}}{\sigma^2_i}x_i+\frac{\mu_{i1}^2-\mu_{i0}^2}{2\sigma^2_i}\right)\right)}\\
+  &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\sum_{i=1}^d\left(-w_ix_i+\frac{\mu_{i1}^2-\mu_{i0}^2}{2\sigma^2_i}\right)\right)}\tag{define $w_i=-\frac{\mu_{i0}-\mu_{i1}}{\sigma_i^2}$}\\
+  &=\frac{1}{1+\exp\left(-w_0-\sum_{i=1}^dw_ix_i\right)}\tag{define $w_0=-\ln\frac{1-z}{z}-\sum_{i=1}^d\frac{\mu_{i1}^2-\mu_{i0}^2}{2\sigma_i^2}$}\\
+  &=\frac{1}{1+\exp\left(-\vec w\cdot\vec x-w_0\right)}\tag{def. of dot product}
+  % &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\ln\frac{(2\pi)^{-d/2}|\Sigma|^{-1/2}\exp(-\frac{1}{2}(\vec x-\bf\mu_0)^\top\Sigma^{-1}(\vec x-\bf\mu_0))}{(2\pi)^{-d/2}|\Sigma|^{-1/2}\exp(-\frac{1}{2}(\vec x-\bf\mu_1)^\top\Sigma^{-1}(\vec x-\bf\mu_1))}\right)}\tag{$p(\vec x\cond y=c)\sim\mathcal N(\bf\mu_c,\Sigma)$}\\
+  % &=\frac{1}{1+\exp\left(\ln\frac{1-z}{z}+\ln\exp(-\frac{1}{2}(\vec x-\bf\mu_0)^\top\Sigma^{-1}(\vec x-\bf\mu_0)+\frac{1}{2}(\vec x-\bf\mu_1)^\top\Sigma^{-1}(\vec x-\bf\mu_1))\right)}\\
+  % &=\frac{1}{1+\frac{1-z}{z}(-\frac{1}{2}(\vec x-\bf\mu_0)^\top\Sigma^{-1}(\vec x-\bf\mu_0)+\frac{1}{2}(\vec x-\bf\mu_1)^\top\Sigma^{-1}(\vec x-\bf\mu_1))}\\
+\end{align*}
+
+And so we have, given the definitions of $w_0$ and $\vec w$, that both models have the same form.
+
+\subsection*{Question 3}
+\noindent\textbf{Problem:} Given the same training set, will the rwo models produce the same classifier when trained?
+\bigskip
+
+\noindent\textbf{Solution:} The modeling assumptions of the naive Bayes classifier, in particular the conditional independence of the input given the class, are not the same as that of the logistic model. The logistic model, for example, does not require that the distribution be conditionally independent in this way. And so when the training set does not conform to this independence assumption, the logistic model will most likely do better (and thus be different) from the Bayes classifier.
+
+Further, Ng \& Jordan (2002) showed that the naive Bayes classifier converges faster than than the logistic classifier.
+
+And so, when trained on the same dataset, we might expect the naive Bayes classifier to not match the logistic one.
+
+% First note that in the naive Bayes model, there are $nd$ parameters for the means $\mu_{ci}$ where $n$ is the number of classes and $d$ is the number of dimensions of the input $\vec x$. There are also, in our diagonal covariance model, $d$ parameters modeling the variances $\sigma_i^2$.
+
+% Conversely, the logistic regression model needs only 1 bias parameter $w_0$ and 1 weight vector $\vec w$ of size $d$.
+
+% This is already an almost 2x difference with the former model needing $(n+1)d$ parameters and the latter needing $d+1$. This disparity only increases when we realize that the variance parameters of the Bayes model are required to be positive, meaning they would take up more parameters if we used, say, the KKT method.
+
+% Why is this relevant? Because whatever training procedure we use will likely have a harder time navigating the higher dimensional space of the Bayes model's parameters than the logistic model's parameters. In the case of gradient descent, our parameters may settle on a local minimum in the Bayes model parameter space that doesn't exist in the lower dimensional logistic parameter space.
+% \bigskip
+
+
+
+\end{document}

@@ -1,0 +1,196 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{physics}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\grad}[1]{\nabla_{#1}}
+\DeclareMathOperator{\Var}{Var}
+\renewcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\setlength{\droptitle}{-7em} % This is your set screw
+
+\begin{document}
+
+\title{Machine Learning\\ Problem Set 3}
+\author{Ozaner Hansha}
+\date{November 3, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Problem:} Give the dual of the soft-margin SVM optimization problem as a QP in canonical form. That is define $\mat H,\vec f, \mat A, \vec a, \mat B, \vec b$ such that:
+$$\begin{array}{rcll}
+    \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\bm\alpha^\top\mat H\bm\alpha+\vec f^\top\bm\alpha&\\
+    \text{subject to}&~ &\mat A\bm\alpha\le \vec a&\text{($\le$ is pointwise)}\\
+    &~ &\mat B\bm\alpha=\vec b&\text{($\vec b$ is unrelated to the bias $b$)}
+\end{array}$$
+\bigskip
+
+\noindent\textbf{Solution:} Before we start, let us define the following matrix $\mat M$ for convenience:
+\begin{align*}
+    \mat M&=\begin{bmatrix}
+        y_1\bm\phi(\vec x_1)\\
+        \vdots\\
+        y_i\bm\phi(\vec x_i)\\
+        \vdots\\
+        y_n\bm\phi(\vec x_n)
+    \end{bmatrix}
+\end{align*}
+
+Now, recall that primal optimization problem for an SVM with soft margin is given by:
+$$\argmin_{\vec w}\left(\frac{1}{2}\|\vec w\|^2+C\sum_{i=1}^n[1-y_i(\vec w^\top\vec\phi(\vec x_i)+b)]_+\right)$$
+
+Introducing a slack variable $\xi_i=[1-y_i(\vec w^\top\bm\phi(\vec x_i)+b)]_+$ for each training example $(\bm\phi(\vec x_i),y_i)$, we can reformulate the primal problem as one with constraints:
+$$\begin{array}{rcll}
+    \displaystyle\argmin_{\vec w,b} &~ &\displaystyle\frac{1}{2}\|\vec w\|^2+C\sum_{i=1}^m\xi_i&\\
+    \text{subject to}&~ &y_i(\vec w^\top\bm{\phi}(\vec x_i)+b)\ge 1-\xi_i&\text{for }i=1,\ldots ,n\\
+    &~ &\xi_i\ge0&\text{for }i=1,\ldots ,n
+\end{array}$$
+
+Now let us take the Lagrangian of this primal problem:
+\begin{align*}
+    \mathcal L(\vec w,b,\bm\xi,\bm\alpha,\vec r)&=\frac{1}{2}\|\vec w\|^2+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_i(y_i(\bm\phi(\vec x_i)^\top\vec w+b)-1+\xi_i)-\sum_{i=1}^mr_i\xi_i\\
+    &=\frac{1}{2}\|\vec w\|^2+C\sum_{i=1}^m\xi_i-\sum_{i=1}^m\alpha_iy_i\bm\phi(\vec x_i)^\top\vec w-b\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i-\sum_{i=1}^m\alpha_i\xi_i-\sum_{i=1}^mr_i\xi_i\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n\cdot\bm\xi-(\mat M^\top\bm\alpha)\cdot\vec w-b\vec y\cdot\bm\alpha+\vec1_n\cdot\bm\alpha-\bm\alpha\cdot\bm\xi-\vec r\cdot\bm\xi\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-(\mat M^\top\bm\alpha)^\top\vec w-b\vec y^\top\bm\alpha+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-\vec r^\top\bm\xi
+\end{align*}
+\newpage
+
+To find the dual problem, we must first minimize the Lagrangian w.r.t. our parameters $\vec w,b,\bm\xi$. Since $\mathcal L$ is the sum of convex functions, it too is convex and thus has a single minimum. We can find that minimum by settings its partial derivatives to 0:
+\begin{align*}
+    \vec 0&=\grad{\vec w}\mathcal L(\vec w,b,\bm\xi,\bm\alpha,\vec r)\\
+    &=\frac{1}{2}\grad{\vec w}\|\vec w\|^2+C\grad{\vec w}\vec1_n^\top\bm\xi-\grad{\vec w}(\mat M^\top\bm\alpha)^\top\vec w-b\grad{\vec w}\vec y^\top\bm\alpha+\grad{\vec w}\vec1_n^\top\bm\alpha-\grad{\vec w}\bm\alpha^\top\bm\xi-\grad{\vec w}\vec r^\top\bm\xi\\
+    &=\vec w+\vec 0-(\mat M^\top\bm\alpha)-\vec 0+\vec 0-\vec 0-\vec 0\\
+    \vec w&=\mat M^\top\bm\alpha\tag{1}\\
+    \\
+    0&=\pdv{b}\mathcal L(\vec w,b,\bm\xi,\bm\alpha,\vec r)\\
+    &=\frac{1}{2}\pdv{b}\|\vec w\|^2+C\pdv{b}\vec1_n^\top\bm\xi-\pdv{b}(\mat M^\top\bm\alpha)^\top\vec w-\pdv{b}b\vec y^\top\bm\alpha+\pdv{b}\vec1_n^\top\bm\alpha-\pdv{b}\bm\alpha^\top\bm\xi-\pdv{b}\vec r^\top\bm\xi\\
+    &=0+0-0-\vec y^\top\bm\alpha+0-0-0\\
+    \vec y^\top\bm\alpha&=0\tag{2}\\
+    \\
+    \vec 0&=\grad{\bm\xi}\mathcal L(\vec w,b,\bm\xi,\bm\alpha,\vec r)\\
+    &=\frac{1}{2}\grad{\bm\xi}\|\vec w\|^2+C\grad{\bm\xi}\vec1_n^\top\bm\xi-\grad{\bm\xi}(\mat M^\top\bm\alpha)^\top\vec w-b\grad{\bm\xi}\vec y^\top\bm\alpha+\grad{\bm\xi}\vec1_n^\top\bm\alpha-\grad{\bm\xi}\bm\alpha^\top\bm\xi-\grad{\bm\xi}\vec r^\top\bm\xi\\
+    &=\vec 0+C\vec1_n-\vec 0-\vec 0+\vec 0-\bm\alpha-\vec r\\
+    \vec r&=C\vec1_n-\bm\alpha\tag{3}
+\end{align*}
+
+Plugging these equations, which hold for optimal $\vec w,b,\bm\xi$, into $\mathcal L$ we arrive at:
+\begin{align*}
+    &\phantom{\,\,\,=}\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-(\mat M^\top\bm\alpha)^\top\vec w-b\vec y^\top\bm\alpha+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-\vec r^\top\bm\xi\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-\vec w^\top\vec w-b\vec y^\top\bm\alpha+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-\vec r^\top\bm\xi\tag{eq. 1}\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-\|\vec w\|^2-b\vec y^\top\bm\alpha+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-\vec r^\top\bm\xi\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-\|\vec w\|^2+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-\vec r^\top\bm\xi\tag{eq. 2}\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-\|\vec w\|^2+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-(C\vec1_n-\bm\alpha)^\top\bm\xi\tag{eq. 3}\\
+    &=\frac{1}{2}\|\vec w\|^2+C\vec1_n^\top\bm\xi-\|\vec w\|^2+\vec1_n^\top\bm\alpha-\bm\alpha^\top\bm\xi-C\vec1_n^\top\bm\xi+\bm\alpha^\top\bm\xi\\
+    &=\frac{1}{2}\|\vec w\|^2-\|\vec w\|^2+\vec1_n^\top\bm\alpha\\
+    &=-\frac{1}{2}\|\vec w\|^2+\vec1_n^\top\bm\alpha\\
+    &=\min_{\vec w,b,\bm\xi}\mathcal L(\vec w,b,\bm\xi,\bm\alpha,\vec r)=\theta_{\mathcal D}(\bm\alpha)
+\end{align*}
+
+And with this we can finally give the dual problem of our soft-margin SVM:
+$$\begin{array}{rcll}
+    \displaystyle\argmax_{\bm\alpha} &~ &\theta_{\mathcal D}(\bm\alpha)&\\
+    \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n&\text{($\le$ is pointwise)}\\
+    &~ &\vec y^\top\bm\alpha=0
+\end{array}$$
+\newpage
+
+Recall that each Lagragian multiplier that relates to an inequality must be nonnegative. So we have that $0\le\alpha_i,r_i$ for all $i$. Further consider the following for all $i$:
+\begin{align*}
+    0&\le r_i\tag{see above}\\
+    0&\le C-\alpha_i\tag{eq. 3}\\
+    \alpha_i&\le C
+\end{align*}
+
+Putting these together we get our first condition $0\le\alpha_i\le C$. The second condition is simply eq. 2.
+\bigskip
+
+We will now transform our dual problem into a canonical QP problem:
+\begin{align*}
+    \begin{array}{rcll}
+        \displaystyle\argmax_{\bm\alpha} &~ &\theta_{\mathcal D}(\bm\alpha)&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}&=\begin{array}{rcll}
+        \displaystyle\argmax_{\bm\alpha} &~ &\displaystyle-\frac{1}{2}\|\vec w\|^2+\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}\tag{def. of $\theta_D$}\\
+    &=\begin{array}{rcll}
+        \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\|\vec w\|^2-\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}\tag{negation of max $=$ min}\\
+    &=\begin{array}{rcll}
+        \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\vec w^\top\vec w-\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}\tag{def. of $L_2$ norm}\\
+    &=\begin{array}{rcll}
+        \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\vec (\mat M^\top\bm\alpha)^\top(\mat M^\top\bm\alpha)-\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}\tag{eq. 1}\\
+    &=\begin{array}{rcll}
+        \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\bm\alpha^\top\mat M\mat M^\top\bm\alpha-\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &0\le\bm\alpha\le C\vec 1_n\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}\\
+    &=\begin{array}{rcll}
+        \displaystyle\argmin_{\bm\alpha} &~ &\displaystyle\frac{1}{2}\bm\alpha^\top\mat M\mat M^\top\bm\alpha-\vec1_n^\top\bm\alpha&\\
+        \text{subject to}&~ &\icol{-I_n\\I_n}\bm\alpha\le\icol{\vec0_n\\C\vec 1_n}\\
+        &~ &\vec y^\top\bm\alpha=0
+    \end{array}
+\end{align*}
+
+\textit{You'll notice in the last equality, in order to represent both $-\bm\alpha\le 0$ and $\bm\alpha\le C$ in a single matrix equation, we stack some matrices and vectors on top of each other to satisfy all $2n$ inequality conditions.}
+\bigskip
+
+At this point it should be clear what $\mat H,\vec f, \mat A, \vec a, \mat B, \vec b$ should be, but we give them below for good measure:
+\begin{alignat*}{2}
+    \mat H&=\mat M\mat M^\top\qquad &&\vec f=-\vec 1_n\\
+    \mat A&=\begin{bmatrix}
+        -I_n\\I_n
+    \end{bmatrix}\qquad &&\vec a=\begin{bmatrix}
+        \vec 0_n\\C\vec 1_n
+    \end{bmatrix}\\
+    \mat B&=\vec y^\top\qquad &&\vec b=[0]=0
+\end{alignat*}
+
+\textit{Recall that $\mat M$ was defined at the start of our solution to be $\mat M_i=y_i\vec x_i$ for each row $i$.}
+\bigskip
+\newpage
+
+\subsection*{Question 2}
+\noindent\textbf{Problem:} Given the Lagragian multipliers $\alpha$ of a soft-margin kernel SVM, how would you calculate the bias term $b$? (Assume there exits at least one support vector $i$ such that $0<a_i<C$).
+\bigskip
+
+\noindent\textbf{Solution:} Recall that all support vectors (at least one of which was guaranteed to exist) lie on the margin, that is to say for any support vector $x_i$:
+$$y_i(\vec w^\top\bm\phi(\vec x_i)+b)=1$$
+
+And so we have the following:
+\begin{align*}
+    1&=y_i(\vec w^\top\bm\phi(\vec x_i)+b)\tag{$x_i$ is a support vector}\\
+    y_i&=\vec w^\top\bm\phi(\vec x_i)+b\tag{$y_i^2=(\pm1)^2=1$}\\
+    b&=y_i-\vec w^\top\bm\phi(\vec x_i)\\
+    &=y_i-\sum_{j=1}^n\alpha_jy_j\phi(\vec x_j)^\top\bm\phi(\vec x_i)\tag{eq. 1}\\
+    &=y_i-\sum_{j;\alpha_j>0}^n\alpha_jy_j\phi(\vec x_j)^\top\bm\phi(\vec x_i)\tag{only support vectors contribute to $\vec w$}
+\end{align*}
+
+However the above corresponds to the kernel $\langle\cdot,\cdot\rangle$. For a general kernel $K(\cdot,\cdot)$ we apply the kernel trick to arrive at:
+$$b=y_i-\sum_{j;\alpha_j>0}^n\alpha_jy_jK(\vec x_j,\vec x_i)$$
+
+\end{document}

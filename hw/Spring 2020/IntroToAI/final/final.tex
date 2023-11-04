@@ -1,0 +1,532 @@
+\documentclass{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{blkarray}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{pgfplots}
+\usetikzlibrary{automata, positioning}
+\usepackage{forest}
+\usepackage{titling}
+
+\newcommand{\icol}[1]{% inline column vector
+  \begin{bsmallmatrix}#1\end{bsmallmatrix}%
+}
+
+\newenvironment{sysmatrix}[1]
+{\left[\begin{array}{@{}#1@{}}}
+{\end{array}\right]}
+\newcommand{\ro}[1]{%
+\xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\setlength{\droptitle}{-7em}   % This is your set screw
+
+\begin{document}
+
+\title{Intro to A.I.\\ Final Exam}
+\author{Ozaner Hansha}
+\date{May 10, 2020}
+\maketitle
+
+\subsection*{Question 1}
+\noindent\textbf{Part a:} Below is the transition diagram of the Markov chain:
+\begin{center}
+  \begin{tikzpicture}[state/.style={circle, draw, minimum size=1.3cm}]
+    \node[state] (l) {left};
+    \node[state, right=of l] (c) {center};
+    \node[state, right=of c] (r) {right};
+    % \node[state] (l) at (210:1) {left};
+    % \node[state] (c) at (90:1) {center};
+    % \node[state] (r) at (330:1) {right};
+    \draw[every loop]
+      (l) edge[loop above] node {.6} (l)
+      (l) edge[bend right, auto=right] node {.4} (c)
+      (c) edge[bend right, auto=right] node {.2} (l)
+      (c) edge[loop above] node {.5} (c)
+      (c) edge[bend right, auto=right] node {.3} (r)
+      (r) edge[loop above] node {.7} (r)
+      (r) edge[bend right, auto=right] node {.3} (c);
+  \end{tikzpicture}
+\end{center}
+\bigskip
+
+\noindent\textbf{Part b:} Note that the Markov chain's transition matrix $M$ is given by:
+$$M=
+\begin{blockarray}{cccc}
+  l&c&r\\
+  \begin{block}{[ccc]c}
+    .6&.4&0&l\\
+    .2&.5&.3&c\\
+    0&.3&.7&r\\
+  \end{block}
+\end{blockarray}$$
+
+And our initial state is given by $x_0=\icol{0\\0\\1}$. With this information, the (transposed) state at time step 3 $x_3^\top$ is given by:
+\begin{align*}
+  x_3^\top&=x_0^\top M^3\\
+  &=\begin{bmatrix}
+    0&0&1
+  \end{bmatrix}\begin{bmatrix}
+    .6&.4&0\\.2&.5&.3\\0&.3&.7
+  \end{bmatrix}^3\\
+  &=\begin{bmatrix}
+    0&0&1
+  \end{bmatrix}\begin{bmatrix}
+    .352&.432&.216\\.216&.406&.378\\.108&.378&.514
+  \end{bmatrix}\\
+  &=\begin{bmatrix}
+    .108&.378&.514
+  \end{bmatrix}
+\end{align*}
+
+And so, at step 3, the probability that the car is on the left lane is 10.8\%, on the center lane is 37.8\%, and on the right lane is 51.4\%.
+\bigskip
+
+\noindent\textbf{Part c:} Note that we assume that the car was in the right lane in step 0, as in part b. Also note that for the Markov chain $(X_i)_{i\in I}$ we denote the event $X_i=s$ as $s_i$ where $s\in\{r,c,l\}$. Now, before we calculate the conditional distribution of $X_3$ given $r_0$ and $c_4$, we must first compute the following:
+
+\begin{align*}
+  P(c_4|r_0)&=(x_0^\top M^4)_2\tag{distr. of Markov chain}\\
+  &=(x_3^\top M)_2\tag{$x_i^\top:=x_0^\top M^i$}\\
+  &=\left(\begin{bmatrix}
+    .108&.378&.514
+  \end{bmatrix}\begin{bmatrix}
+    .6&.4&0\\.2&.5&.3\\0&.3&.7
+  \end{bmatrix}\right)_2\\
+  &=\left(\begin{bmatrix}
+    .1404&.3864&.4732
+  \end{bmatrix}\right)_2\\
+  &=.3864
+\end{align*}
+
+We can now compute our desired probabilities. For each lane $s\in\{l,c,r\}$ we have:
+\begin{align*}
+P(s_3|r_0c_4)&=\frac{P(c_4s_3r_0)}{P(r_0c_4)}\tag{def. of conditional prob.}\\
+&=\frac{P(c_4|s_3r_0)P(s_3|r_0)P(r_0)}{P(c_4|r_0)P(r_0)}\tag{chain rule}\\
+&=\frac{P(c_4|s_3)P(s_3|r_0)P(r_0)}{P(c_4|r_0)P(r_0)}\tag{Markov property}\\
+&=\frac{P(c_4|s_3)P(s_3|r_0)\cdot1}{P(c_4|r_0)\cdot1}\tag{initial distribution}\\
+&=\frac{P(c_4|s_3)P(s_3|r_0)}{.3864}\tag{calculated above}\\
+\end{align*}
+
+Now we plug in the corresponding probabilities for each $s\in\{l,c,r\}$:
+\begin{align*}
+  P(l_3|r_0c_4)&=\frac{P(c_4|l_3)P(l_3|r_0)}{.3864}\\
+  &=\frac{P(c_4|l_3)(.108)}{.3864}\tag{part a}\\
+  &=\frac{M_{12}(.108)}{.3864}\tag{def. of transition prob.}\\
+  &=\frac{18}{161}\approx.1118\\
+  P(c_3|r_0c_4)&=\frac{P(c_4|c_3)P(c_3|r_0)}{.3864}\\
+  &=\frac{P(c_4|l_3)(.378)}{.3864}\tag{part a}\\
+  &=\frac{M_{22}(.378)}{.3864}\tag{def. of transition prob.}\\
+  &=\frac{45}{92}\approx.4891\\
+  P(r_3|r_0c_4)&=\frac{P(c_4|r_3)P(r_3|r_0)}{.3864}\\
+  &=\frac{P(c_4|l_3)(.514)}{.3864}\tag{part a}\\
+  &=\frac{M_{32}(.514)}{.3864}\tag{def. of transition prob.}\\
+  &=\frac{257}{644}\approx.3991
+\end{align*}
+
+Given it was on the center lane at step 4, the probability that at step 3 the car is on the left lane is 11.18\%, on the center lane is 48.91\%, and on the right lane is 39.91\%.
+\bigskip
+
+% First we must compute the stationary distribution of the markov chain, i.e. the unique normal vector $\pi$ such that:
+% $$\pi^\top=\pi^\top M$$
+
+% \textit{note that is it unique because this particular Markov chain is irreducible.}
+% \newline
+
+% We can phrase this problem as the following matrix equation:
+% \begin{align*}
+%   \pi^\top&=\pi^\top M\\
+%   \pi&=M^\top\pi\\
+%   (I-M^\top)\pi&=\mathbf 0\\
+% \end{align*}
+
+% And now we solve the system of equations:
+% \begin{align*}
+%   [I-M^\top|\mathbf 0]=\begin{sysmatrix}{rrr|r}
+%     .4&-.2&0&0\\
+%     -.4&.5&-.3&0\\
+%     0&-.3&.3&0
+%   \end{sysmatrix}
+%   &\ro{r_2+r_1}
+%   \begin{sysmatrix}{rrr|r}
+%     .4&-.2&0&0\\
+%     0&.3&-.3&0\\
+%     0&-.3&.3&0
+%   \end{sysmatrix}\\
+%   &\ro{r_3+r_2}
+%   \begin{sysmatrix}{rrr|r}
+%     .4&-.2&0&0\\
+%     0&.3&-.3&0\\
+%     0&0&0&0
+%   \end{sysmatrix}\\
+%   &\ro{\substack{r_1/.2\\r_2/.3}}
+%   \begin{sysmatrix}{rrr|r}
+%     2&-1&0&0\\
+%     0&1&-1&0\\
+%     0&0&0&0
+%   \end{sysmatrix}
+% \end{align*}
+
+% From here it is clear that our solution is of the form $c\icol{1/2\\1\\1}$ for some constant $c$. Letting $c=.4$, we arrive at the desired normal solution:
+% $$\pi=\begin{bmatrix}
+%   .2\\.4\\.4
+% \end{bmatrix}$$
+
+% We can now state the transition matrix $M^*$ of the time-reversed Markov chain:
+% $$M^*_{ij}=\frac{\pi_j}{\pi_i}M_{ji}$$
+
+% Written out explicitly this is:
+% $$M^*=\begin{bmatrix}
+%   .6&.4&0\\.2&.5&.3\\0&.3&.7
+% \end{bmatrix}$$
+
+% \textit{you'll notice that $M^*=M$, i.e. this markov chain is time reversible.}
+% \newline
+
+% And so now, given the state $x_4=\icol{0\\1\\0}$ at step 4, the (transposed) state at step 3 is given by:
+% \begin{align*}
+%   x_4^\top&=x_3^\top M^*\\
+%   &=\begin{bmatrix}
+%     0&1&0
+%   \end{bmatrix}\begin{bmatrix}
+%     .6&.4&0\\.2&.5&.3\\0&.3&.7
+%   \end{bmatrix}\\
+%   &=\begin{bmatrix}
+%     .2&.5&.3
+%   \end{bmatrix}
+% \end{align*}
+
+% And so given state 4, we have that at step 3 the probability that the car is on the left lane is 20\%, on the center lane is 50\%, and on the right lane is 30\%.
+
+\subsection*{Question 2}
+\noindent\textbf{Part a:} The expected reward given $b$ (i.e. that James buys the textbook) is given by:
+\begin{align*}
+  E[R|b]&=\overbrace{2300}^{\substack{\text{pass}-\\\text{book}}} P(p|b)\tag{def. of conditional expectation}\\
+  &=2300(P(p|m,b)P(m|b)+P(p|\neg m,b)P(\neg m|b))\tag{chain rule \& total probability}\\
+  &=2300((.95)(.9)+(.6)(.1))\\
+  &=2104.5
+\end{align*}
+
+The expected reward given $\neg b$ (i.e. that James doesn't buy the textbook) is given by:
+\begin{align*}
+  E[R|\neg b]&=\overbrace{2500}^{\text{pass}} P(p|\neg b)\tag{def. of conditional expectation}\\
+  &=2500(P(p|m,\neg b)P(m|\neg b)+P(p|\neg m,\neg b)P(\neg m|\neg b))\tag{chain rule \& total probability}\\
+  &=2500((.8)(.7)+(.3)(.3))\\
+  &=1625
+\end{align*}
+
+Since $E[R|b]>E[R|\neg b]$, James should buy the textbook as that will maximize his net reward.
+\bigskip
+
+% The reward $R$ is given by the following random variable:
+% $$R=2500\cdot\mathbf 1_p-200\cdot\mathbf 1_b$$
+
+\noindent\textbf{Part b:} Note that to make this situation more exact we denote having the book at the beginning $b_1$ and at the end $b_2$. Clearly $P(b_2| b_1)=1$.
+\newline
+
+% The expected reward given that James defers buying the book (i.e. $\neg b_1$) is given by:
+% \begin{align*}
+%   E[R|\neg b_1]&=\overbrace{2300}^{\substack{\text{pass}-\\\text{book}}} P(p|\neg b_1, b_2)+\overbrace{2500}^{\text{pass}} P(p|\neg b_1,\neg b_2)\tag{def. of conditional expectation}\\
+%   &=2300(P(p|m,b_2)P(m|\neg b_1)+P(p|\neg m,b_2)P(\neg m|\neg b_1))\\
+%   &\phantom{=}+2500(P(p|m,\neg b_2)P(m|\neg b_1)+P(p|\neg m,\neg b_2)P(\neg m|\neg b_1))\tag{chain rule \& total probability}\\
+%   &=2300((.95)(.7)+(.6)(.3))\\
+%   &\phantom{=}+2500((.8)(.7)+(.3)(.3))\\
+%   &=2104.5
+% \end{align*}
+
+First we compute the expected reward given that James defers buying the book and then buys it (i.e. $\neg b_1, b_2$) is given by:
+\begin{align*}
+  E[R|\neg b_1, b_2]&=\overbrace{2300}^{\substack{\text{pass}-\\\text{book}}} P(p|\neg b_1, b_2)\tag{def. of conditional expectation}\\
+  &=2300(P(p|m,b_2)P(m|\neg b_1)+P(p|\neg m,b_2)P(\neg m|\neg b_1))\tag{chain rule \& total probability}\\
+  &=2300((.95)(.7)+(.6)(.3))\\
+  &=1943.5
+\end{align*}
+
+Now we recall that the expected reward given that James defers buying the book and then doesn't buy it (i.e. $\neg b_1,\neg b_2$) is the same as in part a (i.e. $\neg b$):
+$$E[R|\neg b_1,\neg b_2]= E[R|\neg b]=1625$$
+
+Likewise, the expected reward given that James doesn't defer buying the book (i.e. $b_1$) is also the same (i.e. $b$):
+$$E[R|b_1]=E[R|b_1,b_2]= E[R|b]=2104.5$$
+
+% \begin{align*}
+%   E[R|\neg b_1,\neg b_2]&=\overbrace{2500}^{\text{pass}} P(p|\neg b_1,\neg b_2)\tag{def. of conditional expectation}\\
+%   &=2500(P(p|m,\neg b_2)P(m|\neg b_1)+P(p|\neg m,\neg b_2)P(\neg m|\neg b_1))\tag{chain rule}\\
+%   &=2500((.8)(.7)+(.3)(.3))\\
+%   &=1625
+% \end{align*}
+
+We can now express the expected reward given James defers the decision (i.e. $\neg b_1$) like so:
+\begin{align*}
+E[R|\neg b_1]&=E[R|\neg b_1, b_2]p(b_2|\neg b_1)+E[R|\neg b_1,\neg b_2]p(\neg b_2|\neg b_1)\\
+&=1943.5P(b_2|\neg b_1)+1625P(\neg b_2|\neg b_1)
+\end{align*}
+
+You'll note, however, that we cannot determine the probability of $P(b_2|\neg b_1)$ or $P(\neg b_2|\neg b_1)$. This is not a problem though, as we can still bound the expected reward:
+\begin{align*}
+E[R|\neg b_1]&\le \operatorname{max}(E[R|\neg b_1, b_2], E[R|\neg b_1,\neg b_2])\\
+&=E[R|\neg b_1, b_2]\\
+&=1943.5
+\end{align*}
+
+As a result, we know that the expected reward of deferring to buy the book is less than the expected reward of buying it right away:
+$$E[R|\neg b_1]\le 1943.5\le E[R|b_1]=2104.5$$
+\newpage
+
+Now, to compute our policy, we simply have to determine whether buying or not buying the book before the test (i.e. $b_2$) maximizes our reward in the case that James has mastered/hasn't mastered the material:
+\begin{align*}
+  E[R|m,\neg b_1,b_2]&=\overbrace{2300}^{\substack{\text{pass}-\\\text{book}}}P(p|m,b_2)=2185\\
+  E[R|m,\neg b_1,\neg b_2]&=\overbrace{2500}^{\text{pass}}P(p|m,\neg b_2)=2000\\
+  E[R|\neg m,\neg b_1,b_2]&=\overbrace{2300}^{\substack{\text{pass}-\\\text{book}}}P(p|\neg m,b_2)=1380\\
+  E[R|\neg m,\neg b_1,\neg b_2]&=\overbrace{2500}^{\text{pass}}P(p|\neg m,\neg b_2)=750
+\end{align*}
+
+It is now clear what our policy should be:
+\begin{center}
+  \begin{forest}
+    for tree={l sep+=.8cm,s sep+=.5cm,shape=rectangle, rounded corners,
+        draw, align=center,
+        top color=white, bottom color=white}
+    [Start
+      [Buy $b_1$, edge label={node[midway,left]{2104.5}}, edge={olive, line width=1.5pt}]
+      [Defer $\neg b_1$, edge label={node[midway,right]{$\le1943.5$}}
+        [Mastered $m$,edge label={node[midway,left]{}}
+          [Buy $b_2$,edge label={node[midway,left]{2185}}, edge={olive, line width=1.5pt}]
+          [Don't Buy $\neg b_2$,edge label={node[midway,right]{2000}}]
+        ]
+        [Not Mastered $\neg m$,edge label={node[midway,left]{}}
+          [Buy $b_2$,edge label={node[midway,left]{1380}}, edge={olive, line width=1.5pt}]
+          [Don't Buy $\neg b_2$,edge label={node[midway,right]{750}}]
+        ]
+      ]
+    ]
+  \end{forest}
+\end{center}
+
+We highlight the optimal choice in the decision tree above with \textcolor{olive}{olive} branches, with the edge weights denoting the expected reward given that choice. You'll note that, even though the choice to buy or not buy the book before the test should never be encountered in an optimal setting (since the optimal first action is to simply buy the book at the beginning), we include it as the definition of a policy is a mapping of \textit{all} states to actions.
+\newpage
+
+\subsection*{Question 3}
+\noindent\textbf{Part a:}
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    height=9cm,
+    width=9cm,
+    grid=major,
+    ylabel=$i_2$,
+    xlabel=$i_1$,
+    xmin=0,xmax=1,
+    ymin=0,ymax=1,
+    legend pos=outer north east,
+    legend style={legend cell align=right,legend plot pos=right}
+  ]
+  \addplot[color=blue] {x+.2};
+  \addlegendentry{Line 0}
+  \addplot[color=red] {.4408*x-.2449};
+  \addlegendentry{Line 1}
+  \addplot[color=green] {.6652*x+.1739};
+  \addlegendentry{Line 2}
+  \addplot[color=orange] {1.025*x+.8861};
+  \addlegendentry{Line 3}
+  \addplot[color=purple] {.4089*x+.1778};
+  \addlegendentry{Line 4}
+  \addplot[color=teal] {.2795*x-.2020};
+  \addlegendentry{Line 5}
+  \node[circle,fill,inner sep=2pt] at (axis cs:.12,1) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.34,.97) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.7,.67) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.92,.45) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.09,.72) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.27,.58) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.45,.15) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.6,.3) {};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tabular}{r|c}
+    Step & Misclassified \\
+    \hline
+    0 & 4 \\
+    1 & 4 \\
+    2 & 3 \\
+    3 & 4 \\
+    4 & 3 \\
+    5 & 4 
+  \end{tabular}
+\end{center}
+
+We use a learning rate of $\alpha=.5$. Note that the boundary is given by $y=mx+b$ where:
+\begin{align*}
+m&=-\frac{w_1}{w_2}\\
+b&=-\frac{w_0}{w_2}
+\end{align*}
+
+The calculations for the weights at each step are given below:
+\begin{align*}
+ \mathbf w^{(0)}&=\begin{bmatrix}.2\\1\\-1\end{bmatrix}\\
+ \mathbf w^{(1)}&=\begin{bmatrix}.2\\1\\-1\end{bmatrix}+.5(0-1)\begin{bmatrix}1\\.92\\.45\end{bmatrix}=\begin{bmatrix}-.3\\.54\\-1.225\end{bmatrix}\\
+ \mathbf w^{(2)}&=\begin{bmatrix}-.3\\.54\\-1.225\end{bmatrix}+.5(1-0)\begin{bmatrix}1\\.45\\.15\end{bmatrix}=\begin{bmatrix}.2\\.765\\-1.15\end{bmatrix}\\
+ \mathbf w^{(3)}&=\begin{bmatrix}.2\\.765\\-1.15\end{bmatrix}+.5(1-0)\begin{bmatrix}1\\.09\\.72\end{bmatrix}=\begin{bmatrix}.7\\.81\\-.79\end{bmatrix}\\
+ \mathbf w^{(4)}&=\begin{bmatrix}.7\\.81\\-.79\end{bmatrix}+.5(0-1)\begin{bmatrix}1\\.7\\.67\end{bmatrix}=\begin{bmatrix}.2\\.46\\-1.125\end{bmatrix}\\
+ \mathbf w^{(5)}&=\begin{bmatrix}.2\\.46\\-1.125\end{bmatrix}+.5(0-1)\begin{bmatrix}1\\.09\\.72\end{bmatrix}=\begin{bmatrix}-.3\\.415\\-1.485\end{bmatrix}\\
+\end{align*}
+
+\noindent\textbf{Part b:} Our perceptron did not achieve perfect classification in 5 iterations. One set of weights $\mathbf w^{(p)}$ that would perfectly classify the data is given below:
+$$\mathbf w^{(p)}=\begin{bmatrix}
+  -1\\1\\1
+\end{bmatrix}\implies\begin{cases}
+  m=-1\\
+  b=1
+\end{cases}$$
+
+Graphing the corresponding decision boundary we have:
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+      height=9cm,
+      width=9cm,
+      grid=major,
+      ylabel=$i_2$,
+      xlabel=$i_1$,
+      xmin=0,xmax=1,
+      ymin=0,ymax=1,
+      legend pos=outer north east,
+      legend style={legend cell align=right,legend plot pos=right}
+    ]
+    \addplot[color=purple] {-x+1};
+    \addlegendentry{Line P}
+    \node[circle,fill,inner sep=2pt] at (axis cs:.12,1) {};
+    \node[circle,fill,inner sep=2pt] at (axis cs:.34,.97) {};
+    \node[circle,fill,inner sep=2pt] at (axis cs:.7,.67) {};
+    \node[circle,fill,inner sep=2pt] at (axis cs:.92,.45) {};
+    \node[circle,draw=black,inner sep=2pt] at (axis cs:.09,.72) {};
+    \node[circle,draw=black,inner sep=2pt] at (axis cs:.27,.58) {};
+    \node[circle,draw=black,inner sep=2pt] at (axis cs:.45,.15) {};
+    \node[circle,draw=black,inner sep=2pt] at (axis cs:.6,.3) {};
+  \end{axis}
+  \end{tikzpicture}
+  \end{center}
+\newpage
+
+\noindent\textbf{Part c:} Such a modified problem is equivalent to projecting the dataset onto the $i_1$ axis like so:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  axis x line=center,
+  ymin=0,ymax=0,
+  axis y line=none,
+  xlabel=$i_1$,
+  xmin=0,xmax=1,
+  ]
+  \node[circle,fill,inner sep=2pt] at (axis cs:.12,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.34,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.7,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.92,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.09,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.27,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.45,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.6,0) {};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The boundary problem is now to find the point on the axis that separates the black and white data the most. One such boundary is at $i_1=.65$, where the left of this point represents white samples and the right represents black ones. Only 2 samples are misclassified by this:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  axis x line=center,
+  ymin=0,ymax=0,
+  axis y line=none,
+  xlabel=$i_1$,
+  xmin=0,xmax=1,
+  legend pos=outer north east,
+  legend style={legend cell align=right,legend plot pos=right}
+  ]
+  \addplot[color=purple] {2};
+  \node[circle,fill,inner sep=2pt,color=purple] at (axis cs:.65,0) {};
+  \addlegendentry{Point P}
+  \node[circle,fill,inner sep=2pt] at (axis cs:.12,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.34,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.7,0) {};
+  \node[circle,fill,inner sep=2pt] at (axis cs:.92,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.09,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.27,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.45,0) {};
+  \node[circle,draw=black,inner sep=2pt] at (axis cs:.6,0) {};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Question 4}
+\noindent\textbf{Part a:} A sinusodial regression would try to fit the weights $w_0,w_1,w_2,w_3$ on the following function:
+$$f_{\mathbf w}(x)=w_0\sin(w_1x+w_2)+w_3$$
+
+Fitting these 4 variables corresponds to fitting the sine wave's amplitude ($w_0$), frequency ($w_1$), horizontal translation ($w_2$), and vertical translation ($w_3$). 
+\bigskip
+
+\noindent\textbf{Part b:}
+\begin{align*}
+  \nabla\operatorname{Cost}_{\mathbf w}(D)&=\begin{bmatrix}
+    \frac{\partial\operatorname{Cost}_{\mathbf w}(D)}{\partial w_0}\\
+    \frac{\partial\operatorname{Cost}_{\mathbf w}(D)}{\partial w_1}\\
+    \frac{\partial\operatorname{Cost}_{\mathbf w}(D)}{\partial w_2}\\
+    \frac{\partial\operatorname{Cost}_{\mathbf w}(D)}{\partial w_3}
+  \end{bmatrix}\tag{def. of gradient}\\
+  &=\begin{bmatrix}
+    \frac{\partial(y-f_{\mathbf w}(x))^2}{\partial w_0}\\
+    \frac{\partial\sum_{(x,y)\in D}(y-f_{\mathbf w}(x))^2}{\partial w_1}\\
+    \frac{\partial\sum_{(x,y)\in D}(y-f_{\mathbf w}(x))^2}{\partial w_2}\\
+    \frac{\partial\sum_{(x,y)\in D}(y-f_{\mathbf w}(x))^2}{\partial w_3}
+  \end{bmatrix}\tag{def. of Cost}\\
+  &=\sum_{(x,y)\in D}\begin{bmatrix}
+    \frac{\partial(y-f_{\mathbf w}(x))^2}{\partial w_0}\\
+    \frac{\partial(y-f_{\mathbf w}(x))^2}{\partial w_1}\\
+    \frac{\partial(y-f_{\mathbf w}(x))^2}{\partial w_2}\\
+    \frac{\partial(y-f_{\mathbf w}(x))^2}{\partial w_3}
+  \end{bmatrix}\tag{linearity}\\
+  &=\sum_{(x,y)\in D}\begin{bmatrix}
+    2(w_0\sin(w_1x+w_2)-y+w_3)\sin(w_1x+w_2)\\
+    2(w_0\sin(w_1x+w_2)-y+w_3)\cos(w_1x+w_2)w_0x\\
+    2(w_0\sin(w_1x+w_2)-y+w_3)\cos(w_1x+w_2)w_0\\
+    2(w_0\sin(w_1x+w_2)-y+w_3)
+  \end{bmatrix}\tag{calculate partial derivatives}
+\end{align*}
+\bigskip
+
+\noindent\textbf{Extra Credit:} The amount of daylight any particular location on earth receives changes over time. By recording the amount of daylight for a few different days, we can fit a sinusodial curve and extrapolate farther into the future/past.
+
+Another example is with modeling circular motion. The position of a cart on a ferris wheel, for example, can be modeled with a sinusoidal curve due to its recurrent motion and constant frequency (rotational speed).
+
+\subsection*{Question 5}
+Below we give the input function $S$ and activation function $f$ for an $n$-input neuron that implements an $n$-input xor gate:
+\begin{align*}
+  S(x_1,\cdots,x_n)&=\sum_{1\le i\le n}x_i\\
+  f(x)&=\begin{cases}
+    1,&x=1\\
+    0,&\text{otherwise}
+  \end{cases}
+\end{align*}
+
+Note that we set all weights $w_i$ of this neuron to 1.
+
+% Its clear that $S$ will only return 1 if only a single of its inputs is 1, as any other situation would net either 0 (if all inputs are 0) or a number greater than 1. The activation function $f$ then outputs 1 in this case and 0 otherwise.
+
+\subsection*{Question 6}
+\noindent\textbf{Part a:} First recall that the complexity of matrix-vector multiplication with a matrix of size $m\times m$ and a vector of size $m\times1$ is $O(m^2)$ (lower bounds can be found but we use the standard matrix multiplication algorithm). Also note that the activation function applied at each layer, presumably, takes constant time for any given input.
+
+Since each of the $n$ layers takes $O(m^2)$ time for the matrix multiplication (i.e. summation function of entire layer) and $O(m)$ time for the activation function of each entry, we have that the entire network takes $O(n(m^2+m))=\mathbf{O(m^2n)}$ time to be queried. Note that the first and last layers take les time to perform matrix multiplication since they are smaller, but this does not affect the overall complexity.
+\bigskip
+
+\noindent\textbf{Part b:} Each of the $n$ layers has $m^2$ weights (since they are represented by $m\times m$ matrices). The first layer actually only has $mi$ weights and the output has only $mj$, with $i,j\le m$, but this does not affect the asymptotic complexity. Put together this totals a spatial complexity of $\mathbf{O(m^2n)}$.
+
+
+\end{document}
