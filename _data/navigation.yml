@@ -8,8 +8,6 @@ main:
     url: /portfolio/
   - title: "Coursework"
     url: /coursework/
-  - title: "Resume"
-    url: /assets/docs/resume.pdf
   # - title: "Posts"
   #   url: /posts/
   # - title: "Categories"
